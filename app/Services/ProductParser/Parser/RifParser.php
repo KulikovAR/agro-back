@@ -4,19 +4,29 @@ namespace App\Services\ProductParser\Parser;
 
 use App\Enums\ParserEnum;
 use App\Enums\ParserProductTypeEnum;
+use App\Services\ProductParser\Client\RifClient;
 use phpQuery;
 use phpQueryObject;
 
-class Parser
+class RifParser
 {
     private $prices;
     private phpQueryObject $document;
+    private array $arr = [];
     public function __construct(
-        $document,
         private int $count_from,
         private int $count_to,
-        private array $arr = [],
+        private int $type,
+        private RifClient $client = new RifClient(),
     ) {
+        if($type==ParserProductTypeEnum::WHEAT->value)
+        {
+            $document = $this->client->wheatBodyHttp();
+        }
+        if($type==ParserProductTypeEnum::BARLEY->value)
+        {
+            $document = $this->client->barleyBodyHttp();
+        }
         $this->document = phpQuery::newDocumentHTML($document);
         $this->prices = $this->document->find('body .price');
     }
@@ -25,11 +35,12 @@ class Parser
     {
         return $this->arr;
     }
+
     public function callParse()
     {
-        $this->parse(ParserProductTypeEnum::WHEAT->value);
+       $this->parse();
     }
-    private function parse($type)
+    private function parse()
     {
         $count = 0;
         foreach ($this->prices as $k => $price) {
@@ -48,6 +59,9 @@ class Parser
                     $products_pq =  pq($product);
 
                     if ($key % 2 == 0) {
+
+
+                        $this->productArrayInit($count,$k,$key);
                         // Название
                         $this->getName($products_pq, $k, $count, $key);
 
@@ -56,9 +70,8 @@ class Parser
                         $this->getAttributes($products_pq, $k, $count, $key);
 
                         $this->getDescription($products_pq, $k, $count, $key);
-
                         $this->getEntity($count, $k, $key, 'company', $company);
-                        $this->getEntity($count, $k, $key, 'type', $type);
+                        $this->getEntity($count, $k, $key, 'type', $this->type);
                         $this->getEntity($count, $k, $key, 'exporter', ParserEnum::EXPORTER->value);
                     } else {
                         $name = $products_pq->find('td:first')->text();
@@ -104,27 +117,51 @@ class Parser
         $descr_arr = explode(';', $descr);
 
         foreach ($descr_arr as $d) {
-            $this->getElementInDescription($d, '≥', $count, $k, $key, 'клейковина');
-            $this->getElementInDescription($d, '≤', $count, $k, $key, 'ИДК');
-            $this->getElementInDescription($d, '≥', $count, $k, $key, 'chp');
-            $this->getElementInDescription($d, '≥', $count, $k, $key, 'натура');
-            $this->getElementInDescription($d, '≤', $count, $k, $key, 'влажность');
-            $this->getElementInDescription($d, '≤', $count, $k, $key, 'сорная примесь');
-            $this->getElementInDescription($d, '≤', $count, $k, $key, 'клоп');
+            $this->getElementInDescription($d, '≥', $count, $k, $key, 'клейковина','gluten');
+            $this->getElementInDescription($d, '≤', $count, $k, $key, 'ИДК','idk');
+            $this->getElementInDescription($d, '≥', $count, $k, $key, 'ЧП','chp');
+            $this->getElementInDescription($d, '≥', $count, $k, $key, 'натура','nature');
+            $this->getElementInDescription($d, '≤', $count, $k, $key, 'влажность','humidity');
+            $this->getElementInDescription($d, '≤', $count, $k, $key, 'сорная примесь','weed_impurity');
+            $this->getElementInDescription($d, '≤', $count, $k, $key, 'клоп','chinch');
         }
     }
 
     private function getEntity($count, $k, $key, string $entity_key, $entity)
     {
-        $this->arr[$count][$k + $key]['entity_key'] = $entity;
+        $this->arr[$count][$k + $key][$entity_key] = $entity;
     }
 
-    private function getElementInDescription(string $d, string $prefix, $count, $k, $key, string $element_name)
+    private function getElementInDescription(string $d, string $prefix, $count, $k, $key, string $element_name, string $element_key)
     {
         if (strpos($d, $element_name) === false) {
             return;
         }
+        // dd($element_key);
         $gluten_arr = explode($prefix, $d);
-        $this->arr[$count][$k + $key]['gluten'] = trim($gluten_arr[1], ' ');
+        // dd($this->arr[$count][$k+$key]['class']);
+        // if(!array_key_exists($element_key,$this->arr[$count][$k+$key])){
+        //     $this->arr[$count][$k + $key][$element_key] = null;
+        // }
+      
+        $this->arr[$count][$k + $key][$element_key] = trim($gluten_arr[1], ' ');
+        // dd($this->arr[$count][$k+$key]);
+     
+    }
+
+    private function productArrayInit($count,$k,$key){
+        $this->arr[$count][$k + $key]['name'] = null;
+        $this->arr[$count][$k + $key]['attr'] = null;
+        $this->arr[$count][$k + $key]['class'] = null;
+        $this->arr[$count][$k + $key]['exporter'] = null;
+        $this->arr[$count][$k + $key]['company'] = null;
+        $this->arr[$count][$k + $key]['gluten'] = null;
+        $this->arr[$count][$k + $key]['idk'] = null;
+        $this->arr[$count][$k + $key]['chp'] = null;
+        $this->arr[$count][$k + $key]['nature'] = null;
+        $this->arr[$count][$k + $key]['humidity'] = null;
+        $this->arr[$count][$k + $key]['weed_impurity'] = null;
+        $this->arr[$count][$k + $key]['chinch'] = null;
+        $this->arr[$count][$k + $key]['type'] = null;
     }
 }

@@ -1,9 +1,9 @@
 <?php
-namespace App\Services\ProductParser\Parser;
+namespace App\Services\ProductParser\Client;
 
 use Illuminate\Support\Facades\Http;
 
-class ParserHttp
+class RifClient
 {
     private Http $client;
     public function __construct(

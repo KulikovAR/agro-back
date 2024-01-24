@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
 
-class GoodFilter extends AbstractFilter
+class ProductParserFilter extends AbstractFilter
 {
     public const NAME = 'name';
-    public const CLASS = 'class';
+    public const CLASS_TYPE = 'class';
     public const ATTR = 'attr';
     public const COMPANY = 'company';
     public const PRICE = 'price';
@@ -32,7 +32,7 @@ class GoodFilter extends AbstractFilter
     {
         return [
             self::NAME                     => [$this, 'name'],
-            self::CLASS                    => [$this, 'CLASS'],
+            self::CLASS_TYPE               => [$this, 'class'],
             self::ATTR                     => [$this, 'attr'],
             self::COMPANY                  => [$this, 'company'],
             self::PRICE                    => [$this, 'price'],

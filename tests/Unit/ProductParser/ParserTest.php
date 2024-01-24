@@ -2,8 +2,10 @@
 
 namespace Tests\Unit\ProductParser;
 
+use App\Services\ProductParser\Client\RifClient;
 use App\Services\ProductParser\Parser\Parser;
 use App\Services\ProductParser\Parser\ParserHttp;
+use App\Services\ProductParser\Parser\RifParser;
 use Tests\TestCase;
 
 class ParserTest extends TestCase
@@ -13,10 +15,9 @@ class ParserTest extends TestCase
      */
     public function test_example(): void
     { 
-        $client = new ParserHttp();
-        $client->wheatBodyHttp();
-        $parser = new Parser($client->wheatBodyHttp(),0,10);
-        $parser->callParse();
+        $client = new RifClient();
+        $parser = new RifParser($client->barleyBodyHttp(),0,9);
+        $parser->callBarleyParse();
        dd( $parser->getResult());
     }
 }

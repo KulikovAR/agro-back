@@ -50,6 +50,7 @@ use App\Http\Controllers\SubcategoryController;
 */
 Route::prefix('products-parser')->group(function(){
     Route::get('get-filters',[ProductParserController::class,'getProductFilter'])->name('product-parser.get-filter');
+    Route::get('/',[ProductParserController::class,'index'])->name('product-parser.index');
 });
 
 Route::middleware(['guest'])->group(function () {

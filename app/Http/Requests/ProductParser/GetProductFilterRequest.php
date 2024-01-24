@@ -24,6 +24,7 @@ class GetProductFilterRequest extends FormRequest
         return [
             'types'   => ['required','array'],
             'types.*' => ['string'],
+            
         ];
     }
 }
