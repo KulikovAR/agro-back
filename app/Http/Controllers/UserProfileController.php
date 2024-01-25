@@ -24,11 +24,6 @@ class UserProfileController extends Controller
         );
     }
 
-    public function addToFavorite(Request $request)
-    {   $user = User::where('id',$request->user_id)->first();
-        Favorite::firstOrCreate(["user_id"=>$request->user_id, "good_id"=>$request->good_id],["user_id"=>$request->user_id, "good_id"=>$request->good_id]);
-        return new ApiJsonResponse(data: new UserResource($user));
-    }
     public function store(UserProfileRequest $request)
     {
         $user = $request->user();

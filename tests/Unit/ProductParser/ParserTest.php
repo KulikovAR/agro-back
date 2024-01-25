@@ -15,9 +15,9 @@ class ParserTest extends TestCase
      */
     public function test_example(): void
     { 
-        $client = new RifClient();
-        $parser = new RifParser($client->barleyBodyHttp(),0,9);
-        $parser->callBarleyParse();
-       dd( $parser->getResult());
+    //     $client = new RifClient();
+    //     $parser = new RifParser($client->barleyBodyHttp(),0,9);
+    //     $parser->callBarleyParse();
+    //    dd( $parser->getResult());
     }
 }

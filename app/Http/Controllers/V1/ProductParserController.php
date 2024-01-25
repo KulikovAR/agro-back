@@ -23,7 +23,7 @@ class ProductParserController extends Controller
         return new ApiJsonResponse(data: $this->service->getFilters($request->types));
     }
     public function index(ProductParserRequest $request)
-    {
+    {   
         $data = $request->validated();
         $filter = app()->make(ProductParserFilter::class, ['queryParams' => array_filter($data)]);
         $products = Product::filter($filter)->get();

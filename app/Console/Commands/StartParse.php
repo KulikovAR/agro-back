@@ -31,8 +31,8 @@ class StartParse extends Command
      * Execute the console command.
      */
     public function handle()
-    {
+    {    $this->service->saveAndParse(0,9,ParserProductTypeEnum::BARLEY->value);
          $this->service->saveAndParse(0,10,ParserProductTypeEnum::WHEAT->value);
-         $this->service->saveAndParse(0,9,ParserProductTypeEnum::BARLEY->value);
+       
     }
 }

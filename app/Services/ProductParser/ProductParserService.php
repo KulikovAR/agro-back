@@ -59,10 +59,13 @@ class ProductParserService
         $this->save($data);
     }
     private function save($data)
-    {
+    {   
         foreach ($data as $item) {
             if (!array_key_exists('gluten', $item)) {
                 $item['gluten'] = null;
+            }
+            if($item['name']=='Ячмень'){
+            $product_data = ['attr' => $item['attr'], 'name' => $item['name'], 'class' => $item['class'], 'type' => $item['type'], 'nature'=>$item['nature']];
             }
             $product_data = ['attr' => $item['attr'], 'name' => $item['name'], 'class' => $item['class'], 'type' => $item['type']];
             Validator::make($product_data, $this->product_rules());
