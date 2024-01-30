@@ -1,0 +1,229 @@
+<?php
+
+namespace App\Services\Dadata;
+
+use App\Enums\DadataBaseUrlEnum;
+use App\Enums\DadataUrlEnum;
+use App\Http\Requests\Dadata\DadataRequest;
+use App\Http\Requests\Dadata\DadataSuggestRequest;
+use Illuminate\Support\Facades\Http;
+
+class Dadata
+{
+    private DadataClient $dadata;
+    private DadataTokenResetClient $clean_auth;
+    public function __construct()
+    {
+        $this->dadata = new DadataClient;
+        $this->clean_auth = new DadataTokenResetClient;
+    }
+
+
+     /**
+     * Отправляет запрос на получение полного адреса.
+     * @param string $query - запрос
+     * @param int $count - количество результатов (по умолчанию 1)
+     * @return array|null - массив с полной информацией об адресе
+     */
+    public function sendFullAddress($query, $count = 1)
+    {
+        $params = [
+            "query" => $query,
+            "count" => $count
+        ];
+        $response = $this->dadata->client->post(DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::SUGGEST->value, $params);
+
+        if ($response->successful()) {
+            return array_map(function ($item) {
+                $city = null;
+                $data = $item['data'];
+
+                if ($data['city']) {
+                    $city = $data['city'];
+                } elseif ($data['settlement_with_type']) {
+                    $city = $data['settlement_with_type'];
+                }
+
+                return [
+                    "lat"                  => $data["geo_lat"],
+                    "lon"                  => $data["geo_lon"],
+                    "city"                 => $city,
+                    "city_type"            => $data['city_type'],
+                    "region"               => $data['region'],
+                    "region_type_full"     => $data['region_type_full'],
+                    "settlement"           => $data['settlement'],
+                    "settlement_type_full" => $data['settlement_type_full'],
+                    "area"                 => $data['area']
+                ];
+            }, json_decode($response->body(), true)['suggestions']);
+        }
+    }
+
+
+    /**
+     * Отправляет запрос на получение адреса по координатам.
+     * @param float $lat - широта
+     * @param float $lon - долгота
+     * @param int $radius - радиус поиска (по умолчанию 50)
+     * @return array|null - адрес, соответствующий координатам
+     */
+    public function sendCoords($lat, $lon, $radius = 50)
+    {
+
+        $params = [
+            'lat'           => $lat,
+            'lon'           => $lon,
+            'radius_meters' => $radius
+        ];
+
+        $response = $this->dadata->client->post(DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::GEOLOCATE->value, $params);
+        if ($response->successful()) {
+            dd( [
+                "address" => (json_decode($response->body(), true)['suggestions']),
+            ]);
+        }
+    }
+
+     /**
+     * Получение информации по ИНН.
+     * @param string $inn - ИНН
+     * @return array|null - информация, соответствующая ИНН
+     */
+    public function getInfoByInn($inn)
+    {
+
+        $params = [
+            'query'           => $inn
+        ];
+
+        $response = $this->dadata->client->post(DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::FIND_BY_INN->value, $params);
+        if ($response->successful()) {
+
+            return isset(json_decode($response->body(), true)['suggestions']) ?  json_decode($response->body(), true)['suggestions'] : null;
+        }
+    }
+
+     /**
+     * Отправляет кастомный запрос.
+     * @param DadataRequest $request - объект запроса
+     * @return object - результат запроса в виде объекта
+     */
+    public function sendRequest(DadataRequest $request)
+    {
+        $response = $this->dadata->client->post($request->path, $request->body);
+        return json_decode($response->body());
+    }
+
+      /**
+     * Отправляет запрос на поиск организации.
+     * @param string $query - запрос
+     * @return array - массив с организациями, соответствующими запросу
+     */
+    public function sendCompany(string $query): array
+    {
+        $params = [
+            'query' => $query,
+            'count' => 10,
+            "status" => ["ACTIVE"]
+        ];
+        $response = $this->dadata->client->post(DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::CLIENT->value, $params);
+
+        if ($response->successful()) {
+            return json_decode($response->body(), true)['suggestions'];
+        }
+        return [];
+    }
+     /**
+     * Отправляет запрос с подсказками.
+     * @param DadataSuggestRequest $request - объект запроса с подсказками
+     * @return array - массив с предложениями/подсказками
+     */
+    public function sendSuggest(DadataSuggestRequest $request)
+    {
+
+        $response = $this->dadata->client->post(DadataUrlEnum::API_URL_SUGGEST->value . $request->url, $request->body);
+
+        if ($response->successful()) {
+            return json_decode($response->body(), true)['suggestions'];
+        }
+    }
+     /**
+     * Получает информацию о транспортном средстве.
+     * @param array $brand - массив с информацией о марке транспортного средства
+     */
+    public  function getVehicle(array $brand)
+    {
+
+        $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value . 'vehicle', $brand);
+        if ($response->successful()) {
+            return (json_decode($response->body(), true));
+        }
+        // throw new BadRequestHttpException($response->getData()['message']);
+    }
+
+    public  function sendPhone(array $phone)
+    {
+        $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value . 'phone', $phone);
+        if ($response->successful()) {
+            return (json_decode($response->body(), true));
+        }
+
+        // throw new BadRequestHttpException($response->getData()['message']);
+    }
+
+    public function sendPassport(array $passport)
+    {
+
+
+        $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value . 'passport', $passport);
+        if ($response->successful()) {
+            return (json_decode($response->body(), true));
+        }
+
+        // throw new BadRequestHttpException($response->getData()['message']);
+    }
+
+    public function sendAddress(array $query): array
+    {
+        $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value . 'address', $query);
+
+        if ($response->successful()) {
+            return [
+                'lat' => $this->decodeBodyItem($response, 'geo_lat'),
+                'lon' => $this->decodeBodyItem($response, 'geo_lon'),
+            ];
+        }
+        // throw new BadRequestHttpException($response->getData());
+    }
+
+    public function getAddressArray(array $query)
+    {
+        $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value . 'address', $query);
+
+        // dd(json_decode($response->body(),true));
+        if ($response->successful()) {
+            dd([
+                "country" => $this->decodeBodyItem($response, 'country'),
+                "region" => $this->decodeBodyItem($response, 'region'),
+                "city" => $this->decodeBodyItem($response, 'city'),
+                "street" => $this->decodeBodyItem($response, 'street'),
+                "street_with_type" => $this->decodeBodyItem($response, 'street_with_type'),
+                "house" => $this->decodeBodyItem($response, 'house'),
+                "room" => $this->decodeBodyItem($response, 'flat'),
+                "postal_code" => $this->decodeBodyItem($response, 'postal_code'),
+                "region_code" => $this->decodeBodyItem($response, 'tax_office_legal'),
+                "region_with_type" => $this->decodeBodyItem($response, 'region_with_type'),
+                "federal_district" => $this->decodeBodyItem($response, 'federal_district'),
+                "kladr_id" => $this->decodeBodyItem($response, 'kladr_id'),
+                "city_kladr_id" => $this->decodeBodyItem($response, 'city_kladr_id'),
+            ]);
+        }
+        throw new BadRequestHttpException($response->getData(), 400);
+    }
+
+
+    private function decodeBodyItem($response, $item)
+    {
+        json_decode($response->body(), true)[0][$item];
+    }
+}
