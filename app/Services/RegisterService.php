@@ -35,7 +35,7 @@ class RegisterService
     }
 
 
-    public function Registration(RegistrationPhoneRequest $request): ApiJsonResponse
+    public function registration(RegistrationPhoneRequest $request): User
     {
 
         $code_arr = $this->setCode();
@@ -49,14 +49,9 @@ class RegisterService
         ]);
         event(new RegisteredUserEvent($user));
         // Auth::login($user); //session login
-        return new ApiJsonResponse(
-            200,
-            StatusEnum::OK,
-            __('registration.verify_email'),
-            data: [
-                'user'  => new UserResource($user),
-            ]
-        );
+
+        return $user;
+
     }
 
 
@@ -65,6 +60,7 @@ class RegisterService
         $user = User::where('phone_number', $request->phone_number)->first();
         if($user->code == $request->code){
             $bearerToken = $this->CreateAuthToken($user, Browser::userAgent());
+            return array('user'=>$user, 'token'=>$bearerToken);
         }
         throw new BadRequestException ('Неверный код');
     }
