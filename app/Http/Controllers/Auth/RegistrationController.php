@@ -47,7 +47,7 @@ class RegistrationController extends Controller
         );
     }
 
-    public function verification(RegistrationSmsCodeRequest $request)
+    public function verification(RegistrationSmsCodeRequest $request): ApiJsonResponse
     {
         $data = $this->service->verificationCheck($request);
         return new ApiJsonResponse(
@@ -58,6 +58,16 @@ class RegistrationController extends Controller
                 'user'  => new UserResource($data['user']),
                 'token' => $data['token']
             ]
+        );
+    }
+
+    public function codeUpdate(User $user)
+    {
+        $this->service->updateCode($user);
+        return new ApiJsonResponse(
+            200,
+            StatusEnum::OK,
+            data: [],
         );
     }
 }

@@ -19,12 +19,13 @@ return new class extends MigrationService
             $table->string('name')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('phone_verified_at')->nullable();
             $table->char('salt', 60)->nullable();
             $table->string('password')->nullable();
             $table->string('phone_number')->unique();
             $table->string('code');
             $table->string('code_hash');
-            $table->date('code_expire');
+            $table->timestamp('code_expire_at');
             $table->softDeletes();
             $table->timestamps();
             $table->rememberToken();

@@ -23,24 +23,18 @@ class RegisterService
 
 
 {
-    use BearerTokenTrait;
-    use PasswordHash;
-    private function setCode()
-    {
-        $code = (string)rand(10000, 99999);
-        $code_hash = Hash::make($code);
-        $code_expire = Carbon::now();
+    private $sms;
 
-        return array('code' => $code, 'code_hash' => $code_hash, 'code_expire' => $code_expire);
+    public function __construct()
+    {
+        $this->sms = new SmsVerification;
     }
 
-
+    use PasswordHash;
     public function registration(RegistrationPhoneRequest $request): User
     {
-
-        $code_arr = $this->setCode();
-        $sms = new SmsVerification;
-        $sms->send($request->phone_number, $code_arr['code'] . '- Verification code Cargis');
+        $code_arr = $this->sms->setCode();
+        $this->sms->send($request->phone_number, $code_arr['code'] . '- Verification code Cargis');
         $user = User::create([
             'phone'    => $request->phone,
             'code'     => $code_arr['code'],
@@ -48,20 +42,25 @@ class RegisterService
             'code_expire' => $code_arr['code_expire']
         ]);
         event(new RegisteredUserEvent($user));
-        // Auth::login($user); //session login
-
         return $user;
-
     }
 
 
-    public function verificationCheck(RegistrationSmsCodeRequest $request)
+    public function verificationCheck(RegistrationSmsCodeRequest $request):array
     {
         $user = User::where('phone_number', $request->phone_number)->first();
-        if($user->code == $request->code){
-            $bearerToken = $this->CreateAuthToken($user, Browser::userAgent());
-            return array('user'=>$user, 'token'=>$bearerToken);
+        if ($user->code == $request->code) {
+            $bearerToken = $user->CreateAuthToken(Browser::userAgent());
+            $user->update(['phone_verification_at' => Carbon::now()]);
+            return array('user' => $user, 'token' => $bearerToken);
         }
-        throw new BadRequestException ('Неверный код');
+        throw new BadRequestException('Неверный код');
     }
+
+    public function updateCode(User $user)
+    {
+        $code_arr = $this->sms->setCode();
+        $this->sms->send($user->phone_number, $code_arr['code'] . '- Verification code Cargis');
+        $user->update(['code' => $code_arr['code']]);
+    } 
 }
