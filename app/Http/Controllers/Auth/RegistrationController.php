@@ -15,6 +15,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Services\RegisterService;
 use App\Services\Sms\SmsVerification;
+use App\Services\UserService;
 use App\Traits\BearerTokenTrait;
 use App\Traits\PasswordHash;
 use Carbon\Carbon;
@@ -26,16 +27,19 @@ use Illuminate\Support\Str;
 class RegistrationController extends Controller
 {
 
-    private RegisterService $service;
+    private RegisterService $register_service;
+    private UserService $user_service;
 
     public function __construct()
     {
-        $this->service = new RegisterService;
+        $this->register_service = new RegisterService;
+        
+        $this->user_service = new UserService;
     }
 
     public function registration(RegistrationPhoneRequest $request): ApiJsonResponse
     {
-        $user =  $this->service->registration($request);
+        $user =  $this->register_service->registration($request);
 
         return new ApiJsonResponse(
             200,
@@ -49,7 +53,7 @@ class RegistrationController extends Controller
 
     public function verification(RegistrationSmsCodeRequest $request): ApiJsonResponse
     {
-        $data = $this->service->verificationCheck($request);
+        $data = $this->register_service->verificationCheck($request);
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
@@ -63,7 +67,7 @@ class RegistrationController extends Controller
 
     public function codeUpdate(User $user)
     {
-        $this->service->updateCode($user);
+        $this->user_service->updateCode($user);
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
