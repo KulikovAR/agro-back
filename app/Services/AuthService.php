@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Enums\StatusEnum;
 use App\Events\RegisteredUserEvent;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\Auth\RegistrationEmailRequest;
+
 use App\Http\Requests\Auth\RegistrationPhoneRequest;
 use App\Http\Requests\Auth\RegistrationSmsCodeRequest;
 use App\Http\Resources\User\UserResource;
@@ -44,7 +44,7 @@ class AuthService
         if($user->phone_verified_at==null){
             return response()->json(['message'=>'Подтвердите, пожалуйста, свой телефон'],404);
         }
-        $user->update('code',$code_arr['code']);
+        $user->update(['code' => $code_arr['code'], 'code_hash' => $code_arr['code_hash'], 'code_expire_at' => $code_arr['code_expire']]);
 
         return $user;
       

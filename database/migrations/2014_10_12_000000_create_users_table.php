@@ -25,7 +25,7 @@ return new class extends MigrationService
             $table->string('phone_number')->unique();
             $table->string('code');
             $table->string('code_hash');
-            $table->timestamp('code_expire_at');
+            $table->timestamp('code_expire_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->rememberToken();

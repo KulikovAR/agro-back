@@ -36,7 +36,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         'email',
         'email_verified_at',
         'password',
-        'language',
+        'phone_number',
+        'code_hash',
+        'code_expire_at',
+        'code',
+
     ];
 
     /**

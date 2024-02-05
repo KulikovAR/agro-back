@@ -8,7 +8,6 @@ use Illuminate\Validation\Validator;
 
 class RegistrationPhoneRequest extends FormRequest
 {
-    use EmailPasswordRules;
 
     public function authorize(): bool
     {

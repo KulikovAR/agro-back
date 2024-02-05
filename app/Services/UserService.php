@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Enums\StatusEnum;
 use App\Events\RegisteredUserEvent;
-use App\Http\Requests\Auth\RegistrationEmailRequest;
+
 use App\Http\Requests\Auth\RegistrationPhoneRequest;
 use App\Http\Requests\Auth\RegistrationSmsCodeRequest;
 use App\Http\Resources\User\UserResource;
