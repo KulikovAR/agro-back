@@ -59,6 +59,10 @@ namespace App\Docs;
  *      name="Faq",
  *      description="Faq"
  * )
+ *  * OA\Tag(
+ *      name="Product",
+ *      description="Продукты для парсера"
+ * )
  * @OA\Tag(
  *      name="UserProfile",
  *      description="Настройки пользователя"
