@@ -21,8 +21,9 @@ use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class RegisterService
 
-
+    
 {
+    use BearerTokenTrait;
     private $sms;
 
     public function __construct()
@@ -52,10 +53,10 @@ class RegisterService
     {
         $user = User::where('phone_number', $request->phone_number)->first();
         if ($user->code == $request->code) {
-            $bearerToken = $user->CreateAuthToken(Browser::userAgent());
-            $user->update(['phone_verification_at' => Carbon::now()]);
+            $bearerToken = $this->createAuthToken($user);
+            $user->update(['phone_verified_at' => Carbon::now()]);
             return array('user' => $user, 'token' => $bearerToken);
-        }
+        }   
         throw new BadRequestException('Неверный код');
     }
 }

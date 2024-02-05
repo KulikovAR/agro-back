@@ -11,7 +11,7 @@ class RegistrationSmsCodeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,7 @@ class RegistrationSmsCodeRequest extends FormRequest
     {
         return [
             "phone_number"   => ["regex:/^7\d{10}$/", 'string', 'required', 'max:11'],
-            'code'           => ['string','required'],
+            "code"           => ['string','required'],
         ];
     }
 }

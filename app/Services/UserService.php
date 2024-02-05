@@ -32,8 +32,11 @@ class UserService
 
     public function updateCode(User $user)
     {
+        
         $code_arr = $this->sms->setCode();
-        $this->sms->send($user->phone_number, $code_arr['code'] . '- Verification code Cargis');
-        $user->update(['code' => $code_arr['code']]);
+        if (env('APP_ENV') == 'production') {
+            $this->sms->send($user->phone_number, $code_arr['code'] . '- Verification code Cargis');
+        }
+        $user->update(['code' => $code_arr['code'], 'code_hash' => $code_arr['code_hash'], 'code_expire_at' => $code_arr['code_expire']]);
     } 
 }

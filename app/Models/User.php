@@ -5,6 +5,7 @@ namespace App\Models;
 
 use App\Notifications\PasswordResetNotification;
 use App\Notifications\VerifyEmailNotification;
+use App\Traits\BearerTokenTrait;
 use App\Traits\SheduleLessons;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -38,7 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         'password',
         'phone_number',
         'code_hash',
-        'code_expire_at',
+        'phone_verified_at',
         'code',
 
     ];

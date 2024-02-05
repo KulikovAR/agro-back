@@ -1,0 +1,1527 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "description": "Documentation API",
+        "contact": {
+            "email": "admin@admin.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api/v1",
+            "description": "API Server"
+        },
+        {
+            "url": "/",
+            "description": "Session Server"
+        }
+    ],
+    "paths": {
+        "/assets/{locale}": {
+            "get": {
+                "tags": [
+                    "Assets"
+                ],
+                "summary": "Tel codes, flags, countries, etc",
+                "operationId": "index_assets",
+                "parameters": [
+                    {
+                        "name": "locale",
+                        "in": "path",
+                        "description": "Can specify language: ru, en... (optional)",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "ru",
+                                "en"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "example": "{}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    }
+                },
+                "security": [
+                    {
+                        "api": []
+                    }
+                ]
+            }
+        },
+        "/auth/{provider}/redirect": {
+            "get": {
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Redirect to social media auth window",
+                "operationId": "redirectToSocialMedia",
+                "parameters": [
+                    {
+                        "name": "provider",
+                        "in": "path",
+                        "description": "For testing please visit :<br><br> <a href='/api/v1/auth/google/redirect' target='_blank'>/auth/google/redirect</a>",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "google"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "https://airsurfer.dev-2-tech.ru/auth/redirect?token=[token]"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    }
+                }
+            }
+        },
+        "/login/session": {
+            "post": {
+                "tags": [
+                    "CSRF"
+                ],
+                "summary": "Login Session",
+                "description": "before request get csrf token",
+                "operationId": "login_session",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "test@test.ru"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "testtest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": ""
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "token"
+                                                },
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": "9976801b-6070-4357-bab2-fb47219dad57"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "test@test.ru"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    }
+                },
+                "servers": [
+                    {
+                        "url": "/",
+                        "description": "Session Server"
+                    }
+                ]
+            }
+        },
+        "/logout/session": {
+            "delete": {
+                "tags": [
+                    "CSRF"
+                ],
+                "summary": "Logout",
+                "description": "before request get csrf token if there is no one",
+                "operationId": "logout_session",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": ""
+                                        },
+                                        "data": {
+                                            "example": "[]"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    }
+                },
+                "security": [
+                    {
+                        "api": []
+                    }
+                ],
+                "servers": [
+                    {
+                        "url": "/",
+                        "description": "Session Server"
+                    }
+                ]
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Авторизация пользователя",
+                "operationId": "88e348a5b015538b5638ae524af31f8c",
+                "requestBody": {
+                    "description": "Тело запроса",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone_number"
+                                ],
+                                "properties": {
+                                    "phone_number": {
+                                        "description": "Номер телефона пользователя",
+                                        "type": "string",
+                                        "example": "79202149572"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное подтверждение авторизации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "login.verify_phone"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "9b43aeb0-7b99-4266-a3fa-6ff7fa1dc644"
+                                                        },
+                                                        "phone_number": {
+                                                            "type": "string",
+                                                            "example": "79202149572"
+                                                        },
+                                                        "code": {
+                                                            "type": "string",
+                                                            "example": "44417"
+                                                        },
+                                                        "code_hash": {
+                                                            "type": "string",
+                                                            "example": "$2y$12$iUP5sPOCOkkE23o..PTiTeUfDk6pogGjK2ItLgy1GukqgXa5rfJpW"
+                                                        },
+                                                        "phone_verified_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2024-02-05T16:20:13.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "5|R4fHMZZw5ODsWLwZQjtm4NzubiUv0uGpA7w6ll8z9a086e0c"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неудачная авторизация",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid credentials"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "delete": {
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Logout",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": ""
+                                        },
+                                        "data": {
+                                            "example": "[]"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    }
+                },
+                "security": [
+                    {
+                        "api": []
+                    }
+                ]
+            }
+        },
+        "/login/verification": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Подтверждение авторизации пользователя",
+                "operationId": "e57a2b4ce71f1373d1745246be8f575e",
+                "requestBody": {
+                    "description": "Verification data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone_number",
+                                    "code"
+                                ],
+                                "properties": {
+                                    "phone_number": {
+                                        "description": "User's phone number",
+                                        "type": "string"
+                                    },
+                                    "code": {
+                                        "description": "Verification code",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное подтверждение авторизации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "login.verify_phone"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "9b43aeb0-7b99-4266-a3fa-6ff7fa1dc644"
+                                                        },
+                                                        "phone_number": {
+                                                            "type": "string",
+                                                            "example": "79202149572"
+                                                        },
+                                                        "code": {
+                                                            "type": "string",
+                                                            "example": "44417"
+                                                        },
+                                                        "code_hash": {
+                                                            "type": "string",
+                                                            "example": "$2y$12$iUP5sPOCOkkE23o..PTiTeUfDk6pogGjK2ItLgy1GukqgXa5rfJpW"
+                                                        },
+                                                        "phone_verified_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2024-02-05T16:20:13.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "5|R4fHMZZw5ODsWLwZQjtm4NzubiUv0uGpA7w6ll8z9a086e0c"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неудачное подтверждение авторизации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid verification code"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sanctum/csrf-cookie": {
+            "get": {
+                "tags": [
+                    "CSRF"
+                ],
+                "summary": "Get csrf token. Use Session server prefix.",
+                "operationId": "csrf",
+                "responses": {
+                    "200": {
+                        "description": "Sets csrf cookie, must be attached to every request"
+                    }
+                },
+                "servers": [
+                    {
+                        "url": "/",
+                        "description": "Session Server"
+                    }
+                ]
+            }
+        },
+        "/password/send": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Send password url",
+                "operationId": "send_password",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Email Sent"
+                                        },
+                                        "data": {
+                                            "example": "{}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    }
+                }
+            }
+        },
+        "/password/reset": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Reset password",
+                "operationId": "reset_password",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Email Sent"
+                                        },
+                                        "data": {
+                                            "example": "{}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    }
+                }
+            }
+        },
+        "/password": {
+            "patch": {
+                "tags": [
+                    "UserProfile"
+                ],
+                "summary": "Upade password",
+                "operationId": "update_password",
+                "parameters": [
+                    {
+                        "name": "current_password",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Email Sent"
+                                        },
+                                        "data": {
+                                            "example": "{}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    }
+                },
+                "security": [
+                    {
+                        "api": []
+                    }
+                ]
+            }
+        },
+        "/registration": {
+            "post": {
+                "tags": [
+                    "Registration"
+                ],
+                "summary": "User Registration",
+                "operationId": "daef88cb6b6d4f3c3bcdd1a8f1390564",
+                "requestBody": {
+                    "description": "User registration data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone_number",
+                                    "code"
+                                ],
+                                "properties": {
+                                    "phone_number": {
+                                        "description": "User's phone number",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное подтверждение авторизации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "login.verify_phone"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "9b43aeb0-7b99-4266-a3fa-6ff7fa1dc644"
+                                                        },
+                                                        "phone_number": {
+                                                            "type": "string",
+                                                            "example": "79202149572"
+                                                        },
+                                                        "code": {
+                                                            "type": "string",
+                                                            "example": "44417"
+                                                        },
+                                                        "code_hash": {
+                                                            "type": "string",
+                                                            "example": "$2y$12$iUP5sPOCOkkE23o..PTiTeUfDk6pogGjK2ItLgy1GukqgXa5rfJpW"
+                                                        },
+                                                        "phone_verified_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2024-02-05T16:20:13.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "5|R4fHMZZw5ODsWLwZQjtm4NzubiUv0uGpA7w6ll8z9a086e0c"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/registration/verification": {
+            "post": {
+                "tags": [
+                    "Registration"
+                ],
+                "summary": "Verify User Registration",
+                "operationId": "c3cc8ed5396771f64d5a912828bd6ca2",
+                "requestBody": {
+                    "description": "Verification data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone_number",
+                                    "code"
+                                ],
+                                "properties": {
+                                    "phone_number": {
+                                        "description": "User's phone number",
+                                        "type": "string"
+                                    },
+                                    "code": {
+                                        "description": "Verification code",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное подтверждение авторизации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "login.verify_phone"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "9b43aeb0-7b99-4266-a3fa-6ff7fa1dc644"
+                                                        },
+                                                        "phone_number": {
+                                                            "type": "string",
+                                                            "example": "79202149572"
+                                                        },
+                                                        "code": {
+                                                            "type": "string",
+                                                            "example": "44417"
+                                                        },
+                                                        "code_hash": {
+                                                            "type": "string",
+                                                            "example": "$2y$12$iUP5sPOCOkkE23o..PTiTeUfDk6pogGjK2ItLgy1GukqgXa5rfJpW"
+                                                        },
+                                                        "phone_verified_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2024-02-05T16:20:13.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "5|R4fHMZZw5ODsWLwZQjtm4NzubiUv0uGpA7w6ll8z9a086e0c"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/code/update/{id}": {
+            "put": {
+                "tags": [
+                    "Registration"
+                ],
+                "summary": "Обновление кода пользователя по идентификатору",
+                "operationId": "98361982672c358e99a53582e1ba42e7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Идентификатор пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Тело запроса",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "status",
+                                    "message",
+                                    "data"
+                                ],
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "example": "OK"
+                                    },
+                                    "message": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "data": {
+                                        "type": "string",
+                                        "example": "[]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное обновление кода пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": ""
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "[]"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Пользователь не найден",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Not Found"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/verification/email": {
+            "post": {
+                "tags": [
+                    "Registration"
+                ],
+                "summary": "Send verification email, update user email",
+                "description": "Send verification email, update user email if not verified",
+                "operationId": "send_verification_email",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "test@test.ru"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": ""
+                                        },
+                                        "data": {
+                                            "example": "{}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    }
+                },
+                "security": [
+                    {
+                        "api": []
+                    }
+                ]
+            }
+        },
+        "/verification/{id}/{hash}": {
+            "get": {
+                "tags": [
+                    "Registration"
+                ],
+                "summary": "Verify email using url",
+                "operationId": "verify_email",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "hashed user id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "hash",
+                        "in": "path",
+                        "description": "hash",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "expires",
+                        "in": "query",
+                        "description": "expires",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "signature",
+                        "in": "query",
+                        "description": "signature",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "https://airsurfer.dev-2-tech.ru/"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    }
+                }
+            }
+        },
+        "/user_profile": {
+            "get": {
+                "tags": [
+                    "UserProfile"
+                ],
+                "summary": "View profile",
+                "operationId": "index_profile",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Created"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": "9976801b-6070-4357-bab2-fb47219dad57"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "test@test.ru"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "profile": {
+                                                    "properties": {
+                                                        "firstname": {
+                                                            "type": "string",
+                                                            "example": "firstname"
+                                                        },
+                                                        "lastname": {
+                                                            "type": "string",
+                                                            "example": "lastname"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    }
+                },
+                "security": [
+                    {
+                        "api": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "UserProfile"
+                ],
+                "summary": "Create or update profile",
+                "operationId": "create_profile",
+                "parameters": [
+                    {
+                        "name": "firstname",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "firstname"
+                        }
+                    },
+                    {
+                        "name": "lastname",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "lastname"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Created"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "firstname": {
+                                                    "type": "string",
+                                                    "example": "firstname"
+                                                },
+                                                "lastname": {
+                                                    "type": "string",
+                                                    "example": "lastname"
+                                                },
+                                                "avatar": {
+                                                    "type": "string",
+                                                    "example": "http://127.0.0.1:8000/avatars/q8Ft0bOlR3Yv9npwfwydzG5f4aD6Ybt9PV5HL5uX.png"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    }
+                },
+                "security": [
+                    {
+                        "api": []
+                    }
+                ]
+            }
+        },
+        "/user_profile/avatar": {
+            "post": {
+                "tags": [
+                    "UserProfile"
+                ],
+                "summary": "Create or update avatar profile",
+                "operationId": "create_avatar_profile",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "avatar"
+                                ],
+                                "properties": {
+                                    "avatar": {
+                                        "description": "file to upload",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Created"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "firstname": {
+                                                    "type": "string",
+                                                    "example": "firstname"
+                                                },
+                                                "lastname": {
+                                                    "type": "string",
+                                                    "example": "lastname"
+                                                },
+                                                "avatar": {
+                                                    "type": "string",
+                                                    "example": "http://127.0.0.1:8000/avatars/q8Ft0bOlR3Yv9npwfwydzG5f4aD6Ybt9PV5HL5uX.png"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    }
+                },
+                "security": [
+                    {
+                        "api": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "title": "User",
+                "description": "User model",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id магазина",
+                        "type": "string",
+                        "format": "string",
+                        "example": "9a77fec2-b5e1-4d58-99b8-6f45fe8f11ff"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "Почта пользователя",
+                        "type": "string",
+                        "format": "string",
+                        "example": "nfs2025@mail.ru"
+                    },
+                    "email_verified_at": {
+                        "title": "email_verified_at",
+                        "description": "Подтверждение почты",
+                        "type": "string",
+                        "format": "integer",
+                        "example": "1"
+                    },
+                    "userprofile": {
+                        "$ref": "#/components/schemas/UserProfile"
+                    },
+                    "code": {
+                        "title": "phone_number",
+                        "description": "Номер телефона",
+                        "type": "string",
+                        "format": "string",
+                        "example": "79202149572"
+                    },
+                    "code_hash": {
+                        "title": "code",
+                        "description": "Пятизначный код в СМС",
+                        "type": "string",
+                        "format": "string",
+                        "example": "39563"
+                    },
+                    "code_expire_at": {
+                        "title": "code_hash",
+                        "description": "Захэшированный код",
+                        "type": "string",
+                        "format": "string",
+                        "example": "dc10fce584f2cdf09d6690e0f2883227"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            },
+            "UserProfile": {
+                "title": "UserProfile",
+                "description": "UserProfile model",
+                "properties": {
+                    "firstname": {
+                        "title": "firstname",
+                        "description": "Имя пользователя",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Руслан"
+                    },
+                    "lastname": {
+                        "title": "lastname",
+                        "description": "Фамилия пользователя",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Смыслов"
+                    },
+                    "avatar": {
+                        "title": "avatar",
+                        "description": "Путь к аватару пользователя",
+                        "type": "string",
+                        "format": "string",
+                        "example": "storage/avatar.img"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UserProfile"
+                }
+            }
+        },
+        "responses": {
+            "404": {
+                "description": "Not Found"
+            },
+            "403": {
+                "description": "Don't have permissions",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "You don't have permissions to process this request"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Unauthenticated",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Unauthenticated."
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "422": {
+                "description": "Error validation",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "The given data was invalid."
+                                },
+                                "errors": {
+                                    "properties": {
+                                        "email": {
+                                            "type": "array",
+                                            "items": {
+                                                "example": "Must be a valid email."
+                                            }
+                                        },
+                                        "password": {
+                                            "type": "array",
+                                            "items": {
+                                                "example": "More than 8 chars."
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Registration",
+            "description": "Регистрация"
+        },
+        {
+            "name": "Login",
+            "description": "Авторизация"
+        },
+        {
+            "name": "Comment",
+            "description": "Комментарии"
+        },
+        {
+            "name": "Tag",
+            "description": "Тэги"
+        },
+        {
+            "name": "Good",
+            "description": "Товары"
+        },
+        {
+            "name": "File",
+            "description": "Файлы"
+        },
+        {
+            "name": "Store",
+            "description": "Магазины"
+        },
+        {
+            "name": "Notification",
+            "description": "Уведомления"
+        },
+        {
+            "name": "UserProfile",
+            "description": "Настройки пользователя"
+        },
+        {
+            "name": "Assets",
+            "description": "Данные для UI"
+        },
+        {
+            "name": "CSRF",
+            "description": "session auth with CSRF protection"
+        }
+    ]
+}

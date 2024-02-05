@@ -13,21 +13,20 @@ trait BearerTokenTrait
         return Cookie::make('bearer_token', $token, httpOnly: false);
     }
 
-    protected function createTemporaryAuthToken(?string $tokenName = null, \DateTime $expiresAt = null): string
+    protected function createTemporaryAuthToken(User $user, ?string $tokenName = null, \DateTime $expiresAt = null): string
     {
         if (empty($expiresAt)) {
             $expiresAt = Carbon::now()->addMinutes(15)->toDateTime();
         }
 
-        return $this->createTempToken($tokenName, expiresAt: $expiresAt)->plainTextToken;
+        return $user->createTempToken($tokenName, expiresAt: $expiresAt)->plainTextToken;
     }
 
-    protected function createAuthToken(?string $tokenName = null, \DateTime $expiresAt = null): string
+    protected function createAuthToken(User $user, ?string $tokenName = null, \DateTime $expiresAt = null): string
     {
         if (empty($tokenName)) {
             $tokenName = 'spa';
         }
-        return $this->createToken($tokenName, expiresAt: $expiresAt)->plainTextToken;
+        return $user->createToken($tokenName, expiresAt: $expiresAt)->plainTextToken;
     }
 }
-

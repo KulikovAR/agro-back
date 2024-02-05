@@ -29,11 +29,10 @@ class AuthTokenController extends Controller
     }
     use BearerTokenTrait;
 
-    public function store(LoginRequest $request): ApiJsonResponse
+    public function store(LoginRequest $request)
     {
 
         $user =  $this->auth_service->login($request);
-
         return new ApiJsonResponse(
             data: [
                 'user'  => new UserResource($user),
@@ -47,7 +46,7 @@ class AuthTokenController extends Controller
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
-            __('registration.verify_email'),
+            __('login.verify_phone'),
             data: [
                 'user'  => new UserResource($data['user']),
                 'token' => $data['token']

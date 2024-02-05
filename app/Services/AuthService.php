@@ -25,6 +25,7 @@ class AuthService
 
 
 {
+    use BearerTokenTrait;
     private $sms;
 
     public function __construct()
@@ -34,18 +35,18 @@ class AuthService
 
     use PasswordHash;
     
-    public function login(LoginRequest $request):User
+    public function login(LoginRequest $request)
     {   
         $code_arr = $this->sms->setCode();
         if(env('APP_ENV')=='production'){
         $this->sms->send($request->phone_number, $code_arr['code'] . '- Verification code Cargis');
         }
         $user= User::where('phone_number', $request->phone_number)->first();
+       
         if($user->phone_verified_at==null){
             return response()->json(['message'=>'Подтвердите, пожалуйста, свой телефон'],404);
         }
         $user->update(['code' => $code_arr['code'], 'code_hash' => $code_arr['code_hash'], 'code_expire_at' => $code_arr['code_expire']]);
-
         return $user;
       
         
@@ -56,7 +57,7 @@ class AuthService
     {
         $user = User::where('phone_number', $request->phone_number)->first();
         if ($user->code == $request->code) {
-            $bearerToken = $user->CreateAuthToken(Browser::userAgent());    
+            $bearerToken = $this->createAuthToken($user);   
             return array('user' => $user, 'token' => $bearerToken);
         }
         throw new BadRequestException('Неверный код');

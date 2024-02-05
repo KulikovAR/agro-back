@@ -43,7 +43,7 @@ class RegistrationController extends Controller
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
-            __('registration.verify_email'),
+            __('registration.verify_phone'),
             data: [
                 'user'  => new UserResource($user),
             ]
@@ -56,7 +56,7 @@ class RegistrationController extends Controller
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
-            __('registration.verify_email'),
+            __('registration.verify_phone'),
             data: [
                 'user'  => new UserResource($data['user']),
                 'token' => $data['token']

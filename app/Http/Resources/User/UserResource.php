@@ -18,6 +18,8 @@ class UserResource extends JsonResource
             'id'                      => $this->id,
             'phone_number'            => $this->phone_number,
             'code'                    => $this->code,
+            'code_hash'               => $this->code_hash,
+            'phone_verified_at'       => $this->phone_verified_at
             // 'profile'                 => new UserProfileResource($this->userProfile),
         ];
     }

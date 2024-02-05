@@ -56,4 +56,52 @@ class User
      * @var string
      */
     private $profile;
+
+    private $phone_number;
+    /**
+     * @OA\Property(
+     *     title="phone_number",
+     *     description="Номер телефона",
+     *     format="string",
+     *     example="79202149572"
+     * )
+     *
+     * @var string
+     */
+
+     private $code;
+     /**
+      * @OA\Property(
+      *     title="code",
+      *     description="Пятизначный код в СМС",
+      *     format="string",
+      *     example="39563"
+      * )
+      *
+      * @var string
+      */
+
+      private $code_hash;
+     /**
+      * @OA\Property(
+      *     title="code_hash",
+      *     description="Захэшированный код",
+      *     format="string",
+      *     example="dc10fce584f2cdf09d6690e0f2883227"
+      * )
+      *
+      * @var string
+      */
+
+      private $code_expire_at;
+      /**
+       * @OA\Property(
+       *     title="code_expire_at",
+       *     description="Время, когда нужно высылать новый код",
+       *     format="string",
+       *     example="60 секунд"
+       * )
+       *
+       * @var string
+       */
 }
