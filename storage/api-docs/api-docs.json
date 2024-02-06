@@ -302,10 +302,6 @@
                                                         }
                                                     },
                                                     "type": "object"
-                                                },
-                                                "token": {
-                                                    "type": "string",
-                                                    "example": "5|R4fHMZZw5ODsWLwZQjtm4NzubiUv0uGpA7w6ll8z9a086e0c"
                                                 }
                                             },
                                             "type": "object"
@@ -707,13 +703,13 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "phone_number",
-                                    "code"
+                                    "phone_number"
                                 ],
                                 "properties": {
                                     "phone_number": {
                                         "description": "User's phone number",
-                                        "type": "string"
+                                        "type": "string",
+                                        "example": "79202149572"
                                     }
                                 },
                                 "type": "object"
@@ -763,10 +759,6 @@
                                                         }
                                                     },
                                                     "type": "object"
-                                                },
-                                                "token": {
-                                                    "type": "string",
-                                                    "example": "5|R4fHMZZw5ODsWLwZQjtm4NzubiUv0uGpA7w6ll8z9a086e0c"
                                                 }
                                             },
                                             "type": "object"
@@ -800,11 +792,13 @@
                                 "properties": {
                                     "phone_number": {
                                         "description": "User's phone number",
-                                        "type": "string"
+                                        "type": "string",
+                                        "example": "79202149572"
                                     },
                                     "code": {
                                         "description": "Verification code",
-                                        "type": "string"
+                                        "type": "string",
+                                        "example": "89021"
                                     }
                                 },
                                 "type": "object"

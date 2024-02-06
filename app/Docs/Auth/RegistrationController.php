@@ -13,8 +13,8 @@ class RegistrationController
  *         required=true,
  *         description="User registration data",
  *         @OA\JsonContent(
- *             required={"phone_number", "code"},
- *             @OA\Property(property="phone_number", type="string", description="User's phone number"),
+ *             required={"phone_number"},
+ *             @OA\Property(property="phone_number", type="string", example="79202149572", description="User's phone number"),
  *         ),
  *     ),
       *     @OA\Response(
@@ -32,7 +32,6 @@ class RegistrationController
      *                     @OA\Property(property="code_hash", type="string", example="$2y$12$iUP5sPOCOkkE23o..PTiTeUfDk6pogGjK2ItLgy1GukqgXa5rfJpW"),
      *                     @OA\Property(property="phone_verified_at", type="string", format="date-time", example="2024-02-05T16:20:13.000000Z"),
      *                 ),
-     *                 @OA\Property(property="token", type="string", example="5|R4fHMZZw5ODsWLwZQjtm4NzubiUv0uGpA7w6ll8z9a086e0c"),
      *             ),
      *         ),
      *     ),
@@ -50,8 +49,8 @@ class RegistrationController
  *         description="Verification data",
  *         @OA\JsonContent(
  *             required={"phone_number", "code"},
- *             @OA\Property(property="phone_number", type="string", description="User's phone number"),
- *             @OA\Property(property="code", type="string", description="Verification code"),
+ *             @OA\Property(property="phone_number", type="string", example="79202149572", description="User's phone number"),
+ *             @OA\Property(property="code", type="string", example="89021", description="Verification code"),
  *         ),
  *     ),
      *     @OA\Response(

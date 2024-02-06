@@ -37,6 +37,9 @@ class UserService
         if (env('APP_ENV') == 'production') {
             $this->sms->send($user->phone_number, $code_arr['code'] . '- Verification code Cargis');
         }
+        if(now() < Carbon::parse($user->code_expire_at)) {
+            return response()->json(['message'=>'Вы пока не можете получить новый код'],404);
+            }
         $user->update(['code' => $code_arr['code'], 'code_hash' => $code_arr['code_hash'], 'code_expire_at' => $code_arr['code_expire']]);
     } 
 }

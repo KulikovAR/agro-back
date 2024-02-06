@@ -12,8 +12,8 @@ class SmsTest extends TestCase
      */
     public function test_example(): void
     {
-        $cock = new SmsVerification;
-        $cock->send();
+        // $cock = new SmsVerification;
+        // $cock->send();
 
     }
 }

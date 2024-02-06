@@ -32,7 +32,6 @@ class AuthTokenController
      *                     @OA\Property(property="code_hash", type="string", example="$2y$12$iUP5sPOCOkkE23o..PTiTeUfDk6pogGjK2ItLgy1GukqgXa5rfJpW"),
      *                     @OA\Property(property="phone_verified_at", type="string", format="date-time", example="2024-02-05T16:20:13.000000Z"),
      *                 ),
-     *                 @OA\Property(property="token", type="string", example="5|R4fHMZZw5ODsWLwZQjtm4NzubiUv0uGpA7w6ll8z9a086e0c"),
      *             ),
      *         ),
      *     ),

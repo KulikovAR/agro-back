@@ -49,7 +49,7 @@ class RegisterService
     }
 
 
-    public function verificationCheck(RegistrationSmsCodeRequest $request): array
+    public function verificationCheck(RegistrationSmsCodeRequest $request)
     {
         $user = User::where('phone_number', $request->phone_number)->first();
         if ($user->code == $request->code) {
@@ -57,6 +57,12 @@ class RegisterService
             $user->update(['phone_verified_at' => Carbon::now()]);
             return array('user' => $user, 'token' => $bearerToken);
         }   
-        throw new BadRequestException('Неверный код');
+        return new ApiJsonResponse(
+            200,
+            StatusEnum::OK,
+            data: [
+                'message' => 'Неверный код'
+            ],
+        );
     }
 }
