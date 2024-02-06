@@ -2,15 +2,15 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use App\Services\Dadata\Dadata;
+use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic test example.
-     */
-    public function test_that_true_is_true(): void
+    public function test_example(): void
     {
+        $dadata = new Dadata;
+        $dadata->sendAddress(['Москва хабар']);
         $this->assertTrue(true);
     }
 }

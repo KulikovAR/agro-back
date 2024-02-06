@@ -7,6 +7,8 @@ use App\Enums\DadataUrlEnum;
 use App\Http\Requests\Dadata\DadataRequest;
 use App\Http\Requests\Dadata\DadataSuggestRequest;
 use Illuminate\Support\Facades\Http;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+
 
 class Dadata
 {
@@ -19,7 +21,7 @@ class Dadata
     }
 
 
-     /**
+    /**
      * Отправляет запрос на получение полного адреса.
      * @param string $query - запрос
      * @param int $count - количество результатов (по умолчанию 1)
@@ -57,6 +59,8 @@ class Dadata
                 ];
             }, json_decode($response->body(), true)['suggestions']);
         }
+        dd($response->body());
+        throw new BadRequestHttpException(json_decode($response->body())->message);
     }
 
 
@@ -78,18 +82,19 @@ class Dadata
 
         $response = $this->dadata->client->post(DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::GEOLOCATE->value, $params);
         if ($response->successful()) {
-            dd( [
+            dd([
                 "address" => (json_decode($response->body(), true)['suggestions']),
             ]);
         }
+        throw new BadRequestHttpException(json_decode($response->body())->message);
     }
 
-     /**
+    /**
      * Получение информации по ИНН.
      * @param string $inn - ИНН
      * @return array|null - информация, соответствующая ИНН
      */
-    public function getInfoByInn($inn)
+    public function getInfoByInn($inn): array
     {
 
         $params = [
@@ -101,9 +106,10 @@ class Dadata
 
             return isset(json_decode($response->body(), true)['suggestions']) ?  json_decode($response->body(), true)['suggestions'] : null;
         }
+        throw new BadRequestHttpException(json_decode($response->body())->message);
     }
 
-     /**
+    /**
      * Отправляет кастомный запрос.
      * @param DadataRequest $request - объект запроса
      * @return object - результат запроса в виде объекта
@@ -111,10 +117,13 @@ class Dadata
     public function sendRequest(DadataRequest $request)
     {
         $response = $this->dadata->client->post($request->path, $request->body);
-        return json_decode($response->body());
+        if ($response->successful()) {
+            return json_decode($response->body());
+        }
+        throw new BadRequestHttpException(json_decode($response->body())->message);
     }
 
-      /**
+    /**
      * Отправляет запрос на поиск организации.
      * @param string $query - запрос
      * @return array - массив с организациями, соответствующими запросу
@@ -131,9 +140,9 @@ class Dadata
         if ($response->successful()) {
             return json_decode($response->body(), true)['suggestions'];
         }
-        return [];
+        throw new BadRequestHttpException(json_decode($response->body())->message);
     }
-     /**
+    /**
      * Отправляет запрос с подсказками.
      * @param DadataSuggestRequest $request - объект запроса с подсказками
      * @return array - массив с предложениями/подсказками
@@ -146,8 +155,9 @@ class Dadata
         if ($response->successful()) {
             return json_decode($response->body(), true)['suggestions'];
         }
+        throw new BadRequestHttpException(json_decode($response->body())->message);
     }
-     /**
+    /**
      * Получает информацию о транспортном средстве.
      * @param array $brand - массив с информацией о марке транспортного средства
      */
@@ -158,9 +168,19 @@ class Dadata
         if ($response->successful()) {
             return (json_decode($response->body(), true));
         }
-        // throw new BadRequestHttpException($response->getData()['message']);
+        throw new BadRequestHttpException(json_decode($response->body())->message);
     }
 
+    /**
+     * Отправляет запрос на очистку и стандартизацию телефонного номера с использованием Dadata API.
+     *
+     * @param array $phone Массив, содержащий телефонный номер для обработки.
+     *
+     * @return array Результат запроса в виде массива, если запрос успешен.
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     *           В случае неуспешного запроса выбрасывается исключение с сообщением об ошибке.
+     */
     public  function sendPhone(array $phone)
     {
         $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value . 'phone', $phone);
@@ -168,8 +188,20 @@ class Dadata
             return (json_decode($response->body(), true));
         }
 
-        // throw new BadRequestHttpException($response->getData()['message']);
+        throw new BadRequestHttpException(json_decode($response->body())->message);
     }
+
+    /**
+     * Отправляет запрос на очистку и валидацию телефонного номера с использованием Dadata API.
+     *
+     * @param array $phone Массив, содержащий телефонный номер для обработки.
+     *                     Пример: ['phone' => '+7 (123) 456-7890']
+     *
+     * @return array Результат запроса в виде ассоциативного массива.
+     *               Пример успешного результата: ['result' => 'cleaned_phone_number']
+     *
+     * @throws BadRequestHttpException В случае неудачного запроса выбрасывается исключение с сообщением об ошибке.
+     */
 
     public function sendPassport(array $passport)
     {
@@ -180,27 +212,62 @@ class Dadata
             return (json_decode($response->body(), true));
         }
 
-        // throw new BadRequestHttpException($response->getData()['message']);
+        throw new BadRequestHttpException(json_decode($response->body())->message);
     }
-
+    /**
+     * Отправляет запрос на очистку и валидацию адреса с использованием Dadata API.
+     *
+     * @param array $query Массив, содержащий информацию об адресе для обработки.
+     *                     Пример: ['address' => 'г. Москва, ул. Примерная, д. 123']
+     *
+     * @return array Результат запроса в виде ассоциативного массива с координатами.
+     *               Пример успешного результата: ['lat' => 55.123456, 'lon' => 37.654321]
+     *
+     * @throws BadRequestHttpException В случае неудачного запроса выбрасывается исключение с сообщением об ошибке.
+     */
     public function sendAddress(array $query): array
     {
         $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value . 'address', $query);
-
         if ($response->successful()) {
             return [
                 'lat' => $this->decodeBodyItem($response, 'geo_lat'),
                 'lon' => $this->decodeBodyItem($response, 'geo_lon'),
             ];
         }
-        // throw new BadRequestHttpException($response->getData());
+        throw new BadRequestHttpException(json_decode($response->body())->message);
     }
 
+    /**
+     * Отправляет запрос на очистку и валидацию адреса с использованием Dadata API
+     * и возвращает ассоциативный массив с различными элементами адреса.
+     *
+     * @param array $query Массив, содержащий информацию об адресе для обработки.
+     *                     Пример: ['address' => 'г. Москва, ул. Примерная, д. 123']
+     *
+     * @return array Ассоциативный массив с элементами адреса.
+     *               Пример успешного результата:
+     *               [
+     *                  "country" => "Россия",
+     *                  "region" => "Московская область",
+     *                  "city" => "Москва",
+     *                  "street" => "Примерная",
+     *                  "street_with_type" => "ул. Примерная",
+     *                  "house" => "123",
+     *                  "room" => "Квартира 456",
+     *                  "postal_code" => "123456",
+     *                  "region_code" => "50",
+     *                  "region_with_type" => "Московская область",
+     *                  "federal_district" => "Центральный федеральный округ",
+     *                  "kladr_id" => "5000000000000",
+     *                  "city_kladr_id" => "7700000000000",
+     *               ]
+     *
+     * @throws BadRequestHttpException В случае неудачного запроса выбрасывается исключение с сообщением об ошибке.
+     */
     public function getAddressArray(array $query)
     {
         $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value . 'address', $query);
 
-        // dd(json_decode($response->body(),true));
         if ($response->successful()) {
             dd([
                 "country" => $this->decodeBodyItem($response, 'country'),
@@ -218,7 +285,7 @@ class Dadata
                 "city_kladr_id" => $this->decodeBodyItem($response, 'city_kladr_id'),
             ]);
         }
-        throw new BadRequestHttpException($response->getData(), 400);
+        throw new BadRequestHttpException(json_decode($response->body())->message);
     }
 
 

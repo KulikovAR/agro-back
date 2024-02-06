@@ -17,20 +17,4 @@ class DadataClient
             ]
         );
     }
-
-    public function headersWithToken()
-    {
-       
-    }
-
-    public function cleanAuthorization()
-    {
-        $this->client = Http::withHeaders(
-            [
-                "Authorization" => "Token " . config('dadata.token'),
-                "Content-Type"  => "application/json",
-                "X-Secret"  => config('dadata.secret'),
-            ]
-        );
-    }
 }

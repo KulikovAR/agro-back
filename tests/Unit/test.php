@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit\Dadata;
+namespace Tests\Unit;
 
 use App\Services\Dadata\Dadata;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
-class SendCoords extends TestCase
+class test extends TestCase
 {
     /**
      * A basic unit test example.
@@ -13,7 +13,7 @@ class SendCoords extends TestCase
     public function test_example(): void
     {
         $dadata = new Dadata;
-        $dadata->sendCoords(90,90);
-
+        $dadata->sendAddress(['Москва хабар']);
+        $this->assertTrue(true);
     }
 }
