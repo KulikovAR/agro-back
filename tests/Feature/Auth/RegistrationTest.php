@@ -46,11 +46,11 @@ class RegistrationTest extends TestCase
 
         $response = $this->json('POST', '/api/registration/phone', ['phone_number' =>  $phone_number]);
 
-
+       
 
         // Получаем пользователя из базы данных
         $user = User::where('phone_number', $phone_number)->first();
-
+        
         // Подтверждаем телефон с правильным кодом
         $responseVerify = $this->json('POST', 'api/registration/verification', [
             'phone_number' => $user->phone_number,
@@ -71,6 +71,7 @@ class RegistrationTest extends TestCase
                     'token',
                 ],
             ]);
+       
     }
 
     public function test_verify_phone_invalid_code()
@@ -80,7 +81,7 @@ class RegistrationTest extends TestCase
 
         $response = $this->json('POST', '/api/registration/phone', ['phone_number' =>  $phone_number]);
 
-
+     
         // Создаем пользователя и отправляем запрос на регистрацию
 
         // Подтверждаем телефон с неверным кодом
@@ -90,12 +91,6 @@ class RegistrationTest extends TestCase
         ]);
 
         $responseVerify->assertStatus(400)
-            ->assertJsonStructure([
-                'status',
-                'message',
-                'data' => [
-                    'message'
-                ],
-            ]);
+            ->assertJsonFragment(['message' => 'Неверный код']);
     }
 }

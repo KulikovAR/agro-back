@@ -32,7 +32,7 @@ class RegistrationController extends Controller
     public function __construct()
     {
         $this->register_service = new RegisterService;
-        
+
         $this->user_service = new UserService;
     }
 
@@ -53,6 +53,14 @@ class RegistrationController extends Controller
     public function verification(RegistrationSmsCodeRequest $request): ApiJsonResponse
     {
         $data = $this->register_service->verificationCheck($request);
+        if (array_key_exists('message', $data)) {
+            return new ApiJsonResponse(
+                400,
+                StatusEnum::OK,
+                __('Неверный код'),
+                data: []
+            );
+        }
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
