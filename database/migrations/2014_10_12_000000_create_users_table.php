@@ -5,7 +5,8 @@ use App\Services\MigrationService;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends MigrationService {
+return new class extends MigrationService
+{
     /**
      * Run the migrations.
      */
@@ -16,11 +17,15 @@ return new class extends MigrationService {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('name')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('phone_verified_at')->nullable();
             $table->char('salt', 60)->nullable();
             $table->string('password')->nullable();
-            $table->char('language', 2)->nullable();
+            $table->string('phone_number')->unique();
+            $table->string('code');
+            $table->string('code_hash');
+            $table->timestamp('code_expire_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->rememberToken();

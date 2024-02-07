@@ -49,10 +49,13 @@ use App\Http\Controllers\SubcategoryController;
 */
 
 Route::middleware(['guest'])->group(function () {
-    Route::post('/registration/email', [RegistrationController::class, 'emailRegistration'])->name('registration');
+    Route::post('/registration/phone', [RegistrationController::class, 'registration'])->name('registration');
+    Route::post('/registration/verification',[RegistrationController::class,'verification'])->name('register.verification');
+    Route::put('/code/update/{user}',[RegistrationController::class,'codeUpdate'])->name('code.update');
     Route::post('/login', [AuthTokenController::class, 'store'])->name('login.stateless');
-    Route::post('/password/send', [PasswordController::class, 'sendPasswordLink'])->middleware(['throttle:6,1'])->name('password.send');
-    Route::post('/password/reset', [PasswordController::class, 'store'])->name('password.reset');
+    Route::post('/login/verification',[AuthTokenController::class, 'verification'])->name('login.verification');
+    // Route::post('/password/send', [PasswordController::class, 'sendPasswordLink'])->middleware(['throttle:6,1'])->name('password.send');
+    // Route::post('/password/reset', [PasswordController::class, 'store'])->name('password.reset');
 });
 
 Route::middleware('auth:sanctum')->group(function () {
