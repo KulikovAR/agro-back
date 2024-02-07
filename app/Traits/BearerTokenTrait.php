@@ -30,4 +30,3 @@ trait BearerTokenTrait
         return $user->createToken($tokenName, expiresAt: $expiresAt)->plainTextToken;
     }
 }
-

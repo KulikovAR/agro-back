@@ -237,31 +237,32 @@
                 "tags": [
                     "Login"
                 ],
-                "summary": "Login",
-                "operationId": "login",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "test@test.ru"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "test@test.ru"
+                "summary": "Авторизация пользователя",
+                "operationId": "88e348a5b015538b5638ae524af31f8c",
+                "requestBody": {
+                    "description": "Тело запроса",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone_number"
+                                ],
+                                "properties": {
+                                    "phone_number": {
+                                        "description": "Номер телефона пользователя",
+                                        "type": "string",
+                                        "example": "79202149572"
+                                    }
+                                },
+                                "type": "object"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Success",
+                        "description": "Успешное подтверждение авторизации",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -272,42 +273,63 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": ""
+                                            "example": "login.verify_phone"
                                         },
                                         "data": {
                                             "properties": {
                                                 "user": {
                                                     "properties": {
                                                         "id": {
-                                                            "type": "integer",
-                                                            "example": "9976801b-6070-4357-bab2-fb47219dad57"
-                                                        },
-                                                        "email": {
+
                                                             "type": "string",
-                                                            "example": "test@test.ru"
+                                                            "example": "9b43aeb0-7b99-4266-a3fa-6ff7fa1dc644"
                                                         },
-                                                        "profile": {
-                                                            "type": "object",
-                                                            "example": "{}"
+                                                            "type": "string",
+                                                            "example": "79202149572"
+                                                        },
+                                                        "code": {
+                                                            "type": "string",
+                                                            "example": "44417"
+                                                        },
+                                                        "code_hash": {
+                                                            "type": "string",
+                                                            "example": "$2y$12$iUP5sPOCOkkE23o..PTiTeUfDk6pogGjK2ItLgy1GukqgXa5rfJpW"
+                                                        },
+                                                        "phone_verified_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2024-02-05T16:20:13.000000Z"
                                                         }
                                                     },
                                                     "type": "object"
-                                                },
-                                                "token": {
-                                                    "type": "string",
-                                                    "example": "token"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
+                                                            "type": "integer",
+                                                            "example": "9976801b-6070-4357-bab2-fb47219dad57"
+                                                        },
                                     },
                                     "type": "object"
                                 }
                             }
                         }
                     },
-                    "422": {
-                        "$ref": "#/components/responses/422"
+                    "401": {
+                        "description": "Неудачная авторизация",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid credentials"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -352,6 +374,117 @@
                         "api": []
                     }
                 ]
+            }
+        },
+        "/login/verification": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Подтверждение авторизации пользователя",
+                "operationId": "e57a2b4ce71f1373d1745246be8f575e",
+                "requestBody": {
+                    "description": "Verification data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone_number",
+                                    "code"
+                                ],
+                                "properties": {
+                                    "phone_number": {
+                                        "description": "User's phone number",
+                                        "type": "string"
+                                    },
+                                    "code": {
+                                        "description": "Verification code",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное подтверждение авторизации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "login.verify_phone"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "9b43aeb0-7b99-4266-a3fa-6ff7fa1dc644"
+                                                        },
+                                                        "phone_number": {
+                                                            "type": "string",
+                                                            "example": "79202149572"
+                                                        },
+                                                        "code": {
+                                                            "type": "string",
+                                                            "example": "44417"
+                                                        },
+                                                        "code_hash": {
+                                                            "type": "string",
+                                                            "example": "$2y$12$iUP5sPOCOkkE23o..PTiTeUfDk6pogGjK2ItLgy1GukqgXa5rfJpW"
+                                                        },
+                                                        "phone_verified_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2024-02-05T16:20:13.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "5|R4fHMZZw5ODsWLwZQjtm4NzubiUv0uGpA7w6ll8z9a086e0c"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неудачное подтверждение авторизации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid verification code"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/sanctum/csrf-cookie": {
@@ -555,92 +688,248 @@
                 ]
             }
         },
-        "/registration/email": {
+        "/registration": {
             "post": {
                 "tags": [
                     "Registration"
                 ],
-                "summary": "Register account with email",
-                "operationId": "email",
-                "parameters": [
-                    {
-                        "name": "firstname",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "Test"
-                        }
-                    },
-                    {
-                        "name": "lastname",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "User"
-                        }
-                    },
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "www@www.ru"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "www12345"
-                        }
-                    },
-                    {
-                        "name": "password_confirmation",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "www12345"
+                "summary": "User Registration",
+                "operationId": "daef88cb6b6d4f3c3bcdd1a8f1390564",
+                "requestBody": {
+                    "description": "User registration data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone_number"
+                                ],
+                                "properties": {
+                                    "phone_number": {
+                                        "description": "User's phone number",
+                                        "type": "string",
+                                        "example": "79202149572"
+                                    }
+                                },
+                                "type": "object"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Success",
+                        "description": "Успешное подтверждение авторизации",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "login.verify_phone"
+                                        },
                                         "data": {
                                             "properties": {
                                                 "user": {
                                                     "properties": {
                                                         "id": {
-                                                            "type": "integer",
-                                                            "example": "9976801b-6070-4357-bab2-fb47219dad57"
-                                                        },
-                                                        "email": {
                                                             "type": "string",
-                                                            "example": "test@test.ru"
+                                                            "example": "9b43aeb0-7b99-4266-a3fa-6ff7fa1dc644"
+                                                        },
+                                                        "phone_number": {
+                                                            "type": "string",
+                                                            "example": "79202149572"
+                                                        },
+                                                        "code": {
+                                                            "type": "string",
+                                                            "example": "44417"
+                                                        },
+                                                        "code_hash": {
+                                                            "type": "string",
+                                                            "example": "$2y$12$iUP5sPOCOkkE23o..PTiTeUfDk6pogGjK2ItLgy1GukqgXa5rfJpW"
+                                                        },
+                                                        "phone_verified_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2024-02-05T16:20:13.000000Z"
                                                         }
                                                     },
                                                     "type": "object"
                                                 }
                                             },
                                             "type": "object"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Please check your email."
-                                        },
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/registration/verification": {
+            "post": {
+                "tags": [
+                    "Registration"
+                ],
+                "summary": "Verify User Registration",
+                "operationId": "c3cc8ed5396771f64d5a912828bd6ca2",
+                "requestBody": {
+                    "description": "Verification data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "phone_number",
+                                    "code"
+                                ],
+                                "properties": {
+                                    "phone_number": {
+                                        "description": "User's phone number",
+                                        "type": "string",
+                                        "example": "79202149572"
+                                    },
+                                    "code": {
+                                        "description": "Verification code",
+                                        "type": "string",
+                                        "example": "89021"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное подтверждение авторизации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
                                         "status": {
                                             "type": "string",
                                             "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "login.verify_phone"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "example": "9b43aeb0-7b99-4266-a3fa-6ff7fa1dc644"
+                                                        },
+                                                        "phone_number": {
+                                                            "type": "string",
+                                                            "example": "79202149572"
+                                                        },
+                                                        "code": {
+                                                            "type": "string",
+                                                            "example": "44417"
+                                                        },
+                                                        "code_hash": {
+                                                            "type": "string",
+                                                            "example": "$2y$12$iUP5sPOCOkkE23o..PTiTeUfDk6pogGjK2ItLgy1GukqgXa5rfJpW"
+                                                        },
+                                                        "phone_verified_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2024-02-05T16:20:13.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "5|R4fHMZZw5ODsWLwZQjtm4NzubiUv0uGpA7w6ll8z9a086e0c"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/code/update/{id}": {
+            "put": {
+                "tags": [
+                    "Registration"
+                ],
+                "summary": "Обновление кода пользователя по идентификатору",
+                "operationId": "98361982672c358e99a53582e1ba42e7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Идентификатор пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Тело запроса",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "status",
+                                    "message",
+                                    "data"
+                                ],
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "example": "OK"
+                                    },
+                                    "message": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "data": {
+                                        "type": "string",
+                                        "example": "[]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное обновление кода пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": ""
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": "[]"
                                         }
                                     },
                                     "type": "object"
@@ -648,8 +937,25 @@
                             }
                         }
                     },
-                    "422": {
-                        "$ref": "#/components/responses/422"
+                    "404": {
+                        "description": "Пользователь не найден",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Not Found"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -765,128 +1071,6 @@
                     },
                     "401": {
                         "$ref": "#/components/responses/401"
-                    }
-                }
-            }
-        },
-        "/products-parser/": {
-            "get": {
-                "tags": [
-                    "Products"
-                ],
-                "summary": "Get list of products from the parser",
-                "operationId": "86fb46094ef7f57ffb3fcbb69c0b66ad",
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "status": {
-                                            "description": "Status of the response",
-                                            "type": "string",
-                                            "example": "OK"
-                                        },
-                                        "message": {
-                                            "description": "Additional message if any",
-                                            "type": "string",
-                                            "example": ""
-                                        },
-                                        "data": {
-                                            "description": "List of products",
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "name": {
-                                                        "type": "string",
-                                                        "example": "Ячмень"
-                                                    },
-                                                    "class": {
-                                                        "type": "string",
-                                                        "example": "3-й"
-                                                    },
-                                                    "attr": {
-                                                        "type": "string",
-                                                        "nullable": true
-                                                    },
-                                                    "company": {
-                                                        "type": "string",
-                                                        "example": "Компания"
-                                                    },
-                                                    "price": {
-                                                        "type": "number",
-                                                        "example": 0
-                                                    },
-                                                    "type": {
-                                                        "type": "integer",
-                                                        "example": 2
-                                                    },
-                                                    "gluten": {
-                                                        "type": "string",
-                                                        "nullable": true
-                                                    },
-                                                    "idk": {
-                                                        "type": "string",
-                                                        "nullable": true
-                                                    },
-                                                    "chp": {
-                                                        "type": "string",
-                                                        "nullable": true
-                                                    },
-                                                    "nature": {
-                                                        "type": "string",
-                                                        "example": "580"
-                                                    },
-                                                    "humidity": {
-                                                        "type": "string",
-                                                        "example": "14%"
-                                                    },
-                                                    "weed_impurity": {
-                                                        "type": "string",
-                                                        "nullable": true
-                                                    },
-                                                    "chinch": {
-                                                        "type": "string",
-                                                        "nullable": true
-                                                    },
-                                                    "exporter": {
-                                                        "type": "string",
-                                                        "example": "Экспортёр"
-                                                    },
-                                                    "parser": {
-                                                        "type": "integer",
-                                                        "example": 1
-                                                    },
-                                                    "created_at": {
-                                                        "type": "string",
-                                                        "example": "2024-02-05T10:59:44.000000Z"
-                                                    },
-                                                    "updated_at": {
-                                                        "type": "string",
-                                                        "example": "2024-02-05T10:59:44.000000Z"
-                                                    },
-                                                    "logs": {
-                                                        "description": "Information about product logs",
-                                                        "type": "object",
-                                                        "additionalProperties": {
-                                                            "type": "number",
-                                                            "example": 0
-                                                        }
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
                     }
                 }
             }
@@ -1129,122 +1313,6 @@
     },
     "components": {
         "schemas": {
-            "Product": {
-                "title": "Product",
-                "description": "Product model",
-                "properties": {
-                    "id": {
-                        "title": "id",
-                        "description": "Id магазина",
-                        "type": "string",
-                        "format": "string",
-                        "example": "9a77fec2-b5e1-4d58-99b8-6f45fe8f11ff"
-                    },
-                    "name": {
-                        "description": "Название продукта",
-                        "type": "string",
-                        "example": "Ячмень"
-                    },
-                    "class": {
-                        "description": "Класс или категория продукта",
-                        "type": "string",
-                        "example": "3-й"
-                    },
-                    "attr": {
-                        "description": "Атрибуты продукта",
-                        "type": "string",
-                        "example": "15,3",
-                        "nullable": true
-                    },
-                    "company": {
-                        "description": "Компания, связанная с продуктом",
-                        "type": "string",
-                        "example": "Компания"
-                    },
-                    "price": {
-                        "description": "Цена продукта",
-                        "type": "number",
-                        "example": 14.8
-                    },
-                    "type": {
-                        "description": "Тип продукта",
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "gluten": {
-                        "description": "Содержание глютена",
-                        "type": "string",
-                        "example": "23",
-                        "nullable": true
-                    },
-                    "idk": {
-                        "description": "Идентификатор (IDK), связанный с продуктом",
-                        "type": "string",
-                        "example": "90",
-                        "nullable": true
-                    },
-                    "chp": {
-                        "description": "Значение CHP (Combined Heat and Power)",
-                        "type": "string",
-                        "example": "220",
-                        "nullable": true
-                    },
-                    "nature": {
-                        "description": "Значение природы продукта",
-                        "type": "string",
-                        "example": "760"
-                    },
-                    "humidity": {
-                        "description": "Процент влажности продукта",
-                        "type": "string",
-                        "example": "14%"
-                    },
-                    "weed_impurity": {
-                        "description": "Информация о сорняках в продукте",
-                        "type": "string",
-                        "example": null,
-                        "nullable": true
-                    },
-                    "chinch": {
-                        "description": "Клопы",
-                        "type": "string",
-                        "example": "2",
-                        "nullable": true
-                    },
-                    "exporter": {
-                        "description": "Компания-экспортер, связанная с продуктом",
-                        "type": "string",
-                        "example": "Экспортёр"
-                    },
-                    "parser": {
-                        "description": "Идентификатор парсера",
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "created_at": {
-                        "description": "Метка времени создания записи о продукте",
-                        "type": "string",
-                        "example": "2024-02-05T10:59:44.000000Z"
-                    },
-                    "updated_at": {
-                        "description": "Метка времени последнего обновления записи о продукте",
-                        "type": "string",
-                        "example": "2024-02-05T10:59:44.000000Z"
-                    },
-                    "logs": {
-                        "description": "Информация о журнале для продукта, включая дату и соответствующие данные",
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "number",
-                            "example": 0
-                        }
-                    }
-                },
-                "type": "object",
-                "xml": {
-                    "name": "Product"
-                }
-            },
             "User": {
                 "title": "User",
                 "description": "User model",
@@ -1272,6 +1340,27 @@
                     },
                     "userprofile": {
                         "$ref": "#/components/schemas/UserProfile"
+                    },
+                    "code": {
+                        "title": "phone_number",
+                        "description": "Номер телефона",
+                        "type": "string",
+                        "format": "string",
+                        "example": "79202149572"
+                    },
+                    "code_hash": {
+                        "title": "code",
+                        "description": "Пятизначный код в СМС",
+                        "type": "string",
+                        "format": "string",
+                        "example": "39563"
+                    },
+                    "code_expire_at": {
+                        "title": "code_hash",
+                        "description": "Захэшированный код",
+                        "type": "string",
+                        "format": "string",
+                        "example": "dc10fce584f2cdf09d6690e0f2883227"
                     }
                 },
                 "type": "object",

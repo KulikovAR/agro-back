@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Auth;
 use App\Enums\StatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginEmailRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegistrationSmsCodeRequest;
+use App\Http\Resources\User\UserResource;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\User;
+use App\Services\AuthService;
 use App\Services\UserDeviceService;
+use App\Services\UserService;
 use App\Traits\BearerTokenTrait;
 use hisorange\BrowserDetect\Parser as Browser;
 use Illuminate\Http\Request;
@@ -17,26 +21,35 @@ use Illuminate\Support\Str;
 
 class AuthTokenController extends Controller
 {
+
+    public function __construct(
+        private AuthService $auth_service,
+    ) {
+        $this->auth_service = new AuthService;
+    }
     use BearerTokenTrait;
 
-    public function store(LoginEmailRequest $request): ApiJsonResponse
-    {   $user= User::where('email', Str::lower($request->email))->first();
-        if($user->email_verified_at==null){
-            return response()->json(['message'=>'Подтвердите, пожалуйста, свою почту'],404);
-        }
-        $passwordCheckCallable = function ($email, $password) {
-            $user = User::where('email', Str::lower($email))->first();
-            return $user && Hash::check($password, $user->password);
-        };
+    public function store(LoginRequest $request)
+    {
 
-        $request->authenticate($passwordCheckCallable);
-
-      
-
+        $user =  $this->auth_service->login($request);
         return new ApiJsonResponse(
             data: [
                 'user'  => new UserResource($user),
-                'token' => $this->createAuthToken($user, Browser::userAgent()),
+            ]
+        );
+    }
+
+    public function verification(RegistrationSmsCodeRequest $request): ApiJsonResponse
+    {
+        $data = $this->auth_service->verificationCheck($request);
+        return new ApiJsonResponse(
+            200,
+            StatusEnum::OK,
+            __('login.verify_phone'),
+            data: [
+                'user'  => new UserResource($data['user']),
+                'token' => $data['token']
             ]
         );
     }
