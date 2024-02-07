@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Enums\StatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginEmailRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\User\UserResource;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\User;
 use App\Services\UserDeviceService;
