@@ -19,6 +19,7 @@ use App\Http\Controllers\QuizResultController;
 use App\Http\Controllers\ShortsController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\V1\ProductParserController;
 use App\Models\Role;
 use App\Models\User;
 use App\Notifications\AdminNotification;
@@ -47,6 +48,10 @@ use App\Http\Controllers\SubcategoryController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::prefix('products-parser')->group(function(){
+    Route::get('get-filters',[ProductParserController::class,'getProductFilter'])->name('product-parser.get-filter');
+    Route::get('/',[ProductParserController::class,'index'])->name('product-parser.index');
+});
 
 Route::middleware(['guest'])->group(function () {
     Route::post('/registration/phone', [RegistrationController::class, 'registration'])->name('registration');

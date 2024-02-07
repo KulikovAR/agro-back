@@ -280,10 +280,10 @@
                                                 "user": {
                                                     "properties": {
                                                         "id": {
+
                                                             "type": "string",
                                                             "example": "9b43aeb0-7b99-4266-a3fa-6ff7fa1dc644"
                                                         },
-                                                        "phone_number": {
                                                             "type": "string",
                                                             "example": "79202149572"
                                                         },
@@ -302,10 +302,9 @@
                                                         }
                                                     },
                                                     "type": "object"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
+                                                            "type": "integer",
+                                                            "example": "9976801b-6070-4357-bab2-fb47219dad57"
+                                                        },
                                     },
                                     "type": "object"
                                 }
