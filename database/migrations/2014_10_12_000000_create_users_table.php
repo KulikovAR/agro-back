@@ -22,9 +22,9 @@ return new class extends MigrationService
             $table->timestamp('phone_verified_at')->nullable();
             $table->char('salt', 60)->nullable();
             $table->string('password')->nullable();
-            $table->string('phone_number')->unique();
-            $table->string('code');
-            $table->string('code_hash');
+            $table->string('phone_number')->unique()->nullable();
+            $table->string('code')->nullable();
+            $table->string('code_hash')->nullable();
             $table->timestamp('code_expire_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
