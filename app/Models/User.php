@@ -81,5 +81,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new PasswordResetNotification($token));
-    }
+    } 
+
+    public function driver(): HasOne
+    {
+        return $this->hasOne(Driver::class);
+    } 
 }

@@ -22,23 +22,20 @@ class UserFactory extends Factory
         return [
             'email'                   => fake()->unique()->safeEmail(),
             'email_verified_at'       => now(),
-            // 'phone'             => $this->faker->numerify('+7#########'),
-            // 'phone_prefix'      => $this->faker->numerify('+##'),
-            // 'phone_verified_at' => now(),
+            'phone_number'            => $this->faker->numerify('+7#########'),
+            'phone_verified_at'        => now(),
             'salt'                    => Hash::make(Str::random(10)),
             'password'                => Hash::make('test'),
-            'language'                => config('app.locale'),
+            'code'                    => $this->faker->randomNumber(),
+            'code_hash'               => Hash::make('stroka'),
+            'code_expire_at'          => now(),
             'remember_token'          => Str::random(10)
         ];
+
     }
 
     /**
      * Indicate that the model's email address should be unverified.
      */
-    public function unverified(): static
-    {
-        return $this->state(fn(array $attributes) => [
-            'email_verified_at' => null,
-        ]);
-    }
+
 }

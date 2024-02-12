@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Notifications\UserAppNotification;
 use App\Services\NotificationService;
 use Carbon\Carbon;
+use Database\Factories\DriverFactory;
 use Database\Factories\GoodFactory;
 use Database\Factories\UserProfileFactory;
 use Illuminate\Database\Seeder;
@@ -32,16 +33,16 @@ class UserSeeder extends Seeder
             return;
         }
 
-        $userAdmin = User::factory()->create(
-            [
-                'password' => Hash::make(self::ADMIN_PASSWORD),
-                'email' => self::ADMIN_EMAIL,
-            ]
-        );
-        $userAdmin->assignRole(Role::ROLE_ADMIN);
+        // $userAdmin = User::factory()->create(
+        //     [
+        //         'password' => Hash::make(self::ADMIN_PASSWORD),
+        //         'email' => self::ADMIN_EMAIL,
+        //     ]
+        // );
+        // $userAdmin->assignRole(Role::ROLE_ADMIN);
 
-        $message = "Новый тест на проверку";
-        NotificationService::notifyAdmin($message);
+        // $message = "Новый тест на проверку";
+        // NotificationService::notifyAdmin($message);
 
         $user = User::factory()->create(
             [
@@ -49,10 +50,11 @@ class UserSeeder extends Seeder
                 'email' => self::USER_EMAIL,
             ],
         );
-        $user->assignRole(Role::ROLE_USER);
+        $user->driver()->create((new DriverFactory())->definition());
+        // $user->assignRole(Role::ROLE_USER);
 
-        $user->userProfile()->create((new UserProfileFactory())->definition());
+        // $user->userProfile()->create((new UserProfileFactory())->definition());
 
-        $user->notify(new UserAppNotification('Тестовое уведомление'));
+        // $user->notify(new UserAppNotification('Тестовое уведомление'));
     }
 }
