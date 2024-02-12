@@ -50,7 +50,8 @@ class UserSeeder extends Seeder
                 'email' => self::USER_EMAIL,
             ],
         );
-        $user->driver()->create((new DriverFactory())->definition());
+       
+         $user->driver()->create((new DriverFactory())->definition());
         // $user->assignRole(Role::ROLE_USER);
 
         // $user->userProfile()->create((new UserProfileFactory())->definition());
