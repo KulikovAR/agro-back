@@ -12,6 +12,17 @@ class Transport extends Model
 {
     use HasFactory,HasUuids;
     
+    protected $fillable = [
+        'driver_id',
+        'is_active',
+        'type',
+        'number',
+        'model',
+        'description',
+        'free',
+        'volume_cm',
+        'capacity'
+    ];
     public function driver(): BelongsTo
     {
        return $this->belongsTo(Driver::class);
