@@ -37,6 +37,7 @@ use App\Http\Controllers\ParameterController;
 use App\Http\Controllers\StoreChatController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SubcategoryController;
+use App\Http\Controllers\V1\CounteragentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +53,13 @@ Route::prefix('products-parser')->group(function(){
     Route::get('get-filters',[ProductParserController::class,'getProductFilter'])->name('product-parser.get-filter');
     Route::get('/',[ProductParserController::class,'index'])->name('product-parser.index');
 });
-
+Route::prefix('counteragents')->group(function(){
+    Route::get('/',[CounteragentController::class,'index'])->name('counteragent.index');
+    Route::get('/{$counteragent}',[CounteragentController::class,'show'])->name('counteragent.show');
+    Route::post('/create',[CounteragentController::class,'create'])->name('counteragent.create');
+    Route::put('/update/{$counteragent}',[CounteragentController::class,'update'])->name('counteragent.update');
+    Route::delete('/delete/{$counteragent}',[CounteragentController::class,'delete'])->name('counteragent.update');
+});
 Route::middleware(['guest'])->group(function () {
     Route::post('/registration/phone', [RegistrationController::class, 'registration'])->name('registration');
     Route::post('/registration/verification',[RegistrationController::class,'verification'])->name('register.verification');
