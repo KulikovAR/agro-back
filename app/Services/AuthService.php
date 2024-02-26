@@ -34,33 +34,42 @@ class AuthService
     }
 
     use PasswordHash;
-    
-    public function login(LoginRequest $request)
-    {   
+
+    public function login(LoginRequest $request):ApiJsonResponse
+    {
         $code_arr = $this->sms->setCode();
-        if(env('APP_ENV')=='production'){
-        $this->sms->send($request->phone_number, $code_arr['code'] . '- Verification code Cargis');
+        if (env('APP_ENV') == 'production') {
+            $this->sms->send($request->phone_number, $code_arr['code'] . '- Verification code Cargis');
         }
-        $user= User::where('phone_number', $request->phone_number)->first();
-       
-        if($user->phone_verified_at==null){
-            return response()->json(['message'=>'Подтвердите, пожалуйста, свой телефон'],404);
+        $user = User::where('phone_number', $request->phone_number)->first();
+
+        if ($user->phone_verified_at == null) {
+            return new ApiJsonResponse(
+                404,
+                StatusEnum::ERR,
+                __('Подтвердите, пожалуйста, свой телефон'),
+                data: []
+            );
         }
         $user->update(['code' => $code_arr['code'], 'code_hash' => $code_arr['code_hash'], 'code_expire_at' => $code_arr['code_expire']]);
-        return $user;
-      
-        
+        return new ApiJsonResponse(
+            200,
+            StatusEnum::OK,
+            __('login.verify_phone'),
+            data: [
+                'user'  => new UserResource($user),
+            ]
+        );
     }
 
 
-    public function verificationCheck(RegistrationSmsCodeRequest $request):array
+    public function verificationCheck(RegistrationSmsCodeRequest $request): array
     {
         $user = User::where('phone_number', $request->phone_number)->first();
         if ($user->code == $request->code) {
-            $bearerToken = $this->createAuthToken($user);   
+            $bearerToken = $this->createAuthToken($user);
             return array('user' => $user, 'token' => $bearerToken);
         }
         throw new BadRequestException('Неверный код');
     }
-
 }

@@ -6,7 +6,7 @@ class RegistrationController
 {
 /**
  * @OA\Post(
- *     path="/registration",
+ *     path="/registration/phone",
  *     summary="User Registration",
  *     tags={"Registration"},
  *     @OA\RequestBody(

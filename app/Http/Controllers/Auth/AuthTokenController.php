@@ -29,15 +29,11 @@ class AuthTokenController extends Controller
     }
     use BearerTokenTrait;
 
-    public function store(LoginRequest $request)
+    public function store(LoginRequest $request):ApiJsonResponse
     {
-
+       
         $user =  $this->auth_service->login($request);
-        return new ApiJsonResponse(
-            data: [
-                'user'  => new UserResource($user),
-            ]
-        );
+        return $user;
     }
 
     public function verification(RegistrationSmsCodeRequest $request): ApiJsonResponse
