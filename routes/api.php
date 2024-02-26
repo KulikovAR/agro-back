@@ -1,25 +1,16 @@
 <?php
 
-use App\Http\Controllers\AnnounceController;
 use App\Http\Controllers\AssetsController;
 use App\Http\Controllers\Auth\AuthProviderController;
 use App\Http\Controllers\Auth\AuthTokenController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationContactController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\DeviceController;
-use App\Http\Controllers\LessonController;
-use App\Http\Controllers\LessonRatingController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProposalController;
-use App\Http\Controllers\QuizController;
-use App\Http\Controllers\QuizResultController;
-use App\Http\Controllers\ShortsController;
-use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\V1\ProductParserController;
+use App\Http\Controllers\V1\TransportController;
+
 use App\Models\Role;
 use App\Models\User;
 use App\Notifications\AdminNotification;
@@ -53,6 +44,14 @@ use App\Http\Controllers\V1\TransportTypeController;
 Route::prefix('products-parser')->group(function(){
     Route::get('get-filters',[ProductParserController::class,'getProductFilter'])->name('product-parser.get-filter');
     Route::get('/',[ProductParserController::class,'index'])->name('product-parser.index');
+});
+
+Route::prefix('transport')->group(function(){
+    Route::get('/',[TransportController::class,'index'])->name('transport.index');
+    Route::get('/{id}',[TransportController::class,'show'])->name('transport.show');
+    Route::post('/create',[TransportController::class,'create'])->name('transport.create');
+    Route::put('/update/{transport}',[TransportController::class,'update'])->name('transport.update');
+    Route::delete('/delete/{transport}',[TransportController::class,'delete'])->name('transport.delete');
 });
 
 Route::middleware(['guest'])->group(function () {

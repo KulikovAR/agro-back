@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('transports', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->integer('type');
-            $table->string('number');
+            $table->string('number')->unique();
             $table->string('model');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->boolean('free');
             $table->boolean('is_active');
             $table->string('volume_cm');
