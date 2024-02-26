@@ -19,7 +19,7 @@ class RegistrationTest extends TestCase
     {
 
         $phone_number = '792021495' . $this->faker->numberBetween(0, 9) . $this->faker->numberBetween(0, 9);
-        $response = $this->json('POST', '/api/registration/phone', ['phone_number' =>  $phone_number]);
+        $response = $this->json('POST', route('registration' ,['phone_number' =>  $phone_number]));
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'status',
@@ -44,7 +44,7 @@ class RegistrationTest extends TestCase
 
         $phone_number = '792021495' . $this->faker->numberBetween(0, 9) . $this->faker->numberBetween(0, 9);
 
-        $response = $this->json('POST', '/api/registration/phone', ['phone_number' =>  $phone_number]);
+        $response = $this->json('POST', route('registration' ,['phone_number' =>  $phone_number]));
 
        
 
@@ -52,10 +52,10 @@ class RegistrationTest extends TestCase
         $user = User::where('phone_number', $phone_number)->first();
         
         // Подтверждаем телефон с правильным кодом
-        $responseVerify = $this->json('POST', 'api/registration/verification', [
+        $responseVerify = $this->json('POST',route('register.verification', [
             'phone_number' => $user->phone_number,
             'code'         => $user->code,
-        ]);
+        ]));
         $responseVerify->assertStatus(200)
             ->assertJsonStructure([
                 'status',
@@ -79,16 +79,16 @@ class RegistrationTest extends TestCase
 
         $phone_number = '792021495' . $this->faker->numberBetween(0, 9) . $this->faker->numberBetween(0, 9);
 
-        $response = $this->json('POST', '/api/registration/phone', ['phone_number' =>  $phone_number]);
+        $response = $this->json('POST', route('registration' ,['phone_number' =>  $phone_number]));
 
      
         // Создаем пользователя и отправляем запрос на регистрацию
 
         // Подтверждаем телефон с неверным кодом
-        $responseVerify = $this->json('POST', 'api/registration/verification', [
+        $responseVerify = $this->json('POST',route('register.verification', [
             'phone_number' => $phone_number,
-            'code'         => '11111', // Неверный код
-        ]);
+            'code'         => '111111', //Неверный код
+        ]));
 
         $responseVerify->assertStatus(400)
             ->assertJsonFragment(['message' => 'Неверный код']);

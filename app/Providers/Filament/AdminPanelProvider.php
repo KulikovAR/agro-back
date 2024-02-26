@@ -28,8 +28,48 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => [
+                    50 => '#41bbfd',
+                    100 => '#41bbfd',
+                    200 => '#41bbfd',
+                    300 => '#41bbfd',
+                    400 => '#41bbfd',
+                    500 => '#41bbfd',
+                    600 => '#41bbfd',
+                    700 => '#41bbfd',
+                    800 => '#41bbfd',
+                    900 => '#41bbfd',
+                    950 => '#41bbfd',
+                ],
+                'warning' => [
+                    50 => '#41bbfd',
+                    100 => '#41bbfd',
+                    200 => '#41bbfd',
+                    300 => '#41bbfd',
+                    400 => '#41bbfd',
+                    500 => '#41bbfd',
+                    600 => '#41bbfd',
+                    700 => '#41bbfd',
+                    800 => '#41bbfd',
+                    900 => '#41bbfd',
+                    950 => '#41bbfd',
+                ],
+                'success' => [
+                    50 => '#f0faff',
+                    100 => '#f0faff',
+                    200 => '#f0faff',
+                    300 => '#f0faff',
+                    400 => '#f0faff',
+                    500 => '#f0faff',
+                    600 => '#f0faff',
+                    700 => '#f0faff',
+                    800 => '#f0faff',
+                    900 => '#f0faff',
+                    950 => '#f0faff',
+                ],
             ])
+            ->brandLogo(asset('images/logo.png'))
+            ->font('Open Sans')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
