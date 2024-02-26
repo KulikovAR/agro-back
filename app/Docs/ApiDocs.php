@@ -55,6 +55,14 @@ namespace App\Docs;
  *      name="FaqTag",
  *      description="Faq Тэги"
  * )
+ *  * OA\Tag(
+ *      name="TransportBrand",
+ *      description="Брэнд автотранспорта"
+ * )
+ *  * OA\Tag(
+ *      name="TransportType",
+ *      description="Тип автотранспорта"
+ * )
  * OA\Tag(
  *      name="Faq",
  *      description="Faq"
