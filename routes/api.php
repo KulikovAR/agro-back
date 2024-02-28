@@ -29,6 +29,8 @@ use App\Http\Controllers\StoreChatController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\V1\CounteragentController;
+use App\Http\Controllers\V1\TransportBrandController;
+use App\Http\Controllers\V1\TransportTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,8 +59,9 @@ Route::middleware(['guest'])->group(function () {
     Route::put('/code/update/{user}',[RegistrationController::class,'codeUpdate'])->name('code.update');
     Route::post('/login', [AuthTokenController::class, 'store'])->name('login.stateless');
     Route::post('/login/verification',[AuthTokenController::class, 'verification'])->name('login.verification');
-    // Route::get('/transport/manual/brands',[TransportBrandController::class,'index'])->name('transport.brands');
-    // Route::get('/transport/manual/types',[TransportTypeController::class,'index'])->name('transport.types');
+    Route::delete('/logout',[AuthTokenController::class,'destroy'])->name('logout');
+    Route::get('/transport/manual/brands',[TransportBrandController::class,'index'])->name('transport.brands');
+    Route::get('/transport/manual/types',[TransportTypeController::class,'index'])->name('transport.types');
     // Route::post('/password/send', [PasswordController::class, 'sendPasswordLink'])->middleware(['throttle:6,1'])->name('password.send');
     // Route::post('/password/reset', [PasswordController::class, 'store'])->name('password.reset');
 });

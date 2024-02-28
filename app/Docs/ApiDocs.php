@@ -23,65 +23,13 @@ namespace App\Docs;
  *      name="Login",
  *      description="Авторизация"
  * )
- * @OA\Tag(
- *      name="Comment",
- *      description="Комментарии"
- * )
- * @OA\Tag(
- *      name="Tag",
- *      description="Тэги"
- * )
- * @OA\Tag(
- *      name="Good",
- *      description="Товары"
- * )
- * @OA\Tag(
- *      name="File",
- *      description="Файлы"
- * )
- * @OA\Tag(
- *      name="Store",
- *      description="Магазины"
- * )
- * @OA\Tag(
- *      name="Notification",
- *      description="Уведомления"
- * )
- * @OA\Proposal(
- *      name="Proposal",
- *      description="Предложения"
- * )
- * OA\Tag(
- *      name="FaqTag",
- *      description="Faq Тэги"
- * )
- *  * OA\Tag(
- *      name="TransportBrand",
- *      description="Брэнд автотранспорта"
- * )
- *  * OA\Tag(
- *      name="TransportType",
- *      description="Тип автотранспорта"
- * )
- * OA\Tag(
- *      name="Faq",
- *      description="Faq"
- * )
- *  * OA\Tag(
+ *  OA\Tag(
  *      name="Product",
  *      description="Продукты для парсера"
  * )
  * @OA\Tag(
  *      name="UserProfile",
  *      description="Настройки пользователя"
- * )
- * @OA\Tag(
- *      name="Assets",
- *      description="Данные для UI"
- * )
- * @OA\Tag(
- *      name="CSRF",
- *      description="session auth with CSRF protection"
  * )
  * @OA\Server(
  *      url="/api/v1",
