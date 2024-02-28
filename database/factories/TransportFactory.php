@@ -19,7 +19,7 @@ class TransportFactory extends Factory
 
         return [
             'type' => 1,
-            'number' => 'aaa723c',
+            'number' => $this->faker->unique()->word(),
             'model'  => 'Moskvich',
             'description' => $this->faker->text(10),
             'free'  => true,

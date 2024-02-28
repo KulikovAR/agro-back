@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(DriverSeeder::class);
         $this->call(ProductSeeder::class);
-        $this->call(CounterAgentSeeder::class);
+        // $this->call(CounterAgentSeeder::class);
     }
 }

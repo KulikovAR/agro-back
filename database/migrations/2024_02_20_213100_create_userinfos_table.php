@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('surname');
             $table->string('patronymic');
+            $table->string('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('inn')->unique();
             $table->string('kpp')->unique();
             $table->string('ogrn')->unique();
@@ -25,9 +27,10 @@ return new class extends Migration
             $table->string('office_address');
             $table->string('tax_system');
             $table->string('okved');
-            $table->string('bank_accounts');
+            // $table->string('bank_accounts');
             $table->string('phone_number')->unique();
             $table->string('password');
+            $table->string('type');
             $table->timestamps();
         });
     }

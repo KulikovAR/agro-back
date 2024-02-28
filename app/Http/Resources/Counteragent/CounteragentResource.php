@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Counteragent;
 
+use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -33,6 +34,7 @@ class CounteragentResource extends JsonResource
             // 'bank_accounts'     => $this->bank_accounts,
             'created_at'        => $this->created_at,
             'updated_at'        => $this->updated_at,
+            'user'              => new UserResource ($this->user),  
         ];
     }
 }
