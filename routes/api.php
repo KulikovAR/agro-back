@@ -42,29 +42,41 @@ use App\Http\Controllers\V1\TransportTypeController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::prefix('products-parser')->group(function(){
-    Route::get('get-filters',[ProductParserController::class,'getProductFilter'])->name('product-parser.get-filter');
-    Route::get('/',[ProductParserController::class,'index'])->name('product-parser.index');
+
+Route::prefix('products-parser')->group(function () {
+    Route::get('get-filters', [ProductParserController::class, 'getProductFilter'])->name('product-parser.get-filter');
+    Route::get('/', [ProductParserController::class, 'index'])->name('product-parser.index');
 });
-Route::prefix('counteragents')->group(function(){
-    Route::get('/',[CounteragentController::class,'index'])->name('counteragent.index');
-    Route::get('/{user}',[CounteragentController::class,'show'])->name('counteragent.show');
-    Route::post('/create',[CounteragentController::class,'create'])->name('counteragent.create');
-    Route::put('/update/{user}',[CounteragentController::class,'update'])->name('counteragent.update');
-    Route::delete('/delete/{user}',[CounteragentController::class,'delete'])->name('counteragent.update');
+Route::prefix('counteragents')->group(function () {
+    Route::get('/', [CounteragentController::class, 'index'])->name('counteragent.index');
+    Route::get('/{user}', [CounteragentController::class, 'show'])->name('counteragent.show');
+    Route::post('/create', [CounteragentController::class, 'create'])->name('counteragent.create');
+    Route::put('/update/{user}', [CounteragentController::class, 'update'])->name('counteragent.update');
+    Route::delete('/delete/{user}', [CounteragentController::class, 'delete'])->name('counteragent.update');
 });
 Route::middleware(['guest'])->group(function () {
     Route::post('/registration/phone', [RegistrationController::class, 'registration'])->name('registration');
-    Route::post('/registration/verification',[RegistrationController::class,'verification'])->name('register.verification');
-    Route::put('/code/update/{user}',[RegistrationController::class,'codeUpdate'])->name('code.update');
+    Route::post('/registration/verification', [RegistrationController::class, 'verification'])->name('register.verification');
+    Route::put('/code/update/{user}', [RegistrationController::class, 'codeUpdate'])->name('code.update');
     Route::post('/login', [AuthTokenController::class, 'store'])->name('login.stateless');
-    Route::post('/login/verification',[AuthTokenController::class, 'verification'])->name('login.verification');
-    Route::delete('/logout',[AuthTokenController::class,'destroy'])->name('logout');
-    Route::get('/transport/manual/brands',[TransportBrandController::class,'index'])->name('transport.brands');
-    Route::get('/transport/manual/types',[TransportTypeController::class,'index'])->name('transport.types');
+    Route::post('/login/verification', [AuthTokenController::class, 'verification'])->name('login.verification');
+    Route::delete('/logout', [AuthTokenController::class, 'destroy'])->name('logout');
+
     // Route::post('/password/send', [PasswordController::class, 'sendPasswordLink'])->middleware(['throttle:6,1'])->name('password.send');
     // Route::post('/password/reset', [PasswordController::class, 'store'])->name('password.reset');
 });
+
+
+Route::prefix('transport')->group(function () {
+    Route::get('/', [TransportController::class, 'index'])->name('transport.index');
+    Route::get('/{id}', [TransportController::class, 'show'])->name('transport.show');
+    Route::post('/create', [TransportController::class, 'create'])->name('transport.create');
+    Route::put('/update/{transport}', [TransportController::class, 'update'])->name('transport.update');
+    Route::delete('/delete/{transport}', [TransportController::class, 'delete'])->name('transport.delete');
+    Route::get('/manual/brands', [TransportBrandController::class, 'index'])->name('transport.brands');
+    Route::get('/manual/types', [TransportTypeController::class, 'index'])->name('transport.types');
+});
+
 
 Route::middleware('auth:sanctum')->group(function () {
 
