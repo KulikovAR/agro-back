@@ -493,6 +493,10 @@
                                                             "type": "string",
                                                             "example": "$2y$12$VYFuyMZmtXX5Lv1f/6RR2.0vC33tlbKy.IPuULNrg2FVYkw5uWxm6"
                                                         },
+                                                        "code": {
+                                                            "type": "string",
+                                                            "example": "12345"
+                                                        },
                                                         "phone_verified_at": {
                                                             "type": "string",
                                                             "format": "date-time",
