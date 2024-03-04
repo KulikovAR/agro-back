@@ -8,8 +8,10 @@ use App\Models\User;
 use App\Notifications\UserAppNotification;
 use App\Services\NotificationService;
 use Carbon\Carbon;
+use Database\Factories\CounteragentFactory;
 use Database\Factories\DriverFactory;
 use Database\Factories\GoodFactory;
+use Database\Factories\UserinfoFactory;
 use Database\Factories\UserProfileFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
@@ -50,8 +52,11 @@ class UserSeeder extends Seeder
                 'email' => self::USER_EMAIL,
             ],
         );
-       
-         $user->driver()->create((new DriverFactory())->definition());
+         $users = User::factory(10)->create();
+         foreach($users as $item){
+         $item->driver()->create((new DriverFactory())->definition());
+         $item->counteragent()->create((new UserinfoFactory())->definition());
+         }
         // $user->assignRole(Role::ROLE_USER);
 
         // $user->userProfile()->create((new UserProfileFactory())->definition());

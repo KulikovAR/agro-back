@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Counteragent extends Model
 {
+
     use HasFactory, HasUuids;
+    protected $table = 'userinfos';
     protected $fillable = [
         'id',
         'inn',
@@ -19,6 +21,7 @@ class Counteragent extends Model
         'patronymic',
         'kpp',
         'ogrn',
+        'user_id',
         'phone_number',
         'short_name',
         'full_name',
@@ -30,4 +33,10 @@ class Counteragent extends Model
         'created_at',
         'password',
     ];
+
+
+    public function user():BelongsTo
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
 }

@@ -87,4 +87,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     {
         return $this->hasOne(Driver::class);
     } 
+
+    public function counteragent():HasOne
+    {
+        return $this->hasOne((Counteragent::class));
+    }
 }

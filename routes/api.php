@@ -48,10 +48,10 @@ Route::prefix('products-parser')->group(function(){
 });
 Route::prefix('counteragents')->group(function(){
     Route::get('/',[CounteragentController::class,'index'])->name('counteragent.index');
-    Route::get('/{$counteragent}',[CounteragentController::class,'show'])->name('counteragent.show');
+    Route::get('/{user}',[CounteragentController::class,'show'])->name('counteragent.show');
     Route::post('/create',[CounteragentController::class,'create'])->name('counteragent.create');
-    Route::put('/update/{$counteragent}',[CounteragentController::class,'update'])->name('counteragent.update');
-    Route::delete('/delete/{$counteragent}',[CounteragentController::class,'delete'])->name('counteragent.update');
+    Route::put('/update/{user}',[CounteragentController::class,'update'])->name('counteragent.update');
+    Route::delete('/delete/{user}',[CounteragentController::class,'delete'])->name('counteragent.update');
 });
 Route::middleware(['guest'])->group(function () {
     Route::post('/registration/phone', [RegistrationController::class, 'registration'])->name('registration');

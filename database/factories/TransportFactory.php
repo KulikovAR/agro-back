@@ -19,7 +19,7 @@ class TransportFactory extends Factory
 
         return [
             'type' => 1,
-            'number' => $this->faker->numberBetween(0,9). $this->faker->numberBetween(0,9). $this->faker->numberBetween(0,9). $this->faker->numberBetween(0,9). $this->faker->numberBetween(0,9),
+            'number' => $this->faker->unique()->word(),
             'model'  => 'Moskvich',
             'description' => $this->faker->text(10),
             'free'  => true,
