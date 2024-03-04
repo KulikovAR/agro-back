@@ -17,26 +17,26 @@ class CounteragentService
 
     public function index ():Collection
     {
-        return Counteragent::all(); 
+        return User::with('counteragent')->get(); 
     }
 
-    public function create(CreateCounteragentRequest $request):Counteragent
+    public function create(CreateCounteragentRequest $request):User
     {
         $counteragent = Counteragent::create($request->all());
-        return $counteragent;
+        return User::with('counteragent')->where('id', $counteragent->user_id)->first();
     }
 
-    public function show(User $user):Counteragent
+    public function show(User $user):User
     {   
-        $counteragent = $user->counteragent;
-        return $counteragent->first();
+    
+        return $user::with('counteragent')->where('id', $user->id)->first();
     }
 
     public function update(UpdateCounteragentRequest $request, User $user):Counteragent
     {   
         $counteragent = $user->counteragent;
         $counteragent->update($request->all());
-        return $counteragent;
+        return $user::with('counteragent')->where('id',$counteragent->user_id)->first();
     }
 
     public function delete(User $user):string
