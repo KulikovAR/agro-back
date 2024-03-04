@@ -78,7 +78,7 @@ class RegistrationController extends Controller
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
-            data: [],
+            data: new UserResource($user),
         );
     }
 }

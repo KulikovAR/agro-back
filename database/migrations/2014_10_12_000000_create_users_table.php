@@ -16,7 +16,6 @@ return new class extends MigrationService
 
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id');
-            $table->string('name')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('phone_verified_at')->nullable();
