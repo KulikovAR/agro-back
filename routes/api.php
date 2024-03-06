@@ -44,7 +44,7 @@ use App\Http\Controllers\V1\TransportTypeController;
 */
 
 Route::prefix('products-parser')->group(function () {
-    Route::get('get-filters', [ProductParserController::class, 'getProductFilter'])->name('product-parser.get-filter');
+    Route::get('/get-filters', [ProductParserController::class, 'getProductFilter'])->name('product-parser.get-filter');
     Route::get('/', [ProductParserController::class, 'index'])->name('product-parser.index');
 });
 Route::prefix('counteragents')->group(function () {
