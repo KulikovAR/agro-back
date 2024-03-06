@@ -82,6 +82,10 @@
                                                             "type": "string",
                                                             "example": "$2y$12$VYFuyMZmtXX5Lv1f/6RR2.0vC33tlbKy.IPuULNrg2FVYkw5uWxm6"
                                                         },
+                                                        "code": {
+                                                            "type": "string",
+                                                            "example": "12345"
+                                                        },
                                                         "phone_verified_at": {
                                                             "type": "string",
                                                             "format": "date-time",
@@ -253,6 +257,10 @@
                                                             "type": "string",
                                                             "example": "$2y$12$VYFuyMZmtXX5Lv1f/6RR2.0vC33tlbKy.IPuULNrg2FVYkw5uWxm6"
                                                         },
+                                                        "code": {
+                                                            "type": "string",
+                                                            "example": "12345"
+                                                        },
                                                         "phone_verified_at": {
                                                             "type": "string",
                                                             "format": "date-time",
@@ -381,6 +389,10 @@
                                                         "code_hash": {
                                                             "type": "string",
                                                             "example": "$2y$12$VYFuyMZmtXX5Lv1f/6RR2.0vC33tlbKy.IPuULNrg2FVYkw5uWxm6"
+                                                        },
+                                                        "code": {
+                                                            "type": "string",
+                                                            "example": "12345"
                                                         },
                                                         "phone_verified_at": {
                                                             "type": "string",
@@ -755,6 +767,73 @@
                                                 },
                                                 "type": "object"
                                             }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products-parser/get-filters": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Получить фильтры для продуктов",
+                "description": "Метод предоставляет фильтры для продуктов на основе параметров.",
+                "operationId": "14c1d7ee5c3b8376e4d5d7af106a81c0",
+                "parameters": [
+                    {
+                        "name": "types[]",
+                        "in": "query",
+                        "description": "Массив с параметрами фильтрации",
+                        "required": true,
+                        "style": "form",
+                        "explode": "true",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "example": "name"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "label": {
+                                                                "type": "string"
+                                                            },
+                                                            "value": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"

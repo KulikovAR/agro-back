@@ -68,5 +68,49 @@ class ProductParserController
 
 public function index(){}
 
+/**
+ * @OA\Get(
+ *     path="/products-parser/get-filters",
+ *     summary="Получить фильтры для продуктов",
+ *     tags={"Products"},
+ *     description="Метод предоставляет фильтры для продуктов на основе параметров.",
+ *     @OA\Parameter(
+ *         name="types[]",
+ *         in="query",
+ *         description="Массив с параметрами фильтрации",
+ *         required=true,
+ *         style="form",
+ *         explode="true",
+ *         @OA\Schema(
+ *             type="array",
+ *             @OA\Items(type="string", example="name")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Успешный ответ",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(property="status", type="string", example="OK"),
+ *             @OA\Property(property="message", type="string"),
+ *             @OA\Property(
+ *                 property="data",
+ *                 type="object",
+ *                 @OA\Property(
+ *                     property="name",
+ *                     type="array",
+ *                     @OA\Items(
+ *                         type="object",
+ *                         @OA\Property(property="label", type="string"),
+ *                         @OA\Property(property="value", type="string")
+ *                     )
+ *                 )
+ *             )
+ *         )
+ *     )
+ * )
+ */
+
+     public function getProductFilter(){}
 
 }
