@@ -59,7 +59,6 @@ class Dadata
                 ];
             }, json_decode($response->body(), true)['suggestions']);
         }
-        dd($response->body());
         throw new BadRequestHttpException(json_decode($response->body())->message);
     }
 
@@ -94,7 +93,7 @@ class Dadata
      * @param string $inn - ИНН
      * @return array|null - информация, соответствующая ИНН
      */
-    public function getInfoByInn($inn): array
+    public function getInfoByInn($inn): array|null
     {
 
         $params = [

@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Enums\OrganizationTypeEnum;
 use App\Traits\EmailPasswordRules;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 
 class RegistrationPhoneRequest extends FormRequest
@@ -17,7 +19,19 @@ class RegistrationPhoneRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "phone_number"   => ["regex:/^7\d{10}$/", 'string', 'required', 'max:11'],
+            'type' => ['string', Rule::enum(OrganizationTypeEnum::class)],
+            'inn' => [
+                'string',
+                Rule::when(
+                    $this->input('type') == OrganizationTypeEnum::IP->value,
+                    'regex:/^\d{12}$/'
+                ),
+                Rule::when(
+                    $this->input('type') == OrganizationTypeEnum::COMPANY->value,
+                    'regex:/^\d{10}$/'
+                )
+            ],
+            "phone_number" => ["regex:/^7\d{10}$/", 'string', 'required', 'max:11'],
         ];
     }
 }

@@ -13,24 +13,24 @@ return new class extends Migration
     {
         Schema::create('userinfos', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('surname');
-            $table->string('patronymic');
+            $table->string('name')->nullable();
+            $table->string('surname')->nullable();
+            $table->string('patronymic')->nullable();
             $table->string('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('inn')->unique();
-            $table->string('kpp')->unique();
-            $table->string('ogrn')->unique();
-            $table->string('short_name');
-            $table->string('full_name');
-            $table->string('juridical_address');
-            $table->string('office_address');
-            $table->string('tax_system');
-            $table->string('okved');
+            $table->string('inn')->unique()->nullable();
+            $table->string('kpp')->unique()->nullable();
+            $table->string('ogrn')->unique()->nullable();
+            $table->string('short_name')->nullable();
+            $table->string('full_name')->nullable();
+            $table->string('juridical_address')->nullable();
+            $table->string('office_address')->nullable();
+            $table->string('tax_system')->nullable();
+            $table->string('okved')->nullable();
             // $table->string('bank_accounts');
-            $table->string('phone_number')->unique();
-            $table->string('password');
-            $table->string('type');
+            $table->string('phone_number')->unique()->nullable();
+            $table->string('password')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }
