@@ -17,23 +17,20 @@ class SmsVerification
   {
     $this->sender = new SmsClient;
   }
-  public function send($phone_number, $message)
+  public function send($phone_number, $message): void
   {
-    /* реализация для smsAero
-            $smsAeroParams = Yii::$app->params["smsAero"];
-            $smsAero = new ApiClass($smsAeroParams["email"],$smsAeroParams["key"],$smsAeroParams["sign"]);
-            return $smsAero->send($phoneNumber,$text);
-        */
     $params = array(
-      "from" => config('sms.from_company'),
-      "message" => $message,
-      "to" => $phone_number,
-      "callback_url" => SmsApiEnum::CALLBACK->value
+        "number" => $phone_number,
+        "text" => $message,
+        "sign"  => 'SMS Aero',
+//      "callback_url" => SmsApiEnum::CALLBACK->value
     );
-    $response = $this->sender->client->post(SmsApiEnum::API->value, $params);
-    dd($response);
 
-    throw new BadRequestHttpException('SMS not sent.');
+    $response = $this->sender->client->get(SmsApiEnum::API->value, $params);
+
+    if(!$response->successful()) {
+        throw new BadRequestHttpException('SMS not sent.');
+    }
   }
 
   /**

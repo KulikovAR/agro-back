@@ -11,7 +11,6 @@ class SmsClient
         $this->client = Http::withHeaders(
             [
                 "Authorization" => "Basic " . base64_encode (config('sms.login').':'.config('sms.passwd')),
-                "Content-Type"  => "application/json; charset=utf-8",
             ]
         );
     }
