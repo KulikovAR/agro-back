@@ -61,6 +61,7 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login', [AuthTokenController::class, 'store'])->name('login.stateless');
     Route::post('/login/verification', [AuthTokenController::class, 'verification'])->name('login.verification');
     Route::delete('/logout', [AuthTokenController::class, 'destroy'])->name('logout');
+    Route::get('/user',[AuthTokenController::class,'getUser'])->name('get_user');
 
     // Route::post('/password/send', [PasswordController::class, 'sendPasswordLink'])->middleware(['throttle:6,1'])->name('password.send');
     // Route::post('/password/reset', [PasswordController::class, 'store'])->name('password.reset');

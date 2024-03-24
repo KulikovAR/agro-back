@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\LoginRequest;
 
 use App\Http\Requests\Auth\RegistrationPhoneRequest;
 use App\Http\Requests\Auth\RegistrationSmsCodeRequest;
+use App\Http\Resources\User\DevUserResource;
 use App\Http\Resources\User\UserResource;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\User;
@@ -26,6 +27,7 @@ class AuthService
 
 {
     use BearerTokenTrait;
+
     private $sms;
 
     public function __construct()
@@ -35,29 +37,22 @@ class AuthService
 
     use PasswordHash;
 
-    public function login(LoginRequest $request):ApiJsonResponse
+    public function login(LoginRequest $request): ApiJsonResponse
     {
         $code_arr = $this->sms->setCode();
+        $user = User::firstOrCreate(['phone_number' => $request->phone_number]);
         if (env('APP_ENV') == 'production') {
             $this->sms->send($request->phone_number, $code_arr['code'] . '- Verification code Cargis');
+            $resource = new UserResource($user);
         }
-        $user = User::where('phone_number', $request->phone_number)->first();
-
-        if ($user->phone_verified_at == null) {
-            return new ApiJsonResponse(
-                404,
-                StatusEnum::ERR,
-                __('Подтвердите, пожалуйста, свой телефон'),
-                data: []
-            );
-        }
+        $resource = new DevUserResource($user);
         $user->update(['code' => $code_arr['code'], 'code_hash' => $code_arr['code_hash'], 'code_expire_at' => $code_arr['code_expire']]);
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
             __('login.verify_phone'),
             data: [
-                'user'  => new UserResource($user),
+                'user' => $resource,
             ]
         );
     }
@@ -71,5 +66,12 @@ class AuthService
             return array('user' => $user, 'token' => $bearerToken);
         }
         throw new BadRequestException('Неверный код');
+    }
+
+    public function getUser(Request $request)
+    {
+        $token = $request->bearerToken();
+        $user_token = \Laravel\Sanctum\PersonalAccessToken::findToken($token);
+        return User::where('id', $user_token->tokenable_id)->first();
     }
 }

@@ -7,8 +7,8 @@ services:
         uid: 1000
       context: ./
       dockerfile: Dockerfile
-    image: cargis
-    container_name: cargis-app
+    image: agro
+    container_name: agro-app
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
@@ -19,7 +19,7 @@ services:
   db:
     platform: linux/x86_64 #macOS
     image: mysql:5.7
-    container_name: cargis-db
+    container_name: agro-db
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -35,7 +35,7 @@ services:
 
   nginx:
     image: nginx:alpine
-    container_name: cargis-nginx
+    container_name: agro-nginx
     restart: unless-stopped
     ports:
       - 8000:80
