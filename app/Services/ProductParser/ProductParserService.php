@@ -29,18 +29,19 @@ class ProductParserService
 
         return $arr;
     }
+
     private function product_rules()
     {
         return [
-            'attr' => ['string', 'required'],
-            'company' => ['string', 'required'],
-            'price' => ['decimal:2', 'required'],
-            'type'  => ['integer', 'required'],
-            'gluten' => ['string'],
-            'idk'    => ['string'],
-            'chp'    => ['string'],
-            'nature' => ['string'],
-            'humidity' => ['string'],
+            'attr'          => ['string', 'required'],
+            'company'       => ['string', 'required'],
+            'price'         => ['decimal:2', 'required'],
+            'type'          => ['integer', 'required'],
+            'gluten'        => ['string'],
+            'idk'           => ['string'],
+            'chp'           => ['string'],
+            'nature'        => ['string'],
+            'humidity'      => ['string'],
             'weed_impurity' => ['string'],
             'chinch'        => ['string'],
         ];
@@ -53,30 +54,62 @@ class ProductParserService
             'price'      => ['decimal:2', 'required'],
         ];
     }
+
     public function saveAndParse($count_from, $count_to, $type)
     {
         $data = $this->parse($count_from, $count_to, $type);
         $this->save($data);
     }
+
     private function save($data)
-    {   
+    {
         foreach ($data as $item) {
             if (!array_key_exists('gluten', $item)) {
                 $item['gluten'] = null;
             }
-            if($item['name']=='Ячмень'){
-            $product_data = ['attr' => $item['attr'], 'name' => $item['name'], 'class' => $item['class'], 'type' => $item['type'], 'nature'=>$item['nature']];
+            if ($item['name'] == 'Ячмень') {
+                $product_data = [
+                    'attr'   => $item['attr'],
+                    'name'   => $item['name'],
+                    'class'  => $item['class'],
+                    'type'   => $item['type'],
+                    'nature' => $item['nature']
+                ];
             }
-            $product_data = ['attr' => $item['attr'], 'name' => $item['name'], 'class' => $item['class'], 'type' => $item['type']];
+            $product_data = [
+                'attr'  => $item['attr'],
+                'name'  => $item['name'],
+                'class' => $item['class'],
+                'type'  => $item['type']
+            ];
             Validator::make($product_data, $this->product_rules());
-            $product = Product::updateOrCreate($product_data, ['attr' => $item['attr'], 'name' => $item['name'], 'class' => $item['class'], 'type' => $item['type'], 'gluten' => $item['gluten'], 'idk' => $item['idk'], 'chp' => $item['chp'], 'nature' => $item['nature'], 'humidity' => $item['humidity'], 'weed_impurity' => $item['weed_impurity'], 'chinch' => $item['chinch'], 'company' => $item['company'], 'price' => $item['price'], 'exporter' => $item['exporter']]);
+            $product = Product::updateOrCreate(
+                $product_data,
+                [
+                    'attr'          => $item['attr'],
+                    'name'          => $item['name'],
+                    'class'         => $item['class'],
+                    'type'          => $item['type'],
+                    'gluten'        => $item['gluten'],
+                    'idk'           => $item['idk'],
+                    'chp'           => $item['chp'],
+                    'nature'        => $item['nature'],
+                    'humidity'      => $item['humidity'],
+                    'weed_impurity' => $item['weed_impurity'],
+                    'chinch'        => $item['chinch'],
+                    'company'       => $item['company'],
+                    'price'         => $item['price'],
+                    'exporter'      => $item['exporter']
+                ]
+            );
             $product_log_data = [
                 'product_id' => $product->id,
-                'price' => $item['price'],
+                'price'      => $item['price'],
                 'created_at' => Carbon::now()->startOfDay(),
             ];
             Validator::make($product_log_data, $this->product_log_rules());
-            ProductLog::updateOrCreate(['product_id' => $product->id, 'created_at' => Carbon::now()->startOfDay()], $product_log_data);
+            ProductLog::updateOrCreate(['product_id' => $product->id, 'created_at' => Carbon::now()->startOfDay()],
+                $product_log_data);
         }
     }
 

@@ -43,8 +43,6 @@ class SmsVerification
   //     return true;
   // }
 
-
-
   public function setCode()
   {
     $code = (string)rand(10000, 99999);
