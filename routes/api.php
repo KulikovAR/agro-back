@@ -17,17 +17,7 @@ use App\Notifications\AdminNotification;
 use App\Notifications\PasswordResetNotification;
 use Database\Seeders\UserSeeder;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BannerController;
-use App\Http\Controllers\FaqController;
-use App\Http\Controllers\FaqTagController;
-use App\Http\Controllers\FileController;
-use App\Http\Controllers\GoodController;
-use App\Http\Controllers\MaintenanceController;
-use App\Http\Controllers\MarkController;
-use App\Http\Controllers\ParameterController;
-use App\Http\Controllers\StoreChatController;
-use App\Http\Controllers\StoreController;
-use App\Http\Controllers\SubcategoryController;
+use App\Http\Controllers\V1\OrderController;
 use App\Http\Controllers\V1\CounteragentController;
 use App\Http\Controllers\V1\TransportBrandController;
 use App\Http\Controllers\V1\TransportTypeController;
@@ -75,6 +65,12 @@ Route::prefix('transport')->group(function () {
     Route::delete('/delete/{transport}', [TransportController::class, 'delete'])->name('transport.delete');
     Route::get('/manual/brands', [TransportBrandController::class, 'index'])->name('transport.brands');
     Route::get('/manual/types', [TransportTypeController::class, 'index'])->name('transport.types');
+});
+
+Route::prefix('orders')->group(function (){
+    Route::get('/',[OrderController::class,'index'])->name('order.index');
+    Route::get('/{order}',[OrderController::class,'show'])->name('order.show');
+    Route::post('/create',[OrderController::class,'create'])->name('order.create');
 });
 
 
