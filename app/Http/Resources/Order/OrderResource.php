@@ -54,10 +54,14 @@ class OrderResource extends JsonResource
                 'd.m.y'
             ),
             'end_order_at'                                => Carbon::parse($this->end_order_at)->format('d.m.y'),
-            'load_latitude'                               => $this->load_latitude,
-            'load_longitude'                              => $this->load_longitude,
-            'unload_latitude'                             => $this->unload_latitude,
-            'unload_longitude'                            => $this->unload_longitude,
+            'load_coordinates'                            => array(
+                'x' => $this->load_longitude,
+                'y' => $this->load_latitude
+            ),
+            'unload_coordinates'                          => array(
+                'x' => $this->unload_longitude,
+                'y' => $this->unload_latitude
+            ),
             'load_place_name'                             => $this->load_place_name,
             'unload_place_name'                           => $this->unload_place_name,
             'cargo_weight'                                => $this->cargo_weight,

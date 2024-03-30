@@ -2,18 +2,17 @@
 
 namespace App\Http\Requests\Order;
 
-use App\Enums\OrderClarificationDayEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class OrderUpdateRequest extends FormRequest
+class OrderFilterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,7 +25,8 @@ class OrderUpdateRequest extends FormRequest
         return [
             'crop'                                        => ['string'],
             'volume'                                      => ['string'],
-            'distance'                                    => ['integer'],
+            'distance_from'                               => ['integer'],
+            'distance_to'                                 => ['integer', Rule::when($this->input('distance_from'),'gt:distance_from')],
             'tariff'                                      => ['integer'],
             'nds_percent'                                 => ['integer'],
             'terminal_name'                               => ['string'],
@@ -45,22 +45,19 @@ class OrderUpdateRequest extends FormRequest
             'daily_load_rate'                             => ['integer'],
             'contact_name'                                => ['string'],
             'contact_phone'                               => ['string'],
-            'cargo_shortrage_rate'                        => ['integer'],
+            'cargo_shortage_rate'                         => ['integer'],
             'unit_of_measurement_for_cargo_shortage_rate' => ['string'],
             'cargo_price'                                 => ['integer'],
             'load_place'                                  => ['string'],
             'approach'                                    => ['string'],
             'work_time'                                   => ['string'],
             'is_load_in_weekend'                          => ['boolean'],
-            'clarification_of_the_weekend'                => [
-                'string',
-//                Rule::enum(OrderClarificationDayEnum::class())
-            ],
+            'clarification_of_the_weekend'                => ['string'],
             'loader_power'                                => ['integer'],
-            'load_method'                                 => ['string',],
+            'load_method'                                 => ['string'],
             'tolerance_to_the_norm'                       => ['integer'],
             'start_order_at'                              => ['date'],
-            'end_order_at'                                => ['date', 'after:start_order_at'],
+            'end_order_at'                                => ['date'],
             'load_latitude'                               => ['string'],
             'load_longitude'                              => ['string'],
             'unload_latitude'                             => ['string'],
@@ -70,8 +67,9 @@ class OrderUpdateRequest extends FormRequest
             'cargo_weight'                                => ['integer'],
             'description'                                 => ['string'],
             'load_types'                                  => ['array'],
-            'load_types.*'                                => ['string', 'exists:load_types,id']
-
+            'load_types.*.load_type_id'                   => ['string', 'exists:load_types,id'],
+            'tariff_order'                                => ['string'],
+            'distance_order'                              => ['string'],
         ];
     }
 }
