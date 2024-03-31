@@ -655,6 +655,1147 @@
                 }
             }
         },
+        "/orders": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get list of orders",
+                "description": "Returns list of orders",
+                "operationId": "getOrdersList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Заявки получены"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "9bb029ec-7092-40ea-9e88-b647c278e05f"
+                                                    },
+                                                    "start_order_at": {
+                                                        "type": "string",
+                                                        "example": "30.03.24"
+                                                    },
+                                                    "deadlines": {
+                                                        "type": "string",
+                                                        "example": "30.03.24-05.04.24"
+                                                    },
+                                                    "distance": {
+                                                        "type": "integer",
+                                                        "example": 50
+                                                    },
+                                                    "crop": {
+                                                        "type": "string",
+                                                        "example": "corn"
+                                                    },
+                                                    "tariff": {
+                                                        "type": "integer",
+                                                        "example": 500
+                                                    },
+                                                    "cargo_weight": {
+                                                        "type": "integer",
+                                                        "example": 800
+                                                    },
+                                                    "load_place_name": {
+                                                        "type": "string",
+                                                        "example": "Warehouse A"
+                                                    },
+                                                    "unload_place_name": {
+                                                        "type": "string",
+                                                        "example": "Warehouse A"
+                                                    },
+                                                    "order_number": {
+                                                        "type": "integer",
+                                                        "example": 0
+                                                    },
+                                                    "load_coordinates": {
+                                                        "properties": {
+                                                            "x": {
+                                                                "type": "string",
+                                                                "example": "-74.0060"
+                                                            },
+                                                            "y": {
+                                                                "type": "string",
+                                                                "example": "40.7128"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "unload_coordinates": {
+                                                        "properties": {
+                                                            "x": {
+                                                                "type": "string",
+                                                                "example": "-87.6298"
+                                                            },
+                                                            "y": {
+                                                                "type": "string",
+                                                                "example": "41.8781"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{id}": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get order by ID",
+                "description": "Returns a single order by its ID",
+                "operationId": "getOrderById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the order",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Заявка получена"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "crop": {
+                                                        "type": "string",
+                                                        "example": "et"
+                                                    },
+                                                    "volume": {
+                                                        "type": "string",
+                                                        "example": "qui"
+                                                    },
+                                                    "distance": {
+                                                        "type": "integer",
+                                                        "example": 37
+                                                    },
+                                                    "tariff": {
+                                                        "type": "integer",
+                                                        "example": 79
+                                                    },
+                                                    "nds_percent": {
+                                                        "type": "integer",
+                                                        "example": 90
+                                                    },
+                                                    "terminal_name": {
+                                                        "type": "string",
+                                                        "example": "Schuster LLC"
+                                                    },
+                                                    "terminal_address": {
+                                                        "type": "string",
+                                                        "example": "1564 Doyle Point Apt. 923\\nEast Augustashire, MD 95825"
+                                                    },
+                                                    "terminal_inn": {
+                                                        "type": "string",
+                                                        "example": "9188393931"
+                                                    },
+                                                    "exporter_name": {
+                                                        "type": "string",
+                                                        "example": "Izabella Batz Sr."
+                                                    },
+                                                    "exporter_inn": {
+                                                        "type": "string",
+                                                        "example": "5762204790"
+                                                    },
+                                                    "is_semi_truck": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "is_tonar": {
+                                                        "type": "boolean",
+                                                        "example": false
+                                                    },
+                                                    "scale_lenght": {
+                                                        "type": "integer",
+                                                        "example": 10
+                                                    },
+                                                    "height_limit": {
+                                                        "type": "integer",
+                                                        "example": 8
+                                                    },
+                                                    "is_overload": {
+                                                        "type": "boolean",
+                                                        "example": false
+                                                    },
+                                                    "timeslot": {
+                                                        "type": "string",
+                                                        "example": "est"
+                                                    },
+                                                    "outage_begin": {
+                                                        "type": "integer",
+                                                        "example": 20
+                                                    },
+                                                    "outage_price": {
+                                                        "type": "integer",
+                                                        "example": 87
+                                                    },
+                                                    "daily_load_rate": {
+                                                        "type": "integer",
+                                                        "example": 30
+                                                    },
+                                                    "contact_name": {
+                                                        "type": "string",
+                                                        "example": "rem"
+                                                    },
+                                                    "contact_phone": {
+                                                        "type": "string",
+                                                        "example": "985.863.6637"
+                                                    },
+                                                    "cargo_shortage_rate": {
+                                                        "type": "integer",
+                                                        "example": 84
+                                                    },
+                                                    "unit_of_measurement_for_cargo_shortage_rate": {
+                                                        "type": "string",
+                                                        "example": "iste"
+                                                    },
+                                                    "cargo_price": {
+                                                        "type": "integer",
+                                                        "example": 6
+                                                    },
+                                                    "load_place": {
+                                                        "type": "string",
+                                                        "example": "509 Schuyler Keys\\nLake Coralie, ID 51860-3476"
+                                                    },
+                                                    "approach": {
+                                                        "type": "string",
+                                                        "example": "Incidunt dolorum est sunt delectus quidem."
+                                                    },
+                                                    "work_time": {
+                                                        "type": "string",
+                                                        "example": "Aut deleniti nobis adipisci et illum."
+                                                    },
+                                                    "order_number": {
+                                                        "type": "integer",
+                                                        "example": 0
+                                                    },
+                                                    "is_load_in_weekend": {
+                                                        "type": "boolean",
+                                                        "example": false
+                                                    },
+                                                    "clarification_of_the_weekend": {
+                                                        "type": "string",
+                                                        "example": "magni"
+                                                    },
+                                                    "loader_power": {
+                                                        "type": "integer",
+                                                        "example": 18
+                                                    },
+                                                    "load_method": {
+                                                        "type": "string",
+                                                        "example": "et"
+                                                    },
+                                                    "tolerance_to_the_norm": {
+                                                        "type": "integer",
+                                                        "example": 21
+                                                    },
+                                                    "start_order_at": {
+                                                        "type": "string",
+                                                        "example": "06.04.24"
+                                                    },
+                                                    "end_order_at": {
+                                                        "type": "string",
+                                                        "example": "20.04.24"
+                                                    },
+                                                    "load_coordinates": {
+                                                        "properties": {
+                                                            "x": {
+                                                                "type": "string",
+                                                                "example": "-3.997162"
+                                                            },
+                                                            "y": {
+                                                                "type": "string",
+                                                                "example": "-86.827053"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "unload_coordinates": {
+                                                        "properties": {
+                                                            "x": {
+                                                                "type": "string",
+                                                                "example": "157.599518"
+                                                            },
+                                                            "y": {
+                                                                "type": "string",
+                                                                "example": "-17.582172"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "load_place_name": {
+                                                        "type": "string",
+                                                        "example": "nihil"
+                                                    },
+                                                    "unload_place_name": {
+                                                        "type": "string",
+                                                        "example": "autem"
+                                                    },
+                                                    "cargo_weight": {
+                                                        "type": "integer",
+                                                        "example": 12
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "Molestiae enim quidem iure omnis architecto et tempora eos. Ullam dolor quo sit aliquid. Cumque quae repellat quam cum esse eaque. Dolor rerum praesentium dolorum aut. Quia voluptates illo ut enim vel qui exercitationem."
+                                                    },
+                                                    "load_types": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "string",
+                                                                    "example": "9bb222c4-9fca-4b95-91a3-08e79f51b703"
+                                                                },
+                                                                "title": {
+                                                                    "type": "string",
+                                                                    "example": "maiores"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Order not found"
+                    }
+                }
+            }
+        },
+        "/orders/create": {
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Create a new order",
+                "description": "Creates a new order with the provided data",
+                "operationId": "createOrder",
+                "requestBody": {
+                    "description": "Order data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "crop",
+                                    "volume",
+                                    "distance",
+                                    "tariff",
+                                    "nds_percent",
+                                    "terminal_name",
+                                    "terminal_address",
+                                    "terminal_inn",
+                                    "exporter_name",
+                                    "exporter_inn",
+                                    "is_semi_truck",
+                                    "is_tonar",
+                                    "scale_length",
+                                    "height_limit",
+                                    "is_overload",
+                                    "timeslot",
+                                    "outage_begin",
+                                    "outage_price",
+                                    "daily_load_rate",
+                                    "contact_name",
+                                    "contact_phone",
+                                    "cargo_shortage_rate",
+                                    "unit_of_measurement_for_cargo_shortage_rate",
+                                    "cargo_price",
+                                    "load_place",
+                                    "approach",
+                                    "work_time",
+                                    "is_load_in_weekend",
+                                    "clarification_of_the_weekend",
+                                    "loader_power",
+                                    "load_method",
+                                    "tolerance_to_the_norm",
+                                    "start_order_at",
+                                    "end_order_at",
+                                    "load_latitude",
+                                    "load_longitude",
+                                    "unload_latitude",
+                                    "unload_longitude",
+                                    "load_place_name",
+                                    "unload_place_name",
+                                    "cargo_weight",
+                                    "description",
+                                    "load_types"
+                                ],
+                                "properties": {
+                                    "crop": {
+                                        "type": "string",
+                                        "example": "corn"
+                                    },
+                                    "volume": {
+                                        "type": "string",
+                                        "example": "1000 kg"
+                                    },
+                                    "distance": {
+                                        "type": "integer",
+                                        "example": 50
+                                    },
+                                    "tariff": {
+                                        "type": "integer",
+                                        "example": 500
+                                    },
+                                    "nds_percent": {
+                                        "type": "integer",
+                                        "example": 20
+                                    },
+                                    "terminal_name": {
+                                        "type": "string",
+                                        "example": "Terminal A"
+                                    },
+                                    "terminal_address": {
+                                        "type": "string",
+                                        "example": "123 Main St, City"
+                                    },
+                                    "terminal_inn": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "exporter_name": {
+                                        "type": "string",
+                                        "example": "Exporter Inc."
+                                    },
+                                    "exporter_inn": {
+                                        "type": "string",
+                                        "example": "0987654321"
+                                    },
+                                    "is_semi_truck": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "is_tonar": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "scale_length": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "height_limit": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "is_overload": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "timeslot": {
+                                        "type": "string",
+                                        "example": "morning"
+                                    },
+                                    "outage_begin": {
+                                        "type": "integer",
+                                        "example": 8
+                                    },
+                                    "outage_price": {
+                                        "type": "integer",
+                                        "example": 100
+                                    },
+                                    "daily_load_rate": {
+                                        "type": "integer",
+                                        "example": 200
+                                    },
+                                    "contact_name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "contact_phone": {
+                                        "type": "string",
+                                        "example": "+1234567890"
+                                    },
+                                    "cargo_shortage_rate": {
+                                        "type": "integer",
+                                        "example": 50
+                                    },
+                                    "unit_of_measurement_for_cargo_shortage_rate": {
+                                        "type": "string",
+                                        "example": "kg"
+                                    },
+                                    "cargo_price": {
+                                        "type": "integer",
+                                        "example": 300
+                                    },
+                                    "load_place": {
+                                        "type": "string",
+                                        "example": "456 Elm St, City"
+                                    },
+                                    "approach": {
+                                        "type": "string",
+                                        "example": "from the south"
+                                    },
+                                    "work_time": {
+                                        "type": "string",
+                                        "example": "8am - 5pm"
+                                    },
+                                    "is_load_in_weekend": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "clarification_of_the_weekend": {
+                                        "type": "string",
+                                        "example": "N/A"
+                                    },
+                                    "loader_power": {
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "load_method": {
+                                        "type": "string",
+                                        "example": "crane"
+                                    },
+                                    "tolerance_to_the_norm": {
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "start_order_at": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-03-30"
+                                    },
+                                    "end_order_at": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-04-05"
+                                    },
+                                    "load_latitude": {
+                                        "type": "string",
+                                        "example": "40.7128"
+                                    },
+                                    "load_longitude": {
+                                        "type": "string",
+                                        "example": "-74.0060"
+                                    },
+                                    "unload_latitude": {
+                                        "type": "string",
+                                        "example": "41.8781"
+                                    },
+                                    "unload_longitude": {
+                                        "type": "string",
+                                        "example": "-87.6298"
+                                    },
+                                    "load_place_name": {
+                                        "type": "string",
+                                        "example": "Warehouse A"
+                                    },
+                                    "unload_place_name": {
+                                        "type": "string",
+                                        "example": "Warehouse B"
+                                    },
+                                    "cargo_weight": {
+                                        "type": "integer",
+                                        "example": 800
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                    },
+                                    "load_types": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "type1"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Заявка создана"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "9bb23060-4d95-4832-ad93-9dd8170e59e2"
+                                                    },
+                                                    "order_number": {
+                                                        "type": "null"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/update/{id}": {
+            "put": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Update an existing order",
+                "description": "Updates an existing order with the provided data",
+                "operationId": "updateOrder",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the order to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Order data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "crop",
+                                    "volume",
+                                    "distance",
+                                    "tariff",
+                                    "nds_percent",
+                                    "terminal_name",
+                                    "terminal_address",
+                                    "terminal_inn",
+                                    "exporter_name",
+                                    "exporter_inn",
+                                    "is_semi_truck",
+                                    "is_tonar",
+                                    "scale_length",
+                                    "height_limit",
+                                    "is_overload",
+                                    "timeslot",
+                                    "outage_begin",
+                                    "outage_price",
+                                    "daily_load_rate",
+                                    "contact_name",
+                                    "contact_phone",
+                                    "cargo_shortage_rate",
+                                    "unit_of_measurement_for_cargo_shortage_rate",
+                                    "cargo_price",
+                                    "load_place",
+                                    "approach",
+                                    "work_time",
+                                    "is_load_in_weekend",
+                                    "clarification_of_the_weekend",
+                                    "loader_power",
+                                    "load_method",
+                                    "tolerance_to_the_norm",
+                                    "start_order_at",
+                                    "end_order_at",
+                                    "load_latitude",
+                                    "load_longitude",
+                                    "unload_latitude",
+                                    "unload_longitude",
+                                    "load_place_name",
+                                    "unload_place_name",
+                                    "cargo_weight",
+                                    "description",
+                                    "load_types"
+                                ],
+                                "properties": {
+                                    "crop": {
+                                        "type": "string",
+                                        "example": "corn"
+                                    },
+                                    "volume": {
+                                        "type": "string",
+                                        "example": "1000 kg"
+                                    },
+                                    "distance": {
+                                        "type": "integer",
+                                        "example": 50
+                                    },
+                                    "tariff": {
+                                        "type": "integer",
+                                        "example": 500
+                                    },
+                                    "nds_percent": {
+                                        "type": "integer",
+                                        "example": 20
+                                    },
+                                    "terminal_name": {
+                                        "type": "string",
+                                        "example": "Terminal A"
+                                    },
+                                    "terminal_address": {
+                                        "type": "string",
+                                        "example": "123 Main St, City"
+                                    },
+                                    "terminal_inn": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "exporter_name": {
+                                        "type": "string",
+                                        "example": "Exporter Inc."
+                                    },
+                                    "exporter_inn": {
+                                        "type": "string",
+                                        "example": "0987654321"
+                                    },
+                                    "is_semi_truck": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "is_tonar": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "scale_length": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "height_limit": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "is_overload": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "timeslot": {
+                                        "type": "string",
+                                        "example": "morning"
+                                    },
+                                    "outage_begin": {
+                                        "type": "integer",
+                                        "example": 8
+                                    },
+                                    "outage_price": {
+                                        "type": "integer",
+                                        "example": 100
+                                    },
+                                    "daily_load_rate": {
+                                        "type": "integer",
+                                        "example": 200
+                                    },
+                                    "contact_name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "contact_phone": {
+                                        "type": "string",
+                                        "example": "+1234567890"
+                                    },
+                                    "cargo_shortage_rate": {
+                                        "type": "integer",
+                                        "example": 50
+                                    },
+                                    "unit_of_measurement_for_cargo_shortage_rate": {
+                                        "type": "string",
+                                        "example": "kg"
+                                    },
+                                    "cargo_price": {
+                                        "type": "integer",
+                                        "example": 300
+                                    },
+                                    "load_place": {
+                                        "type": "string",
+                                        "example": "456 Elm St, City"
+                                    },
+                                    "approach": {
+                                        "type": "string",
+                                        "example": "from the south"
+                                    },
+                                    "work_time": {
+                                        "type": "string",
+                                        "example": "8am - 5pm"
+                                    },
+                                    "is_load_in_weekend": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "clarification_of_the_weekend": {
+                                        "type": "string",
+                                        "example": "N/A"
+                                    },
+                                    "loader_power": {
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "load_method": {
+                                        "type": "string",
+                                        "example": "crane"
+                                    },
+                                    "tolerance_to_the_norm": {
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "start_order_at": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-03-30"
+                                    },
+                                    "end_order_at": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-04-05"
+                                    },
+                                    "load_latitude": {
+                                        "type": "string",
+                                        "example": "40.7128"
+                                    },
+                                    "load_longitude": {
+                                        "type": "string",
+                                        "example": "-74.0060"
+                                    },
+                                    "unload_latitude": {
+                                        "type": "string",
+                                        "example": "41.8781"
+                                    },
+                                    "unload_longitude": {
+                                        "type": "string",
+                                        "example": "-87.6298"
+                                    },
+                                    "load_place_name": {
+                                        "type": "string",
+                                        "example": "Warehouse A"
+                                    },
+                                    "unload_place_name": {
+                                        "type": "string",
+                                        "example": "Warehouse B"
+                                    },
+                                    "cargo_weight": {
+                                        "type": "integer",
+                                        "example": 800
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                    },
+                                    "load_types": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "type1"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Заявка получена"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "crop": {
+                                                    "type": "string",
+                                                    "example": "corn"
+                                                },
+                                                "volume": {
+                                                    "type": "string",
+                                                    "example": "1000 kg"
+                                                },
+                                                "distance": {
+                                                    "type": "integer",
+                                                    "example": 50
+                                                },
+                                                "tariff": {
+                                                    "type": "integer",
+                                                    "example": 500
+                                                },
+                                                "nds_percent": {
+                                                    "type": "integer",
+                                                    "example": 20
+                                                },
+                                                "terminal_name": {
+                                                    "type": "string",
+                                                    "example": "Terminal A"
+                                                },
+                                                "terminal_address": {
+                                                    "type": "string",
+                                                    "example": "123 Main St, City"
+                                                },
+                                                "terminal_inn": {
+                                                    "type": "string",
+                                                    "example": "1234567890"
+                                                },
+                                                "exporter_name": {
+                                                    "type": "string",
+                                                    "example": "Exporter Inc."
+                                                },
+                                                "exporter_inn": {
+                                                    "type": "string",
+                                                    "example": "0987654321"
+                                                },
+                                                "is_semi_truck": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "is_tonar": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "scale_length": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "height_limit": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "is_overload": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "timeslot": {
+                                                    "type": "string",
+                                                    "example": "morning"
+                                                },
+                                                "outage_begin": {
+                                                    "type": "integer",
+                                                    "example": 8
+                                                },
+                                                "outage_price": {
+                                                    "type": "integer",
+                                                    "example": 100
+                                                },
+                                                "daily_load_rate": {
+                                                    "type": "integer",
+                                                    "example": 200
+                                                },
+                                                "contact_name": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "contact_phone": {
+                                                    "type": "string",
+                                                    "example": "+1234567890"
+                                                },
+                                                "cargo_shortage_rate": {
+                                                    "type": "integer",
+                                                    "example": 50
+                                                },
+                                                "unit_of_measurement_for_cargo_shortage_rate": {
+                                                    "type": "string",
+                                                    "example": "kg"
+                                                },
+                                                "cargo_price": {
+                                                    "type": "integer",
+                                                    "example": 300
+                                                },
+                                                "load_place": {
+                                                    "type": "string",
+                                                    "example": "456 Elm St, City"
+                                                },
+                                                "approach": {
+                                                    "type": "string",
+                                                    "example": "from the south"
+                                                },
+                                                "work_time": {
+                                                    "type": "string",
+                                                    "example": "8am - 5pm"
+                                                },
+                                                "is_load_in_weekend": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "clarification_of_the_weekend": {
+                                                    "type": "string",
+                                                    "example": "N/A"
+                                                },
+                                                "loader_power": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "load_method": {
+                                                    "type": "string",
+                                                    "example": "crane"
+                                                },
+                                                "tolerance_to_the_norm": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "start_order_at": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2024-03-30"
+                                                },
+                                                "end_order_at": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2024-04-05"
+                                                },
+                                                "load_latitude": {
+                                                    "type": "string",
+                                                    "example": "40.7128"
+                                                },
+                                                "load_longitude": {
+                                                    "type": "string",
+                                                    "example": "-74.0060"
+                                                },
+                                                "unload_latitude": {
+                                                    "type": "string",
+                                                    "example": "41.8781"
+                                                },
+                                                "unload_longitude": {
+                                                    "type": "string",
+                                                    "example": "-87.6298"
+                                                },
+                                                "load_place_name": {
+                                                    "type": "string",
+                                                    "example": "Warehouse A"
+                                                },
+                                                "unload_place_name": {
+                                                    "type": "string",
+                                                    "example": "Warehouse B"
+                                                },
+                                                "cargo_weight": {
+                                                    "type": "integer",
+                                                    "example": 800
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                                },
+                                                "load_types": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "type1"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Order not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Order not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid data provided",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid data provided"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/products-parser/": {
             "get": {
                 "tags": [

@@ -54,17 +54,17 @@ class OrderCreateRequest extends FormRequest
             'is_load_in_weekend'                          => ['boolean'],
             'clarification_of_the_weekend'                => [
                 'string',
-                Rule::enum(OrderClarificationDayEnum::getWithDescription())
+//                Rule::enum(OrderClarificationDayEnum::getWithDescription())
             ],
             'loader_power'                                => ['integer'],
             'load_method'                                 => ['string', 'required'],
             'tolerance_to_the_norm'                       => ['integer'],
             'start_order_at'                              => ['date', 'required'],
             'end_order_at'                                => ['date', 'required', 'after:start_order_at'],
-            'load_latitude'                               => ['string', 'required'],
-            'load_longitude'                              => ['string', 'required'],
-            'unload_latitude'                             => ['string', 'required'],
-            'unload_longitude'                            => ['string', 'required'],
+            'load_latitude'                               => ['numeric', 'required'],
+            'load_longitude'                              => ['numeric', 'required'],
+            'unload_latitude'                             => ['numeric', 'required'],
+            'unload_longitude'                            => ['numeric', 'required'],
             'load_place_name'                             => ['string', 'required'],
             'unload_place_name'                           => ['string', 'required'],
             'cargo_weight'                                => ['integer', 'required'],
