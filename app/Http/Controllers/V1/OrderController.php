@@ -39,9 +39,7 @@ class OrderController extends Controller
             200,
             StatusEnum::OK,
             'Заявка получена',
-            data: [
-                $this->service->show($order)
-            ]
+            data: $this->service->show($order)
         );
     }
 
