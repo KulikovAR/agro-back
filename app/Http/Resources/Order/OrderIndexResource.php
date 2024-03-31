@@ -16,18 +16,26 @@ class OrderIndexResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'                => $this->id,
-            'start_order_at'    => Carbon::parse($this->start_order_at)->format('d.m.y'),
-            'deadlines'         => Carbon::parse($this->start_order_at)->format('d.m.y') . '-' . Carbon::parse(
+            'id'                 => $this->id,
+            'start_order_at'     => Carbon::parse($this->start_order_at)->format('d.m.y'),
+            'deadlines'          => Carbon::parse($this->start_order_at)->format('d.m.y') . '-' . Carbon::parse(
                     $this->end_order_at
                 )->format('d.m.y'),
-            'distance'          => $this->distance,
-            'crop'              => $this->crop,
-            'tariff'            => $this->tariff,
-            'cargo_weight'      => $this->cargo_weight,
-            'load_place_name'   => $this->load_place_name,
-            'unload_place_name' => $this->load_place_name,
-            'order_number'      => $this->order_number,
+            'distance'           => $this->distance,
+            'crop'               => $this->crop,
+            'tariff'             => $this->tariff,
+            'cargo_weight'       => $this->cargo_weight,
+            'load_place_name'    => $this->load_place_name,
+            'unload_place_name'  => $this->load_place_name,
+            'order_number'       => $this->order_number,
+            'load_coordinates'   => array(
+                'x' => $this->load_longitude,
+                'y' => $this->load_latitude
+            ),
+            'unload_coordinates' => array(
+                'x' => $this->unload_longitude,
+                'y' => $this->unload_latitude
+            ),
         ];
     }
 }
