@@ -75,6 +75,10 @@ Route::prefix('orders')->group(function (){
     Route::delete('/delete/{order}',[OrderController::class,'delete'])->name('order.delete');
 });
 
+Route::prefix('load_types')->group(function (){
+    Route::get('/',[OrderController::class,'getLoadTypes'])->name('order.get_load_types');
+});
+
 
 Route::middleware('auth:sanctum')->group(function () {
 

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Order\ObservedBy;
 use App\Observers\OrderObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,9 +30,7 @@ class Order extends Model
         'terminal_inn',
         'exporter_name',
         'exporter_inn',
-        'is_semi_truck',
-        'is_tonar',
-        'scale_lenght',
+        'scale_length',
         'height_limit',
         'is_overload',
         'timeslot',
@@ -62,9 +60,12 @@ class Order extends Model
         'unload_place_name',
         'cargo_weight',
         'description',
+        'unload_method',
+        'is_full_charter',
     ];
+
     public function loadTypes(): BelongsToMany
     {
-        return $this->belongsToMany(LoadType::class,'order_load_types','order_id','load_type_id');
+        return $this->belongsToMany(LoadType::class, 'order_load_types', 'order_id', 'load_type_id');
     }
 }

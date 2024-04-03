@@ -6,9 +6,11 @@ use App\Filters\OrderFilter;
 use App\Http\Requests\Order\OrderCreateRequest;
 use App\Http\Requests\Order\OrderFilterRequest;
 use App\Http\Requests\Order\OrderUpdateRequest;
+use App\Http\Resources\LoadType\LoadTypeCollection;
 use App\Http\Resources\Order\OrderCreateResource;
 use App\Http\Resources\Order\OrderIndexCollection;
 use App\Http\Resources\Order\OrderResource;
+use App\Models\LoadType;
 use App\Models\Order;
 
 class OrderService
@@ -50,5 +52,10 @@ class OrderService
     public function delete(Order $order):void
     {
         $order->delete();
+    }
+
+    public function getLoadTypes()
+    {
+        return new LoadTypeCollection(LoadType::all());
     }
 }

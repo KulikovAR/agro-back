@@ -19,6 +19,13 @@ class LoadTypeSeeder extends Seeder
         if (App::environment(EnvironmentTypeEnum::productEnv())) {
             return;
         }
-        $orders = LoadType::factory(5)->create();
+        LoadType::create(['title' => 'Маниту']);
+        LoadType::create(['title' => 'Зерномёт']);
+        LoadType::create(['title' => 'Из-под трубы']);
+        LoadType::create(['title' => 'Комбайн']);
+        LoadType::create(['title' => 'Кун']);
+        LoadType::create(['title' => 'Амкодор']);
+        LoadType::create(['title' => 'Вертикальный']);
+        LoadType::create(['title' => 'Элеватор']);
     }
 }

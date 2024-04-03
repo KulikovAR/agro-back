@@ -15,7 +15,7 @@ class OrderFactory extends Factory
     {
         return [
             'crop'                                        => $this->faker->word,
-            'volume'                                      => $this->faker->word,
+            'volume'                                      => $this->faker->numberBetween(1, 100),
             'distance'                                    => $this->faker->numberBetween(1, 100),
             'tariff'                                      => $this->faker->numberBetween(1, 100),
             'nds_percent'                                 => $this->faker->numberBetween(0, 100),
@@ -24,12 +24,10 @@ class OrderFactory extends Factory
             'terminal_inn'                                => $this->faker->numerify('##########'),
             'exporter_name'                               => $this->faker->name,
             'exporter_inn'                                => $this->faker->numerify('##########'),
-            'is_semi_truck'                               => $this->faker->boolean,
-            'is_tonar'                                    => $this->faker->boolean,
             'height_limit'                                => $this->faker->numberBetween(1, 10),
             'is_overload'                                 => $this->faker->boolean,
             'timeslot'                                    => $this->faker->word,
-            'scale_lenght'                                => $this->faker->numberBetween(1, 10),
+            'scale_length'                                => $this->faker->numberBetween(1, 10),
             'outage_begin'                                => $this->faker->numberBetween(1, 100),
             'outage_price'                                => $this->faker->numberBetween(1, 100),
             'daily_load_rate'                             => $this->faker->numberBetween(1, 100),
@@ -52,10 +50,12 @@ class OrderFactory extends Factory
             'load_longitude'                              => $this->faker->longitude,
             'unload_latitude'                             => $this->faker->latitude,
             'unload_longitude'                            => $this->faker->longitude,
-            'unload_place_name'                           => $this->faker->word(),
-            'load_place_name'                             => $this->faker->word(),
-            'cargo_weight'                                => $this->faker->numberBetween(1,100),
+            'unload_place_name'                           => $this->faker->address(),
+            'load_place_name'                             => $this->faker->address(),
+            'cargo_weight'                                => $this->faker->numberBetween(1, 100),
             'description'                                 => $this->faker->paragraph,
+            'is_full_charter'                             => $this->faker->boolean,
+            'unload_method'                               => $this->faker->word
         ];
     }
 }

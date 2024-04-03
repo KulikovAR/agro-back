@@ -75,6 +75,8 @@ class OrderController
      *                          type="string",
      *                          example="Warehouse A"
      *                      ),
+     *               @OA\Property(property="is_full_charter", type="boolean", example="true"),
+     *               @OA\Property(property="unload_method", type="string", example="pricep"),
      *                      @OA\Property(
      *                          property="order_number",
      *                          type="integer",
@@ -214,7 +216,7 @@ class OrderController
      *                          example=false
      *                      ),
      *                      @OA\Property(
-     *                          property="scale_lenght",
+     *                          property="scale_length",
      *                          type="integer",
      *                          example=10
      *                      ),
@@ -376,6 +378,8 @@ class OrderController
      *                          type="string",
      *                          example="Molestiae enim quidem iure omnis architecto et tempora eos. Ullam dolor quo sit aliquid. Cumque quae repellat quam cum esse eaque. Dolor rerum praesentium dolorum aut. Quia voluptates illo ut enim vel qui exercitationem."
      *                      ),
+     *                   @OA\Property(property="is_full_charter", type="boolean", example="true"),
+     *                   @OA\Property(property="unload_method", type="string", example="pricep"),
      *                      @OA\Property(
      *                          property="load_types",
      *                          type="array",
@@ -461,6 +465,8 @@ class OrderController
      *              @OA\Property(property="unload_place_name", type="string", example="Warehouse B"),
      *              @OA\Property(property="cargo_weight", type="integer", example=800),
      *              @OA\Property(property="description", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
+     *                   @OA\Property(property="is_full_charter", type="boolean", example="true"),
+     *               @OA\Property(property="unload_method", type="string", example="pricep"),
      *              @OA\Property(property="load_types", type="array", @OA\Items(type="string", example="type1")),
      *          ),
      *      ),
@@ -551,6 +557,8 @@ class OrderController
      *              @OA\Property(property="unload_place_name", type="string", example="Warehouse B"),
      *              @OA\Property(property="cargo_weight", type="integer", example=800),
      *              @OA\Property(property="description", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
+     *              @OA\Property(property="is_full_charter", type="boolean", example="true"),
+     *              @OA\Property(property="unload_method", type="string", example="pricep"),
      *              @OA\Property(property="load_types", type="array", @OA\Items(type="string", example="type1")),
      *          ),
      *      ),
@@ -605,6 +613,8 @@ class OrderController
      *                  @OA\Property(property="unload_place_name", type="string", example="Warehouse B"),
      *                  @OA\Property(property="cargo_weight", type="integer", example=800),
      *                  @OA\Property(property="description", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit."),
+     *                  @OA\Property(property="is_full_charter", type="boolean", example="true"),
+     *                  @OA\Property(property="unload_method", type="string", example="pricep"),
      *                  @OA\Property(property="load_types", type="array", @OA\Items(type="string", example="type1")),
      *              ),
      *          ),
@@ -656,7 +666,7 @@ class OrderController
      *          @OA\JsonContent(
      *              @OA\Property(property="status", type="string", example="OK"),
      *              @OA\Property(property="message", type="string", example="Заявка удалена"),
-     *              @OA\Property(property="data", type="array", example="[]")
+     *              @OA\Property(property="data", type="array", @OA\Items())
      *          )
      *      ),
      *      @OA\Response(
@@ -671,6 +681,53 @@ class OrderController
      */
 
     public function delete()
+    {
+
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/load_types/",
+     *     summary="Получить список типов загрузок",
+     *     tags={"Load Types"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Список типов загрузок",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="string",
+     *                 example="OK"
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example="Типы загрузок получены"
+     *             ),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(
+     *                         property="id",
+     *                         type="string",
+     *                         example="9bb8d29b-7cb0-4180-9eb7-0065d63a0a2d"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="title",
+     *                         type="string",
+     *                         example="Маниту"
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     )
+     * )
+     */
+
+    public function getLoadTypes()
     {
 
     }

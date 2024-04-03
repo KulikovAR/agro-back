@@ -718,6 +718,14 @@
                                                         "type": "string",
                                                         "example": "Warehouse A"
                                                     },
+                                                    "is_full_charter": {
+                                                        "type": "boolean",
+                                                        "example": "true"
+                                                    },
+                                                    "unload_method": {
+                                                        "type": "string",
+                                                        "example": "pricep"
+                                                    },
                                                     "order_number": {
                                                         "type": "integer",
                                                         "example": 0
@@ -847,7 +855,7 @@
                                                         "type": "boolean",
                                                         "example": false
                                                     },
-                                                    "scale_lenght": {
+                                                    "scale_length": {
                                                         "type": "integer",
                                                         "example": 10
                                                     },
@@ -980,6 +988,14 @@
                                                     "description": {
                                                         "type": "string",
                                                         "example": "Molestiae enim quidem iure omnis architecto et tempora eos. Ullam dolor quo sit aliquid. Cumque quae repellat quam cum esse eaque. Dolor rerum praesentium dolorum aut. Quia voluptates illo ut enim vel qui exercitationem."
+                                                    },
+                                                    "is_full_charter": {
+                                                        "type": "boolean",
+                                                        "example": "true"
+                                                    },
+                                                    "unload_method": {
+                                                        "type": "string",
+                                                        "example": "pricep"
                                                     },
                                                     "load_types": {
                                                         "type": "array",
@@ -1242,6 +1258,14 @@
                                     "description": {
                                         "type": "string",
                                         "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                    },
+                                    "is_full_charter": {
+                                        "type": "boolean",
+                                        "example": "true"
+                                    },
+                                    "unload_method": {
+                                        "type": "string",
+                                        "example": "pricep"
                                     },
                                     "load_types": {
                                         "type": "array",
@@ -1537,6 +1561,14 @@
                                         "type": "string",
                                         "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                                     },
+                                    "is_full_charter": {
+                                        "type": "boolean",
+                                        "example": "true"
+                                    },
+                                    "unload_method": {
+                                        "type": "string",
+                                        "example": "pricep"
+                                    },
                                     "load_types": {
                                         "type": "array",
                                         "items": {
@@ -1737,6 +1769,14 @@
                                                     "type": "string",
                                                     "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                                                 },
+                                                "is_full_charter": {
+                                                    "type": "boolean",
+                                                    "example": "true"
+                                                },
+                                                "unload_method": {
+                                                    "type": "string",
+                                                    "example": "pricep"
+                                                },
                                                 "load_types": {
                                                     "type": "array",
                                                     "items": {
@@ -1786,6 +1826,121 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Invalid data provided"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Delete an existing order",
+                "description": "Deletes an existing order",
+                "operationId": "deleteOrder",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the order to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Заявка удалена"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Order not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Order not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/load_types/": {
+            "get": {
+                "tags": [
+                    "Load Types"
+                ],
+                "summary": "Получить список типов загрузок",
+                "operationId": "3e866488c5618d454c1f7f9d7e246ac1",
+                "responses": {
+                    "200": {
+                        "description": "Список типов загрузок",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Типы загрузок получены"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "9bb8d29b-7cb0-4180-9eb7-0065d63a0a2d"
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Маниту"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
                                         }
                                     },
                                     "type": "object"
