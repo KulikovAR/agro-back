@@ -25,9 +25,7 @@ class OrderTest extends TestCase
             'terminal_inn'                                => $this->faker->numerify('##########'),
             'exporter_name'                               => $this->faker->name(),
             'exporter_inn'                                => $this->faker->numerify('##########'),
-            'is_semi_truck'                               => $this->faker->boolean(),
-            'is_tonar'                                    => $this->faker->boolean(),
-            'scale_lenght'                                => $this->faker->numberBetween(1, 10),
+            'scale_length'                                => $this->faker->numberBetween(1, 10),
             'height_limit'                                => $this->faker->numberBetween(1, 10),
             'is_overload'                                 => $this->faker->boolean(),
             'timeslot'                                    => $this->faker->word(),
@@ -59,11 +57,13 @@ class OrderTest extends TestCase
             'load_longitude'                              => $this->faker->longitude(),
             'unload_latitude'                             => $this->faker->latitude(),
             'unload_longitude'                            => $this->faker->longitude(),
-            'load_place_name'                             => $this->faker->word(),
-            'unload_place_name'                           => $this->faker->word(),
+            'load_place_name'                             => $this->faker->address(),
+            'unload_place_name'                           => $this->faker->address(),
             'cargo_weight'                                => $this->faker->numberBetween(1, 100),
             'description'                                 => $this->faker->paragraph(),
             'load_types'                                  => [LoadType::inRandomOrder()->first()->id],
+            'is_full_charter'                             => $this->faker->boolean(),
+            'unload_method'                               => $this->faker->word
             // Пример данных для массива
         ];
 

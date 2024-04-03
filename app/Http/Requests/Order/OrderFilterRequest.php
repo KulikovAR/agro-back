@@ -34,8 +34,6 @@ class OrderFilterRequest extends FormRequest
             'terminal_inn'                                => ['string'],
             'exporter_name'                               => ['string'],
             'exporter_inn'                                => ['string'],
-            'is_semi_truck'                               => ['boolean'],
-            'is_tonar'                                    => ['boolean'],
             'scale_lenght'                                => ['integer'],
             'height_limit'                                => ['integer'],
             'is_overload'                                 => ['boolean'],

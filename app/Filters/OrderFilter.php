@@ -17,9 +17,7 @@ class OrderFilter extends AbstractFilter
     public const TERMINAL_INN = 'terminal_inn';
     public const EXPORTER_NAME = 'exporter_name';
     public const EXPORTER_INN = 'exporter_inn';
-    public const IS_SEMI_TRUCK = 'is_semi_truck';
-    public const IS_TONAR = 'is_tonar';
-    public const SCALE_LENGHT = 'scale_lenght';
+    public const SCALE_LENGTH = 'scale_length';
     public const HEIGHT_LIMIT = 'height_limit';
     public const IS_OVERLOAD = 'is_overload';
     public const TIMESLOT = 'timeslot';
@@ -67,9 +65,7 @@ class OrderFilter extends AbstractFilter
             self::TERMINAL_INN                                => [$this, 'terminal_inn'],
             self::EXPORTER_NAME                               => [$this, 'exporter_name'],
             self::EXPORTER_INN                                => [$this, 'exporter_inn'],
-            self::IS_SEMI_TRUCK                               => [$this, 'is_semi_truck'],
-            self::IS_TONAR                                    => [$this, 'is_tonar'],
-            self::SCALE_LENGHT                                => [$this, 'scale_lenght'],
+            self::SCALE_LENGTH                                => [$this, 'scale_length'],
             self::HEIGHT_LIMIT                                => [$this, 'height_limit'],
             self::IS_OVERLOAD                                 => [$this, 'is_overload'],
             self::TIMESLOT                                    => [$this, 'timeslot'],
@@ -160,17 +156,8 @@ class OrderFilter extends AbstractFilter
         $builder->where('exporter_inn', $value);
     }
 
-    public function is_semi_truck(Builder $builder, $value)
-    {
-        $builder->where('is_semi_truck', $value);
-    }
 
-    public function is_tonar(Builder $builder, $value)
-    {
-        $builder->where('is_tonar', $value);
-    }
-
-    public function scale_lenght(Builder $builder, $value)
+    public function scale_length(Builder $builder, $value)
     {
         $builder->where('scale_lenght', $value);
     }

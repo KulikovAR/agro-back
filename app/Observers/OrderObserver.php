@@ -12,7 +12,7 @@ class OrderObserver
     public function created(Order $order): void
     {
         $order->order_number = $order->max('order_number') + 1;
-        $order->saveQuietly();
+        $order->save();
     }
 
     /**

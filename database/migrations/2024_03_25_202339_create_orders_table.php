@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('crop');
-            $table->string('volume');
+            $table->integer('volume');
             $table->integer('distance');
             $table->integer('tariff');
             $table->integer('nds_percent')->nullable();
@@ -22,9 +22,7 @@ return new class extends Migration {
             $table->string('terminal_inn');
             $table->string('exporter_name');
             $table->string('exporter_inn');
-            $table->boolean('is_semi_truck');
-            $table->boolean('is_tonar');
-            $table->integer('scale_lenght');
+            $table->integer('scale_length');
             $table->integer('height_limit');
             $table->boolean('is_overload');
             $table->string('timeslot');
@@ -43,9 +41,9 @@ return new class extends Migration {
             $table->string('clarification_of_the_weekend')->nullable();
             $table->integer('loader_power')->nullable();
             $table->integer('order_number')->default(0);
+            $table->string('unload_method');
             $table->string('load_method');
             $table->string('unload_type')->nullable();
-            $table->boolean('is_full_charter')->nullable();
             $table->integer('tolerance_to_the_norm')->nullable();
             $table->timestamp('start_order_at')->useCurrent();
             $table->timestamp('end_order_at')->useCurrent();
@@ -56,6 +54,7 @@ return new class extends Migration {
             $table->string('load_place_name');
             $table->string('unload_place_name');
             $table->integer('cargo_weight');
+            $table->boolean('is_full_charter')->nullable();
             $table->text('description')->nullable();
             $table->boolean('is_moderated')->default(false);
             $table->timestamps();

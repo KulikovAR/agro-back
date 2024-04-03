@@ -25,7 +25,7 @@ class OrderCreateRequest extends FormRequest
     {
         return [
             'crop'                                        => ['string', 'required'],
-            'volume'                                      => ['string', 'required'],
+            'volume'                                      => ['numeric', 'required'],
             'distance'                                    => ['integer', 'required'],
             'tariff'                                      => ['integer', 'required'],
             'nds_percent'                                 => ['integer'],
@@ -36,7 +36,7 @@ class OrderCreateRequest extends FormRequest
             'exporter_inn'                                => ['string', 'required'],
             'is_semi_truck'                               => ['boolean', 'required'],
             'is_tonar'                                    => ['boolean', 'required'],
-            'scale_lenght'                                => ['integer', 'required'],
+            'scale_length'                                => ['integer', 'required'],
             'height_limit'                                => ['integer', 'required'],
             'is_overload'                                 => ['boolean', 'required'],
             'timeslot'                                    => ['string', 'required'],
@@ -64,11 +64,13 @@ class OrderCreateRequest extends FormRequest
             'load_latitude'                               => ['numeric', 'required'],
             'load_longitude'                              => ['numeric', 'required'],
             'unload_latitude'                             => ['numeric', 'required'],
+            'unload_method'                               => ['string','required'],
             'unload_longitude'                            => ['numeric', 'required'],
             'load_place_name'                             => ['string', 'required'],
             'unload_place_name'                           => ['string', 'required'],
-            'cargo_weight'                                => ['integer', 'required'],
+            'cargo_weight'                                => ['numeric', 'required'],
             'description'                                 => ['string'],
+            'is_full_charter'                             => ['boolean'],
             'load_types'                                  => ['array', 'required'],
             'load_types.*'                                => ['string', 'exists:load_types,id']
 

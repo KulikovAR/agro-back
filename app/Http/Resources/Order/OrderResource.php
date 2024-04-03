@@ -27,9 +27,7 @@ class OrderResource extends JsonResource
             'terminal_inn'                                => $this->terminal_inn,
             'exporter_name'                               => $this->exporter_name,
             'exporter_inn'                                => $this->exporter_inn,
-            'is_semi_truck'                               => $this->is_semi_truck,
-            'is_tonar'                                    => $this->is_tonar,
-            'scale_lenght'                                => $this->scale_lenght,
+            'scale_length'                                => $this->scale_length,
             'height_limit'                                => $this->height_limit,
             'is_overload'                                 => $this->is_overload,
             'timeslot'                                    => $this->timeslot,
@@ -67,6 +65,8 @@ class OrderResource extends JsonResource
             'cargo_weight'                                => $this->cargo_weight,
             'description'                                 => $this->description,
             'load_types'                                  => new LoadTypeCollection($this->loadTypes),
+            'is_full_charter'                             => $this->is_full_charter,
+            'unload_method'                               => $this->unload_method,
         ];
     }
 }

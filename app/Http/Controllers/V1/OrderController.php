@@ -20,14 +20,14 @@ class OrderController extends Controller
     ) {
         $this->service = new OrderService;
     }
+
     public function index(OrderFilterRequest $request): ApiJsonResponse
     {
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
             'Заявки получены',
-            data:
-                $this->service->index($request)
+            data: $this->service->index($request)
 
         );
     }
@@ -55,7 +55,7 @@ class OrderController extends Controller
         );
     }
 
-        public function update(OrderUpdateRequest $request, Order $order): ApiJsonResponse
+    public function update(OrderUpdateRequest $request, Order $order): ApiJsonResponse
     {
         return new ApiJsonResponse(
             200,
@@ -78,6 +78,16 @@ class OrderController extends Controller
             data: [
 
             ]
+        );
+    }
+
+    public function getLoadTypes(): ApiJsonResponse
+    {
+        return new ApiJsonResponse(
+            200,
+            StatusEnum::OK,
+            'Типы загрузок получены',
+            data: $this->service->getLoadTypes()
         );
     }
 }
