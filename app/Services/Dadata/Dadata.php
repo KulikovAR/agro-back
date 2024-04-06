@@ -141,6 +141,8 @@ class Dadata
         }
         throw new BadRequestHttpException(json_decode($response->body())->message);
     }
+
+
     /**
      * Отправляет запрос с подсказками.
      * @param DadataSuggestRequest $request - объект запроса с подсказками

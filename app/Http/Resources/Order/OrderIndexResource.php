@@ -17,6 +17,7 @@ class OrderIndexResource extends JsonResource
     {
         return [
             'id'                 => $this->id,
+            'status'             => $this->status,
             'start_order_at'     => Carbon::parse($this->start_order_at)->format('d.m.y'),
             'deadlines'          => Carbon::parse($this->start_order_at)->format('d.m.y') . '-' . Carbon::parse(
                     $this->end_order_at

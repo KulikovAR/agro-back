@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Order;
 
+use App\Enums\LoadMethodEnum;
 use App\Enums\OrderClarificationDayEnum;
+use App\Enums\OrderStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -54,7 +56,7 @@ class OrderCreateRequest extends FormRequest
             'is_load_in_weekend'                          => ['boolean'],
             'clarification_of_the_weekend'                => [
                 'string',
-//                Rule::enum(OrderClarificationDayEnum::getWithDescription())
+                Rule::enum(OrderClarificationDayEnum::class)
             ],
             'loader_power'                                => ['integer'],
             'load_method'                                 => ['string', 'required'],
@@ -64,7 +66,8 @@ class OrderCreateRequest extends FormRequest
             'load_latitude'                               => ['numeric', 'required'],
             'load_longitude'                              => ['numeric', 'required'],
             'unload_latitude'                             => ['numeric', 'required'],
-            'unload_method'                               => ['string','required'],
+            'status'                                      => ['string', 'required', Rule::enum(OrderStatusEnum::class)],
+            'unload_method'                               => ['string', 'required', Rule::enum(LoadMethodEnum::class)],
             'unload_longitude'                            => ['numeric', 'required'],
             'load_place_name'                             => ['string', 'required'],
             'unload_place_name'                           => ['string', 'required'],

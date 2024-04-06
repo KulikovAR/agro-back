@@ -8,6 +8,8 @@ use App\Notifications\VerifyEmailNotification;
 use App\Traits\BearerTokenTrait;
 use App\Traits\SheduleLessons;
 use Carbon\Carbon;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasName;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,9 +22,10 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Filament\Panel;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference
+class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference, FilamentUser, HasName
 {
 
     use HasApiTokens, HasFactory, Notifiable, HasUuids, SoftDeletes, HasRoles;
@@ -81,15 +84,25 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new PasswordResetNotification($token));
-    } 
+    }
 
     public function driver(): HasOne
     {
         return $this->hasOne(Driver::class);
-    } 
+    }
 
     public function counteragent():HasOne
     {
         return $this->hasOne((Counteragent::class));
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return str_ends_with($this->email, '@admin.ru');
+    }
+
+    public function getFilamentName(): string
+    {
+        return "{$this->email}";
     }
 }

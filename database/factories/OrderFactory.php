@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Enums\LoadMethodEnum;
+use App\Enums\OrderClarificationDayEnum;
+use App\Enums\OrderStatusEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrderFactory extends Factory
@@ -40,9 +43,9 @@ class OrderFactory extends Factory
             'approach'                                    => $this->faker->sentence,
             'work_time'                                   => $this->faker->sentence,
             'is_load_in_weekend'                          => $this->faker->boolean,
-            'clarification_of_the_weekend'                => $this->faker->word,
+            'clarification_of_the_weekend'                => OrderClarificationDayEnum::SATURDAY_AND_SUNDAY->value,
             'loader_power'                                => $this->faker->numberBetween(1, 100),
-            'load_method'                                 => $this->faker->word,
+            'load_method'                                 => LoadMethodEnum::BY_THE_TUBE->value,
             'tolerance_to_the_norm'                       => $this->faker->numberBetween(1, 100),
             'start_order_at'                              => $this->faker->dateTimeBetween('+1 days', '+1 week'),
             'end_order_at'                                => $this->faker->dateTimeBetween('+1 week', '+1 month'),
@@ -55,7 +58,8 @@ class OrderFactory extends Factory
             'cargo_weight'                                => $this->faker->numberBetween(1, 100),
             'description'                                 => $this->faker->paragraph,
             'is_full_charter'                             => $this->faker->boolean,
-            'unload_method'                               => $this->faker->word
+            'unload_method'                               => $this->faker->word,
+            'status'                                      => OrderStatusEnum::ACTIVE->value,
         ];
     }
 }

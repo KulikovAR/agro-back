@@ -21,6 +21,7 @@ class OrderResource extends JsonResource
             'volume'                                      => $this->volume,
             'distance'                                    => $this->distance,
             'tariff'                                      => $this->tariff,
+            'status'                                      => $this->status,
             'nds_percent'                                 => $this->nds_percent,
             'terminal_name'                               => $this->terminal_name,
             'terminal_address'                            => $this->terminal_address,

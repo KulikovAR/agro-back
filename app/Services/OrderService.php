@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\LoadMethodEnum;
 use App\Filters\OrderFilter;
 use App\Http\Requests\Order\OrderCreateRequest;
 use App\Http\Requests\Order\OrderFilterRequest;
@@ -57,5 +58,10 @@ class OrderService
     public function getLoadTypes()
     {
         return new LoadTypeCollection(LoadType::all());
+    }
+
+    public function getLoadMethods()
+    {
+        return LoadMethodEnum::getLoadMethods();
     }
 }
