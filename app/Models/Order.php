@@ -62,6 +62,7 @@ class Order extends Model
         'description',
         'unload_method',
         'is_full_charter',
+        'is_moderated',
     ];
 
     public function loadTypes(): BelongsToMany
