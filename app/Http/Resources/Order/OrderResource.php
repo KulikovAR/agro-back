@@ -44,7 +44,6 @@ class OrderResource extends JsonResource
             'approach'                                    => $this->approach,
             'work_time'                                   => $this->work_time,
             'order_number'                                => $this->order_number,
-            'is_load_in_weekend'                          => $this->is_load_in_weekend,
             'clarification_of_the_weekend'                => $this->clarification_of_the_weekend,
             'loader_power'                                => $this->loader_power,
             'load_method'                                 => $this->load_method,

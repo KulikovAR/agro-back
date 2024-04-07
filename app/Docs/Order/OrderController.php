@@ -297,11 +297,6 @@ class OrderController
      *                          example=0
      *                      ),
      *                      @OA\Property(
-     *                          property="is_load_in_weekend",
-     *                          type="boolean",
-     *                          example=false
-     *                      ),
-     *                      @OA\Property(
      *                          property="clarification_of_the_weekend",
      *                          type="string",
      *                          example="magni"
@@ -424,7 +419,7 @@ class OrderController
      *          required=true,
      *          description="Order data",
      *          @OA\JsonContent(
-     *              required={"crop","volume","distance","tariff","nds_percent","terminal_name","terminal_address","terminal_inn","exporter_name","exporter_inn","is_semi_truck","is_tonar","scale_length","height_limit","is_overload","timeslot","outage_begin","outage_price","daily_load_rate","contact_name","contact_phone","cargo_shortage_rate","unit_of_measurement_for_cargo_shortage_rate","cargo_price","load_place","approach","work_time","is_load_in_weekend","clarification_of_the_weekend","loader_power","load_method","tolerance_to_the_norm","start_order_at","end_order_at","load_latitude","load_longitude","unload_latitude","unload_longitude","load_place_name","unload_place_name","cargo_weight","description","load_types"},
+     *              required={"crop","volume","distance","tariff","nds_percent","terminal_name","terminal_address","terminal_inn","exporter_name","exporter_inn","is_semi_truck","is_tonar","scale_length","height_limit","is_overload","timeslot","outage_begin","outage_price","daily_load_rate","contact_name","contact_phone","cargo_shortage_rate","unit_of_measurement_for_cargo_shortage_rate","cargo_price","load_place","approach","work_time","clarification_of_the_weekend","loader_power","load_method","tolerance_to_the_norm","start_order_at","end_order_at","load_latitude","load_longitude","unload_latitude","unload_longitude","load_place_name","unload_place_name","cargo_weight","description","load_types"},
      *              @OA\Property(property="crop", type="string", example="corn"),
      *              @OA\Property(property="volume", type="string", example="1000 kg"),
      *              @OA\Property(property="distance", type="integer", example=50),
@@ -452,7 +447,6 @@ class OrderController
      *              @OA\Property(property="load_place", type="string", example="456 Elm St, City"),
      *              @OA\Property(property="approach", type="string", example="from the south"),
      *              @OA\Property(property="work_time", type="string", example="8am - 5pm"),
-     *              @OA\Property(property="is_load_in_weekend", type="boolean", example=false),
      *              @OA\Property(property="clarification_of_the_weekend", type="string", example="N/A"),
      *              @OA\Property(property="loader_power", type="integer", example=10),
      *              @OA\Property(property="load_method", type="string", example="crane"),
@@ -517,7 +511,7 @@ class OrderController
      *          required=true,
      *          description="Order data",
      *          @OA\JsonContent(
-     *              required={"crop","volume","distance","tariff","nds_percent","terminal_name","terminal_address","terminal_inn","exporter_name","exporter_inn","is_semi_truck","is_tonar","scale_length","height_limit","is_overload","timeslot","outage_begin","outage_price","daily_load_rate","contact_name","contact_phone","cargo_shortage_rate","unit_of_measurement_for_cargo_shortage_rate","cargo_price","load_place","approach","work_time","is_load_in_weekend","clarification_of_the_weekend","loader_power","load_method","tolerance_to_the_norm","start_order_at","end_order_at","load_latitude","load_longitude","unload_latitude","unload_longitude","load_place_name","unload_place_name","cargo_weight","description","load_types"},
+     *              required={"crop","volume","distance","tariff","nds_percent","terminal_name","terminal_address","terminal_inn","exporter_name","exporter_inn","is_semi_truck","is_tonar","scale_length","height_limit","is_overload","timeslot","outage_begin","outage_price","daily_load_rate","contact_name","contact_phone","cargo_shortage_rate","unit_of_measurement_for_cargo_shortage_rate","cargo_price","load_place","approach","work_time","clarification_of_the_weekend","loader_power","load_method","tolerance_to_the_norm","start_order_at","end_order_at","load_latitude","load_longitude","unload_latitude","unload_longitude","load_place_name","unload_place_name","cargo_weight","description","load_types"},
      *              @OA\Property(property="crop", type="string", example="corn"),
      *              @OA\Property(property="volume", type="string", example="1000 kg"),
      *              @OA\Property(property="distance", type="integer", example=50),
@@ -545,7 +539,6 @@ class OrderController
      *              @OA\Property(property="load_place", type="string", example="456 Elm St, City"),
      *              @OA\Property(property="approach", type="string", example="from the south"),
      *              @OA\Property(property="work_time", type="string", example="8am - 5pm"),
-     *              @OA\Property(property="is_load_in_weekend", type="boolean", example=false),
      *              @OA\Property(property="clarification_of_the_weekend", type="string", example="N/A"),
      *              @OA\Property(property="loader_power", type="integer", example=10),
      *              @OA\Property(property="load_method", type="string", example="crane"),
@@ -602,7 +595,6 @@ class OrderController
      *                  @OA\Property(property="load_place", type="string", example="456 Elm St, City"),
      *                  @OA\Property(property="approach", type="string", example="from the south"),
      *                  @OA\Property(property="work_time", type="string", example="8am - 5pm"),
-     *                  @OA\Property(property="is_load_in_weekend", type="boolean", example=false),
      *                  @OA\Property(property="clarification_of_the_weekend", type="string", example="N/A"),
      *                  @OA\Property(property="loader_power", type="integer", example=10),
      *                  @OA\Property(property="load_method", type="string", example="crane"),

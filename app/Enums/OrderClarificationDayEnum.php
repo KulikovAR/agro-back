@@ -4,9 +4,9 @@ namespace App\Enums;
 
 enum OrderClarificationDayEnum: string
 {
-    case SATURDAY = 'Суббота';
-    case SUNDAY = 'Воскресенье';
-    case SATURDAY_AND_SUNDAY = 'Суббота и воскресенье';
+    case SATURDAY = 'суббота';
+    case SUNDAY = 'воскресенье';
+    case SATURDAY_AND_SUNDAY = 'суббота и воскресенье';
 
     public static function getValue():array
     {

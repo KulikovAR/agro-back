@@ -38,7 +38,6 @@ return new class extends Migration {
             $table->string('load_place');
             $table->string('approach')->nullable();
             $table->text('work_time')->nullable();
-            $table->boolean('is_load_in_weekend')->nullable();
             $table->string('clarification_of_the_weekend')->nullable();
             $table->integer('loader_power')->nullable();
             $table->integer('order_number')->default(0);
