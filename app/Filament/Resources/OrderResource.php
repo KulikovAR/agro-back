@@ -8,6 +8,7 @@ use App\Enums\OrderStatusEnum;
 use App\Enums\UnitOfMeasurementForCargoShortrageRateEnum;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Models\LoadType;
 use App\Models\Order;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -18,18 +19,19 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Closure;
+
 class OrderResource extends Resource
 {
+    protected static ?string $pluralModelLabel = 'Заявки';
 
+    protected static ?string $modelLabel = 'Заявка';
     private $dadata;
     protected static ?string $model = Order::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-path-rounded-square';
 
     public static function form(Form $form): Form
     {
         $dadata = new Dadata();
-//        dd($dadata->sendCompany("сбер"));
-
         return $form
             ->schema([
                 Forms\Components\TextInput::make('crop')
@@ -55,12 +57,13 @@ class OrderResource extends Resource
                     ->label('Название терминала')
                     ->searchable()
                     ->required()
-                    ->options([]),
-//                    ->getSearchResultsUsing(fn (string $search): array => $dadata->sendCompany($search)[0]),
-                Forms\Components\TextInput::make('terminal_inn')
+//                    ->options([]),
+                    ->getSearchResultsUsing(fn(string $search): array => $dadata->sendCompanyForFilament($search,'value')),
+                Forms\Components\Select::make('terminal_inn')
                     ->label('ИНН терминала')
+                    ->searchable()
                     ->required()
-                    ->maxLength(255),
+                    ->getSearchResultsUsing(fn(string $search): array => $dadata->SendCompanyForFilament($search,'inn',true)),
                 Forms\Components\TextInput::make('exporter_name')
                     ->label('Название экспортера')
                     ->required()
@@ -121,12 +124,8 @@ class OrderResource extends Resource
                 Forms\Components\Textarea::make('work_time')
                     ->label('Время работы')
                     ->columnSpanFull(),
-                Forms\Components\Toggle::make('is_load_in_weekend')
-                    ->reactive()
-                    ->label('Загрузка в выходные'),
                 Forms\Components\Select::make('clarification_of_the_weekend')
                     ->label('Уточнение выходных')
-                    ->hidden(fn ($get) => $get('is_load_in_weekend') === false)
                     ->options(OrderClarificationDayEnum::getValue()),
                 Forms\Components\TextInput::make('loader_power')
                     ->label('Мощность погрузчика')
@@ -138,6 +137,12 @@ class OrderResource extends Resource
                     ->label('Метод загрузки')
                     ->required()
                     ->options(LoadMethodEnum::getLoadMethods()),
+                Forms\Components\Select::make('author_id')
+                    ->relationship(name: 'loadTypes', titleAttribute: 'title')
+                    ->label('Способы погрузки')
+                    ->searchable(['title'])
+                    ->preload()
+                    ->multiple(),
                 Forms\Components\TextInput::make('unload_type')
                     ->label('Тип выгрузки')
                     ->maxLength(255),
@@ -291,8 +296,8 @@ class OrderResource extends Resource
                     ->label('Статус модерации')
                     ->color(fn(string $state): string => match ($state) {
                         'draft' => 'info',
-                        '1' => 'warning',
-                        '0' => 'warning',
+                        '1' => 'success',
+                        '0' => 'danger',
                     }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

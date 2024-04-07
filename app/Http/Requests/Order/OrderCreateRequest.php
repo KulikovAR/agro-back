@@ -53,11 +53,7 @@ class OrderCreateRequest extends FormRequest
             'load_place'                                  => ['string', 'required'],
             'approach'                                    => ['string'],
             'work_time'                                   => ['string'],
-            'is_load_in_weekend'                          => ['boolean'],
-            'clarification_of_the_weekend'                => [
-                'string',
-                Rule::enum(OrderClarificationDayEnum::class)
-            ],
+            'clarification_of_the_weekend'                => ['string'],
             'loader_power'                                => ['integer'],
             'load_method'                                 => ['string', 'required'],
             'tolerance_to_the_norm'                       => ['integer'],
