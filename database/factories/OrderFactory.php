@@ -42,7 +42,6 @@ class OrderFactory extends Factory
             'load_place'                                  => $this->faker->address,
             'approach'                                    => $this->faker->sentence,
             'work_time'                                   => $this->faker->sentence,
-            'is_load_in_weekend'                          => $this->faker->boolean,
             'clarification_of_the_weekend'                => OrderClarificationDayEnum::SATURDAY_AND_SUNDAY->value,
             'loader_power'                                => $this->faker->numberBetween(1, 100),
             'load_method'                                 => LoadMethodEnum::BY_THE_TUBE->value,

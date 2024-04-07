@@ -45,7 +45,6 @@ class Order extends Model
         'load_place',
         'approach',
         'work_time',
-        'is_load_in_weekend',
         'clarification_of_the_weekend',
         'loader_power',
         'load_method',
