@@ -40,6 +40,7 @@ class RegisterService
         $code_arr = $this->sms->setCode();
         if (env('APP_ENV') == 'production') {
             $this->sms->send($request->phone_number, $code_arr['code'] . '- Verification code Cargis');
+
         }
         $user = User::create([
             'phone_number' => $request->phone_number,
