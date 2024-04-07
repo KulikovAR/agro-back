@@ -31,7 +31,7 @@ class AuthTokenController extends Controller
 
     public function store(LoginRequest $request):ApiJsonResponse
     {
-       
+
         $user =  $this->auth_service->login($request);
         return $user;
     }
@@ -46,6 +46,18 @@ class AuthTokenController extends Controller
             data: [
                 'user'  => new UserResource($data['user']),
                 'token' => $data['token']
+            ]
+        );
+    }
+
+    public function getUser(Request $request):ApiJsonResponse
+    {
+        return new ApiJsonResponse(
+            200,
+            StatusEnum::OK,
+            __('login.verify_phone'),
+            data: [
+                'user'  => new UserResource($this->auth_service->getUser($request))
             ]
         );
     }
