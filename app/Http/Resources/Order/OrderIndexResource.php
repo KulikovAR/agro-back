@@ -25,7 +25,7 @@ class OrderIndexResource extends JsonResource
             'distance'           => $this->distance,
             'crop'               => $this->crop,
             'tariff'             => $this->tariff,
-            'cargo_weight'       => $this->cargo_weight,
+            'volume'             => $this->volume,
             'load_place_name'    => $this->load_place_name,
             'unload_place_name'  => $this->unload_place_name,
             'order_number'       => $this->order_number,
