@@ -52,7 +52,7 @@ return new class extends Migration {
             $table->string('unload_longitude')->nullable();
             $table->string('load_place_name');
             $table->string('unload_place_name');
-            $table->integer('cargo_weight');
+//            $table->integer('cargo_weight');
             $table->boolean('is_full_charter')->nullable();
             $table->text('description')->nullable();
             $table->boolean('is_moderated')->default(false);

@@ -58,7 +58,7 @@ class OrderTest extends TestCase
             'unload_longitude'                            => $this->faker->longitude(),
             'load_place_name'                             => $this->faker->address(),
             'unload_place_name'                           => $this->faker->address(),
-            'cargo_weight'                                => $this->faker->numberBetween(1, 100),
+//            'cargo_weight'                                => $this->faker->numberBetween(1, 100),
             'description'                                 => $this->faker->paragraph(),
             'load_types'                                  => [LoadType::inRandomOrder()->first()->id],
             'is_full_charter'                             => $this->faker->boolean(),
