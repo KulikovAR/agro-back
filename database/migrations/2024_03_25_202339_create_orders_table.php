@@ -34,13 +34,13 @@ return new class extends Migration {
             $table->integer('cargo_shortage_rate')->nullable();
             $table->string('unit_of_measurement_for_cargo_shortage_rate')->nullable();
             $table->integer('cargo_price')->nullable();
-            $table->string('load_place');
+            $table->string('load_place')->nullable();
             $table->string('approach')->nullable();
             $table->text('work_time')->nullable();
             $table->string('clarification_of_the_weekend')->nullable();
             $table->integer('loader_power')->nullable();
             $table->integer('order_number')->default(0);
-            $table->string('unload_method');
+            $table->string('unload_method')->nullable();
             $table->string('load_method');
             $table->string('unload_type')->nullable();
             $table->integer('tolerance_to_the_norm')->nullable();
