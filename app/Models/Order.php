@@ -26,7 +26,6 @@ class Order extends Model
         'tariff',
         'nds_percent',
         'terminal_name',
-        'terminal_address',
         'terminal_inn',
         'exporter_name',
         'exporter_inn',

@@ -18,10 +18,9 @@ return new class extends Migration {
             $table->integer('tariff');
             $table->integer('nds_percent')->nullable();
             $table->string('terminal_name');
-            $table->string('terminal_address');
-            $table->string('terminal_inn');
+            $table->string('terminal_inn')->nullable();
             $table->string('exporter_name');
-            $table->string('exporter_inn');
+            $table->string('exporter_inn')->nullable();
             $table->integer('scale_length');
             $table->integer('height_limit');
             $table->boolean('is_overload');
