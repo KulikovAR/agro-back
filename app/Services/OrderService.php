@@ -19,10 +19,10 @@ class OrderService
 
     public function index(OrderFilterRequest $request): OrderIndexCollection
     {
-        $data = $request->validated();
+        $data   = $request->validated();
         $filter = app()->make(OrderFilter::class, ['queryParams' => array_filter($data)]);
-        $order = Order::filter($filter);
-        return new OrderIndexCollection($order->orderBy('created_at', 'desc')->get());
+        $order   = Order::filter($filter);
+        return new OrderIndexCollection($order->orderBy('created_at','desc')->get());
     }
 
     public function show(Order $order): OrderResource
@@ -32,30 +32,28 @@ class OrderService
 
     public function create(OrderCreateRequest $request): OrderCreateResource
     {
+        $order = Order::create($request->except(['load_types']));
         if (!is_null($request->load_types)) {
-            $order = Order::create($request->except(['load_types']));
-            foreach ($request->load_types as $load_type) {
-                $order = Order::create($request->except(['load_types']));
-                $order->loadTypes()->attach($load_type);
-            }
-            return new OrderCreateResource($order);
+        foreach ($request->load_types as $load_type) {
+            $order->loadTypes()->attach($load_type);
         }
-        $order = Order::create($request->all());
+        return new OrderCreateResource($order);
+    }
         return new OrderCreateResource($order);
     }
 
-    public function update(OrderUpdateRequest $request, Order $order): OrderResource
+    public function update(OrderUpdateRequest $request ,Order $order): OrderResource
     {
         $order->update($request->except(['load_types']));
-        if (!is_null($request->load_types)) {
-            foreach ($request->load_types as $load_type) {
+        if(!is_null($request->load_types)){
+            foreach($request->load_types as $load_type){
                 $order->loadTypes()->sync($load_type);
             }
         }
         return new OrderResource($order);
     }
 
-    public function delete(Order $order): void
+    public function delete(Order $order):void
     {
         $order->delete();
     }
