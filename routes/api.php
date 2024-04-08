@@ -72,6 +72,11 @@ Route::prefix('load_methods')->group(function () {
     Route::get('/', [OrderController::class, 'getLoadMethods'])->name('order.get_load_methods');
 });
 
+Route::prefix('orders')->group(function () {
+    Route::post('/create', [OrderController::class, 'create'])->name('order.create');
+    Route::post('/update/{order}', [OrderController::class, 'update'])->name('order.update');
+    Route::delete('/delete/{order}', [OrderController::class, 'delete'])->name('order.delete');
+});
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('transport')->group(function () {
@@ -83,11 +88,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/manual/brands', [TransportBrandController::class, 'index'])->name('transport.brands');
         Route::get('/manual/types', [TransportTypeController::class, 'index'])->name('transport.types');
     });
-    Route::prefix('orders')->group(function () {
-        Route::post('/create', [OrderController::class, 'create'])->name('order.create');
-        Route::post('/update/{order}', [OrderController::class, 'update'])->name('order.update');
-        Route::delete('/delete/{order}', [OrderController::class, 'delete'])->name('order.delete');
-    });
+
     Route::post('/verification/email', [VerificationContactController::class, 'sendEmailVerification'])->name(
         'verification.email.send'
     );

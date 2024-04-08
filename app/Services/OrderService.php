@@ -33,9 +33,12 @@ class OrderService
     public function create(OrderCreateRequest $request): OrderCreateResource
     {
         $order = Order::create($request->except(['load_types']));
+        if (!is_null($request->load_types)) {
         foreach ($request->load_types as $load_type) {
             $order->loadTypes()->attach($load_type);
         }
+        return new OrderCreateResource($order);
+    }
         return new OrderCreateResource($order);
     }
 

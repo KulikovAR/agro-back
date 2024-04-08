@@ -20,6 +20,7 @@ class Order extends Model
 
     protected $fillable = [
         'id',
+        'order_number',
         'crop',
         'volume',
         'distance',
