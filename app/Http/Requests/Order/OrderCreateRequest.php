@@ -32,10 +32,10 @@ class OrderCreateRequest extends FormRequest
             'tariff'                                      => ['integer', 'required'],
             'nds_percent'                                 => ['integer'],
             'terminal_name'                               => ['string', 'required'],
-            'terminal_address'                            => ['string', 'required'],
-            'terminal_inn'                                => ['string', 'required'],
+//            'terminal_address'                            => ['string', 'required'],
+            'terminal_inn'                                => ['string'],
             'exporter_name'                               => ['string', 'required'],
-            'exporter_inn'                                => ['string', 'required'],
+            'exporter_inn'                                => ['string'],
             'is_semi_truck'                               => ['boolean', 'required'],
             'is_tonar'                                    => ['boolean', 'required'],
             'scale_length'                                => ['integer', 'required'],
@@ -70,7 +70,7 @@ class OrderCreateRequest extends FormRequest
             'cargo_weight'                                => ['numeric', 'required'],
             'description'                                 => ['string'],
             'is_full_charter'                             => ['boolean'],
-            'load_types'                                  => ['array', 'required'],
+            'load_types'                                  => ['array'],
             'load_types.*'                                => ['string', 'exists:load_types,id']
 
 

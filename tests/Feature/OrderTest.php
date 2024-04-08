@@ -21,7 +21,6 @@ class OrderTest extends TestCase
             'tariff'                                      => $this->faker->numberBetween(1, 100),
             'nds_percent'                                 => $this->faker->numberBetween(0, 100),
             'terminal_name'                               => $this->faker->company(),
-            'terminal_address'                            => $this->faker->address(),
             'terminal_inn'                                => $this->faker->numerify('##########'),
             'exporter_name'                               => $this->faker->name(),
             'exporter_inn'                                => $this->faker->numerify('##########'),
