@@ -61,7 +61,7 @@ class OrderCreateRequest extends FormRequest
             'load_longitude'                              => ['numeric'],
             'unload_latitude'                             => ['numeric'],
             'unload_longitude'                            => ['numeric'],
-            'status'                                      => ['string', 'required', Rule::enum(OrderStatusEnum::class)],
+            'status'                                      => ['string', Rule::enum(OrderStatusEnum::class)],
             'unload_method'                               => ['string', 'required', Rule::enum(LoadMethodEnum::class)],
             'load_place_name'                             => ['string', 'required'],
             'unload_place_name'                           => ['string', 'required'],

@@ -25,7 +25,7 @@ return new class extends Migration {
             $table->integer('height_limit');
             $table->boolean('is_overload');
             $table->string('timeslot');
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->integer('outage_begin')->nullable();
             $table->integer('outage_price')->nullable();
             $table->integer('daily_load_rate')->nullable();
