@@ -46,10 +46,10 @@ return new class extends Migration {
             $table->integer('tolerance_to_the_norm')->nullable();
             $table->timestamp('start_order_at')->useCurrent();
             $table->timestamp('end_order_at')->useCurrent();
-            $table->string('load_latitude');
-            $table->string('load_longitude');
-            $table->string('unload_latitude');
-            $table->string('unload_longitude');
+            $table->string('load_latitude')->nullable();
+            $table->string('load_longitude')->nullable();
+            $table->string('unload_latitude')->nullable();
+            $table->string('unload_longitude')->nullable();
             $table->string('load_place_name');
             $table->string('unload_place_name');
             $table->integer('cargo_weight');
