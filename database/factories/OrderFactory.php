@@ -53,7 +53,7 @@ class OrderFactory extends Factory
             'unload_longitude'                            => $this->faker->longitude,
             'unload_place_name'                           => $this->faker->address(),
             'load_place_name'                             => $this->faker->address(),
-            'cargo_weight'                                => $this->faker->numberBetween(1, 100),
+//            'cargo_weight'                                => $this->faker->numberBetween(1, 100),
             'description'                                 => $this->faker->paragraph,
             'is_full_charter'                             => $this->faker->boolean,
             'unload_method'                               => $this->faker->word,

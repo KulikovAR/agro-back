@@ -25,7 +25,7 @@ return new class extends Migration {
             $table->integer('height_limit');
             $table->boolean('is_overload');
             $table->string('timeslot');
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->integer('outage_begin')->nullable();
             $table->integer('outage_price')->nullable();
             $table->integer('daily_load_rate')->nullable();
@@ -46,13 +46,13 @@ return new class extends Migration {
             $table->integer('tolerance_to_the_norm')->nullable();
             $table->timestamp('start_order_at')->useCurrent();
             $table->timestamp('end_order_at')->useCurrent();
-            $table->string('load_latitude');
-            $table->string('load_longitude');
-            $table->string('unload_latitude');
-            $table->string('unload_longitude');
+            $table->string('load_latitude')->nullable();
+            $table->string('load_longitude')->nullable();
+            $table->string('unload_latitude')->nullable();
+            $table->string('unload_longitude')->nullable();
             $table->string('load_place_name');
             $table->string('unload_place_name');
-            $table->integer('cargo_weight');
+//            $table->integer('cargo_weight');
             $table->boolean('is_full_charter')->nullable();
             $table->text('description')->nullable();
             $table->boolean('is_moderated')->default(false);
