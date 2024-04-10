@@ -22,9 +22,9 @@ return new class extends Migration {
             $table->string('exporter_name')->nullable();
             $table->string('exporter_inn')->nullable();
             $table->integer('scale_length');
-            $table->integer('height_limit');
+            $table->float('height_limit');
             $table->boolean('is_overload')->nullable();
-            $table->string('timeslot');
+            $table->string('timeslot')->nullable();
             $table->string('status')->nullable();
             $table->integer('outage_begin')->nullable();
             $table->integer('outage_price')->nullable();
