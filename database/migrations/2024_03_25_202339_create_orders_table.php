@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table->string('crop');
             $table->integer('volume');
-            $table->integer('distance');
+            $table->integer('distance')->nullable();
             $table->integer('tariff');
             $table->integer('nds_percent')->nullable();
             $table->string('terminal_name');
@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->string('exporter_inn')->nullable();
             $table->integer('scale_length');
             $table->integer('height_limit');
-            $table->boolean('is_overload');
+            $table->boolean('is_overload')->nullable();
             $table->string('timeslot');
             $table->string('status')->nullable();
             $table->integer('outage_begin')->nullable();

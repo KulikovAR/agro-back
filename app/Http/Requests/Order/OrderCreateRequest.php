@@ -28,7 +28,7 @@ class OrderCreateRequest extends FormRequest
         return [
             'crop'                                        => ['string', 'required'],
             'volume'                                      => ['numeric', 'required'],
-            'distance'                                    => ['integer', 'required'],
+            'distance'                                    => ['integer'],
             'tariff'                                      => ['integer', 'required'],
             'nds_percent'                                 => ['nullable','integer'],
             'terminal_name'                               => ['string', 'required'],
@@ -37,7 +37,7 @@ class OrderCreateRequest extends FormRequest
             'exporter_inn'                                => ['string'],
             'scale_length'                                => ['integer', 'required'],
             'height_limit'                                => ['integer', 'required'],
-            'is_overload'                                 => ['boolean', 'required'],
+            'is_overload'                                 => ['boolean'],
             'timeslot'                                    => ['string', 'required'],
             'outage_begin'                                => ['nullable','integer'],
             'outage_price'                                => ['integer'],
