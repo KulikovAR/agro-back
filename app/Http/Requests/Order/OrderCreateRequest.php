@@ -36,7 +36,7 @@ class OrderCreateRequest extends FormRequest
             'exporter_name'                               => ['string'],
             'exporter_inn'                                => ['string'],
             'scale_length'                                => ['integer', 'required'],
-            'height_limit'                                => ['float', 'required'],
+            'height_limit'                                => ['required'],
             'is_overload'                                 => ['boolean'],
             'timeslot'                                    => ['string'],
             'outage_begin'                                => ['nullable','integer'],
