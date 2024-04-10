@@ -33,7 +33,7 @@ class OrderCreateRequest extends FormRequest
             'nds_percent'                                 => ['nullable','integer'],
             'terminal_name'                               => ['string', 'required'],
             'terminal_inn'                                => ['string'],
-            'exporter_name'                               => ['string', 'required'],
+            'exporter_name'                               => ['string'],
             'exporter_inn'                                => ['string'],
             'scale_length'                                => ['integer', 'required'],
             'height_limit'                                => ['integer', 'required'],

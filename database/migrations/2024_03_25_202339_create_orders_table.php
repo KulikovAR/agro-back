@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->integer('nds_percent')->nullable();
             $table->string('terminal_name');
             $table->string('terminal_inn')->nullable();
-            $table->string('exporter_name');
+            $table->string('exporter_name')->nullable();
             $table->string('exporter_inn')->nullable();
             $table->integer('scale_length');
             $table->integer('height_limit');
