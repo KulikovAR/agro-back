@@ -48,6 +48,10 @@ class OrderFilter extends AbstractFilter
     public const DESCRIPTION = 'description';
     public const LOAD_TYPES = 'load_types';
     public const UNLOAD_METHODS = 'unload_methods';
+    public const LOAD_REGION = 'load_region';
+    public const LOAD_CITY = 'load_city';
+    public const UNLOAD_REGION = 'unload_region';
+    public const UNLOAD_CITY = 'unload_city';
     public const TARIFF_ORDER = 'tariff_order';
     public const DISTANCE_ORDER = 'distance_order';
 
@@ -96,6 +100,10 @@ class OrderFilter extends AbstractFilter
             self::DESCRIPTION                                 => [$this, 'description'],
             self::LOAD_TYPES                                  => [$this, 'load_types'],
             self::UNLOAD_METHODS                              => [$this, 'unload_methods'],
+            self::LOAD_REGION                                 => [$this, 'load_region'],
+            self::LOAD_CITY                                   => [$this, 'load_city'],
+            self::UNLOAD_REGION                               => [$this, 'unload_region'],
+            self::UNLOAD_CITY                                 => [$this, 'unload_city'],
             self::TARIFF_ORDER                                => [$this, 'tariff_order'],
             self::DISTANCE_ORDER                              => [$this, 'distance_order']
         ];
@@ -128,8 +136,7 @@ class OrderFilter extends AbstractFilter
 
     public function nds_percent(Builder $builder, $value)
     {
-
-        if(is_null($value)){
+        if (is_null($value)) {
             $builder->whereNull('nds_percent');
         }
         $builder->where('nds_percent', $value);
@@ -320,6 +327,25 @@ class OrderFilter extends AbstractFilter
         });
     }
 
+    public function load_region(Builder $builder, $value)
+    {
+        $builder->where('load_region', $value);
+    }
+
+    public function load_city(Builder $builder, $value)
+    {
+        $builder->where('load_region', $value);
+    }
+
+    public function unload_region(Builder $builder, $value)
+    {
+        $builder->where('load_region', $value);
+    }
+
+    public function unload_city(Builder $builder, $value)
+    {
+        $builder->where('load_region', $value);
+    }
 
     public function tariff_order(Builder $builder, $value)
     {

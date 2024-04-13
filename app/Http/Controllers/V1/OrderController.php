@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1;
 
 use App\Enums\StatusEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Order\OrderCitiesRequest;
 use App\Http\Requests\Order\OrderCreateRequest;
 use App\Http\Requests\Order\OrderFilterRequest;
 use App\Http\Requests\Order\OrderUpdateRequest;
@@ -88,6 +89,24 @@ class OrderController extends Controller
             StatusEnum::OK,
             'Типы загрузок получены',
             data: $this->service->getOptions()
+        );
+    }
+
+    public function getRegions() {
+        $regions = Order::whereNotNull('load_region')->get()->pluck('load_region')->toArray();
+
+        $regions = array_unique($regions);
+        return new ApiJsonResponse(data:
+            $regions
+        );
+    }
+
+    public function getCities(OrderCitiesRequest $request) {
+        $cities = Order::where('load_region', $request->region)->get()->pluck('load_city')->toArray();
+
+        $cities = array_unique($cities);
+        return new ApiJsonResponse(data:
+            $cities
         );
     }
 }

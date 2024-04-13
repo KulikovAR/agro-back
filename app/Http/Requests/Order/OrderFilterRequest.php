@@ -26,7 +26,10 @@ class OrderFilterRequest extends FormRequest
             'crop'                                        => ['string'],
             'volume'                                      => ['string'],
             'distance_from'                               => ['integer'],
-            'distance_to'                                 => ['integer', Rule::when($this->input('distance_from'),'gt:distance_from')],
+            'distance_to'                                 => [
+                'integer',
+                Rule::when($this->input('distance_from'), 'gt:distance_from')
+            ],
             'tariff'                                      => ['integer'],
             'nds_percent'                                 => ['nullable'],
             'terminal_name'                               => ['string'],
@@ -66,6 +69,10 @@ class OrderFilterRequest extends FormRequest
             'description'                                 => ['string'],
             'load_types'                                  => ['array'],
             'load_types.*.load_type_id'                   => ['string', 'exists:load_types,id'],
+            'load_region'                                 => ['string'],
+            'load_city'                                   => ['string'],
+            'unload_region'                               => ['string'],
+            'unload_city'                                 => ['string'],
             'tariff_order'                                => ['string'],
             'distance_order'                              => ['string'],
         ];
