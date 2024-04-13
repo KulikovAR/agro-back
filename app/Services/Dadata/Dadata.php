@@ -310,7 +310,7 @@ class Dadata
         $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value . 'address', $query);
 
         if ($response->successful()) {
-            dd([
+            return [
                 "country"          => $this->decodeBodyItem($response, 'country'),
                 "region"           => $this->decodeBodyItem($response, 'region'),
                 "city"             => $this->decodeBodyItem($response, 'city'),
@@ -324,7 +324,9 @@ class Dadata
                 "federal_district" => $this->decodeBodyItem($response, 'federal_district'),
                 "kladr_id"         => $this->decodeBodyItem($response, 'kladr_id'),
                 "city_kladr_id"    => $this->decodeBodyItem($response, 'city_kladr_id'),
-            ]);
+                "region_type_full" => $this->decodeBodyItem($response,'region_type_full'),
+            ];
+
         }
         throw new BadRequestHttpException(json_decode($response->body())->message);
     }
@@ -332,6 +334,6 @@ class Dadata
 
     private function decodeBodyItem($response, $item)
     {
-        json_decode($response->body(), true)[0][$item];
+        return json_decode($response->body(), true)[0][$item];
     }
 }

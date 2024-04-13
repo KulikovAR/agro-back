@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Enums\LoadMethodEnum;
 use App\Enums\OrderClarificationDayEnum;
 use App\Enums\OrderStatusEnum;
+use App\Enums\OrderTimeslotEnum;
 use App\Enums\UnitOfMeasurementForCargoShortrageRateEnum;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
@@ -79,10 +80,10 @@ class OrderResource extends Resource
                 Forms\Components\Toggle::make('is_overload')
                     ->label('Перегрузка')
                     ->required(),
-                Forms\Components\TextInput::make('timeslot')
+                Forms\Components\Select::make('timeslot')
                     ->label('Таймслот')
                     ->required()
-                    ->maxLength(255),
+                    ->options(OrderTimeslotEnum::class),
                 Forms\Components\Select::make('status')
                     ->label('Статус')
                     ->required()
@@ -137,9 +138,15 @@ class OrderResource extends Resource
                     ->label('Метод загрузки')
                     ->required()
                     ->options(LoadMethodEnum::getLoadMethods()),
-                Forms\Components\Select::make('author_id')
+                Forms\Components\Select::make('load_type_id')
                     ->relationship(name: 'loadTypes', titleAttribute: 'title')
                     ->label('Способы погрузки')
+                    ->searchable(['title'])
+                    ->preload()
+                    ->multiple(),
+                Forms\Components\Select::make('unload_method_id')
+                    ->relationship(name: 'unloadMethods', titleAttribute: 'title')
+                    ->label('Методы разгрузки')
                     ->searchable(['title'])
                     ->preload()
                     ->multiple(),
@@ -163,10 +170,6 @@ class OrderResource extends Resource
                     ->label('Адрес места выгрузки')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('cargo_weight')
-                    ->label('Вес груза')
-                    ->required()
-                    ->numeric(),
                 Forms\Components\Toggle::make('is_full_charter')
                     ->label('Полная хартия'),
                 Forms\Components\Textarea::make('description')

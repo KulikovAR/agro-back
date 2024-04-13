@@ -57,13 +57,21 @@ class Order extends Model
         'unload_place_name',
         'cargo_weight',
         'description',
-        'unload_method',
         'is_full_charter',
         'is_moderated',
+        'load_city',
+        'unload_city',
+        'load_region',
+        'unload_region',
     ];
 
     public function loadTypes(): BelongsToMany
     {
         return $this->belongsToMany(LoadType::class, 'order_load_types', 'order_id', 'load_type_id');
+    }
+
+    public function unloadMethods(): BelongsToMany
+    {
+        return $this->belongsToMany(UnloadMethod::class, 'order_unload_methods', 'order_id', 'unload_method_id');
     }
 }
