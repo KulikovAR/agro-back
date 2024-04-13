@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Enums\StatusEnum;
 use App\Models\LoadType;
+use App\Models\UnloadMethod;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -21,9 +22,7 @@ class OrderTest extends TestCase
             'tariff'                                      => $this->faker->numberBetween(1, 100),
             'nds_percent'                                 => $this->faker->numberBetween(0, 100),
             'terminal_name'                               => $this->faker->company(),
-            'terminal_inn'                                => $this->faker->numerify('##########'),
             'exporter_name'                               => $this->faker->name(),
-            'exporter_inn'                                => $this->faker->numerify('##########'),
             'scale_length'                                => $this->faker->numberBetween(1, 10),
             'height_limit'                                => $this->faker->numberBetween(1, 10),
             'is_overload'                                 => $this->faker->boolean(),
@@ -61,8 +60,8 @@ class OrderTest extends TestCase
 //            'cargo_weight'                                => $this->faker->numberBetween(1, 100),
             'description'                                 => $this->faker->paragraph(),
             'load_types'                                  => [LoadType::inRandomOrder()->first()->id],
+            'unload_methods'                              => [UnloadMethod::inRandomOrder()->first()->id],
             'is_full_charter'                             => $this->faker->boolean(),
-            'unload_method'                               => $this->faker->word
             // Пример данных для массива
         ];
 

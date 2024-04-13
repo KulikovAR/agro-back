@@ -45,9 +45,9 @@ class OrderFilter extends AbstractFilter
     public const UNLOAD_LONGITUDE = 'unload_longitude';
     public const LOAD_PLACE_NAME = 'load_place_name';
     public const UNLOAD_PLACE_NAME = 'unload_place_name';
-    public const CARGO_WEIGHT = 'cargo_weight';
     public const DESCRIPTION = 'description';
     public const LOAD_TYPES = 'load_types';
+    public const UNLOAD_METHODS = 'unload_methods';
     public const TARIFF_ORDER = 'tariff_order';
     public const DISTANCE_ORDER = 'distance_order';
 
@@ -93,11 +93,11 @@ class OrderFilter extends AbstractFilter
             self::UNLOAD_LONGITUDE                            => [$this, 'unload_longitude'],
             self::LOAD_PLACE_NAME                             => [$this, 'load_place_name'],
             self::UNLOAD_PLACE_NAME                           => [$this, 'unload_place_name'],
-            self::CARGO_WEIGHT                                => [$this, 'cargo_weight'],
             self::DESCRIPTION                                 => [$this, 'description'],
             self::LOAD_TYPES                                  => [$this, 'load_types'],
-            self::TARIFF_ORDER                                => [$this,'tariff_order'],
-            self::DISTANCE_ORDER                              => [$this,'distance_order']
+            self::UNLOAD_METHODS                              => [$this, 'unload_methods'],
+            self::TARIFF_ORDER                                => [$this, 'tariff_order'],
+            self::DISTANCE_ORDER                              => [$this, 'distance_order']
         ];
     }
 
@@ -128,6 +128,10 @@ class OrderFilter extends AbstractFilter
 
     public function nds_percent(Builder $builder, $value)
     {
+
+        if(is_null($value)){
+            $builder->whereNull('nds_percent');
+        }
         $builder->where('nds_percent', $value);
     }
 
@@ -297,11 +301,6 @@ class OrderFilter extends AbstractFilter
         $builder->where('unload_place_name', $value);
     }
 
-    public function cargo_weight(Builder $builder, $value)
-    {
-        $builder->where('cargo_weight', $value);
-    }
-
     public function description(Builder $builder, $value)
     {
         $builder->where('description', $value);
@@ -314,12 +313,20 @@ class OrderFilter extends AbstractFilter
         });
     }
 
-    public function tariff_order (Builder $builder, $value)
+    public function unload_methods(Builder $builder, $value)
+    {
+        $builder->WhereHas('unloadMethods', function ($q) use ($value) {
+            $q->whereIn('unload_method_id', $value);
+        });
+    }
+
+
+    public function tariff_order(Builder $builder, $value)
     {
         $builder->orderBy('tariff', $value);
     }
 
-    public function distance_order (Builder $builder, $value)
+    public function distance_order(Builder $builder, $value)
     {
         $builder->orderBy('distance', $value);
     }

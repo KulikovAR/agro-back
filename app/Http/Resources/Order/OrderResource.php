@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Order;
 
 use App\Http\Resources\LoadType\LoadTypeCollection;
+use App\Http\Resources\UnloadMethodCollection;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -61,12 +62,15 @@ class OrderResource extends JsonResource
                 'y' => $this->unload_latitude
             ),
             'load_place_name'                             => $this->load_place_name,
+            'load_city'                                   => $this->load_city,
+            'load_region'                                 => $this->load_region,
+            'unload_region'                               => $this->unload_region,
+            'unload_city'                                 => $this->unload_city,
             'unload_place_name'                           => $this->unload_place_name,
-            'cargo_weight'                                => $this->cargo_weight,
             'description'                                 => $this->description,
             'load_types'                                  => new LoadTypeCollection($this->loadTypes),
+            'unload_methods'                              => new UnloadMethodCollection($this->unloadMethods),
             'is_full_charter'                             => $this->is_full_charter,
-            'unload_method'                               => $this->unload_method,
             'created_at'                                  => Carbon::parse($this->created_at)->format('d.m.y')
         ];
     }

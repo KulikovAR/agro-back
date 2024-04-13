@@ -81,23 +81,14 @@ class OrderController extends Controller
         );
     }
 
-    public function getLoadTypes(): ApiJsonResponse
+    public function getOptions(): ApiJsonResponse
     {
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
             'Типы загрузок получены',
-            data: $this->service->getLoadTypes()
-        );
-    }
-
-    public function getLoadMethods(): ApiJsonResponse
-    {
-        return new ApiJsonResponse(
-            200,
-            StatusEnum::OK,
-            'Типы загрузок получены',
-            data: $this->service->getLoadMethods()
+            data: $this->service->getOptions()
         );
     }
 }
+

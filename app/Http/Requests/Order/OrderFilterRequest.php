@@ -28,7 +28,7 @@ class OrderFilterRequest extends FormRequest
             'distance_from'                               => ['integer'],
             'distance_to'                                 => ['integer', Rule::when($this->input('distance_from'),'gt:distance_from')],
             'tariff'                                      => ['integer'],
-            'nds_percent'                                 => ['integer'],
+            'nds_percent'                                 => ['nullable'],
             'terminal_name'                               => ['string'],
             'terminal_address'                            => ['string'],
             'terminal_inn'                                => ['string'],
