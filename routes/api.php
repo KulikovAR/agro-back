@@ -65,11 +65,7 @@ Route::prefix('orders')->group(function () {
     Route::get('/{order}', [OrderController::class, 'show'])->name('order.show');
 });
 
-Route::prefix('orders')->group(function () {
-    Route::post('/create', [OrderController::class, 'create'])->name('order.create');
-    Route::post('/update/{order}', [OrderController::class, 'update'])->name('order.update');
-    Route::delete('/delete/{order}', [OrderController::class, 'delete'])->name('order.delete');
-});
+
 
 
 
@@ -84,7 +80,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/manual/types', [TransportTypeController::class, 'index'])->name('transport.types');
     });
 
-
+    Route::prefix('orders')->group(function () {
+        Route::post('/create', [OrderController::class, 'create'])->name('order.create');
+        Route::post('/update/{order}', [OrderController::class, 'update'])->name('order.update');
+        Route::delete('/delete/{order}', [OrderController::class, 'delete'])->name('order.delete');
+    });
 
     Route::prefix('options')->group(function () {
         Route::get('/', [OrderController::class, 'getOptions'])->name('order.get_options');
