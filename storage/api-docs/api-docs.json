@@ -726,6 +726,10 @@
                                                         "type": "string",
                                                         "example": "pricep"
                                                     },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "Активная"
+                                                    },
                                                     "order_number": {
                                                         "type": "integer",
                                                         "example": 0
@@ -919,10 +923,6 @@
                                                         "type": "integer",
                                                         "example": 0
                                                     },
-                                                    "is_load_in_weekend": {
-                                                        "type": "boolean",
-                                                        "example": false
-                                                    },
                                                     "clarification_of_the_weekend": {
                                                         "type": "string",
                                                         "example": "magni"
@@ -996,6 +996,10 @@
                                                     "unload_method": {
                                                         "type": "string",
                                                         "example": "pricep"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "Активная"
                                                     },
                                                     "load_types": {
                                                         "type": "array",
@@ -1071,7 +1075,6 @@
                                     "load_place",
                                     "approach",
                                     "work_time",
-                                    "is_load_in_weekend",
                                     "clarification_of_the_weekend",
                                     "loader_power",
                                     "load_method",
@@ -1197,10 +1200,6 @@
                                         "type": "string",
                                         "example": "8am - 5pm"
                                     },
-                                    "is_load_in_weekend": {
-                                        "type": "boolean",
-                                        "example": false
-                                    },
                                     "clarification_of_the_weekend": {
                                         "type": "string",
                                         "example": "N/A"
@@ -1266,6 +1265,10 @@
                                     "unload_method": {
                                         "type": "string",
                                         "example": "pricep"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "Активная"
                                     },
                                     "load_types": {
                                         "type": "array",
@@ -1373,7 +1376,6 @@
                                     "load_place",
                                     "approach",
                                     "work_time",
-                                    "is_load_in_weekend",
                                     "clarification_of_the_weekend",
                                     "loader_power",
                                     "load_method",
@@ -1499,10 +1501,6 @@
                                         "type": "string",
                                         "example": "8am - 5pm"
                                     },
-                                    "is_load_in_weekend": {
-                                        "type": "boolean",
-                                        "example": false
-                                    },
                                     "clarification_of_the_weekend": {
                                         "type": "string",
                                         "example": "N/A"
@@ -1568,6 +1566,10 @@
                                     "unload_method": {
                                         "type": "string",
                                         "example": "pricep"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "example": "Активная"
                                     },
                                     "load_types": {
                                         "type": "array",
@@ -1707,10 +1709,6 @@
                                                     "type": "string",
                                                     "example": "8am - 5pm"
                                                 },
-                                                "is_load_in_weekend": {
-                                                    "type": "boolean",
-                                                    "example": false
-                                                },
                                                 "clarification_of_the_weekend": {
                                                     "type": "string",
                                                     "example": "N/A"
@@ -1776,6 +1774,10 @@
                                                 "unload_method": {
                                                     "type": "string",
                                                     "example": "pricep"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "Активная"
                                                 },
                                                 "load_types": {
                                                     "type": "array",
@@ -1941,6 +1943,101 @@
                                                 },
                                                 "type": "object"
                                             }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/regions": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Retrieve a list of regions for orders",
+                "operationId": "849aa8865d0d72eb7cb98683e7f7285b",
+                "responses": {
+                    "200": {
+                        "description": "A list of regions retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": ""
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "Liechtenstein",
+                                                "Northern Mariana Islands",
+                                                "Barbados",
+                                                "Lesotho",
+                                                "Moldova"
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/cities": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Retrieve a list of cities for a specific region",
+                "operationId": "f2ef60b0244d669a36593eef3509303f",
+                "parameters": [
+                    {
+                        "name": "region",
+                        "in": "query",
+                        "description": "Name of the region for which cities are to be retrieved",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of cities retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": ""
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "Emmerichbury"
+                                            ]
                                         }
                                     },
                                     "type": "object"

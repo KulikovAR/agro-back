@@ -728,4 +728,85 @@ class OrderController
     {
 
     }
+
+
+    /**
+     * @OA\Get(
+     *     path="/orders/regions",
+     *     summary="Retrieve a list of regions for orders",
+     *     tags={"Orders"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="A list of regions retrieved successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="string",
+     *                 example="OK"
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example=""
+     *             ),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(type="string"),
+     *                 example={"Liechtenstein", "Northern Mariana Islands", "Barbados", "Lesotho", "Moldova"}
+     *             )
+     *         )
+     *     ),
+     * )
+     */
+
+    public function getRegions() {
+
+    }
+
+
+    /**
+     * @OA\Get(
+     *     path="/orders/cities",
+     *     summary="Retrieve a list of cities for a specific region",
+     *     tags={"Orders"},
+     *     @OA\Parameter(
+     *         name="region",
+     *         in="query",
+     *         required=true,
+     *         description="Name of the region for which cities are to be retrieved",
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="A list of cities retrieved successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="status",
+     *                 type="string",
+     *                 example="OK"
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 example=""
+     *             ),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(type="string"),
+     *                 example={"Emmerichbury"}
+     *             )
+     *         )
+     *     ),
+     * )
+     */
+
+    public function getCities() {
+
+    }
 }

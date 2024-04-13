@@ -61,6 +61,8 @@ Route::middleware(['guest'])->group(function () {
 
 
 Route::prefix('orders')->group(function () {
+    Route::get('/regions', [OrderController::class, 'getRegions'])->name('order.regions');
+    Route::get('/cities', [OrderController::class, 'getCities'])->name('order.cities');
     Route::get('/', [OrderController::class, 'index'])->name('order.index');
     Route::get('/{order}', [OrderController::class, 'show'])->name('order.show');
 });
