@@ -65,6 +65,15 @@ class Order extends Model
         'unload_region',
     ];
 
+    const SORT = [
+        'tariff',
+        'distance'
+    ];
+
+    public static function sortFields(): array {
+        return self::SORT;
+    }
+
     public function loadTypes(): BelongsToMany
     {
         return $this->belongsToMany(LoadType::class, 'order_load_types', 'order_id', 'load_type_id');

@@ -2,6 +2,7 @@
 
 namespace App\Filters;
 
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder;
 
 class OrderFilter extends AbstractFilter
@@ -52,8 +53,7 @@ class OrderFilter extends AbstractFilter
     public const LOAD_CITY = 'load_city';
     public const UNLOAD_REGION = 'unload_region';
     public const UNLOAD_CITY = 'unload_city';
-    public const TARIFF_ORDER = 'tariff_order';
-    public const DISTANCE_ORDER = 'distance_order';
+    public const SORT = 'sort';
 
     protected function getCallbacks(): array
     {
@@ -104,8 +104,7 @@ class OrderFilter extends AbstractFilter
             self::LOAD_CITY                                   => [$this, 'load_city'],
             self::UNLOAD_REGION                               => [$this, 'unload_region'],
             self::UNLOAD_CITY                                 => [$this, 'unload_city'],
-            self::TARIFF_ORDER                                => [$this, 'tariff_order'],
-            self::DISTANCE_ORDER                              => [$this, 'distance_order']
+            self::SORT                                        => [$this, 'sort'],
         ];
     }
 
@@ -347,13 +346,16 @@ class OrderFilter extends AbstractFilter
         $builder->where('load_region', $value);
     }
 
-    public function tariff_order(Builder $builder, $value)
+    public function sort(Builder $builder, $value)
     {
-        $builder->orderBy('tariff', $value);
-    }
+        $sortType = substr($value, 0, 1) == '-' ? 'desc' : 'asc';
 
-    public function distance_order(Builder $builder, $value)
-    {
-        $builder->orderBy('distance', $value);
+        $field = trim($value, '-');
+
+        if (!in_array($field, Order::sortFields())) {
+            return;
+        }
+
+        $builder->orderBy($field, $sortType);
     }
 }
