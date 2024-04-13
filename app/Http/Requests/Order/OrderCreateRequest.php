@@ -28,7 +28,7 @@ class OrderCreateRequest extends FormRequest
         return [
             'crop'                                        => ['string', 'required'],
             'volume'                                      => ['numeric', 'required'],
-            'distance'                                    => ['integer', 'required'],
+            'distance'                                    => ['integer'],
             'tariff'                                      => ['integer', 'required'],
             'nds_percent'                                 => ['nullable', 'integer'],
             'terminal_name'                               => ['string', 'required'],
@@ -42,7 +42,7 @@ class OrderCreateRequest extends FormRequest
             'daily_load_rate'                             => ['integer'],
             'contact_name'                                => ['string', 'required'],
             'contact_phone'                               => ['string', 'required'],
-            'cargo_shortrage_rate'                        => ['nullable', 'integer'],
+            'cargo_shortrage_rate'                        => ['nullable','integer'],
             'unit_of_measurement_for_cargo_shortage_rate' => ['string'],
             'cargo_price'                                 => ['nullable', 'integer'],
             'load_place'                                  => ['string'],

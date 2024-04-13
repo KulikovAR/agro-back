@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table->string('crop');
             $table->integer('volume');
-            $table->integer('distance');
+            $table->integer('distance')->nullable();
             $table->integer('tariff');
             $table->integer('nds_percent')->nullable();
             $table->string('terminal_name');
