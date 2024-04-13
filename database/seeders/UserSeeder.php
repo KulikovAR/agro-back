@@ -35,28 +35,28 @@ class UserSeeder extends Seeder
             return;
         }
 
-        // $userAdmin = User::factory()->create(
-        //     [
-        //         'password' => Hash::make(self::ADMIN_PASSWORD),
-        //         'email' => self::ADMIN_EMAIL,
-        //     ]
-        // );
-        // $userAdmin->assignRole(Role::ROLE_ADMIN);
+        $admin = User::create([
+            'email'             => 'admin@admin.ru',
+            'phone_number'      => '79202149563',
+            'password'          => '12345678',
+            'phone_verified_at' => Carbon::now()
+        ]);
 
-        // $message = "Новый тест на проверку";
-        // NotificationService::notifyAdmin($message);
+        $admin_role = Role::where('name', 'admin')->first();
+        $admin->assignRole($admin_role);
+
 
         $user = User::factory()->create(
             [
                 'password' => Hash::make(self::USER_PASSWORD),
-                'email' => self::USER_EMAIL,
+                'email'    => self::USER_EMAIL,
             ],
         );
-         $users = User::factory(10)->create();
-         foreach($users as $item){
-         $item->driver()->create((new DriverFactory())->definition());
-         $item->counteragent()->create((new UserinfoFactory())->definition());
-         }
+        $users = User::factory(10)->create();
+        foreach ($users as $item) {
+            $item->driver()->create((new DriverFactory())->definition());
+            $item->counteragent()->create((new UserinfoFactory())->definition());
+        }
         // $user->assignRole(Role::ROLE_USER);
 
         // $user->userProfile()->create((new UserProfileFactory())->definition());

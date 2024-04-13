@@ -15,6 +15,9 @@ class TransportSeeder extends Seeder
      */
     public function run(): void
     {
-      
+        if (App::environment(EnvironmentTypeEnum::productEnv())) {
+            return;
+        }
+        Transport::factory()->count(5)->create();
     }
 }
