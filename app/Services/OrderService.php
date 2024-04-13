@@ -36,7 +36,12 @@ class OrderService
         $data = $request->validated();
         $filter = app()->make(OrderFilter::class, ['queryParams' => array_filter($data)]);
         $order = Order::filter($filter);
-        return new OrderIndexCollection($order->orderBy('order_number', 'desc')->get());
+
+        if(is_null($request->sort)) {
+            $order->orderBy('order_number', 'desc');
+        }
+
+        return new OrderIndexCollection($order->get());
     }
 
     public function show(Order $order): OrderResource

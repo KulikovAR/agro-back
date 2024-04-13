@@ -73,8 +73,7 @@ class OrderFilterRequest extends FormRequest
             'load_city'                                   => ['string'],
             'unload_region'                               => ['string'],
             'unload_city'                                 => ['string'],
-            'tariff_order'                                => ['string'],
-            'distance_order'                              => ['string'],
+            'sort'                                        => ['string'],
         ];
     }
 }
