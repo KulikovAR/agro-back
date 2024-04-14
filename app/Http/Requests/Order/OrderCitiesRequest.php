@@ -15,7 +15,8 @@ class OrderCitiesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'region' => 'string|required'
+            'load_region' => 'string|required',
+            'unload_regions' => 'string|required',
         ];
     }
 }

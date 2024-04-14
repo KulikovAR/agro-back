@@ -91,21 +91,17 @@ class OrderController extends Controller
         );
     }
 
-    public function getRegions() {
-        $regions = Order::whereNotNull('load_region')->get()->pluck('load_region')->toArray();
-
-        $regions = array_unique($regions);
-        return new ApiJsonResponse(data:
-            $regions
+    public function getRegions()
+    {
+        return new ApiJsonResponse(
+            data: $this->service->getRegions()
         );
     }
 
-    public function getCities(OrderCitiesRequest $request) {
-        $cities = Order::where('load_region', $request->region)->get()->pluck('load_city')->toArray();
-
-        $cities = array_unique($cities);
-        return new ApiJsonResponse(data:
-            $cities
+    public function getCities(OrderCitiesRequest $request)
+    {
+        return new ApiJsonResponse(
+            data: $this->service->getCities()
         );
     }
 }

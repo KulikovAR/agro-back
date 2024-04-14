@@ -112,7 +112,7 @@ class OrderFilter extends AbstractFilter
 
     public function crop(Builder $builder, $value)
     {
-        $builder->where('crop', $value);
+        $builder->whereIn('crop', $value);
     }
 
     public function volume(Builder $builder, $value)
@@ -137,7 +137,7 @@ class OrderFilter extends AbstractFilter
 
     public function nds_percent(Builder $builder, $value)
     {
-        if (is_null($value)) {
+            if (is_null($value)) {
             $builder->whereNull('nds_percent');
         }
         $builder->where('nds_percent', $value);
@@ -171,12 +171,12 @@ class OrderFilter extends AbstractFilter
 
     public function scale_length(Builder $builder, $value)
     {
-        $builder->where('scale_lenght', $value);
+        $builder->where('scale_lenght','>=', $value);
     }
 
     public function height_limit(Builder $builder, $value)
     {
-        $builder->where('height_limit', $value);
+        $builder->where('height_limit','>=', $value);
     }
 
     public function is_overload(Builder $builder, $value)
@@ -186,7 +186,7 @@ class OrderFilter extends AbstractFilter
 
     public function timeslot(Builder $builder, $value)
     {
-        $builder->where('timeslot', $value);
+        $builder->whereIn('timeslot', $value);
     }
 
     public function outage_begin(Builder $builder, $value)
@@ -261,7 +261,7 @@ class OrderFilter extends AbstractFilter
 
     public function load_method(Builder $builder, $value)
     {
-        $builder->where('load_method', $value);
+        $builder->whereIn('load_method', $value);
     }
 
     public function tolerance_to_the_norm(Builder $builder, $value)
@@ -317,14 +317,14 @@ class OrderFilter extends AbstractFilter
     public function load_types(Builder $builder, $value)
     {
         $builder->WhereHas('loadTypes', function ($q) use ($value) {
-            $q->whereIn('load_type_id', $value);
+            $q->whereIn('id', $value);
         });
     }
 
     public function unload_methods(Builder $builder, $value)
     {
         $builder->WhereHas('unloadMethods', function ($q) use ($value) {
-            $q->whereIn('unload_method_id', $value);
+            $q->whereIn('id', $value);
         });
     }
 

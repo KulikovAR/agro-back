@@ -23,7 +23,8 @@ class OrderFilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'crop'                                        => ['string'],
+            'crop'                                        => ['array'],
+            'crop.*'                                      => ['string'],
             'volume'                                      => ['string'],
             'distance_from'                               => ['integer'],
             'distance_to'                                 => [
@@ -40,7 +41,7 @@ class OrderFilterRequest extends FormRequest
             'scale_lenght'                                => ['integer'],
             'height_limit'                                => ['integer'],
             'is_overload'                                 => ['boolean'],
-            'timeslot'                                    => ['string'],
+            'timeslot'                                    => ['array'],
             'outage_begin'                                => ['integer'],
             'outage_price'                                => ['integer'],
             'daily_load_rate'                             => ['integer'],
@@ -55,7 +56,7 @@ class OrderFilterRequest extends FormRequest
             'is_load_in_weekend'                          => ['boolean'],
             'clarification_of_the_weekend'                => ['string'],
             'loader_power'                                => ['integer'],
-            'load_method'                                 => ['string'],
+            'load_method'                                 => ['array'],
             'tolerance_to_the_norm'                       => ['integer'],
             'start_order_at'                              => ['date'],
             'end_order_at'                                => ['date'],
@@ -68,7 +69,9 @@ class OrderFilterRequest extends FormRequest
             'cargo_weight'                                => ['integer'],
             'description'                                 => ['string'],
             'load_types'                                  => ['array'],
-            'load_types.*.load_type_id'                   => ['string', 'exists:load_types,id'],
+            'load_types.*'                                => ['string', 'exists:load_types,id'],
+            'unload_methods'                              => ['array'],
+            'unload_methods.*'                            => ['string', 'exists:unload_methods,id'],
             'load_region'                                 => ['array'],
             'load_city'                                   => ['array'],
             'unload_region'                               => ['array'],
