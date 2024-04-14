@@ -53,6 +53,7 @@ class OrderFilter extends AbstractFilter
     public const LOAD_CITY = 'load_city';
     public const UNLOAD_REGION = 'unload_region';
     public const UNLOAD_CITY = 'unload_city';
+    public const WITH_NDS = 'with_nds';
     public const SORT = 'sort';
 
     protected function getCallbacks(): array
@@ -104,6 +105,7 @@ class OrderFilter extends AbstractFilter
             self::LOAD_CITY                                   => [$this, 'load_city'],
             self::UNLOAD_REGION                               => [$this, 'unload_region'],
             self::UNLOAD_CITY                                 => [$this, 'unload_city'],
+            self::WITH_NDS                                    => [$this, 'with_nds'],
             self::SORT                                        => [$this, 'sort'],
         ];
     }
@@ -333,17 +335,27 @@ class OrderFilter extends AbstractFilter
 
     public function load_city(Builder $builder, $value)
     {
-        $builder->where('load_region', $value);
+        $builder->whereIn('load_region', $value);
     }
 
     public function unload_region(Builder $builder, $value)
     {
-        $builder->where('load_region', $value);
+        $builder->whereIn('unload_region', $value);
     }
 
     public function unload_city(Builder $builder, $value)
     {
-        $builder->where('load_region', $value);
+        $builder->whereIn('unload_region', $value);
+    }
+
+    public function with_nds(Builder $builder, $value)
+    {
+        if($value) {
+            $builder->whereNotNull('nds_percent');
+            return;
+        }
+
+        $builder->whereNull('nds_percent');
     }
 
     public function sort(Builder $builder, $value)
