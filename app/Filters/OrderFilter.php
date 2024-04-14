@@ -55,6 +55,7 @@ class OrderFilter extends AbstractFilter
     public const UNLOAD_CITY = 'unload_city';
     public const WITH_NDS = 'with_nds';
     public const SORT = 'sort';
+    public const IS_FULL_CHARTER = 'is_full_charter';
 
     protected function getCallbacks(): array
     {
@@ -107,9 +108,14 @@ class OrderFilter extends AbstractFilter
             self::UNLOAD_CITY                                 => [$this, 'unload_city'],
             self::WITH_NDS                                    => [$this, 'with_nds'],
             self::SORT                                        => [$this, 'sort'],
+            self::IS_FULL_CHARTER                             => [$this,'is_full_charter'],
         ];
     }
 
+    public function is_full_charter(Builder $builder, $value)
+    {
+        $builder->where('is_full_charter', $value);
+    }
     public function crop(Builder $builder, $value)
     {
         $builder->whereIn('crop', $value);
@@ -128,6 +134,16 @@ class OrderFilter extends AbstractFilter
     public function distance_from(Builder $builder, $value)
     {
         $builder->where('distance', '>=', $value);
+    }
+
+    public function cargo_price_from(Builder $builder, $value)
+    {
+        $builder->where('cargo_price', '<=', $value);
+    }
+
+    public function cargo_price_to(Builder $builder, $value)
+    {
+        $builder->where('cargo_price', '>=', $value);
     }
 
     public function tariff(Builder $builder, $value)
@@ -171,7 +187,7 @@ class OrderFilter extends AbstractFilter
 
     public function scale_length(Builder $builder, $value)
     {
-        $builder->where('scale_lenght', '>=', $value);
+        $builder->where('scale_length', '>=', $value);
     }
 
     public function height_limit(Builder $builder, $value)
