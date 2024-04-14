@@ -105,7 +105,7 @@ class OrderService
     {
         return [
             'load_types'        => new LoadTypeCollection(LoadType::all()),
-            'unload_methods'    => new LoadTypeCollection(UnloadMethod::all()),
+            'unload_methods'    => new UnloadMethodCollection(UnloadMethod::all()),
             'load_methods'      => LoadMethodEnum::getLoadMethods(),
             'timeslot'          => OrderTimeslotEnum::getTimselot(),
             'crop'              => CropOrderEnum::getCrop(),
