@@ -56,6 +56,8 @@ class OrderFilter extends AbstractFilter
     public const WITH_NDS = 'with_nds';
     public const SORT = 'sort';
     public const IS_FULL_CHARTER = 'is_full_charter';
+    public const TARIFF_FROM = 'tariff_from';
+    public const TARIFF_TO = 'tariff_to';
 
     protected function getCallbacks(): array
     {
@@ -108,7 +110,9 @@ class OrderFilter extends AbstractFilter
             self::UNLOAD_CITY                                 => [$this, 'unload_city'],
             self::WITH_NDS                                    => [$this, 'with_nds'],
             self::SORT                                        => [$this, 'sort'],
-            self::IS_FULL_CHARTER                             => [$this,'is_full_charter'],
+            self::TARIFF_FROM                                 => [$this, 'tariff_from'],
+            self::TARIFF_TO                                   => [$this, 'tariff_to'],
+            self::IS_FULL_CHARTER                             => [$this, 'is_full_charter'],
         ];
     }
 
@@ -116,6 +120,7 @@ class OrderFilter extends AbstractFilter
     {
         $builder->where('is_full_charter', $value);
     }
+
     public function crop(Builder $builder, $value)
     {
         $builder->whereIn('crop', $value);
