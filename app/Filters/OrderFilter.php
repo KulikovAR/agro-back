@@ -330,22 +330,22 @@ class OrderFilter extends AbstractFilter
 
     public function load_region(Builder $builder, $value)
     {
-        $builder->where('load_region', $value);
+        $builder->whereIn('load_region', $value);
     }
 
     public function load_city(Builder $builder, $value)
     {
-        $builder->where('load_region', $value);
+        $builder->whereIn('load_region', $value);
     }
 
     public function unload_region(Builder $builder, $value)
     {
-        $builder->where('load_region', $value);
+        $builder->whereIn('unload_region', $value);
     }
 
     public function unload_city(Builder $builder, $value)
     {
-        $builder->where('load_region', $value);
+        $builder->whereIn('unload_region', $value);
     }
 
     public function with_nds(Builder $builder, $value)

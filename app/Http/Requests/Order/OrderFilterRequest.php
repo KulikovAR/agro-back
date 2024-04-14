@@ -69,10 +69,10 @@ class OrderFilterRequest extends FormRequest
             'description'                                 => ['string'],
             'load_types'                                  => ['array'],
             'load_types.*.load_type_id'                   => ['string', 'exists:load_types,id'],
-            'load_region'                                 => ['string'],
-            'load_city'                                   => ['string'],
-            'unload_region'                               => ['string'],
-            'unload_city'                                 => ['string'],
+            'load_region'                                 => ['array'],
+            'load_city'                                   => ['array'],
+            'unload_region'                               => ['array'],
+            'unload_city'                                 => ['array'],
             'sort'                                        => ['string'],
         ];
     }
