@@ -49,7 +49,11 @@ class OrderFilterRequest extends FormRequest
             'contact_phone'                               => ['string'],
             'cargo_shortage_rate'                         => ['integer'],
             'unit_of_measurement_for_cargo_shortage_rate' => ['string'],
-            'cargo_price'                                 => ['integer'],
+            'cargo_price_from'                            => ['integer'],
+            'cargo_price_to'                              => [
+                'integer',
+                Rule::when($this->input('cargo_price_from'), 'gt:cargo_price_from')
+            ],
             'load_place'                                  => ['string'],
             'approach'                                    => ['string'],
             'work_time'                                   => ['string'],
