@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Order;
 
+use App\Enums\OrderCityModeEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class OrderCitiesRequest extends FormRequest
 {
@@ -15,8 +17,10 @@ class OrderCitiesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'load_region' => 'string|required',
-            'unload_regions' => 'string|required',
+            'mode'           => ['string', 'required', Rule::enum(OrderCityModeEnum::class)],
+            'load_region'    => ['string', Rule::when($this->input('mode') == 'load', 'required')],
+            'unload_regions' => ['string', Rule::when($this->input('mode') == 'unload', 'required')],
+
         ];
     }
 }

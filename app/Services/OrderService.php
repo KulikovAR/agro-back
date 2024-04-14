@@ -114,32 +114,32 @@ class OrderService
         ];
     }
 
-    public function getRegions() {
+    public function getRegions()
+    {
         $load_regions = Order::whereNotNull('load_region')->get()->pluck('load_region')->toArray();
-        $unload_regions = Order::whereNotNull('load_region')->get()->pluck('load_region')->toArray();
+        $unload_regions = Order::whereNotNull('unload_region')->get()->pluck('unload_region')->toArray();
 
         $load_regions = array_unique($load_regions);
         $unload_regions = array_unique($unload_regions);
 
         $data = [
-            'load_cities' => $load_regions,
-            'unload_cities' => $unload_regions
+            'load_regions'   => $load_regions,
+            'unload_regions' => $unload_regions
         ];
 
-           return $data;
+        return $data;
     }
 
-    public function getCities(OrderCitiesRequest $request) {
-        $load_cities = Order::where('load_region', $request->load_region)->get()->pluck('load_city')->toArray();
-        $unload_cities = Order::where('unload_region', $request->unload_region)->get()->pluck('unload_city')->toArray();
+    public function getCities(OrderCitiesRequest $request)
+    {
+        if ($request->mode == 'load') {
+            $cities = Order::where('load_region', $request->load_region)->get()->pluck('load_city')->toArray();
+            $cities = array_unique($cities);
+            return $cities;
+        }
 
-        $load_cities = array_unique($load_cities);
-        $unload_cities = array_unique($unload_cities);
-
-        $data = [
-            'load_cities' => $load_cities,
-            'unload_cities' => $unload_cities
-        ];
-        return $data;
+        $cities = Order::where('unload_region', $request->unload_region)->get()->pluck('unload_city')->toArray();
+        $cities = array_unique($cities);
+        return $cities;
     }
 }

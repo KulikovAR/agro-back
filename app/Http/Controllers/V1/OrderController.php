@@ -101,7 +101,7 @@ class OrderController extends Controller
     public function getCities(OrderCitiesRequest $request)
     {
         return new ApiJsonResponse(
-            data: $this->service->getCities()
+            data: $this->service->getCities($request)
         );
     }
 }
