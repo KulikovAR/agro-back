@@ -49,10 +49,10 @@ class OrderFilterRequest extends FormRequest
             'contact_phone'                               => ['string'],
             'cargo_shortage_rate'                         => ['integer'],
             'unit_of_measurement_for_cargo_shortage_rate' => ['string'],
-            'cargo_price_from'                            => ['integer'],
-            'cargo_price_to'                              => [
+            'tariff_from'                                 => ['integer'],
+            'tariff_to'                                   => [
                 'integer',
-                Rule::when($this->input('cargo_price_from'), 'gt:cargo_price_from')
+                Rule::when($this->input('tariff_from'), 'gt:tariff_from')
             ],
             'load_place'                                  => ['string'],
             'approach'                                    => ['string'],
@@ -80,6 +80,7 @@ class OrderFilterRequest extends FormRequest
             'load_city'                                   => ['array'],
             'unload_region'                               => ['array'],
             'unload_city'                                 => ['array'],
+            'is_full_charter'                             => ['boolean'],
             'sort'                                        => ['string'],
         ];
     }

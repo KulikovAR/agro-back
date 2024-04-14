@@ -136,14 +136,14 @@ class OrderFilter extends AbstractFilter
         $builder->where('distance', '>=', $value);
     }
 
-    public function cargo_price_from(Builder $builder, $value)
+    public function tariff_from(Builder $builder, $value)
     {
-        $builder->where('cargo_price', '<=', $value);
+        $builder->where('tariff', '<=', $value);
     }
 
-    public function cargo_price_to(Builder $builder, $value)
+    public function tariff_to(Builder $builder, $value)
     {
-        $builder->where('cargo_price', '>=', $value);
+        $builder->where('tariff', '>=', $value);
     }
 
     public function tariff(Builder $builder, $value)
