@@ -9,6 +9,7 @@ use App\Enums\OrderStatusEnum;
 use App\Enums\OrderTimeslotEnum;
 use App\Enums\StatusEnum;
 use App\Filters\OrderFilter;
+use App\Http\Requests\Order\OrderCitiesRequest;
 use App\Http\Requests\Order\OrderCreateRequest;
 use App\Http\Requests\Order\OrderFilterRequest;
 use App\Http\Requests\Order\OrderUpdateRequest;
@@ -17,6 +18,7 @@ use App\Http\Resources\Order\OrderCreateResource;
 use App\Http\Resources\Order\OrderIndexCollection;
 use App\Http\Resources\Order\OrderResource;
 use App\Http\Resources\UnloadMethodCollection;
+use App\Http\Responses\ApiJsonResponse;
 use App\Models\LoadType;
 use App\Models\Order;
 use App\Models\UnloadMethod;
@@ -34,7 +36,7 @@ class OrderService
     public function index(OrderFilterRequest $request): OrderIndexCollection
     {
         $data = $request->validated();
-        $filter = app()->make(OrderFilter::class, ['queryParams' => array_filter($data)]);
+        $filter = app()->make(OrderFilter::class, ['queryParams' => $data]);
         $order = Order::filter($filter);
 
         if(is_null($request->sort)) {
@@ -108,5 +110,34 @@ class OrderService
             'status'   => OrderStatusEnum::getOrderStatus(),
             'clarification_day'   => OrderClarificationDayEnum::getValue(),
         ];
+    }
+
+    public function getRegions() {
+        $load_regions = Order::whereNotNull('load_region')->get()->pluck('load_region')->toArray();
+        $unload_regions = Order::whereNotNull('load_region')->get()->pluck('load_region')->toArray();
+
+        $load_regions = array_unique($load_regions);
+        $unload_regions = array_unique($unload_regions);
+
+        $data = [
+            'load_cities' => $load_regions,
+            'unload_cities' => $unload_regions
+        ];
+
+           return $data;
+    }
+
+    public function getCities(OrderCitiesRequest $request) {
+        $load_cities = Order::where('load_region', $request->load_region)->get()->pluck('load_city')->toArray();
+        $unload_cities = Order::where('unload_region', $request->unload_region)->get()->pluck('unload_city')->toArray();
+
+        $load_cities = array_unique($load_cities);
+        $unload_cities = array_unique($unload_cities);
+
+        $data = [
+            'load_cities' => $load_cities,
+            'unload_cities' => $unload_cities
+        ];
+        return $data;
     }
 }
