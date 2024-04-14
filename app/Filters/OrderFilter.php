@@ -112,7 +112,7 @@ class OrderFilter extends AbstractFilter
 
     public function crop(Builder $builder, $value)
     {
-        $builder->where('crop', $value);
+        $builder->whereIn('crop', $value);
     }
 
     public function volume(Builder $builder, $value)
@@ -186,7 +186,7 @@ class OrderFilter extends AbstractFilter
 
     public function timeslot(Builder $builder, $value)
     {
-        $builder->where('timeslot', $value);
+        $builder->whereIn('timeslot', $value);
     }
 
     public function outage_begin(Builder $builder, $value)
@@ -261,7 +261,7 @@ class OrderFilter extends AbstractFilter
 
     public function load_method(Builder $builder, $value)
     {
-        $builder->where('load_method', $value);
+        $builder->whereIn('load_method', $value);
     }
 
     public function tolerance_to_the_norm(Builder $builder, $value)
