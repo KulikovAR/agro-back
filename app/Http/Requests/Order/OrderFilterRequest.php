@@ -38,7 +38,7 @@ class OrderFilterRequest extends FormRequest
             'terminal_inn'                                => ['string'],
             'exporter_name'                               => ['string'],
             'exporter_inn'                                => ['string'],
-            'scale_lenght'                                => ['integer'],
+            'scale_length'                                => ['integer'],
             'height_limit'                                => ['integer'],
             'is_overload'                                 => ['boolean'],
             'timeslot'                                    => ['array'],
