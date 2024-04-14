@@ -37,7 +37,7 @@ class OrderService
         $filter = app()->make(OrderFilter::class, ['queryParams' => array_filter($data)]);
         $order = Order::filter($filter);
 
-        if(is_null($request->sort)) {
+        if (is_null($request->sort)) {
             $order->orderBy('order_number', 'desc');
         }
 
@@ -57,10 +57,11 @@ class OrderService
         $load_region = $dadataLoadPlaceInfo['region'] . " " . $dadataLoadPlaceInfo['region_type_full'];
         $unload_city = $dadataUnloadPlaceInfo['city'];
         $unload_region = $dadataUnloadPlaceInfo['region'] . " " . $dadataUnloadPlaceInfo['region_type_full'];
-        $data = ['load_city'     => $load_city,
-                 'load_region'   => $load_region,
-                 'unload_city'   => $unload_city,
-                 'unload_region' => $unload_region
+        $data = [
+            'load_city'     => $load_city,
+            'load_region'   => $load_region,
+            'unload_city'   => $unload_city,
+            'unload_region' => $unload_region
         ];
         $queryData = array_merge($request->except(['load_types', 'unload_methods']), $data);
 
@@ -98,15 +99,16 @@ class OrderService
         $order->delete();
     }
 
-    public function getOptions():array
+    public function getOptions(): array
     {
         return [
-            'load_types' => new LoadTypeCollection(LoadType::all()),
-            'unload_methods' => new LoadTypeCollection(LoadType::all()),
-            'timeslot' => OrderTimeslotEnum::getTimselot(),
-            'crop'     => CropOrderEnum::getCrop(),
-            'status'   => OrderStatusEnum::getOrderStatus(),
-            'clarification_day'   => OrderClarificationDayEnum::getValue(),
+            'load_types'        => new LoadTypeCollection(LoadType::all()),
+            'unload_methods'    => new LoadTypeCollection(UnloadMethod::all()),
+            'load_methods'      => LoadMethodEnum::getLoadMethods(),
+            'timeslot'          => OrderTimeslotEnum::getTimselot(),
+            'crop'              => CropOrderEnum::getCrop(),
+            'status'            => OrderStatusEnum::getOrderStatus(),
+            'clarification_day' => OrderClarificationDayEnum::getValue(),
         ];
     }
 }
