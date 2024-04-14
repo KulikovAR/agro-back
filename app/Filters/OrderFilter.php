@@ -137,7 +137,7 @@ class OrderFilter extends AbstractFilter
 
     public function nds_percent(Builder $builder, $value)
     {
-            if (is_null($value)) {
+        if (is_null($value)) {
             $builder->whereNull('nds_percent');
         }
         $builder->where('nds_percent', $value);
@@ -171,12 +171,12 @@ class OrderFilter extends AbstractFilter
 
     public function scale_length(Builder $builder, $value)
     {
-        $builder->where('scale_lenght','>=', $value);
+        $builder->where('scale_lenght', '>=', $value);
     }
 
     public function height_limit(Builder $builder, $value)
     {
-        $builder->where('height_limit','>=', $value);
+        $builder->where('height_limit', '>=', $value);
     }
 
     public function is_overload(Builder $builder, $value)
@@ -317,14 +317,14 @@ class OrderFilter extends AbstractFilter
     public function load_types(Builder $builder, $value)
     {
         $builder->WhereHas('loadTypes', function ($q) use ($value) {
-            $q->whereIn('id', $value);
+            $q->whereIn('load_type_id', $value);
         });
     }
 
     public function unload_methods(Builder $builder, $value)
     {
         $builder->WhereHas('unloadMethods', function ($q) use ($value) {
-            $q->whereIn('id', $value);
+            $q->whereIn('unload_method_id', $value);
         });
     }
 
@@ -350,7 +350,7 @@ class OrderFilter extends AbstractFilter
 
     public function with_nds(Builder $builder, $value)
     {
-        if($value) {
+        if ($value) {
             $builder->whereNotNull('nds_percent');
             return;
         }

@@ -37,7 +37,6 @@ class OrderIndexResource extends JsonResource
                 'x' => $this->unload_longitude,
                 'y' => $this->unload_latitude
             ),
-            'is_overload' => $this->is_overload,
         ];
     }
 }
