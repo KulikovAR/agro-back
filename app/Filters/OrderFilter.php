@@ -143,12 +143,12 @@ class OrderFilter extends AbstractFilter
 
     public function tariff_from(Builder $builder, $value)
     {
-        $builder->where('tariff', '<=', $value);
+        $builder->where('tariff', '>=', $value);
     }
 
     public function tariff_to(Builder $builder, $value)
     {
-        $builder->where('tariff', '>=', $value);
+        $builder->where('tariff', '<=', $value);
     }
 
     public function tariff(Builder $builder, $value)
