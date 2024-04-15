@@ -55,10 +55,10 @@ class OrderService
     {
         $dadataLoadPlaceInfo = $this->dadata->getAddressArray([$request->load_place_name]);
         $dadataUnloadPlaceInfo = $this->dadata->getAddressArray([$request->unload_place_name]);
-        $load_city = $dadataLoadPlaceInfo['city'];
-        $load_region = $dadataLoadPlaceInfo['region'] . " " . $dadataLoadPlaceInfo['region_type_full'];
-        $unload_city = $dadataUnloadPlaceInfo['city'];
-        $unload_region = $dadataUnloadPlaceInfo['region'] . " " . $dadataUnloadPlaceInfo['region_type_full'];
+        $load_city = $dadataLoadPlaceInfo['city'] != null ? $dadataLoadPlaceInfo['city'] : $request->load_place_name;
+        $load_region = $dadataLoadPlaceInfo['region'] . " " . $dadataLoadPlaceInfo['region_type_full'] != null ? $dadataLoadPlaceInfo['region'] . " " . $dadataLoadPlaceInfo['region_type_full'] : $request->load_place_name;
+        $unload_city = $dadataUnloadPlaceInfo['city'] != null ? $dadataUnloadPlaceInfo['city'] : $request->unload_place_name;
+        $unload_region = $dadataUnloadPlaceInfo['region'] . " " . $dadataUnloadPlaceInfo['region_type_full'] != null ? $dadataUnloadPlaceInfo['region'] . " " . $dadataUnloadPlaceInfo['region_type_full'] : $request->unload_place_name ;
         $data = [
             'load_city'     => $load_city,
             'load_region'   => $load_region,
