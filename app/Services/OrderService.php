@@ -53,17 +53,27 @@ class OrderService
 
     public function create(OrderCreateRequest $request): OrderCreateResource|array
     {
+        $loadDadataCoords = $this->dadata->sendFullAddress($request->load_place_name);
+        $unloadDadataCoords = $this->dadata->sendFullAddress($request->unload_place_name);
         $dadataLoadPlaceInfo = $this->dadata->getAddressArray([$request->load_place_name]);
         $dadataUnloadPlaceInfo = $this->dadata->getAddressArray([$request->unload_place_name]);
         $load_city = $dadataLoadPlaceInfo['city'] != null ? $dadataLoadPlaceInfo['city'] : $request->load_place_name;
         $load_region = $dadataLoadPlaceInfo['region'] . " " . $dadataLoadPlaceInfo['region_type_full'] != null ? $dadataLoadPlaceInfo['region'] . " " . $dadataLoadPlaceInfo['region_type_full'] : $request->load_place_name;
         $unload_city = $dadataUnloadPlaceInfo['city'] != null ? $dadataUnloadPlaceInfo['city'] : $request->unload_place_name;
-        $unload_region = $dadataUnloadPlaceInfo['region'] . " " . $dadataUnloadPlaceInfo['region_type_full'] != null ? $dadataUnloadPlaceInfo['region'] . " " . $dadataUnloadPlaceInfo['region_type_full'] : $request->unload_place_name ;
+        $unload_region = $dadataUnloadPlaceInfo['region'] . " " . $dadataUnloadPlaceInfo['region_type_full'] != null ? $dadataUnloadPlaceInfo['region'] . " " . $dadataUnloadPlaceInfo['region_type_full'] : $request->unload_place_name;
+        $load_longitude = $loadDadataCoords[0]['lon'];
+        $load_latitude = $loadDadataCoords[0]['lat'];
+        $unload_latitude = $unloadDadataCoords[0]['lat'];
+        $unload_longitude = $unloadDadataCoords[0]['lon'];
         $data = [
-            'load_city'     => $load_city,
-            'load_region'   => $load_region,
-            'unload_city'   => $unload_city,
-            'unload_region' => $unload_region
+            'load_city'        => $load_city,
+            'load_region'      => $load_region,
+            'unload_city'      => $unload_city,
+            'unload_region'    => $unload_region,
+            'load_longitude'   => $load_longitude,
+            'unload_longitude' => $unload_longitude,
+            'load_latitude'    => $load_latitude,
+            'unload_latitude'  => $unload_latitude,
         ];
         $queryData = array_merge($request->except(['load_types', 'unload_methods']), $data);
 
