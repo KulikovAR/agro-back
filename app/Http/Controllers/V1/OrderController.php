@@ -11,6 +11,7 @@ use App\Http\Requests\Order\OrderUpdateRequest;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\Order;
 use App\Services\OrderService;
+use Illuminate\Http\Request;
 
 
 class OrderController extends Controller
@@ -103,6 +104,11 @@ class OrderController extends Controller
         return new ApiJsonResponse(
             data: $this->service->getCities($request)
         );
+    }
+
+    public function getOrdersWithUserOffers(Request $request)
+    {
+        return new ApiJsonResponse(200, StatusEnum::OK, 'Заявки с откликами пользователя получены', data: $this->service->getOrdersWithUserOffers($request));
     }
 }
 

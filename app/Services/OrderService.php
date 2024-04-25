@@ -23,6 +23,7 @@ use App\Models\LoadType;
 use App\Models\Order;
 use App\Models\UnloadMethod;
 use App\Services\Dadata\Dadata;
+use Illuminate\Http\Request;
 
 class OrderService
 {
@@ -48,6 +49,8 @@ class OrderService
 
     public function show(Order $order): OrderResource
     {
+        $order->view_counter++;
+        $order->save();
         return new OrderResource($order);
     }
 
@@ -151,5 +154,11 @@ class OrderService
         $cities = Order::where('unload_region', $request->unload_region)->get()->pluck('unload_city')->toArray();
         $cities = array_unique($cities);
         return $cities;
+    }
+
+    public function getOrdersWithUserOffers(Request $request)
+    {
+        $user = $request->user();
+        return new OrderIndexCollection($user->orders);
     }
 }

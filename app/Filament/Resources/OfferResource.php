@@ -38,8 +38,8 @@ class OfferResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID')
+                Tables\Columns\TextColumn::make('offer_number')
+                    ->label('Номер отклика')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('user.id')
                     ->state(fn (Offer $offer) => $offer->user->phone_number)

@@ -57,6 +57,7 @@ return new class extends Migration {
             $table->boolean('is_full_charter')->nullable();
             $table->text('description')->nullable();
             $table->boolean('is_moderated')->default(false);
+            $table->integer('view_counter')->default(0);
             $table->timestamps();
         });
     }

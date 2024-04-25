@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table->uuid('user_id');
             $table->uuid('order_id');
+            $table->integer('offer_number')->default(0);
             $table->foreign('order_id')->on('orders')->references('id')->onDelete('cascade');
             $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade');
             $table->timestamps();
