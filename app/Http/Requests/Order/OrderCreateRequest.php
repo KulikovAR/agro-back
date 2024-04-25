@@ -31,7 +31,7 @@ class OrderCreateRequest extends FormRequest
             'distance'                                    => ['integer'],
             'tariff'                                      => ['integer', 'required'],
             'nds_percent'                                 => ['nullable', 'integer'],
-            'terminal_name'                               => ['string', 'required'],
+            'terminal_name'                               => ['string', 'nullable'],
             'exporter_name'                               => ['string', 'nullable'],
             'scale_length'                                => ['numeric', 'required'],
             'height_limit'                                => ['required', 'numeric'],
