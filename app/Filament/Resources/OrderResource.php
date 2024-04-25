@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\CropOrderEnum;
 use App\Enums\LoadMethodEnum;
 use App\Enums\OrderClarificationDayEnum;
 use App\Enums\OrderStatusEnum;
@@ -35,10 +36,10 @@ class OrderResource extends Resource
         $dadata = new Dadata();
         return $form
             ->schema([
-                Forms\Components\TextInput::make('crop')
+                Forms\Components\Select::make('crop')
                     ->label('Культура')
                     ->required()
-                    ->maxLength(255),
+                    ->options(CropOrderEnum::getCrop()),
                 Forms\Components\TextInput::make('volume')
                     ->label('Объем')
                     ->required()
@@ -60,11 +61,6 @@ class OrderResource extends Resource
                     ->required()
 //                    ->options([]),
                     ->getSearchResultsUsing(fn(string $search): array => $dadata->sendCompanyForFilament($search,'value')),
-                Forms\Components\Select::make('terminal_inn')
-                    ->label('ИНН терминала')
-                    ->searchable()
-                    ->required()
-                    ->getSearchResultsUsing(fn(string $search): array => $dadata->SendCompanyForFilament($search,'inn',true)),
                 Forms\Components\TextInput::make('exporter_name')
                     ->label('Название экспортера')
                     ->required()
@@ -83,7 +79,7 @@ class OrderResource extends Resource
                 Forms\Components\Select::make('timeslot')
                     ->label('Таймслот')
                     ->required()
-                    ->options(OrderTimeslotEnum::class),
+                    ->options(OrderTimeslotEnum::getTimselot()),
                 Forms\Components\Select::make('status')
                     ->label('Статус')
                     ->required()

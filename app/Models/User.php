@@ -95,7 +95,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     {
         return $this->hasOne((Counteragent::class));
     }
-
+    public function orders():belongsToMany
+    {
+        return $this->belongsToMany(Order::class, 'offers', 'user_id', 'order_id');
+    }
     public function canAccessPanel(Panel $panel): bool
     {
         return str_ends_with($this->email, '@admin.ru');
