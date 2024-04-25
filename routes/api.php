@@ -70,6 +70,7 @@ Route::prefix('orders')->group(function () {
 
 
 Route::prefix('orders')->group(function () {
+    Route::get('/user-orders', [OrderController::class, 'getOrdersWithUserOffers'])->name('order.user.orders');
     Route::post('/create', [OrderController::class, 'create'])->name('order.create');
     Route::post('/update/{order}', [OrderController::class, 'update'])->name('order.update');
     Route::delete('/delete/{order}', [OrderController::class, 'delete'])->name('order.delete');

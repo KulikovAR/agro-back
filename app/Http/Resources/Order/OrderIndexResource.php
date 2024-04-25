@@ -26,6 +26,7 @@ class OrderIndexResource extends JsonResource
             'crop'               => $this->crop,
             'tariff'             => $this->tariff,
             'volume'             => $this->volume,
+            'view_counter'       => $this->view_counter,
             'load_place_name'    => $this->load_place_name,
             'unload_place_name'  => $this->unload_place_name,
             'order_number'       => $this->order_number,
