@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->integer('distance')->nullable();
             $table->integer('tariff');
             $table->integer('nds_percent')->nullable();
-            $table->string('terminal_name');
+            $table->string('terminal_name')->nullable();
             $table->string('exporter_name')->nullable();
             $table->float('scale_length');
             $table->string('load_city');

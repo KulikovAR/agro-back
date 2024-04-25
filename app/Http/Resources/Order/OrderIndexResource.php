@@ -29,6 +29,7 @@ class OrderIndexResource extends JsonResource
             'load_place_name'    => $this->load_place_name,
             'unload_place_name'  => $this->unload_place_name,
             'order_number'       => $this->order_number,
+            'terminal_name'      => $this->terminal_name,
             'load_coordinates'   => array(
                 'x' => $this->load_longitude,
                 'y' => $this->load_latitude
