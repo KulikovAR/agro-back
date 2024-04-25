@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationContactController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\V1\OfferController;
 use App\Http\Controllers\V1\ProductParserController;
 use App\Http\Controllers\V1\TransportController;
 
@@ -87,7 +88,9 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
 
-
+    Route::prefix('offers')->group(function () {
+        Route::post('/create', [OfferController::class, 'create'])->name('offer.create');
+    });
     Route::prefix('options')->group(function () {
         Route::get('/', [OrderController::class, 'getOptions'])->name('order.get_options');
     });

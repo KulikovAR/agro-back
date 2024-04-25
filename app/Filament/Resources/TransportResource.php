@@ -67,6 +67,10 @@ class TransportResource extends Resource
                     ->label('Тип')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('user_id')
+                    ->label('ID владельца')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('number')
                     ->label('Номер')
                     ->searchable(),
