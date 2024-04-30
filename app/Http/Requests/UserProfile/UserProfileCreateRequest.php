@@ -1,20 +1,16 @@
 <?php
 
-namespace App\Http\Requests\Counteragent;
+namespace App\Http\Requests\UserProfile;
 
 use App\Enums\OrganizationTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CreateCounteragentRequest extends FormRequest
+class UserProfileCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -24,7 +20,6 @@ class CreateCounteragentRequest extends FormRequest
     public function rules(): array
     {
         return [
-
             'type'              => ['required', 'string', Rule::enum(OrganizationTypeEnum::class)],
             'inn'               => [
                 'required', 'string',
@@ -70,10 +65,7 @@ class CreateCounteragentRequest extends FormRequest
             'office_address'     => ['required', 'string'],
             'tax_system'         => ['required', 'string'],
             'okved'              => ['required', 'string'],
-            'phone'              => ['required', 'string', 'regex:/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/'],
             'password'           => ['required', 'string'],
-            'user_id'            => ['required','exists:users,id']
-
         ];
     }
 }

@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Enums\EnvironmentTypeEnum;
+use App\Models\File;
+use App\Models\FileType;
 use App\Models\Role;
 use App\Models\User;
 use App\Notifications\UserAppNotification;
@@ -34,6 +36,7 @@ class UserSeeder extends Seeder
         if (App::environment(EnvironmentTypeEnum::productEnv())) {
             return;
         }
+        $clientRole = Role::where('name', 'client')->first();
 
         $admin = User::create([
             'email'             => 'admin@admin.ru',
@@ -55,7 +58,9 @@ class UserSeeder extends Seeder
         $users = User::factory(10)->create();
         foreach ($users as $item) {
             $item->driver()->create((new DriverFactory())->definition());
-            $item->counteragent()->create((new UserinfoFactory())->definition());
+            $item->files()->attach(File::inRandomOrder()->first()->id,['file_type_id'=>FileType::inRandomOrder()->first()->id, 'id'=>uuid_create()]);
+            $item->userProfile()->create((new UserinfoFactory())->definition());
+            $item->assignRole($clientRole);
         }
         // $user->assignRole(Role::ROLE_USER);
 

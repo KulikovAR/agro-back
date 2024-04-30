@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\UserProfile;
+use App\Models\FileType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CounterAgentSeeder extends Seeder
+class FileTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-         UserProfile::factory()->count(10)->create();
+        FileType::create(['title' => 'ЭТРН']);
     }
 }
