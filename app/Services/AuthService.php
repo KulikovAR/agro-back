@@ -43,7 +43,7 @@ class AuthService
         $code_arr = $this->sms->setCode();
         $clientRole = Role::where('name', 'client')->first();
         $user = User::firstOrCreate(['phone_number' => $request->phone_number],['phone_number' => $request->phone_number]);
-        $user->assignRole($clientRole);
+        $user->syncRoles([$clientRole]);
         if (env('APP_ENV') == 'production') {
             $this->sms->send($request->phone_number, $code_arr['code'] . '- Verification code Cargis');
             $resource = new UserResource($user);
