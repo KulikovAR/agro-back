@@ -33,7 +33,7 @@ class UserinfoFactory extends Factory
             'office_address' => $this->faker->address(),
             'tax_system' => $this->faker->word(),
             'okved' => $this->faker->word(),
-            'password' => $this->faker->password(),
+
         ];
     }
 }

@@ -28,17 +28,13 @@ return new class extends Migration
             $table->string('tax_system')->nullable();
             $table->string('okved')->nullable();
             // $table->string('bank_accounts');
-            $table->string('password')->nullable();
             $table->string('type')->nullable();
             $table->string('series')->nullable();
-            $table->string('series_dl')->nullable(); //Серия водительского удостоверения
-            $table->string('number_dl')->nullable(); //Номер водительского удостоверения
-            $table->timestamp('expiry_date_dl_at')->nullable(); //Срок действия водительского удостоверения
             $table->string('number')->nullable();
             $table->timestamp('issue_date_at')->nullable();
             $table->text('department')->nullable();
             $table->string('department_code')->nullable();
-            $table->string('address')->nullable(); //Это адрес прописки в случае создания пользователя
+            $table->string('snils')->nullable();
             $table->timestamps();
         });
     }
