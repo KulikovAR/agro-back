@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
         if (App::environment(EnvironmentTypeEnum::productEnv())) {
             return;
         }
-        $clientRole = Role::where('name', 'client')->first();
+        $clientRole = Role::where('slug', 'client')->first();
 
         $admin = User::create([
             'email'             => 'admin@admin.ru',
@@ -48,6 +48,16 @@ class UserSeeder extends Seeder
         $admin_role = Role::where('name', 'admin')->first();
         $admin->assignRole($admin_role);
 
+        $client = User::create([
+            'email'             => 'cleint@cleint.ru',
+            'phone_number'      => '+7 (889) 999-99-99',
+            'password'          => '12345678',
+            'phone_verified_at' => Carbon::now()
+        ]);
+        $client->assignRole($clientRole);
+        $client->files()->attach(File::inRandomOrder()->first()->id,['file_type_id'=>FileType::inRandomOrder()->first()->id, 'id'=>uuid_create()]);
+        $client->userProfile()->create((new UserinfoFactory())->definition());
+
 
         $user = User::factory()->create(
             [
@@ -57,7 +67,6 @@ class UserSeeder extends Seeder
         );
         $users = User::factory(10)->create();
         foreach ($users as $item) {
-            $item->driver()->create((new DriverFactory())->definition());
             $item->files()->attach(File::inRandomOrder()->first()->id,['file_type_id'=>FileType::inRandomOrder()->first()->id, 'id'=>uuid_create()]);
             $item->userProfile()->create((new UserinfoFactory())->definition());
             $item->assignRole($clientRole);
