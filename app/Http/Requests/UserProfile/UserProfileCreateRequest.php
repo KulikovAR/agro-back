@@ -20,9 +20,10 @@ class UserProfileCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type'              => ['required', 'string', Rule::enum(OrganizationTypeEnum::class)],
-            'inn'               => [
-                'required', 'string',
+            'type' => ['required', 'string', Rule::enum(OrganizationTypeEnum::class)],
+            'inn' => [
+                'required',
+                'string',
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::IP->value,
                     'regex:/^\d{12}$/'
@@ -32,10 +33,10 @@ class UserProfileCreateRequest extends FormRequest
                     'regex:/^\d{10}$/'
                 )
             ],
-            'name'              => ['required', 'string'],
-            'surname'           => ['required', 'string'],
-            'patronymic'        => ['required', 'string'],
-            'kpp'               => [
+            'name' => ['required', 'string'],
+            'surname' => ['required', 'string'],
+            'patronymic' => ['required', 'string'],
+            'kpp' => [
                 'string',
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::IP->value,
@@ -47,8 +48,9 @@ class UserProfileCreateRequest extends FormRequest
                     'regex:/^\d{9}$/'
                 )
             ],
-            'orgn'               => [
-                'required', 'string',
+            'orgn' => [
+                'required',
+                'string',
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::IP->value,
                     'regex:/^\d{15}$/'
@@ -59,13 +61,18 @@ class UserProfileCreateRequest extends FormRequest
                     'regex:/^\d{13}$/'
                 )
             ],
-            'short_name'         => ['required', 'string'],
-            'full_name'          => ['required', 'string'],
-            'juridical_address'  => ['required', 'string'],
-            'office_address'     => ['required', 'string'],
-            'tax_system'         => ['required', 'string'],
-            'okved'              => ['required', 'string'],
-            'password'           => ['required', 'string'],
+            'short_name' => ['required', 'string'],
+            'full_name' => ['required', 'string'],
+            'juridical_address' => ['required', 'string'],
+            'office_address' => ['required', 'string'],
+            'tax_system' => ['required', 'string'],
+            'okved' => ['required', 'string'],
+            'password' => ['required', 'string'],
+            'number' => ['required', 'string'],
+            'series' => ['required', 'string'],
+            'department' => ['required', 'string'],
+            'department_code' => ['required', 'string'],
+            'snils' => ['required', 'string'],
         ];
     }
 }
