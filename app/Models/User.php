@@ -109,6 +109,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         return str_ends_with($this->email, '@admin.ru');
     }
 
+//    public function roles(): BelongsToMany
+//    {
+//        return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
+//    }
+
     public function getFilamentName(): string
     {
         return "{$this->email}";
