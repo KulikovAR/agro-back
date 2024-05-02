@@ -11,6 +11,7 @@ use App\Http\Controllers\V1\UserProfileController;
 use App\Http\Controllers\V1\OfferController;
 use App\Http\Controllers\V1\ProductParserController;
 use App\Http\Controllers\V1\TransportController;
+use Telegram\Bot\Laravel\Facades\Telegram;
 
 use App\Models\Role;
 use App\Models\User;
@@ -61,6 +62,8 @@ Route::middleware(['guest'])->group(function () {
     // Route::post('/password/reset', [PasswordController::class, 'store'])->name('password.reset');
 });
 
+
+Route::post('/bot/send-message', [\App\Http\Controllers\V1\TgBotController::class, 'sendMessage']);
 
 Route::prefix('orders')->group(function () {
     Route::get('/regions', [OrderController::class, 'getRegions'])->name('order.regions');
@@ -154,6 +157,7 @@ Route::get('/verification/{id}/{hash}', [VerificationContactController::class, '
 Route::get('/assets/{locale?}', [AssetsController::class, 'show'])->name('assets.index');
 
 
+
 Route::get('/mail', function () {
     $admin = User::role(Role::ROLE_ADMIN)->get()->first();
     $admin->notify(new AdminNotification('$message'));
@@ -168,3 +172,5 @@ Route::get('/mail', function () {
 
     return $markdown->render('vendor.notifications.email', $message->toArray());
 });
+
+Route::post('/bot-update',[\App\Http\Controllers\V1\TgBotController::class,'update']);
