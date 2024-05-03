@@ -17,15 +17,16 @@ class TgBotController extends Controller
     }
     public function sendMessage()
     {
+        $update = Telegram::commandsHandler(true);
         $reply_markup = Keyboard::make()
             ->setResizeKeyboard(true)
             ->setOneTimeKeyboard(true)
             ->row([
-                Keyboard::button('1'),
+                Keyboard::button('Отправить номер телефона')
+                ->setRequestContact(true),
             ]);
         Telegram::sendMessage([
             'chat_id' => 562494573,
-            'text' => 'Hello world!',
             'reply_markup' => $reply_markup
         ]);
     return 1;
