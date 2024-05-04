@@ -91,9 +91,19 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         return $this->hasOne(Driver::class);
     }
 
-    public function counteragent():HasOne
+
+    public function files():BelongsToMany
     {
-        return $this->hasOne((Counteragent::class));
+        return $this->belongsToMany(File::class,'user_files','user_id','file_id');
+    }
+    public function userProfile():HasOne
+    {
+        return $this->hasOne((UserProfile::class));
+    }
+
+    public function createdOrders():hasMany
+    {
+        return $this->hasMany(Order::class);
     }
     public function orders():belongsToMany
     {

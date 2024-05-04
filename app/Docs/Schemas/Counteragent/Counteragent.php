@@ -3,7 +3,7 @@
 namespace App\Docs\Schemas\Counteragent;
 /**
  * @OA\Schema(
- *      title="Counteragent",
+ *      title="UserProfile",
  *      description="User information model",
  *      @OA\Property(property="id", type="string", format="uuid", example="9b7b7b76-67ae-49b3-8296-067cf44d7f8d"),
  *      @OA\Property(property="name", type="string", example="Delphine Olson"),

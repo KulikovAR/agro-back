@@ -11,6 +11,7 @@ use App\Http\Requests\Auth\RegistrationSmsCodeRequest;
 use App\Http\Resources\User\DevUserResource;
 use App\Http\Resources\User\UserResource;
 use App\Http\Responses\ApiJsonResponse;
+use App\Models\Role;
 use App\Models\User;
 use App\Services\Sms\SmsVerification;
 use App\Traits\BearerTokenTrait;
@@ -40,7 +41,9 @@ class AuthService
     public function login(LoginRequest $request): ApiJsonResponse
     {
         $code_arr = $this->sms->setCode();
-        $user = User::firstOrCreate(['phone_number' => $request->phone_number]);
+        $clientRole = Role::where('name', 'client')->first();
+        $user = User::firstOrCreate(['phone_number' => $request->phone_number],['phone_number' => $request->phone_number]);
+        $user->syncRoles([$clientRole]);
         if (env('APP_ENV') == 'production') {
             $this->sms->send($request->phone_number, $code_arr['code'] . '- Verification code Cargis');
             $resource = new UserResource($user);
