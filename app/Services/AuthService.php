@@ -41,15 +41,26 @@ class AuthService
     public function login(LoginRequest $request): ApiJsonResponse
     {
         $code_arr = $this->sms->setCode();
+
         $clientRole = Role::where('name', 'client')->first();
+        $logisticianRole = Role::where('name', 'logistician')->first();
+
         $user = User::firstOrCreate(['phone_number' => $request->phone_number],['phone_number' => $request->phone_number]);
+        if($user->hasRole($logisticianRole)) {
+            $user->syncRoles($logisticianRole);
+        }
+        else{
         $user->syncRoles([$clientRole]);
+        }
+        $user->userProfile()->create($this->createProfile());
         if (env('APP_ENV') == 'production') {
             $this->sms->send($request->phone_number, $code_arr['code'] . '- Verification code Cargis');
             $resource = new UserResource($user);
         }
+
         $resource = new DevUserResource($user);
         $user->update(['code' => $code_arr['code'], 'code_hash' => $code_arr['code_hash'], 'code_expire_at' => $code_arr['code_expire']]);
+
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
@@ -76,5 +87,30 @@ class AuthService
         $token = $request->bearerToken();
         $user_token = \Laravel\Sanctum\PersonalAccessToken::findToken($token);
         return User::where('id', $user_token->tokenable_id)->first();
+    }
+
+    private function createProfile(){
+        return [
+            'name' => null,
+            'surname' => null,
+            'patronymic' => null,
+            'user_id' => null,
+            'inn' => null,
+            'kpp' => null,
+            'ogrn' => null,
+            'short_name' => null,
+            'full_name' => null,
+            'juridical_address' => null,
+            'office_address' => null,
+            'tax_system' => null,
+            'okved' => null,
+            'type' => null,
+            'series' => null,
+            'number' => null,
+            'issue_date_at' => null,
+            'department' => null,
+            'department_code' => null,
+            'snils' => null,
+        ];
     }
 }

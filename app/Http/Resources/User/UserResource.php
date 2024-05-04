@@ -3,6 +3,7 @@
 namespace App\Http\Resources\User;
 
 use App\Http\Resources\Counteragent\CounteragentResource;
+use App\Http\Resources\File\FileCollection;
 use App\Http\Resources\Role\RoleCollection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -27,6 +28,7 @@ class UserResource extends JsonResource
             'updated_at' => $this->updated_at,
             'userinfo' => new CounteragentResource($this->userProfile),
             'roles' => new RoleCollection($this->roles),
+            'files' => new FileCollection($this->files),
         ];
     }
 }

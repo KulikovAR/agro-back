@@ -63,11 +63,8 @@ Route::middleware(['guest'])->group(function () {
 });
 
 
-
-=======
 Route::post('/bot/send-message', [\App\Http\Controllers\V1\TgBotController::class, 'sendMessage']);
 
-});
 
 
 

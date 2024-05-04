@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('userinfos', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('surname');
-            $table->string('patronymic');
+            $table->string('name')->nullable();
+            $table->string('surname')->nullable();
+            $table->string('patronymic')->nullable();
             $table->string('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('inn')->unique();
+            $table->string('inn')->unique()->nullable();
             $table->string('kpp')->unique()->nullable();
             $table->string('ogrn')->unique()->nullable();
             $table->string('short_name')->nullable();

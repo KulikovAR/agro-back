@@ -20,7 +20,7 @@ class UserProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type'              => ['string', Rule::enum(OrganizationTypeEnum::class)],
+            'type'              => ['string','required', Rule::enum(OrganizationTypeEnum::class)],
             'inn'               => [
                 'string',
                 Rule::when(
