@@ -69,7 +69,6 @@ Route::post('/bot/send-message', [\App\Http\Controllers\V1\TgBotController::clas
 
 
 
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('userprofile')->group(function () {
         Route::get('/', [UserProfileController::class, 'getUserProfileByToken'])->name(

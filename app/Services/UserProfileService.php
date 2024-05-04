@@ -38,17 +38,10 @@ class UserProfileService
         return new FileResource($avatar);
     }
 
-    public function create(UserProfileCreateRequest $request): UserResource
-    {
-        $user = $request->user();
-        UserProfile::create($request->all());
-        return new UserResource($user);
-    }
-
     public function update(UserProfileUpdateRequest $request): UserResource
     {
         $user = $request->user();
-        $user->userProfile()->update($request->except(['type']));
+        $user->userProfile()->update($request->all());
         return new UserResource($user);
     }
 }
