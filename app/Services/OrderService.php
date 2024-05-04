@@ -37,15 +37,11 @@ class OrderService
 
     public function index(OrderFilterRequest $request): OrderIndexCollection
     {
-        $token = $request->bearerToken();
-        $user_token = \Laravel\Sanctum\PersonalAccessToken::findToken($token);
-        $user = User::where('id', $user_token->tokenable_id)->first();
         $data = $request->validated();
         $filter = app()->make(OrderFilter::class, ['queryParams' => $data]);
         $order = Order::filter($filter);
-
-        if($token != null){
-            $userOrders = $user->orders;
+        if($request->user()->orders != null){
+            $userOrders = $request->user()->orders;
             if (is_null($request->sort)) {
                 $order->orderBy('order_number', 'desc');
             }

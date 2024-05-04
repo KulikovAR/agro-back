@@ -54,27 +54,14 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login', [AuthTokenController::class, 'store'])->name('login.stateless');
     Route::post('/login/verification', [AuthTokenController::class, 'verification'])->name('login.verification');
     Route::delete('/logout', [AuthTokenController::class, 'destroy'])->name('logout');
-    Route::get('/user',[AuthTokenController::class,'getUser'])->name('get_user');
+    Route::get('/user', [AuthTokenController::class, 'getUser'])->name('get_user');
 
     // Route::post('/password/send', [PasswordController::class, 'sendPasswordLink'])->middleware(['throttle:6,1'])->name('password.send');
     // Route::post('/password/reset', [PasswordController::class, 'store'])->name('password.reset');
 });
 
 
-Route::prefix('orders')->group(function () {
-    Route::get('/regions', [OrderController::class, 'getRegions'])->name('order.regions');
-    Route::get('/cities', [OrderController::class, 'getCities'])->name('order.cities');
-    Route::get('/', [OrderController::class, 'index'])->name('order.index');
-    Route::get('/{order}', [OrderController::class, 'show'])->name('order.show');
-});
 
-
-Route::prefix('orders')->group(function () {
-    Route::get('/user-orders', [OrderController::class, 'getOrdersWithUserOffers'])->name('order.user.orders');
-    Route::post('/create', [OrderController::class, 'create'])->name('order.create');
-    Route::post('/update/{order}', [OrderController::class, 'update'])->name('order.update');
-    Route::delete('/delete/{order}', [OrderController::class, 'delete'])->name('order.delete');
-});
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -87,6 +74,17 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/manual/brands', [TransportBrandController::class, 'index'])->name('transport.brands');
         Route::get('/manual/types', [TransportTypeController::class, 'index'])->name('transport.types');
     });
+    Route::prefix('orders')->group(function () {
+        Route::post('/create', [OrderController::class, 'create'])->name('order.create');
+        Route::post('/update/{order}', [OrderController::class, 'update'])->name('order.update');
+        Route::delete('/delete/{order}', [OrderController::class, 'delete'])->name('order.delete');
+        Route::get('/regions', [OrderController::class, 'getRegions'])->name('order.regions');
+        Route::get('/cities', [OrderController::class, 'getCities'])->name('order.cities');
+        Route::get('/', [OrderController::class, 'index'])->name('order.index');
+        Route::get('/{order}', [OrderController::class, 'show'])->name('order.show');
+    });
+
+        Route::get('/user-orders', [OrderController::class, 'getOrdersWithUserOffers'])->name('order.user.orders');
 
 
     Route::prefix('offers')->group(function () {
@@ -116,6 +114,7 @@ Route::middleware('auth:sanctum')->group(function () {
         );
     });
 });
+
 
 Route::get('/auth/{provider}/redirect', [AuthProviderController::class, 'redirectToProvider'])->middleware(
     'throttle:10,1'
