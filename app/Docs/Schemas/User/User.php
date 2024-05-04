@@ -25,7 +25,7 @@ namespace App\Docs\Schemas\User;
       * @var string
       */
      private $id;
- 
+
       /**
       * @OA\Property(
       *     title="name",
@@ -36,10 +36,10 @@ namespace App\Docs\Schemas\User;
       *
       * @var string|null
       */
- 
+
       private $name;
- 
- 
+
+
      /**
       * @OA\Property(
       *     title="email",
@@ -62,7 +62,7 @@ namespace App\Docs\Schemas\User;
       * @var string|null
       */
      private $email_verified_at;
- 
+
      /**
       * @OA\Property(
       *     title="phone_number",
@@ -74,7 +74,7 @@ namespace App\Docs\Schemas\User;
       * @var string|null
       */
      private $phone_number;
- 
+
      /**
       * @OA\Property(
       *     title="code",
@@ -86,7 +86,7 @@ namespace App\Docs\Schemas\User;
       * @var string|null
       */
      private $code;
- 
+
      /**
       * @OA\Property(
       *     title="code_hash",
@@ -98,7 +98,7 @@ namespace App\Docs\Schemas\User;
       * @var string|null
       */
      private $code_hash;
- 
+
      /**
       * @OA\Property(
       *     title="code_expire_at",
@@ -117,7 +117,7 @@ namespace App\Docs\Schemas\User;
 
      *      property="counteragent",
 
-     *      ref="#/components/schemas/Counteragent"
+     *      ref="#/components/schemas/UserProfile"
 
      *)
 

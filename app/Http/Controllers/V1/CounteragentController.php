@@ -11,7 +11,7 @@ use App\Http\Resources\Counteragent\CounteragentResource;
 use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\User\UserResource;
 use App\Http\Responses\ApiJsonResponse;
-use App\Models\Counteragent;
+use App\Models\UserProfile;
 use App\Models\User;
 use App\Services\CounteragentService;
 use Illuminate\Http\Request;

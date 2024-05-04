@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\LoadMethodEnum;
 use App\Enums\OrderClarificationDayEnum;
 use App\Enums\OrderStatusEnum;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrderFactory extends Factory
@@ -59,6 +60,7 @@ class OrderFactory extends Factory
             'description'                                 => $this->faker->paragraph,
             'is_full_charter'                             => $this->faker->boolean,
             'status'                                      => OrderStatusEnum::ACTIVE->value,
+            'creator_id'                                  => User::inRandomOrder()->first()->id,
         ];
     }
 }

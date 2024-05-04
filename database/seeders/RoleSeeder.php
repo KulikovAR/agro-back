@@ -17,8 +17,27 @@ class RoleSeeder extends Seeder
         $admin_role = Role::create(
             [
                 'name' => 'admin',
+                'slug' => 'admin',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+            ]
+        );
+
+        $logistician_role = Role::create(
+            [
+                'name' => 'logistician',
+                'slug' => 'logistician',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        );
+
+        $client_role = Role::create(
+            [
+                'name' => 'client',
+                'slug' => 'client',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ]
         );
     }

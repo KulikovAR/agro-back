@@ -7,10 +7,11 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationContactController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\V1\UserProfileController;
 use App\Http\Controllers\V1\OfferController;
 use App\Http\Controllers\V1\ProductParserController;
 use App\Http\Controllers\V1\TransportController;
+use Telegram\Bot\Laravel\Facades\Telegram;
 
 use App\Models\Role;
 use App\Models\User;
@@ -22,6 +23,7 @@ use App\Http\Controllers\V1\OrderController;
 use App\Http\Controllers\V1\CounteragentController;
 use App\Http\Controllers\V1\TransportBrandController;
 use App\Http\Controllers\V1\TransportTypeController;
+use \App\Http\Controllers\V1\FileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,9 +64,39 @@ Route::middleware(['guest'])->group(function () {
 
 
 
+=======
+Route::post('/bot/send-message', [\App\Http\Controllers\V1\TgBotController::class, 'sendMessage']);
+
+});
+
+
 
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('userprofile')->group(function () {
+        Route::get('/', [UserProfileController::class, 'getUserProfileByToken'])->name(
+            'userprofile.getUserProfileByToken'
+        );
+        Route::post('avatar/create', [UserProfileController::class, 'loadAvatar'])->name('userprofile.avatar.create');
+        Route::post('avatar/update/{file}', [UserProfileController::class, 'updateAvatar'])->name(
+            'userprofile.avatar.update'
+        );
+        Route::post('/create', [UserProfileController::class, 'create'])->name('userprofile.create');
+        Route::put('/update', [UserProfileController::class, 'update'])->name('userprofile.update');
+//        Route::put('password/update', [UserProfileController::class, 'updatePassword'])->name(
+//            'userprofile.password.update'
+//        );
+    });
+    Route::prefix('files')->group(function () {
+        Route::get('/', [FileController::class, 'index'])->name('files.index');
+        Route::get('show/{file}', [FileController::class, 'show'])->name('files.show');
+        Route::post('/create/', [FileController::class, 'create'])->name('files.create');
+        Route::put('/update/{file}', [FileController::class, 'update'])->name('files.update');
+        Route::post('/load_files', [FileController::class, 'loadFilesForUser'])->name('files.load_files');
+        Route::get('/file_types', [FileController::class, 'getFileTypes'])->name('files.getFileTypes');
+        Route::delete('/delete/{file}', [FileController::class, 'delete'])->name('files.update');
+    });
+
     Route::prefix('transport')->group(function () {
         Route::get('/', [TransportController::class, 'index'])->name('transport.index');
         Route::get('/{id}', [TransportController::class, 'show'])->name('transport.show');
@@ -128,6 +160,7 @@ Route::get('/verification/{id}/{hash}', [VerificationContactController::class, '
 Route::get('/assets/{locale?}', [AssetsController::class, 'show'])->name('assets.index');
 
 
+
 Route::get('/mail', function () {
     $admin = User::role(Role::ROLE_ADMIN)->get()->first();
     $admin->notify(new AdminNotification('$message'));
@@ -142,3 +175,5 @@ Route::get('/mail', function () {
 
     return $markdown->render('vendor.notifications.email', $message->toArray());
 });
+
+Route::post('/bot-update',[\App\Http\Controllers\V1\TgBotController::class,'update']);
