@@ -22,6 +22,7 @@ use App\Http\Responses\ApiJsonResponse;
 use App\Models\LoadType;
 use App\Models\Order;
 use App\Models\UnloadMethod;
+use App\Models\User;
 use App\Services\Dadata\Dadata;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,17 @@ class OrderService
         $data = $request->validated();
         $filter = app()->make(OrderFilter::class, ['queryParams' => $data]);
         $order = Order::filter($filter);
+        if($request->user()->orders != null){
+            $userOrders = $request->user()->orders;
+            if (is_null($request->sort)) {
+                $order->orderBy('order_number', 'desc');
+            }
+            $orderCollection = $order->get()->reject(function ($item) use ($userOrders) {
+                return $userOrders->contains($item);
+            });
+            return new OrderIndexCollection($orderCollection);
+
+        }
 
         if (is_null($request->sort)) {
             $order->orderBy('order_number', 'desc');

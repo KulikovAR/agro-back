@@ -100,6 +100,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     {
         return $this->hasOne((UserProfile::class));
     }
+
+    public function createdOrders():hasMany
+    {
+        return $this->hasMany(Order::class);
+    }
     public function orders():belongsToMany
     {
         return $this->belongsToMany(Order::class, 'offers', 'user_id', 'order_id');

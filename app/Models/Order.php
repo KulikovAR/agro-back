@@ -7,6 +7,7 @@ use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -63,6 +64,7 @@ class Order extends Model
         'unload_city',
         'load_region',
         'unload_region',
+        'creator_id'
     ];
 
     const SORT = [
@@ -82,5 +84,9 @@ class Order extends Model
     public function unloadMethods(): BelongsToMany
     {
         return $this->belongsToMany(UnloadMethod::class, 'order_unload_methods', 'order_id', 'unload_method_id');
+    }
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'creator_id');
     }
 }
