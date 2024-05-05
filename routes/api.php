@@ -75,10 +75,10 @@ Route::middleware('auth:sanctum')->group(function () {
             'userprofile.getUserProfileByToken'
         );
         Route::post('avatar/create', [UserProfileController::class, 'loadAvatar'])->name('userprofile.avatar.create');
-        Route::post('avatar/update/{file}', [UserProfileController::class, 'updateAvatar'])->name(
+        Route::post('avatar/update/', [UserProfileController::class, 'updateAvatar'])->name(
             'userprofile.avatar.update'
         );
-        Route::post('/create', [UserProfileController::class, 'create'])->name('userprofile.create');
+        Route::put('/delete', [UserProfileController::class, 'delete'])->name('userprofile.delete');
         Route::put('/update', [UserProfileController::class, 'update'])->name('userprofile.update');
 //        Route::put('password/update', [UserProfileController::class, 'updatePassword'])->name(
 //            'userprofile.password.update'

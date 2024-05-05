@@ -40,19 +40,13 @@ class UserProfileController extends Controller
         );
     }
 
-    public function updateAvatar(AvatarRequest $request, File $file): ApiJsonResponse
+    public function updateAvatar(AvatarRequest $request): ApiJsonResponse
     {
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
             'Аватар пользователя обновлён',
-            data: $this->service->updateAvatar($request, $file)
-        );
-    }
-    public function create(UserProfileCreateRequest $request): ApiJsonResponse
-    {
-        return new ApiJsonResponse(
-            200, StatusEnum::OK, 'Профиль создан', data: $this->service->create($request)
+            data: $this->service->updateAvatar($request)
         );
     }
 
@@ -61,5 +55,11 @@ class UserProfileController extends Controller
         return new ApiJsonResponse(
             200,StatusEnum::OK,'Профиль обновлён', data: $this->service->update($request)
         );
+    }
+
+    public function delete(Request $request): ApiJsonResponse
+    {
+        $this->service->delete($request);
+        return new ApiJsonResponse(200, StatusEnum::OK, 'Профиль очищен', data:[]);
     }
 }

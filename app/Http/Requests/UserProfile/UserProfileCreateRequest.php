@@ -44,7 +44,6 @@ class UserProfileCreateRequest extends FormRequest
                 ),
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::COMPANY->value,
-                    'required',
                     'regex:/^\d{9}$/'
                 )
             ],

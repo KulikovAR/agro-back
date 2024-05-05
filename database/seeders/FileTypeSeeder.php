@@ -13,6 +13,12 @@ class FileTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        FileType::create(['title' => 'ЭТРН']);
+        FileType::create(['title' => 'Аватар']);
+        FileType::create(['title' => 'ПСФЛ']);
+        FileType::create(['title' => 'ЕФС']);
+        FileType::create(['title' => 'Налоговая тайна']);
+        FileType::create(['title' => 'Патент']);
+        FileType::create(['title' => 'УСН']);
+        FileType::create(['title' => 'НДС']);
     }
 }

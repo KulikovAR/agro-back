@@ -8,7 +8,7 @@ use App\Http\Requests\File\CreateFileRequest;
 use App\Http\Requests\File\CreateUserFileRequest;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\File;
-use App\Services\FIleService;
+use App\Services\FileService;
 
 class FileController extends Controller
 {
