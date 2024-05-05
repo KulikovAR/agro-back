@@ -55,7 +55,7 @@ class UserProfileService
     {
         $user = $request->user();
         if ($request->has('issue_date_at')) {
-            $issue_date_at = Carbon::parse($request->issue_date_at)->format('d.m.Y');
+            $issue_date_at = Carbon::parse($request->issue_date_at);
             $user->userProfile()->update(
                 array_merge($request->except('issue_date_at'), ['issue_date_at' => $issue_date_at])
             );
