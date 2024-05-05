@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class File extends Model
 {
-    use HasFactory, HasUuids,FileTrait;
+    use HasFactory,FileTrait,HasUuids;
 
     protected $fillable = [
         'path'

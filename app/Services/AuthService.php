@@ -52,7 +52,7 @@ class AuthService
         else{
         $user->syncRoles([$clientRole]);
         }
-        $user->userProfile()->create($this->createProfile());
+        $user->userProfile()->create($user->clearProfile());
         if (env('APP_ENV') == 'production') {
             $this->sms->send($request->phone_number, $code_arr['code'] . '- Verification code Cargis');
             $resource = new UserResource($user);
@@ -89,28 +89,5 @@ class AuthService
         return User::where('id', $user_token->tokenable_id)->first();
     }
 
-    private function createProfile(){
-        return [
-            'name' => null,
-            'surname' => null,
-            'patronymic' => null,
-            'user_id' => null,
-            'inn' => null,
-            'kpp' => null,
-            'ogrn' => null,
-            'short_name' => null,
-            'full_name' => null,
-            'juridical_address' => null,
-            'office_address' => null,
-            'tax_system' => null,
-            'okved' => null,
-            'type' => null,
-            'series' => null,
-            'number' => null,
-            'issue_date_at' => null,
-            'department' => null,
-            'department_code' => null,
-            'snils' => null,
-        ];
-    }
+
 }
