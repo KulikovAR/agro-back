@@ -34,8 +34,6 @@ class CounteragentResource extends JsonResource
             'phone_number' => $this->phone_number,
             'password' => $this->password,
             // 'bank_accounts'     => $this->bank_accounts,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'series'     => $this->series,
             'number'     => $this->number,
             'department' => $this->department,
