@@ -39,7 +39,7 @@ class CounteragentResource extends JsonResource
             'department' => $this->department,
             'department_code' => $this->department_code,
             'snils'           => $this->snils,
-            'issue_date_at'  => $this->issue_date_at ? Carbon::parse($this->issue_date_at)->format('d.m.y') : null ,
+            'issue_date_at'  => $this->issue_date_at ? Carbon::parse($this->issue_date_at)->format('d.m.Y') : null ,
 
             // 'user'              => new UserResource ($this->user),
         ];
