@@ -27,14 +27,15 @@ class UserProfileService
 
     public function loadAvatar(AvatarRequest $request): FileResource
     {
-        $avatarType = FileType::where('title','Аватар')->first();
+        $avatarType = FileType::where('title', 'Аватар')->first();
         $avatar = $this->loadFile($request->file('avatar'));
-        $request->user()->files()->attach($avatar, ['file_type_id' => $avatarType->id, 'id'=>uuid_create()]);
+        $request->user()->files()->attach($avatar, ['file_type_id' => $avatarType->id, 'id' => uuid_create()]);
         return new FileResource($avatar);
     }
 
-    public function updateAvatar(AvatarRequest $request): FileResource {
-        $avatarType = FileType::where('title','Аватар')->first();
+    public function updateAvatar(AvatarRequest $request): FileResource
+    {
+        $avatarType = FileType::where('title', 'Аватар')->first();
 
         $user = $request->user();
 
@@ -46,16 +47,18 @@ class UserProfileService
 
         $avatar = $this->updateFile($request->file('avatar'), $file);
 
-        $user->files()->attach($avatar, ['file_type_id' => $avatarType->id, 'id'=>uuid_create()]);
+        $user->files()->attach($avatar, ['file_type_id' => $avatarType->id, 'id' => uuid_create()]);
         return new FileResource($avatar);
     }
 
     public function update(UserProfileUpdateRequest $request): UserResource
     {
         $user = $request->user();
-        if($request->has('issue_date_at')){
+        if ($request->has('issue_date_at')) {
             $issue_date_at = Carbon::parse($request->issue_date_at)->format('d.m.y');
-            $user->userProfile()->update(array_merge($request->except('issue_date_at'), ['issue_date_at' => $issue_date_at]));
+            $user->userProfile()->update(
+                array_merge($request->except('issue_date_at'), ['issue_date_at' => $issue_date_at])
+            );
             return new UserResource($user);
         }
         $user->userProfile()->update($request->all());
@@ -64,7 +67,7 @@ class UserProfileService
 
     public function delete(Request $request): void
     {
-        $user=$request->user();
+        $user = $request->user();
 
         $file = File::whereHas('userFiles', function ($query) use ($user) {
             $query->where('user_id', $user->id);
@@ -72,7 +75,10 @@ class UserProfileService
             $query->where('title', 'Аватар');
         })->with(['userFiles', 'fileType'])->first();
 
-        $this->deleteFile($file);
+        if ($file) {
+            $this->deleteFile($file);
+        }
+
         $user->userProfile()->update($user->clearProfile());
     }
 }
