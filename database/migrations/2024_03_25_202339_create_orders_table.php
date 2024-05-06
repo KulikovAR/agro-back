@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('crop');
             $table->integer('volume');
             $table->integer('distance')->nullable();
-            $table->integer('targiff');
+            $table->integer('tariff');
             $table->integer('nds_percent')->nullable();
             $table->string('terminal_name')->nullable();
             $table->string('exporter_name')->nullable();
