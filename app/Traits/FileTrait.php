@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\File;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -39,7 +40,7 @@ trait FileTrait
         return $this->loadFile($uploadedFile);
     }
 
-    public function deleteFiles(array $files): void
+    public function deleteFiles(Collection $files): void
     {
         foreach ($files as $file) {
             $this->deleteFile($file);
@@ -47,7 +48,7 @@ trait FileTrait
     }
 
 
-    public function updateFiles(array $uploadedFiles, array $files): array
+    public function updateFiles(array $uploadedFiles,  Collection $files): array
     {
         $this->deleteFiles($files);
         return $this->loadFiles($uploadedFiles);

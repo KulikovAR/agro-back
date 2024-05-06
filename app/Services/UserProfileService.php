@@ -68,17 +68,9 @@ class UserProfileService
     public function delete(Request $request): void
     {
         $user = $request->user();
-
-        $file = File::whereHas('userFiles', function ($query) use ($user) {
-            $query->where('user_id', $user->id);
-        })->whereHas('fileType', function ($query) {
-            $query->where('title', 'Аватар');
-        })->with(['userFiles', 'fileType'])->first();
-
-        if ($file) {
-            $this->deleteFile($file);
+        if ($user->files) {
+            $this->deleteFiles($user->files);
         }
-
         $user->userProfile()->update($user->clearProfile());
     }
 }
