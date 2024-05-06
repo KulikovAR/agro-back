@@ -113,4 +113,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     {
         return "{$this->email}";
     }
+
+    public function tgUser():hasOne
+    {
+        return $this->hasOne(TgUser::class);
+    }
 }
