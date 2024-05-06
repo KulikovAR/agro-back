@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class File extends Model
@@ -25,5 +26,10 @@ class File extends Model
     public function userFiles(): HasMany
     {
         return $this->hasMany(UserFile::class);
+    }
+
+    public function userFile(): HasOne
+    {
+        return $this->hasOne(UserFile::class);
     }
 }

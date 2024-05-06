@@ -41,7 +41,7 @@ class FileService
         foreach ($files as $key => $file) {
             $user->files()->attach(
                 $file,
-                ['file_type_id' => $file_types[$key]]
+                ['file_type_id' => $file_types[$key], 'id' => uuid_create()]
             );
         }
     }
