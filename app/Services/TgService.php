@@ -5,8 +5,8 @@ namespace App\Services;
 use App\Models\Offer;
 use App\Models\Order;
 use App\Models\TgUser;
+use App\Models\User;
 use Telegram\Bot\Laravel\Facades\Telegram;
-use Telegram\Bot\Objects\User;
 use App\Services\OrderService;
 class TgService
 {
