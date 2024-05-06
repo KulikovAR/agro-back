@@ -6,6 +6,7 @@ use App\Enums\StatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\File\CreateFileRequest;
 use App\Http\Requests\File\CreateUserFileRequest;
+use App\Http\Requests\File\DeleteUserFileRequest;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\File;
 use App\Services\FileService;
@@ -40,6 +41,21 @@ class FileController extends Controller
             $request,
             $file
         )
+        );
+    }
+
+    public function updateFilesForUser(CreateUserFileRequest $request): ApiJsonResponse
+    {
+        return new ApiJsonResponse(
+            200, StatusEnum::OK, 'Документы обновлены', data: $this->service->updateFilesForUser($request)
+        );
+    }
+
+    public function deleteUserFiles(DeleteUserFileRequest $request): ApiJsonResponse
+    {
+        $this->service->deleteUserFiles($request);
+        return new ApiJsonResponse(
+            200, StatusEnum::OK, 'Документы удалены', data: []
         );
     }
 
