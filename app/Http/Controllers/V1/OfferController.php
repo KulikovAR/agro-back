@@ -19,9 +19,6 @@ class OfferController extends Controller
         $this->service = new OfferService;
     }
 
-    public function index()
-    {
-    }
 
     public function create(OfferRequest $request): ApiJsonResponse
     {

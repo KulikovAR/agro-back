@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('tg_users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('chat_id');
+            $table->string('username');
             $table->string('phone_number');
+            $table->uuid('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

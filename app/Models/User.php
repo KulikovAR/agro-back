@@ -128,6 +128,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         return "{$this->email}";
     }
 
+
+    public function tgUser():hasOne
+    {
+        return $this->hasOne(TgUser::class);
+
     public function clearProfile()
     {
         return [
@@ -151,5 +156,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
             'department_code' => null,
             'snils' => null,
         ];
+
     }
 }

@@ -20,7 +20,9 @@ use App\Http\Resources\Order\OrderResource;
 use App\Http\Resources\UnloadMethodCollection;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\LoadType;
+use App\Models\Offer;
 use App\Models\Order;
+use App\Models\TgUser;
 use App\Models\UnloadMethod;
 use App\Models\User;
 use App\Services\Dadata\Dadata;
@@ -81,12 +83,14 @@ class OrderService
         $unload_latitude = $unloadDadataCoords[0]['lat'];
         $unload_longitude = $unloadDadataCoords[0]['lon'];
         $data = [
-            'load_city'        => $load_city,
-            'load_region'      => $load_region,
-            'unload_city'      => $unload_city,
-            'unload_region'    => $unload_region,
-            'load_longitude'   => $load_longitude,
+            'load_city' => $load_city,
+            'load_region' => $load_region,
+            'unload_city' => $unload_city,
+            'unload_region' => $unload_region,
+            'load_longitude' => $load_longitude,
             'unload_longitude' => $unload_longitude,
+            'load_latitude' => $load_latitude,
+            'unload_latitude' => $unload_latitude,
             'load_latitude'    => $load_latitude,
             'unload_latitude'  => $unload_latitude,
             'creator_id'       => $request->user()->id
@@ -130,12 +134,12 @@ class OrderService
     public function getOptions(): array
     {
         return [
-            'load_types'        => new LoadTypeCollection(LoadType::all()),
-            'unload_methods'    => new UnloadMethodCollection(UnloadMethod::all()),
-            'load_methods'      => LoadMethodEnum::getLoadMethods(),
-            'timeslot'          => OrderTimeslotEnum::getTimselot(),
-            'crop'              => CropOrderEnum::getCrop(),
-            'status'            => OrderStatusEnum::getOrderStatus(),
+            'load_types' => new LoadTypeCollection(LoadType::all()),
+            'unload_methods' => new UnloadMethodCollection(UnloadMethod::all()),
+            'load_methods' => LoadMethodEnum::getLoadMethods(),
+            'timeslot' => OrderTimeslotEnum::getTimselot(),
+            'crop' => CropOrderEnum::getCrop(),
+            'status' => OrderStatusEnum::getOrderStatus(),
             'clarification_day' => OrderClarificationDayEnum::getValue(),
         ];
     }
@@ -149,7 +153,7 @@ class OrderService
         $unload_regions = array_unique($unload_regions);
 
         $data = [
-            'load_regions'   => $load_regions,
+            'load_regions' => $load_regions,
             'unload_regions' => $unload_regions
         ];
 
@@ -174,4 +178,6 @@ class OrderService
         $user = $request->user();
         return new OrderIndexCollection($user->orders);
     }
+
+
 }
