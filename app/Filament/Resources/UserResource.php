@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\RoleEnum;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
@@ -23,22 +24,15 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->maxLength(255)
-                    ->label('Имя'),
                 Forms\Components\TextInput::make('email')
-                    ->email()   
+                    ->email()
                     ->label('Электронная почта')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->label('Пароль')
-                    ->maxLength(255),
                 Forms\Components\TextInput::make('phone_number')
-                    ->tel()
                     ->label('Номер телефона')
                     ->maxLength(255),
             ]);
+
     }
 
     public static function table(Table $table): Table
@@ -50,6 +44,9 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Имя')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('roles.name')
+                    ->label('Роли')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->label('Электронная почта')
@@ -94,7 +91,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\RolesRelationManager::class
         ];
     }
 

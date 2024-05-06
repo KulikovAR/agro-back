@@ -1,20 +1,16 @@
 <?php
 
-namespace App\Http\Requests\Counteragent;
+namespace App\Http\Requests\UserProfile;
 
 use App\Enums\OrganizationTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CreateCounteragentRequest extends FormRequest
+class UserProfileUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -24,10 +20,9 @@ class CreateCounteragentRequest extends FormRequest
     public function rules(): array
     {
         return [
-
-            'type'              => ['required', 'string', Rule::enum(OrganizationTypeEnum::class)],
+            'type'              => ['string','required', Rule::enum(OrganizationTypeEnum::class)],
             'inn'               => [
-                'required', 'string',
+                'string',
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::IP->value,
                     'regex:/^\d{12}$/'
@@ -37,9 +32,9 @@ class CreateCounteragentRequest extends FormRequest
                     'regex:/^\d{10}$/'
                 )
             ],
-            'name'              => ['required', 'string'],
-            'surname'           => ['required', 'string'],
-            'patronymic'        => ['required', 'string'],
+            'name'              => ['string'],
+            'surname'           => ['string'],
+            'patronymic'        => ['string'],
             'kpp'               => [
                 'string',
                 Rule::when(
@@ -48,32 +43,27 @@ class CreateCounteragentRequest extends FormRequest
                 ),
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::COMPANY->value,
-                    'required',
                     'regex:/^\d{9}$/'
                 )
             ],
             'orgn'               => [
-                'required', 'string',
+                'string',
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::IP->value,
                     'regex:/^\d{15}$/'
                 ),
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::COMPANY->value,
-                    'required',
                     'regex:/^\d{13}$/'
                 )
             ],
-            'short_name'         => ['required', 'string'],
-            'full_name'          => ['required', 'string'],
-            'juridical_address'  => ['required', 'string'],
-            'office_address'     => ['required', 'string'],
-            'tax_system'         => ['required', 'string'],
-            'okved'              => ['required', 'string'],
-            'phone'              => ['required', 'string', 'regex:/^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/'],
-            'password'           => ['required', 'string'],
-            'user_id'            => ['required','exists:users,id']
-
+            'short_name'         => ['string'],
+            'full_name'          => ['string'],
+            'juridical_address'  => ['string'],
+            'office_address'     => ['string'],
+            'tax_system'         => ['string'],
+            'okved'              => ['string'],
+            'password'           => ['string'],
         ];
     }
 }

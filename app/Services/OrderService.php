@@ -24,6 +24,7 @@ use App\Models\Offer;
 use App\Models\Order;
 use App\Models\TgUser;
 use App\Models\UnloadMethod;
+use App\Models\User;
 use App\Services\Dadata\Dadata;
 use Illuminate\Http\Request;
 
@@ -41,6 +42,17 @@ class OrderService
         $data = $request->validated();
         $filter = app()->make(OrderFilter::class, ['queryParams' => $data]);
         $order = Order::filter($filter);
+        if($request->user()->orders != null){
+            $userOrders = $request->user()->orders;
+            if (is_null($request->sort)) {
+                $order->orderBy('order_number', 'desc');
+            }
+            $orderCollection = $order->get()->reject(function ($item) use ($userOrders) {
+                return $userOrders->contains($item);
+            });
+            return new OrderIndexCollection($orderCollection);
+
+        }
 
         if (is_null($request->sort)) {
             $order->orderBy('order_number', 'desc');
@@ -79,6 +91,9 @@ class OrderService
             'unload_longitude' => $unload_longitude,
             'load_latitude' => $load_latitude,
             'unload_latitude' => $unload_latitude,
+            'load_latitude'    => $load_latitude,
+            'unload_latitude'  => $unload_latitude,
+            'creator_id'       => $request->user()->id
         ];
         $queryData = array_merge($request->except(['load_types', 'unload_methods']), $data);
 
