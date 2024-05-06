@@ -7,7 +7,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationContactController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\V1\UserProfileController;
 use App\Http\Controllers\V1\OfferController;
 use App\Http\Controllers\V1\ProductParserController;
 use App\Http\Controllers\V1\TransportController;
@@ -23,6 +23,7 @@ use App\Http\Controllers\V1\OrderController;
 use App\Http\Controllers\V1\CounteragentController;
 use App\Http\Controllers\V1\TransportBrandController;
 use App\Http\Controllers\V1\TransportTypeController;
+use \App\Http\Controllers\V1\FileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,7 +56,7 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login', [AuthTokenController::class, 'store'])->name('login.stateless');
     Route::post('/login/verification', [AuthTokenController::class, 'verification'])->name('login.verification');
     Route::delete('/logout', [AuthTokenController::class, 'destroy'])->name('logout');
-    Route::get('/user',[AuthTokenController::class,'getUser'])->name('get_user');
+    Route::get('/user', [AuthTokenController::class, 'getUser'])->name('get_user');
 
     // Route::post('/password/send', [PasswordController::class, 'sendPasswordLink'])->middleware(['throttle:6,1'])->name('password.send');
     // Route::post('/password/reset', [PasswordController::class, 'store'])->name('password.reset');
@@ -64,23 +65,37 @@ Route::middleware(['guest'])->group(function () {
 
 Route::post('/bot/send-message', [\App\Http\Controllers\V1\TgBotController::class, 'sendMessage']);
 
-Route::prefix('orders')->group(function () {
-    Route::get('/regions', [OrderController::class, 'getRegions'])->name('order.regions');
-    Route::get('/cities', [OrderController::class, 'getCities'])->name('order.cities');
-    Route::get('/', [OrderController::class, 'index'])->name('order.index');
-    Route::get('/{order}', [OrderController::class, 'show'])->name('order.show');
-});
 
 
-Route::prefix('orders')->group(function () {
-    Route::get('/user-orders', [OrderController::class, 'getOrdersWithUserOffers'])->name('order.user.orders');
-    Route::post('/create', [OrderController::class, 'create'])->name('order.create');
-    Route::post('/update/{order}', [OrderController::class, 'update'])->name('order.update');
-    Route::delete('/delete/{order}', [OrderController::class, 'delete'])->name('order.delete');
-});
 
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('userprofile')->group(function () {
+        Route::get('/', [UserProfileController::class, 'getUserProfileByToken'])->name(
+            'userprofile.getUserProfileByToken'
+        );
+        Route::post('avatar/create', [UserProfileController::class, 'loadAvatar'])->name('userprofile.avatar.create');
+        Route::post('avatar/update/', [UserProfileController::class, 'updateAvatar'])->name(
+            'userprofile.avatar.update'
+        );
+        Route::put('/delete', [UserProfileController::class, 'delete'])->name('userprofile.delete');
+        Route::put('/update', [UserProfileController::class, 'update'])->name('userprofile.update');
+//        Route::put('password/update', [UserProfileController::class, 'updatePassword'])->name(
+//            'userprofile.password.update'
+//        );
+    });
+    Route::prefix('files')->group(function () {
+        Route::get('/', [FileController::class, 'index'])->name('files.index');
+        Route::get('show/{file}', [FileController::class, 'show'])->name('files.show');
+        Route::post('/create/', [FileController::class, 'create'])->name('files.create');
+        Route::put('/update/{file}', [FileController::class, 'update'])->name('files.update');
+        Route::post('/load_files', [FileController::class, 'loadFilesForUser'])->name('files.load_files');
+        Route::post('/update-files',[FileController::class, 'updateFilesForUser'])->name('files.update_files');
+        Route::delete('/delete-files',[FileController::class, 'deleteUserFiles'])->name('files.delete_files');
+        Route::get('/file_types', [FileController::class, 'getFileTypes'])->name('files.getFileTypes');
+        Route::delete('/delete/{file}', [FileController::class, 'delete'])->name('files.update');
+    });
+
     Route::prefix('transport')->group(function () {
         Route::get('/', [TransportController::class, 'index'])->name('transport.index');
         Route::get('/{id}', [TransportController::class, 'show'])->name('transport.show');
@@ -90,6 +105,17 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/manual/brands', [TransportBrandController::class, 'index'])->name('transport.brands');
         Route::get('/manual/types', [TransportTypeController::class, 'index'])->name('transport.types');
     });
+    Route::prefix('orders')->group(function () {
+        Route::post('/create', [OrderController::class, 'create'])->name('order.create');
+        Route::post('/update/{order}', [OrderController::class, 'update'])->name('order.update');
+        Route::delete('/delete/{order}', [OrderController::class, 'delete'])->name('order.delete');
+        Route::get('/regions', [OrderController::class, 'getRegions'])->name('order.regions');
+        Route::get('/cities', [OrderController::class, 'getCities'])->name('order.cities');
+        Route::get('/', [OrderController::class, 'index'])->name('order.index');
+        Route::get('/{order}', [OrderController::class, 'show'])->name('order.show');
+    });
+
+        Route::get('/user-orders', [OrderController::class, 'getOrdersWithUserOffers'])->name('order.user.orders');
 
 
     Route::prefix('offers')->group(function () {
@@ -119,6 +145,7 @@ Route::middleware('auth:sanctum')->group(function () {
         );
     });
 });
+
 
 Route::get('/auth/{provider}/redirect', [AuthProviderController::class, 'redirectToProvider'])->middleware(
     'throttle:10,1'

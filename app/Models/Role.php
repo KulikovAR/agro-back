@@ -14,4 +14,9 @@ class Role extends SpatieRole
     const ROLE_USER    = 'user';
 
     protected $table = 'spatie_roles';
+    protected $keyType = 'string';
+    protected $primaryKey = 'id';
+    protected $fillable = [
+        'name',
+    ];
 }

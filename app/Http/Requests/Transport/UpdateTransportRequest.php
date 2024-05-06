@@ -9,11 +9,6 @@ class UpdateTransportRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -22,7 +17,6 @@ class UpdateTransportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'driver_id'        => ['string', 'exists:drivers,id'],
             'type'             => ['integer'],
             'number'           => ['string'],
             'model'            => ['string'],
