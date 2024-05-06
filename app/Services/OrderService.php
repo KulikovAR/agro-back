@@ -89,6 +89,7 @@ class OrderService
             'unload_longitude' => $unload_longitude,
             'load_latitude'    => $load_latitude,
             'unload_latitude'  => $unload_latitude,
+            'creator_id'       => $request->user()->id
         ];
         $queryData = array_merge($request->except(['load_types', 'unload_methods']), $data);
 
