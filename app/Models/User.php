@@ -132,6 +132,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     {
         return $this->hasOne(TgUser::class);
     }
+
     public function clearProfile()
     {
         return [
