@@ -16,6 +16,7 @@ class FileTypeSeeder extends Seeder
         FileType::create(['title' => 'Аватар']);
         FileType::create(['title' => 'ПСФЛ']);
         FileType::create(['title' => 'ЕФС']);
+        FileType::create(['title' => 'Реквизиты']);
         FileType::create(['title' => 'Налоговая тайна']);
         FileType::create(['title' => 'Патент']);
         FileType::create(['title' => 'УСН']);
