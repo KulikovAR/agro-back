@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\File\CreateFileRequest;
 use App\Http\Requests\File\CreateUserFileRequest;
+use App\Http\Requests\File\DeleteUserFileRequest;
 use App\Http\Resources\File\FileCollection;
 use App\Http\Resources\File\FileResource;
 use App\Http\Resources\FileType\FileTypeCollection;
@@ -52,6 +53,26 @@ class FileService
         $files = $this->loadFiles($request->load_files);
         $this->userAttachFiles($files, $user, $request->file_types);
         return new FileCollection($files);
+    }
+
+    public function updateFilesForUser(CreateUserFileRequest $request)
+    {
+        $user = $request->user();
+        $files = $user->files()->whereHas('fileType', function ($query) use ($request) {
+            $query->whereIn('file_type_id', $request->file_types);
+        })->get();
+        $files = $this->updateFiles($request->load_files, $files);
+        $this->userAttachFiles($files, $user, $request->file_types);
+        return new FileCollection($files);
+    }
+
+    public function deleteUserFiles(DeleteUserFileRequest $request):void
+    {
+        $user = $request->user();
+        $files = $user->files()->whereHas('fileType', function ($query) use ($request) {
+            $query->whereIn('file_type_id', $request->file_types);
+        })->get();
+        $this->deleteFiles($files);
     }
 
     public function getFileTypes()
