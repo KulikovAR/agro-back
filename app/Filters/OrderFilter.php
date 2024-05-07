@@ -269,9 +269,7 @@ class OrderFilter extends AbstractFilter
     public function clarification_of_the_weekend(Builder $builder, $value)
     {
         if($value == 'суббота и воскресенье'){
-            $builder->where('clarification_of_the_weekend',     'суббота')
-            ->orWhere('clarification_of_the_weekend', 'воскресенье')
-            ->orWhere('clarification_of_the_weekend', 'суббота и воскресенье');
+            $builder->whereNotNull('clarification_of_the_weekend');
         }
         else {
             $builder->where('clarification_of_the_weekend', $value);
