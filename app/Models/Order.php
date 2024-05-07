@@ -90,4 +90,39 @@ class Order extends Model
         return $this->belongsTo(User::class, 'creator_id');
     }
 
+    public function setAttribute($key, $value)
+    {
+        if ($this->isFloatAttribute($key)) {
+            $value = str_replace(',', '.', $value);
+        }
+
+        return parent::setAttribute($key, $value);
+    }
+
+    /**
+     * Check if the given attribute is a float.
+     *
+     * @param  string  $key
+     * @return bool
+     */
+    protected function isFloatAttribute($key)
+    {
+        return in_array($key, $this->getFloatAttributes(), true);
+    }
+
+    /**
+     * Get the float attributes for the model.
+     *
+     * @return array
+     */
+    protected function getFloatAttributes()
+    {
+        return [
+
+            'height_limit',
+            'scale_length',
+            // и так далее
+        ];
+    }
+
 }

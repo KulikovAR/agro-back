@@ -265,14 +265,17 @@ class OrderFilter extends AbstractFilter
         $builder->where('work_time', $value);
     }
 
-    public function is_load_in_weekend(Builder $builder, $value)
-    {
-        $builder->where('is_load_in_weekend', $value);
-    }
 
     public function clarification_of_the_weekend(Builder $builder, $value)
     {
-        $builder->where('clarification_of_the_weekend', $value);
+        if($value == 'суббота и воскресенье'){
+            $builder->where('clarification_of_the_weekend',     'суббота')
+            ->orWhere('clarification_of_the_weekend', 'воскресенье')
+            ->orWhere('clarification_of_the_weekend', 'суббота и воскресенье');
+        }
+        else {
+            $builder->where('clarification_of_the_weekend', $value);
+        }
     }
 
     public function loader_power(Builder $builder, $value)

@@ -6,7 +6,6 @@ namespace App\Models;
 use App\Notifications\PasswordResetNotification;
 use App\Notifications\VerifyEmailNotification;
 use App\Traits\BearerTokenTrait;
-use App\Traits\SheduleLessons;
 use Carbon\Carbon;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;

@@ -127,9 +127,6 @@ class OrderResource extends Resource
                 Forms\Components\TextInput::make('loader_power')
                     ->label('Мощность погрузчика')
                     ->numeric(),
-                Forms\Components\TextInput::make('unload_method')
-                    ->label('Метод выгрузки')
-                    ->required(),
                 Forms\Components\Select::make('load_method')
                     ->label('Метод загрузки')
                     ->required()
