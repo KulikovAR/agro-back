@@ -39,18 +39,12 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Имя')
-                    ->searchable(),
+                    ->label('Имя'),
                 Tables\Columns\TextColumn::make('roles.name')
-                    ->label('Роли')
-                    ->searchable(),
+                    ->label('Роли'),
                 Tables\Columns\TextColumn::make('email')
-                    ->label('Электронная почта')
-                    ->searchable(),
+                    ->label('Электронная почта'),
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->label('Время подтверждения почты')
                     ->dateTime()
