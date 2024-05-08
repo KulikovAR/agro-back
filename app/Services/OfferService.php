@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Requests\Offer\OfferRequest;
 use App\Http\Resources\Offer\OfferResource;
 use App\Models\Offer;
+use App\Notifications\OrderNotification;
 
 class OfferService
 {
@@ -12,7 +13,9 @@ class OfferService
     {
         $user = $request->user();
         $offer = Offer::firstOrCreate(['user_id' => $user->id, 'order_id' => $request->order_id],['user_id' => $user->id, 'order_id' => $request->order_id]);
-        TgService::notifyUser($offer->user, $this->textToBot($offer));
+        $logistician = $offer->order->creator;
+//        $logistician->notify(new OrderNotification($this->textToBot($offer)));
+        TgService::notifyUser($logistician, $this->textToBot($offer));
         return new OfferResource($offer);
     }
 
