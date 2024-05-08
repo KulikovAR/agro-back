@@ -28,7 +28,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference, FilamentUser, HasName
 {
 
-    use HasApiTokens, HasFactory, Notifiable, HasUuids, SoftDeletes, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids, SoftDeletes, HasRoles,Notifiable;
 
     /**
      * The attributes that are mass assignable.
