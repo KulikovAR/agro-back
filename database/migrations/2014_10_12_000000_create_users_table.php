@@ -25,7 +25,6 @@ return new class extends MigrationService
             $table->string('code')->nullable();
             $table->string('code_hash')->nullable();
             $table->timestamp('code_expire_at')->nullable();
-            $table->softDeletes();
             $table->timestamps();
             $table->rememberToken();
 
