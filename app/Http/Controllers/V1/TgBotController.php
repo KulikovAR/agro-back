@@ -39,9 +39,9 @@ class TgBotController extends Controller
         {
             $contact = $contact->getContact();
 
-            $user = User::where('phone_number', $phone_number)->exist();
+            $user = User::where('phone_number', $phone_number)->first();
             $logistcianRole = Role::where('name',RoleEnum::LOGISTICIAN->value)->first();
-            if($user && $user->hasRole($logistcianRole)){
+            if(!is_null($user) || $user->hasRole($logistcianRole)){
                 $tgUser = TgUser::create(['phone_number' => $phone_number, 'username' => $username, 'user_id' => $user->id, 'chat_id' => $chatId ]);
                 Telegram::sendMessage([
                     'chat_id' => $chatId,
@@ -54,7 +54,6 @@ class TgBotController extends Controller
                 Telegram::sendMessage([
                     'chat_id' => $chatId,
                     'text' => 'Вы не зарегистрированы в AgroLogistic или не являетесь логистом AgroLogistic',
-                    'reply_markup' => $reply_markup
                 ]);
                 return 1;
             }
@@ -63,7 +62,7 @@ class TgBotController extends Controller
         if($contact->text != '/start'){
             Telegram::sendMessage([
                 'chat_id' => $chatId,
-                'text' => 'Вы не прислали номер телефона',
+                'text' => 'Бот реагирует только на отправку номера телефона',
                 'reply_markup' => $reply_markup
             ]);
             return 1;
