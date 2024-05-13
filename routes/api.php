@@ -37,7 +37,7 @@ use App\Http\Controllers\V1\WhatsAppController;
 |
 */
 
-Route::get('whatsapp/webhook', [WhatsAppController::class, 'webhook']);
+Route::post('whatsapp/webhook', [WhatsAppController::class, 'webhook']);
 
 //Route::prefix('products-parser')->group(function () {
 //    Route::get('/get-filters', [ProductParserController::class, 'getProductFilter'])->name('product-parser.get-filter');
