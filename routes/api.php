@@ -24,6 +24,7 @@ use App\Http\Controllers\V1\CounteragentController;
 use App\Http\Controllers\V1\TransportBrandController;
 use App\Http\Controllers\V1\TransportTypeController;
 use \App\Http\Controllers\V1\FileController;
+use App\Http\Controllers\V1\WhatsAppController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,8 @@ use \App\Http\Controllers\V1\FileController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::get('whatsapp/webhook', [WhatsAppController::class, 'webhook']);
 
 //Route::prefix('products-parser')->group(function () {
 //    Route::get('/get-filters', [ProductParserController::class, 'getProductFilter'])->name('product-parser.get-filter');
