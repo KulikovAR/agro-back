@@ -18,6 +18,9 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
+    protected static ?string $pluralModelLabel = 'Пользователи';
+
+    protected static ?string $modelLabel = 'Пользователь';
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
@@ -32,7 +35,9 @@ class UserResource extends Resource
                     ->label('Номер телефона')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
-                    ->label('Пароль'),
+                    ->label('Пароль')
+                    ->password()
+                    ->revealable(),
             ]);
 
     }
