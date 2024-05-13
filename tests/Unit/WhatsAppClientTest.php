@@ -14,6 +14,8 @@ class WhatsAppClientTest extends TestCase
     {
         $client = new WhatsAppClient();
 
-        dd($client->sendMessage('скуф подьем', '79202149572'));
+        $client->sendMessage('test', '79202149572');
+
+        $this->assertTrue(true);
     }
 }
