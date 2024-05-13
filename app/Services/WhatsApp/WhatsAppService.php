@@ -17,20 +17,18 @@ class WhatsAppService
         $this->client = new WhatsAppClient();
     }
 
-    public function handler(Request $request)
-    {
-        $data = $request->all();
-
+    public function handler(array $data): void
+    {   
         if (!isset($data['messages'])) {
             return;
         }
 
-        if (!isset($data['messages']['wh_type']) || $data['messages']['wh_type'] != self::INCOMING_MESSAGE_TYPE) {
+        if (!isset($data['messages'][0]['wh_type']) || $data['messages'][0]['wh_type'] != self::INCOMING_MESSAGE_TYPE) {
             return;
         }
 
-        $phoneNumber = $this->formatPhone($data['messages']['from']);
-
+        $phoneNumber = $this->formatPhone($data['messages'][0]['from']);
+   
         $user = User::where('phone_number', '+' . $phoneNumber)->first();
 
         if (is_null($user) || !$user->hasRole(RoleEnum::LOGISTICIAN->value)) {

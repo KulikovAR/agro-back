@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class WhatsAppController extends Controller
 {
     public $service;
-    
+
     public function __construct()
     {
         $this->service = new WhatsAppService();
@@ -19,7 +19,7 @@ class WhatsAppController extends Controller
     {
         Storage::put('whatsapp.json', json_encode($request->all()));
 
-        $this->service->handler($request);
+        $this->service->handler($request->all());
 
         return 1;
     }
