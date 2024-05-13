@@ -77,15 +77,24 @@ class UserResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
+                // ...
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // You may add these actions to your table if you're using a simple
+                // resource, or you just want to be able to delete records without
+                // leaving the table.
+                Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
+                // ...
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
+                    // ...
                 ]),
             ]);
     }
