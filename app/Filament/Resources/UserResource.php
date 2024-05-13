@@ -31,6 +31,8 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('phone_number')
                     ->label('Номер телефона')
                     ->maxLength(255),
+                Forms\Components\TextInput::make('password')
+                    ->label('Пароль'),
             ]);
 
     }
