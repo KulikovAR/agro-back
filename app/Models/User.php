@@ -27,7 +27,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference, FilamentUser, HasName
 {
 
-    use HasApiTokens, HasFactory, Notifiable, HasUuids, SoftDeletes, HasRoles,Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids, SoftDeletes, HasRoles, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -43,7 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         'code_hash',
         'phone_verified_at',
         'code',
-
+        'whats_app_verify'
     ];
 
     /**
@@ -91,24 +91,24 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     }
 
 
-    public function files():BelongsToMany
+    public function files(): BelongsToMany
     {
-        return $this->belongsToMany(File::class,'user_files','user_id','file_id');
+        return $this->belongsToMany(File::class, 'user_files', 'user_id', 'file_id');
     }
-    public function fileTypes():belongsToMany
+    public function fileTypes(): belongsToMany
     {
-        return $this->belongsToMany(FileType::class,'user_files','user_id','file_type_id');
+        return $this->belongsToMany(FileType::class, 'user_files', 'user_id', 'file_type_id');
     }
-    public function userProfile():HasOne
+    public function userProfile(): HasOne
     {
         return $this->hasOne((UserProfile::class));
     }
 
-    public function createdOrders():hasMany
+    public function createdOrders(): hasMany
     {
         return $this->hasMany(Order::class);
     }
-    public function orders():belongsToMany
+    public function orders(): belongsToMany
     {
         return $this->belongsToMany(Order::class, 'offers', 'user_id', 'order_id');
     }
@@ -117,7 +117,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         return str_ends_with($this->email, '@admin.ru');
     }
 
-//    public function roles(): BelongsToMany
+    //    public function roles(): BelongsToMany
 //    {
 //        return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
 //    }
@@ -127,7 +127,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         return "{$this->email}";
     }
 
-    public function tgUser():hasOne
+    public function tgUser(): hasOne
     {
         return $this->hasOne(TgUser::class);
     }
@@ -135,25 +135,25 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     public function clearProfile()
     {
         return [
-            'name' => null,
-            'surname' => null,
-            'patronymic' => null,
-            'inn' => null,
-            'kpp' => null,
-            'ogrn' => null,
-            'short_name' => null,
-            'full_name' => null,
+            'name'              => null,
+            'surname'           => null,
+            'patronymic'        => null,
+            'inn'               => null,
+            'kpp'               => null,
+            'ogrn'              => null,
+            'short_name'        => null,
+            'full_name'         => null,
             'juridical_address' => null,
-            'office_address' => null,
-            'tax_system' => null,
-            'okved' => null,
-            'type' => null,
-            'series' => null,
-            'number' => null,
-            'issue_date_at' => null,
-            'department' => null,
-            'department_code' => null,
-            'snils' => null,
+            'office_address'    => null,
+            'tax_system'        => null,
+            'okved'             => null,
+            'type'              => null,
+            'series'            => null,
+            'number'            => null,
+            'issue_date_at'     => null,
+            'department'        => null,
+            'department_code'   => null,
+            'snils'             => null,
         ];
     }
 }
