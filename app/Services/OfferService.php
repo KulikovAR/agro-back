@@ -35,8 +35,8 @@ class OfferService
     public function textToBot(Offer $offer)
     {
         $order = $offer->order;
-        $text  = $order->load_place_name . '-->' . $order->unload_place_name . "\n";
-        $text .= $order->crop . ' ' . $order->volume . "/n";
+        $text  = $order->load_place_name . ' --> ' . $order->unload_place_name . "\n";
+        $text .= $order->crop . ' ' . $order->volume . "\n";
         $text .= $order->distance . ' ' . 'км' . ' ' . '=' . ' ' . $order->tariff . ' ' . 'руб/тн' . "\n";
         foreach ($order->unloadMethods as $unloadMethod) {
             if (!next($order->unloadMethods)) {

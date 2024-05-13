@@ -41,7 +41,6 @@ class WhatsAppService
             return;
         }
 
-
         $user->update([
             'whats_app_verify' => true
         ]);
