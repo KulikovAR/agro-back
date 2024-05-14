@@ -25,7 +25,7 @@ class UserProfile extends Model
         'phone_number',
         'short_name',
         'full_name',
-        'juridicatl_address',
+        'juridical_address',
         'office_address',
         'tax_system',
         'okved',

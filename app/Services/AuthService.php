@@ -52,7 +52,7 @@ class AuthService
         else{
         $user->syncRoles([$clientRole]);
         }
-        $user->userProfile()->create($user->clearProfile());
+        $user->userProfile()->firstOrCreate(['user_id' => $user->id],$user->clearProfile());
         if (env('APP_ENV') == 'production') {
             $this->sms->send($request->phone_number, $code_arr['code'] . '- Verification code Cargis');
             $resource = new UserResource($user);

@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class TgUser extends Model
 {
     use HasFactory;
+    protected $fillable = ['phone_number', 'username', 'user_id', 'chat_id'];
 }
