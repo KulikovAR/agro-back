@@ -16,9 +16,6 @@ class LoadTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        if (App::environment(EnvironmentTypeEnum::productEnv())) {
-            return;
-        }
         LoadType::create(['title' => 'Сцепки']);
         LoadType::create(['title' => 'Полуприцеп']);
         LoadType::create(['title' => 'Тонар']);
