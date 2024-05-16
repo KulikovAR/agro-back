@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->integer('distance')->nullable();
             $table->integer('tariff');
             $table->integer('nds_percent')->nullable();
-            $table->string('terminal_name');
+            $table->string('terminal_name')->nullable();
             $table->string('exporter_name')->nullable();
             $table->float('scale_length');
             $table->string('load_city');
@@ -56,7 +56,10 @@ return new class extends Migration {
 //            $table->integer('cargo_weight');
             $table->boolean('is_full_charter')->nullable();
             $table->text('description')->nullable();
+            $table->uuid('creator_id');
+            $table->foreign('creator_id')->on('users')->references('id')->onDelete('cascade');
             $table->boolean('is_moderated')->default(false);
+            $table->integer('view_counter')->default(0);
             $table->timestamps();
         });
     }

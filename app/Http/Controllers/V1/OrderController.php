@@ -11,6 +11,7 @@ use App\Http\Requests\Order\OrderUpdateRequest;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\Order;
 use App\Services\OrderService;
+use Illuminate\Http\Request;
 
 
 class OrderController extends Controller
@@ -29,7 +30,6 @@ class OrderController extends Controller
             StatusEnum::OK,
             'Заявки получены',
             data: $this->service->index($request)
-
         );
     }
 
@@ -92,22 +92,28 @@ class OrderController extends Controller
         );
     }
 
-    public function getRegions() {
-        $regions = Order::whereNotNull('load_region')->get()->pluck('load_region')->toArray();
-
-        $regions = array_unique($regions);
-        return new ApiJsonResponse(data:
-            $regions
+    public function getRegions()
+    {
+        return new ApiJsonResponse(
+            data: $this->service->getRegions()
         );
     }
 
-    public function getCities(OrderCitiesRequest $request) {
-        $cities = Order::where('load_region', $request->region)->get()->pluck('load_city')->toArray();
-
-        $cities = array_unique($cities);
-        return new ApiJsonResponse(data:
-            $cities
+    public function getCities(OrderCitiesRequest $request)
+    {
+        return new ApiJsonResponse(
+            data: $this->service->getCities($request)
         );
+    }
+
+    public function getOrdersWithUserOffers(Request $request)
+    {
+        return new ApiJsonResponse(200, StatusEnum::OK, 'Заявки с откликами пользователя получены', data: $this->service->getOrdersWithUserOffers($request));
+    }
+
+    public function notifyLogistician(Offer $offer): ApiJsonResponse
+    {
+
     }
 }
 

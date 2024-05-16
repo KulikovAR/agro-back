@@ -11,6 +11,7 @@ use App\Http\Requests\Auth\RegistrationSmsCodeRequest;
 use App\Http\Resources\User\DevUserResource;
 use App\Http\Resources\User\UserResource;
 use App\Http\Responses\ApiJsonResponse;
+use App\Models\Role;
 use App\Models\User;
 use App\Services\Sms\SmsVerification;
 use App\Traits\BearerTokenTrait;
@@ -40,13 +41,26 @@ class AuthService
     public function login(LoginRequest $request): ApiJsonResponse
     {
         $code_arr = $this->sms->setCode();
-        $user = User::firstOrCreate(['phone_number' => $request->phone_number]);
+
+        $clientRole = Role::where('name', 'client')->first();
+        $logisticianRole = Role::where('name', 'logistician')->first();
+
+        $user = User::firstOrCreate(['phone_number' => $request->phone_number],['phone_number' => $request->phone_number]);
+        if($user->hasRole($logisticianRole)) {
+            $user->syncRoles($logisticianRole);
+        }
+        else{
+        $user->syncRoles([$clientRole]);
+        }
+        $user->userProfile()->firstOrCreate(['user_id' => $user->id],$user->clearProfile());
         if (env('APP_ENV') == 'production') {
             $this->sms->send($request->phone_number, $code_arr['code'] . '- Verification code Cargis');
             $resource = new UserResource($user);
         }
+
         $resource = new DevUserResource($user);
         $user->update(['code' => $code_arr['code'], 'code_hash' => $code_arr['code_hash'], 'code_expire_at' => $code_arr['code_expire']]);
+
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
@@ -74,4 +88,6 @@ class AuthService
         $user_token = \Laravel\Sanctum\PersonalAccessToken::findToken($token);
         return User::where('id', $user_token->tokenable_id)->first();
     }
+
+
 }

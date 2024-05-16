@@ -7,14 +7,17 @@ use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Notifications\Notifiable;
 
 class Order extends Model
 {
     use Filterable;
     use HasUuids;
     use HasFactory;
+    use Notifiable;
 
     protected $fillable = [
         'id',
@@ -63,7 +66,17 @@ class Order extends Model
         'unload_city',
         'load_region',
         'unload_region',
+        'creator_id'
     ];
+
+    const SORT = [
+        'tariff',
+        'distance'
+    ];
+
+    public static function sortFields(): array {
+        return self::SORT;
+    }
 
     public function loadTypes(): BelongsToMany
     {
@@ -74,4 +87,44 @@ class Order extends Model
     {
         return $this->belongsToMany(UnloadMethod::class, 'order_unload_methods', 'order_id', 'unload_method_id');
     }
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'creator_id');
+    }
+
+    public function setAttribute($key, $value)
+    {
+        if ($this->isFloatAttribute($key)) {
+            $value = str_replace(',', '.', $value);
+        }
+
+        return parent::setAttribute($key, $value);
+    }
+
+    /**
+     * Check if the given attribute is a float.
+     *
+     * @param  string  $key
+     * @return bool
+     */
+    protected function isFloatAttribute($key)
+    {
+        return in_array($key, $this->getFloatAttributes(), true);
+    }
+
+    /**
+     * Get the float attributes for the model.
+     *
+     * @return array
+     */
+    protected function getFloatAttributes()
+    {
+        return [
+
+            'height_limit',
+            'scale_length',
+            // и так далее
+        ];
+    }
+
 }

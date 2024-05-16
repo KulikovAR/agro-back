@@ -23,7 +23,8 @@ class OrderFilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'crop'                                        => ['string'],
+            'crop'                                        => ['array'],
+            'crop.*'                                      => ['string'],
             'volume'                                      => ['string'],
             'distance_from'                               => ['integer'],
             'distance_to'                                 => [
@@ -37,10 +38,10 @@ class OrderFilterRequest extends FormRequest
             'terminal_inn'                                => ['string'],
             'exporter_name'                               => ['string'],
             'exporter_inn'                                => ['string'],
-            'scale_lenght'                                => ['integer'],
+            'scale_length'                                => ['integer'],
             'height_limit'                                => ['integer'],
             'is_overload'                                 => ['boolean'],
-            'timeslot'                                    => ['string'],
+            'timeslot'                                    => ['array'],
             'outage_begin'                                => ['integer'],
             'outage_price'                                => ['integer'],
             'daily_load_rate'                             => ['integer'],
@@ -48,14 +49,18 @@ class OrderFilterRequest extends FormRequest
             'contact_phone'                               => ['string'],
             'cargo_shortage_rate'                         => ['integer'],
             'unit_of_measurement_for_cargo_shortage_rate' => ['string'],
-            'cargo_price'                                 => ['integer'],
+            'tariff_from'                                 => ['integer'],
+            'tariff_to'                                   => [
+                'integer',
+                Rule::when($this->input('tariff_from'), 'gt:tariff_from')
+            ],
             'load_place'                                  => ['string'],
             'approach'                                    => ['string'],
             'work_time'                                   => ['string'],
             'is_load_in_weekend'                          => ['boolean'],
             'clarification_of_the_weekend'                => ['string'],
             'loader_power'                                => ['integer'],
-            'load_method'                                 => ['string'],
+            'load_method'                                 => ['array'],
             'tolerance_to_the_norm'                       => ['integer'],
             'start_order_at'                              => ['date'],
             'end_order_at'                                => ['date'],
@@ -68,13 +73,15 @@ class OrderFilterRequest extends FormRequest
             'cargo_weight'                                => ['integer'],
             'description'                                 => ['string'],
             'load_types'                                  => ['array'],
-            'load_types.*.load_type_id'                   => ['string', 'exists:load_types,id'],
-            'load_region'                                 => ['string'],
-            'load_city'                                   => ['string'],
-            'unload_region'                               => ['string'],
-            'unload_city'                                 => ['string'],
-            'tariff_order'                                => ['string'],
-            'distance_order'                              => ['string'],
+            'load_types.*'                                => ['string', 'exists:load_types,id'],
+            'unload_methods'                              => ['array'],
+            'unload_methods.*'                            => ['string', 'exists:unload_methods,id'],
+            'load_region'                                 => ['array'],
+            'load_city'                                   => ['array'],
+            'unload_region'                               => ['array'],
+            'unload_city'                                 => ['array'],
+            'is_full_charter'                             => ['boolean'],
+            'sort'                                        => ['string'],
         ];
     }
 }

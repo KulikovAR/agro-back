@@ -2,6 +2,7 @@
 
 namespace App\Filters;
 
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder;
 
 class OrderFilter extends AbstractFilter
@@ -52,8 +53,11 @@ class OrderFilter extends AbstractFilter
     public const LOAD_CITY = 'load_city';
     public const UNLOAD_REGION = 'unload_region';
     public const UNLOAD_CITY = 'unload_city';
-    public const TARIFF_ORDER = 'tariff_order';
-    public const DISTANCE_ORDER = 'distance_order';
+    public const WITH_NDS = 'with_nds';
+    public const SORT = 'sort';
+    public const IS_FULL_CHARTER = 'is_full_charter';
+    public const TARIFF_FROM = 'tariff_from';
+    public const TARIFF_TO = 'tariff_to';
 
     protected function getCallbacks(): array
     {
@@ -104,14 +108,22 @@ class OrderFilter extends AbstractFilter
             self::LOAD_CITY                                   => [$this, 'load_city'],
             self::UNLOAD_REGION                               => [$this, 'unload_region'],
             self::UNLOAD_CITY                                 => [$this, 'unload_city'],
-            self::TARIFF_ORDER                                => [$this, 'tariff_order'],
-            self::DISTANCE_ORDER                              => [$this, 'distance_order']
+            self::WITH_NDS                                    => [$this, 'with_nds'],
+            self::SORT                                        => [$this, 'sort'],
+            self::TARIFF_FROM                                 => [$this, 'tariff_from'],
+            self::TARIFF_TO                                   => [$this, 'tariff_to'],
+            self::IS_FULL_CHARTER                             => [$this, 'is_full_charter'],
         ];
+    }
+
+    public function is_full_charter(Builder $builder, $value)
+    {
+        $builder->where('is_full_charter', $value);
     }
 
     public function crop(Builder $builder, $value)
     {
-        $builder->where('crop', $value);
+        $builder->whereIn('crop', $value);
     }
 
     public function volume(Builder $builder, $value)
@@ -127,6 +139,16 @@ class OrderFilter extends AbstractFilter
     public function distance_from(Builder $builder, $value)
     {
         $builder->where('distance', '>=', $value);
+    }
+
+    public function tariff_from(Builder $builder, $value)
+    {
+        $builder->where('tariff', '>=', $value);
+    }
+
+    public function tariff_to(Builder $builder, $value)
+    {
+        $builder->where('tariff', '<=', $value);
     }
 
     public function tariff(Builder $builder, $value)
@@ -170,12 +192,12 @@ class OrderFilter extends AbstractFilter
 
     public function scale_length(Builder $builder, $value)
     {
-        $builder->where('scale_lenght', $value);
+        $builder->where('scale_length', '>=', $value);
     }
 
     public function height_limit(Builder $builder, $value)
     {
-        $builder->where('height_limit', $value);
+        $builder->where('height_limit', '>=', $value);
     }
 
     public function is_overload(Builder $builder, $value)
@@ -185,7 +207,7 @@ class OrderFilter extends AbstractFilter
 
     public function timeslot(Builder $builder, $value)
     {
-        $builder->where('timeslot', $value);
+        $builder->whereIn('timeslot', $value);
     }
 
     public function outage_begin(Builder $builder, $value)
@@ -243,14 +265,20 @@ class OrderFilter extends AbstractFilter
         $builder->where('work_time', $value);
     }
 
-    public function is_load_in_weekend(Builder $builder, $value)
-    {
-        $builder->where('is_load_in_weekend', $value);
-    }
 
     public function clarification_of_the_weekend(Builder $builder, $value)
     {
-        $builder->where('clarification_of_the_weekend', $value);
+        if($value == 'суббота и воскресенье'){
+            $builder->whereNotNull('clarification_of_the_weekend');
+        }
+        elseif ($value=='суббота') {
+            $builder->where('clarification_of_the_weekend', 'суббота')
+            ->orWhere('clarification_of_the_weekend', 'суббота и воскресенье');
+        }
+        elseif ($value=='воскресенье') {
+            $builder->where('clarification_of_the_weekend', 'воскресенье')
+                ->orWhere('clarification_of_the_weekend', 'суббота и воскресенье');
+        }
     }
 
     public function loader_power(Builder $builder, $value)
@@ -260,7 +288,7 @@ class OrderFilter extends AbstractFilter
 
     public function load_method(Builder $builder, $value)
     {
-        $builder->where('load_method', $value);
+        $builder->whereIn('load_method', $value);
     }
 
     public function tolerance_to_the_norm(Builder $builder, $value)
@@ -329,31 +357,44 @@ class OrderFilter extends AbstractFilter
 
     public function load_region(Builder $builder, $value)
     {
-        $builder->where('load_region', $value);
+        $builder->whereIn('load_region', $value);
     }
 
     public function load_city(Builder $builder, $value)
     {
-        $builder->where('load_region', $value);
+        $builder->whereIn('load_region', $value);
     }
 
     public function unload_region(Builder $builder, $value)
     {
-        $builder->where('load_region', $value);
+        $builder->whereIn('unload_region', $value);
     }
 
     public function unload_city(Builder $builder, $value)
     {
-        $builder->where('load_region', $value);
+        $builder->whereIn('unload_region', $value);
     }
 
-    public function tariff_order(Builder $builder, $value)
+    public function with_nds(Builder $builder, $value)
     {
-        $builder->orderBy('tariff', $value);
+        if ($value) {
+            $builder->whereNotNull('nds_percent');
+            return;
+        }
+
+        $builder->whereNull('nds_percent');
     }
 
-    public function distance_order(Builder $builder, $value)
+    public function sort(Builder $builder, $value)
     {
-        $builder->orderBy('distance', $value);
+        $sortType = substr($value, 0, 1) == '-' ? 'desc' : 'asc';
+
+        $field = trim($value, '-');
+
+        if (!in_array($field, Order::sortFields())) {
+            return;
+        }
+
+        $builder->orderBy($field, $sortType);
     }
 }

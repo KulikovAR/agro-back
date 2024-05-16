@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Counteragent;
 
 use App\Http\Resources\User\UserResource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -33,8 +34,13 @@ class CounteragentResource extends JsonResource
             'phone_number' => $this->phone_number,
             'password' => $this->password,
             // 'bank_accounts'     => $this->bank_accounts,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'series'     => $this->series,
+            'number'     => $this->number,
+            'department' => $this->department,
+            'department_code' => $this->department_code,
+            'snils'           => $this->snils,
+            'issue_date_at'  => $this->issue_date_at ? Carbon::parse($this->issue_date_at)->format('d.m.Y') : null ,
+
             // 'user'              => new UserResource ($this->user),
         ];
     }

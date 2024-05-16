@@ -71,6 +71,7 @@ class OrderResource extends JsonResource
             'load_types'                                  => new LoadTypeCollection($this->loadTypes),
             'unload_methods'                              => new UnloadMethodCollection($this->unloadMethods),
             'is_full_charter'                             => $this->is_full_charter,
+            'view_counter'                                => $this->view_counter,
             'created_at'                                  => Carbon::parse($this->created_at)->format('d.m.y')
         ];
     }

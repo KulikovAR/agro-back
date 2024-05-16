@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('surname')->nullable();
             $table->string('patronymic')->nullable();
             $table->string('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('inn')->unique()->nullable();
             $table->string('kpp')->unique()->nullable();
             $table->string('ogrn')->unique()->nullable();
@@ -28,9 +28,13 @@ return new class extends Migration
             $table->string('tax_system')->nullable();
             $table->string('okved')->nullable();
             // $table->string('bank_accounts');
-            $table->string('phone_number')->unique()->nullable();
-            $table->string('password')->nullable();
             $table->string('type')->nullable();
+            $table->string('series')->nullable();
+            $table->string('number')->nullable();
+            $table->timestamp('issue_date_at')->nullable();
+            $table->text('department')->nullable();
+            $table->string('department_code')->nullable();
+            $table->string('snils')->nullable();
             $table->timestamps();
         });
     }

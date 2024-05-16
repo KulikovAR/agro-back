@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transport_brands', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
-            $table->string('image');
+            $table->string('model');
             $table->timestamps();
         });
     }
