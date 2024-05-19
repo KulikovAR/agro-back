@@ -35,6 +35,7 @@ class Order extends Model
         'height_limit',
         'is_overload',
         'timeslot',
+        'status',
         'outage_begin',
         'outage_price',
         'daily_load_rate',

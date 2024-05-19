@@ -53,7 +53,7 @@ enum CropOrderEnum: string
 
     public static function getCrop(): array
     {
-        return [
+        $arr =  [
             self::BARLEY->value,
             self::WHEAT->value,
             self::WHEAT_3_CLASS->value,
@@ -101,5 +101,6 @@ enum CropOrderEnum: string
             self::SALTPETER->value,
             self::AMMONIUM_PHOSPHATE->value,
         ];
+        return array_combine(array_values($arr), $arr);
     }
 }

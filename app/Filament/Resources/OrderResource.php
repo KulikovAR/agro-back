@@ -129,6 +129,7 @@ class OrderResource extends Resource
                     ->numeric(),
                 Forms\Components\Select::make('load_method')
                     ->label('Метод загрузки')
+                    ->preload()
                     ->required()
                     ->options(LoadMethodEnum::getLoadMethods()),
                 Forms\Components\Select::make('load_type_id')
