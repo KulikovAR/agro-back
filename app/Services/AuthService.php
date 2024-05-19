@@ -53,13 +53,10 @@ class AuthService
         $user->syncRoles([$clientRole]);
         }
         $user->userProfile()->firstOrCreate(['user_id' => $user->id],$user->clearProfile());
-        if (env('APP_ENV') == 'production') {
-            $this->sms->send($request->phone_number, $code_arr['code'] . '- Verification code Cargis');
-            $resource = new UserResource($user);
-        }
 
-        $resource = new DevUserResource($user);
+        $this->sms->send($request->phone_number, $code_arr['code'] . '- Код для подтверждения');
         $user->update(['code' => $code_arr['code'], 'code_hash' => $code_arr['code_hash'], 'code_expire_at' => $code_arr['code_expire']]);
+        $resource = new UserResource($user);
 
         return new ApiJsonResponse(
             200,
