@@ -113,7 +113,6 @@ class OrderResource extends Resource
                     ->numeric(),
                 Forms\Components\TextInput::make('load_place')
                     ->label('Место загрузки')
-                    ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('approach')
                     ->label('Подход')
