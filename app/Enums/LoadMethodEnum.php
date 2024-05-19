@@ -15,7 +15,7 @@ enum LoadMethodEnum: string
 
     public static function getLoadMethods(): array
     {
-        $arr =  [
+        return  [
             self::MANITU->value,
             self::GRAIN_MILL->value,
             self::KUN->value,
@@ -25,7 +25,6 @@ enum LoadMethodEnum: string
             self::ELEVATOR->value,
             self::VERTICAL->value,
         ];
-        return array_combine(array_values($arr), $arr);
     }
 }
 

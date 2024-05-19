@@ -9,10 +9,9 @@ enum OrderTimeslotEnum: string
 
     public static function getTimselot(): array
     {
-        $arr = [
+        return  [
             self::TARGET->value,
             self::IN_THE_PUBLIC_DOMAIN->value,
         ];
-        return array_combine(array_values($arr), $arr);
     }
 }

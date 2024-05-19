@@ -39,7 +39,7 @@ class OrderResource extends Resource
                 Forms\Components\Select::make('crop')
                     ->label('Культура')
                     ->required()
-                    ->options(CropOrderEnum::getCrop()),
+                    ->options(array_combine(array_values(CropOrderEnum::getCrop()),CropOrderEnum::getCrop())),
                 Forms\Components\TextInput::make('volume')
                     ->label('Объем')
                     ->required()
@@ -79,11 +79,11 @@ class OrderResource extends Resource
                 Forms\Components\Select::make('timeslot')
                     ->label('Таймслот')
                     ->required()
-                    ->options(OrderTimeslotEnum::getTimselot()),
+                    ->options(array_combine(array_values(OrderTimeslotEnum::getTimselot()),OrderTimeslotEnum::getTimselot())),
                 Forms\Components\Select::make('status')
                     ->label('Статус')
                     ->required()
-                    ->options(OrderStatusEnum::getOrderStatus()),
+                    ->options(array_combine(array_values(OrderStatusEnum::getOrderStatus()),OrderStatusEnum::getOrderStatus())),
                 Forms\Components\TextInput::make('outage_begin')
                     ->label('Начало простоя')
                     ->numeric(),
@@ -107,7 +107,7 @@ class OrderResource extends Resource
                     ->numeric(),
                 Forms\Components\Select::make('unit_of_measurement_for_cargo_shortage_rate')
                     ->label('Единица измерения ставки недостачи груза')
-                    ->options(UnitOfMeasurementForCargoShortrageRateEnum::getValue()),
+                    ->options(array_combine(array_values(UnitOfMeasurementForCargoShortrageRateEnum::getValue()),UnitOfMeasurementForCargoShortrageRateEnum::getValue())),
                 Forms\Components\TextInput::make('cargo_price')
                     ->label('Стоимость груза')
                     ->numeric(),
@@ -123,7 +123,7 @@ class OrderResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\Select::make('clarification_of_the_weekend')
                     ->label('Уточнение выходных')
-                    ->options(OrderClarificationDayEnum::getValue()),
+                    ->options(array_combine(array_values(OrderClarificationDayEnum::getValue()),OrderClarificationDayEnum::getValue())),
                 Forms\Components\TextInput::make('loader_power')
                     ->label('Мощность погрузчика')
                     ->numeric(),
@@ -131,7 +131,7 @@ class OrderResource extends Resource
                     ->label('Метод загрузки')
                     ->preload()
                     ->required()
-                    ->options(LoadMethodEnum::getLoadMethods()),
+                    ->options(array_combine(array_values(LoadMethodEnum::getLoadMethods()),LoadMethodEnum::getLoadMethods())),
                 Forms\Components\Select::make('load_type_id')
                     ->relationship(name: 'loadTypes', titleAttribute: 'title')
                     ->label('Способы погрузки')

@@ -9,10 +9,9 @@ enum UnitOfMeasurementForCargoShortrageRateEnum: string
 
     public static function getValue(): array
     {
-        $arr =  [
+        return [
             self::PERCENT->value,
             self::KILOGRAMM->value,
         ];
-        return array_combine(array_values($arr), $arr);
     }
 }

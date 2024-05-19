@@ -10,12 +10,11 @@ enum OrderClarificationDayEnum: string
 
     public static function getValue():array
     {
-        $arr =  [
+        return   [
             self::SATURDAY->value,
             self::SUNDAY->value,
             self::SATURDAY_AND_SUNDAY->value,
         ];
-        return array_combine(array_values($arr), $arr);
     }
 
 }
