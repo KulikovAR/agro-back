@@ -55,7 +55,7 @@ class OrderCreateRequest extends FormRequest
             'start_order_at'                              => ['date', 'required'],
             'end_order_at'                                => ['date', 'required', 'after:start_order_at'],
             'load_place_name'                             => ['string', 'required'],
-            'status'                                      => ['string', Rule::enum(OrderStatusEnum::class)],
+//            'status'                                      => ['string', Rule::enum(OrderStatusEnum::class)],
             'unload_method'                               => ['string'],
             'unload_place_name'                           => ['string', 'required'],
             'description'                                 => ['string'],
