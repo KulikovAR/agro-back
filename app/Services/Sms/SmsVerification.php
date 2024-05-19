@@ -27,7 +27,6 @@ class SmsVerification
     );
 
     $response = $this->sender->client->get(SmsApiEnum::API->value, $params);
-
     if(!$response->successful()) {
         throw new BadRequestHttpException('SMS not sent.');
     }
