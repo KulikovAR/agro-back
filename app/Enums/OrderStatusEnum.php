@@ -11,10 +11,11 @@ enum OrderStatusEnum: string
 
     public static function getOrderStatus(): array
     {
-        return [
+        $arr =  [
             self::ACTIVE->value,
             self::PAUSED->value,
             self::DONE->value,
         ];
+        return array_combine(array_values($arr), $arr);
     }
 }
