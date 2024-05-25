@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\TaxSystemEnum;
 use App\Http\Requests\UserProfile\AvatarRequest;
 use App\Http\Requests\UserProfile\UserPasswordUpdateRequest;
 use App\Http\Requests\UserProfile\UserProfileCreateRequest;
@@ -72,5 +73,10 @@ class UserProfileService
             $this->deleteFiles($user->files);
         }
         $user->userProfile()->update($user->clearProfile());
+    }
+
+    public function getTaxSystems()
+    {
+        return TaxSystemEnum::getValues();
     }
 }

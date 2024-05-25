@@ -62,4 +62,9 @@ class UserProfileController extends Controller
         $this->service->delete($request);
         return new ApiJsonResponse(200, StatusEnum::OK, 'Профиль очищен', data:[]);
     }
+
+    public function getTaxSystems(): ApiJsonResponse
+    {
+        return new ApiJsonResponse(200, StatusEnum::OK, '', data: $this->service->getTaxSystems());
+    }
 }

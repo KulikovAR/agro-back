@@ -127,6 +127,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('options')->group(function () {
         Route::get('/', [OrderController::class, 'getOptions'])->name('order.get_options');
     });
+    Route::get('userprofile/tax-systems', [UserProfileController::class, 'getTaxSystems'])->name('userprofile_tax-systems');
 
     Route::post('/verification/email', [VerificationContactController::class, 'sendEmailVerification'])->name(
         'verification.email.send'
