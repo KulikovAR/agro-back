@@ -54,9 +54,9 @@ class AuthService
         }
         $user->userProfile()->firstOrCreate(['user_id' => $user->id],$user->clearProfile());
 
-        $this->sms->send($request->phone_number, $code_arr['code'] . '- Код для подтверждения');
+//        $this->sms->send($request->phone_number, $code_arr['code'] . '- Код для подтверждения');
         $user->update(['code' => $code_arr['code'], 'code_hash' => $code_arr['code_hash'], 'code_expire_at' => $code_arr['code_expire']]);
-        $resource = new UserResource($user);
+        $resource = new DevUserResource($user);
 
         return new ApiJsonResponse(
             200,
