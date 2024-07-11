@@ -41,6 +41,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         'password',
         'phone_number',
         'code_hash',
+        'moderation_status',
         'phone_verified_at',
         'code',
         'whats_app_verify'

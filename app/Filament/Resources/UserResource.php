@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Enums\RoleEnum;
+use App\Enums\ModerationStatusEnum;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
@@ -38,6 +39,11 @@ class UserResource extends Resource
                     ->label('Пароль')
                     ->password()
                     ->revealable(),
+                Forms\Components\Select::make('moderation_status')
+                    ->label('Статус модерации')
+                    ->options(ModerationStatusEnum::getDescriptions())
+                    ->required()
+                    ->native(false)
             ]);
 
     }
@@ -75,6 +81,11 @@ class UserResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('moderation_status')
+                    ->label('Статус модерации')
+                    ->getStateUsing(function ($record) {
+                        return ModerationStatusEnum::getModerationStatus($record->moderation_status);
+                    }),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

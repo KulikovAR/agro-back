@@ -22,6 +22,7 @@ return new class extends MigrationService
             $table->char('salt', 60)->nullable();
             $table->string('password')->nullable();
             $table->string('phone_number')->unique()->nullable();
+            $table->string('moderation_status')->default('pending');
             $table->string('code')->nullable();
             $table->string('code_hash')->nullable();
             $table->timestamp('code_expire_at')->nullable();
