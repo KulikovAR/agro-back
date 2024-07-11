@@ -4,22 +4,26 @@ namespace App\Enums;
 
 enum ModerationStatusEnum: string
 {
-    case Pending = 'На модерации';
-    case Approved = 'Одобрено';
-    case Rejected = 'Отклонено';
+    case PENDING = 'pending';
+    case APPROVED = 'approved';
+    case REJECTED = 'rejected';
 
     public static function getDescriptions(): array
     {
         return [
-            'pending' => self::Pending->value,
-            'approved' => self::Approved->value,
-            'rejected' => self::Rejected->value,
+            self::PENDING->value => 'На модерации',
+            self::APPROVED->value => 'Профиль подтвержден',
+            self::REJECTED->value => 'Профиль не подтвержден',
         ];
     }
 
-    public static function getModerationStatus($status): string
+    public static function getModerationStatus($value): string
     {
-        return self::getDescriptions()[$status];
+        return match ($value){
+            self::PENDING->value => 'На модерации',
+            self::APPROVED->value => 'Профиль подтвержден',
+            self::REJECTED->value => 'Профиль не подтвержден',
+        };
     }
 
 }
