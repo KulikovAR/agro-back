@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string('office_address')->nullable();
             $table->string('tax_system')->nullable();
             $table->string('okved')->nullable();
-            // $table->string('bank_accounts');
             $table->string('type')->nullable();
             $table->string('series')->nullable();
             $table->string('number')->nullable();
