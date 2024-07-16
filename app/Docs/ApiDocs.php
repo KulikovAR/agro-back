@@ -40,7 +40,13 @@ namespace App\Docs;
  *      url="/",
  *      description="Session Server"
  * )
- * 
+ *
+ * @OA\SecurityScheme(
+ *  *     type="http",
+ *  *     scheme="bearer",
+ *  *     securityScheme="bearerAuth"
+ *  * )
+ *
  */
 
 class ApiDocs

@@ -156,4 +156,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
             'snils'             => null,
         ];
     }
+
+    public function bankAccounts(): HasMany
+    {
+        return $this->hasMany(BankAccount::class, 'user_id', 'id');
+    }
 }

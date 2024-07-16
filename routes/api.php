@@ -12,7 +12,6 @@ use App\Http\Controllers\V1\OfferController;
 use App\Http\Controllers\V1\ProductParserController;
 use App\Http\Controllers\V1\TransportController;
 use Telegram\Bot\Laravel\Facades\Telegram;
-
 use App\Models\Role;
 use App\Models\User;
 use App\Notifications\AdminNotification;
@@ -24,6 +23,7 @@ use App\Http\Controllers\V1\CounteragentController;
 use App\Http\Controllers\V1\TransportBrandController;
 use App\Http\Controllers\V1\TransportTypeController;
 use \App\Http\Controllers\V1\FileController;
+use \App\Http\Controllers\V1\BankAccountController;
 use App\Http\Controllers\V1\WhatsAppController;
 
 /*
@@ -86,6 +86,18 @@ Route::middleware('auth:sanctum')->group(function () {
 //        Route::put('password/update', [UserProfileController::class, 'updatePassword'])->name(
 //            'userprofile.password.update'
 //        );
+    });
+
+    Route::prefix('bank-accounts')->group(function () {
+        Route::get('/', [BankAccountController::class, 'index'])->name(
+            'bank_accounts.index.logistician'
+        );
+        Route::get('/{bankAccount}', [BankAccountController::class, 'show'])->name(
+            'bank_accounts.show.carrier'
+        );
+        Route::post('/', [BankAccountController::class, 'create'])->name('bank_accounts.create');
+        Route::put('/{bankAccount}', [BankAccountController::class, 'update'])->name('bank_accounts.update');
+        Route::delete('/{bankAccount}', [BankAccountController::class, 'delete'])->name('bank_accounts.delete');
     });
     Route::prefix('files')->group(function () {
         Route::get('/', [FileController::class, 'index'])->name('files.index');
