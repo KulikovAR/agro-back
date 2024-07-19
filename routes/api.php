@@ -43,13 +43,7 @@ Route::post('whatsapp/webhook', [WhatsAppController::class, 'webhook']);
 //    Route::get('/get-filters', [ProductParserController::class, 'getProductFilter'])->name('product-parser.get-filter');
 //    Route::get('/', [ProductParserController::class, 'index'])->name('product-parser.index');
 //});
-//Route::prefix('counteragents')->group(function () {
-//    Route::get('/', [CounteragentController::class, 'index'])->name('counteragent.index');
-//    Route::get('/{user}', [CounteragentController::class, 'show'])->name('counteragent.show');
-//    Route::post('/create', [CounteragentController::class, 'create'])->name('counteragent.create');
-//    Route::put('/update/{user}', [CounteragentController::class, 'update'])->name('counteragent.update');
-//    Route::delete('/delete/{user}', [CounteragentController::class, 'delete'])->name('counteragent.update');
-//});
+
 Route::middleware(['guest'])->group(function () {
     Route::post('/registration/phone', [RegistrationController::class, 'registration'])->name('registration');
     Route::post('/registration/verification', [RegistrationController::class, 'verification'])->name(
@@ -86,6 +80,11 @@ Route::middleware('auth:sanctum')->group(function () {
 //        Route::put('password/update', [UserProfileController::class, 'updatePassword'])->name(
 //            'userprofile.password.update'
 //        );
+    });
+
+    Route::prefix('counteragents')->group(function () {
+        Route::post('/', [CounteragentController::class, 'create'])->name('counteragent.create');
+        Route::put('/{user}', [CounteragentController::class, 'update'])->name('counteragent.update');
     });
 
     Route::prefix('bank-accounts')->group(function () {

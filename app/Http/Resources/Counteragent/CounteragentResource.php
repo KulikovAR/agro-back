@@ -31,7 +31,6 @@ class CounteragentResource extends JsonResource
             'office_address' => $this->office_address,
             'tax_system' => $this->tax_system,
             'okved' => $this->okved,
-            'phone_number' => $this->phone_number,
             'password' => $this->password,
             // 'bank_accounts'     => $this->bank_accounts,
             'series'     => $this->series,

@@ -29,7 +29,6 @@ class GenerateUserToken extends Command
     {
         if (!is_null($this->argument('role'))) {
             $role = Role::where('name', $this->argument('role'))->first();
-            dd($role);
             echo User::role($role)->first()->createToken('')->plainTextToken . "\n";
             return;
         }
