@@ -57,7 +57,7 @@ class UserProfileService
         $user = $request->user();
         if ($request->has('issue_date_at')) {
             $issue_date_at = Carbon::parse($request->issue_date_at);
-            $user->userProfile()->update(
+            $user->update(
                 array_merge($request->except('issue_date_at'), ['issue_date_at' => $issue_date_at])
             );
             return new UserResource($user);
@@ -72,7 +72,7 @@ class UserProfileService
         if ($user->files) {
             $this->deleteFiles($user->files);
         }
-        $user->userProfile()->update($user->clearProfile());
+        $user->update($user->clearProfile());
     }
 
     public function getTaxSystems()

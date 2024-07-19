@@ -44,7 +44,20 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         'moderation_status',
         'phone_verified_at',
         'code',
-        'whats_app_verify'
+        'whats_app_verify',
+        'inn',
+        'type',
+        'name',
+        'surname',
+        'patronymic',
+        'kpp',
+        'ogrn',
+        'short_name',
+        'full_name',
+        'juridical_address',
+        'office_address',
+        'tax_system',
+        'okved',
     ];
 
     /**
@@ -161,5 +174,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     public function bankAccounts(): HasMany
     {
         return $this->hasMany(BankAccount::class, 'user_id', 'id');
+    }
+    public function counteragents(): HasMany
+    {
+        return $this->hasMany(User::class, 'user_id', 'id');
     }
 }
