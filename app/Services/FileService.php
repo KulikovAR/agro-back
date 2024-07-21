@@ -2,21 +2,38 @@
 
 namespace App\Services;
 
+use App\Clients\IcClient;
+use App\Enums\FileTypeEnum;
+use App\Filters\FileFilter;
+use App\Filters\OrderFilter;
 use App\Http\Requests\File\CreateFileRequest;
 use App\Http\Requests\File\CreateUserFileRequest;
 use App\Http\Requests\File\DeleteUserFileRequest;
+use App\Http\Requests\File\FileFilterRequest;
+use App\Http\Requests\File\FromIcRequest;
 use App\Http\Resources\File\FileCollection;
 use App\Http\Resources\File\FileResource;
 use App\Http\Resources\FileType\FileTypeCollection;
 use App\Models\File;
 use App\Models\FileType;
+use App\Models\Order;
 use App\Models\User;
+use App\Repositories\IcRepository;
 use App\Traits\FileTrait;
+use Faker\Core\Uuid;
+use Illuminate\Http\Request;
 
 class FileService
 {
+//    public function __construct(
+//        private IcRepository $IcRepository = new IcRepository(),
+//        private $IcClient,
+//    )
+//    {
+//        $this->IcClient = new IcClient();
+//        $this->IcRepository = new IcRepository($this->IcClient);
+//    }
     use FileTrait;
-
     public function index(): FileCollection
     {
         return new FileCollection(File::all());
@@ -27,58 +44,67 @@ class FileService
         return new FileResource($file);
     }
 
-    public function create(CreateFileRequest $request): FileResource
-    {
-        return new FileResource($this->loadFile($request->file('file')));
-    }
+//    public function create(CreateFileRequest $request): FileResource
+//    {
+//        return new FileResource($this->loadFile($request->file('file')));
+//    }
 
     public function update(CreateFileRequest $request, File $file): FileResource
     {
         return new FileResource($this->updateFile($request->file('file'), $file));
     }
 
-    private function userAttachFiles(array $files, User $user, array $file_types)
+    public function getDocumentsForSigning(Request $request): FileCollection
     {
-        foreach ($files as $key => $file) {
-            $user->files()->attach(
-                $file,
-                ['file_type_id' => $file_types[$key], 'id' => uuid_create()]
-            );
-        }
+        $user = $request->user();
+        $files = $user->files()->orWhere(['type'=>FileTypeEnum::REQUEST->value, 'type'=>FileTypeEnum::CONTRACT->value, 'type'=>FileTypeEnum::ACT->value])->get();
+        return new FileCollection($files);
     }
 
+    public function getFileTypes(): array
+    {
+        return FileTypeEnum::getValues();
+    }
+    private function userAttachFiles(array $files, User $user)
+    {
+        foreach ($files as $key => $file) {
+            $user->files()->attach($file);
+        }
+    }
+//    public function loadFileFrom1C(FromIcRequest $request, string $inn): FileResource
+//    {
+//        $this->IcRepository->IcFile($request->)
+//    }
     public function loadFilesForUser(CreateUserFileRequest $request)
     {
         $user = $request->user();
-        $files = $this->loadFiles($request->load_files);
-        $this->userAttachFiles($files, $user, $request->file_types);
+        $files = $this->loadFiles($request->documents);
+        $this->userAttachFiles($files, $user);
         return new FileCollection($files);
     }
 
     public function updateFilesForUser(CreateUserFileRequest $request)
     {
+//        dd($request);
         $user = $request->user();
-        $files = $user->files()->whereHas('fileType', function ($query) use ($request) {
-            $query->whereIn('file_type_id', $request->file_types);
-        })->get();
-        $files = $this->updateFiles($request->load_files, $files);
-        $this->userAttachFiles($files, $user, $request->file_types);
+        $types = [];
+        foreach($request->documents as $item) {
+         $types[] = $item['file_type'];
+        }
+        $files = $user->files()->whereIn('type',$types)->get();
+//        dd($files);
+        $uploadFiles = $this->updateFiles($request->documents, $files);
+        $this->userAttachFiles($uploadFiles, $user);
         return new FileCollection($files);
     }
 
     public function deleteUserFiles(DeleteUserFileRequest $request):void
     {
         $user = $request->user();
-        $files = $user->files()->whereHas('fileType', function ($query) use ($request) {
-            $query->whereIn('file_type_id', $request->file_types);
-        })->get();
+        $files = $user->files()->whereIn('type',$request->file_types)->get();
         $this->deleteFiles($files);
     }
 
-    public function getFileTypes()
-    {
-        return new FileTypeCollection(FileType::all());
-    }
 
     public function delete(File $file): void
     {

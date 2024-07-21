@@ -10,11 +10,12 @@ use App\Http\Requests\File\DeleteUserFileRequest;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\File;
 use App\Services\FileService;
+use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
     public function __construct(
-        private FIleService $service
+        private FileService $service
     ) {
         $this->service = new FileService();
     }
@@ -22,6 +23,11 @@ class FileController extends Controller
     public function index(): ApiJsonResponse
     {
         return new ApiJsonResponse(200, StatusEnum::OK, 'Документы получены', data: $this->service->index());
+    }
+
+    public function getDocumentsForSigning(Request $request): ApiJsonResponse
+    {
+        return new ApiJsonResponse(200, StatusEnum::OK, '', data: $this->service->getDocumentsForSigning($request));
     }
 
     public function show(File $file): ApiJsonResponse

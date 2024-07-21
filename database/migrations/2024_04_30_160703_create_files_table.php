@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('path');
+            $table->string('type');
+            $table->string('1c_id')->nullable();
+            $table->boolean('is_signed')->nullable();
             $table->timestamps();
         });
     }

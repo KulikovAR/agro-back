@@ -3,14 +3,14 @@
 namespace App\Http\Requests\File;
 
 use App\Enums\FileTypeEnum;
-use App\Rules\MimeTypeValidation;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class CreateUserFileRequest extends FormRequest
+class FileFilterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     */
+
 
     /**
      * Get the validation rules that apply to the request.
@@ -20,9 +20,8 @@ class CreateUserFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'documents' => ['required', 'array'],
-            'documents.*.file' => ['file'],
-            'documents.*.file_type' => ['string', Rule::enum(FileTypeEnum::class)],
+//            'sort' => ['string'],
+            'type' => ['string', FileTypeEnum::class],
         ];
     }
 }

@@ -100,13 +100,14 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::prefix('files')->group(function () {
         Route::get('/', [FileController::class, 'index'])->name('files.index');
+        Route::get('/on-signing', [FileController::class, 'getDocumentsForSigning'])->name('files.signing');
         Route::get('show/{file}', [FileController::class, 'show'])->name('files.show');
         Route::post('/create/', [FileController::class, 'create'])->name('files.create');
         Route::put('/update/{file}', [FileController::class, 'update'])->name('files.update');
-        Route::post('/load_files', [FileController::class, 'loadFilesForUser'])->name('files.load_files');
+        Route::post('/load-files', [FileController::class, 'loadFilesForUser'])->name('files.load_files');
         Route::post('/update-files',[FileController::class, 'updateFilesForUser'])->name('files.update_files');
         Route::delete('/delete-files',[FileController::class, 'deleteUserFiles'])->name('files.delete_files');
-        Route::get('/file_types', [FileController::class, 'getFileTypes'])->name('files.getFileTypes');
+        Route::get('/file-types', [FileController::class, 'getFileTypes'])->name('files.getFileTypes');
         Route::delete('/delete/{file}', [FileController::class, 'delete'])->name('files.update');
     });
 
