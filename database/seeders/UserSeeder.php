@@ -55,7 +55,7 @@ class UserSeeder extends Seeder
             'phone_verified_at' => Carbon::now()
         ]);
         $client->assignRole($clientRole);
-        $client->files()->attach(File::inRandomOrder()->first()->id,['file_type_id'=>FileType::inRandomOrder()->first()->id, 'id'=>uuid_create()]);
+        $client->files()->attach(File::inRandomOrder()->first()->id);
         $client->userProfile()->create((new UserinfoFactory())->definition());
 
 
@@ -67,7 +67,7 @@ class UserSeeder extends Seeder
         );
         $users = User::factory(10)->create();
         foreach ($users as $item) {
-            $item->files()->attach(File::inRandomOrder()->first()->id,['file_type_id'=>FileType::inRandomOrder()->first()->id, 'id'=>uuid_create()]);
+            $item->files()->attach(File::inRandomOrder()->first()->id);
             $item->userProfile()->create((new UserinfoFactory())->definition());
             $item->assignRole($clientRole);
         }

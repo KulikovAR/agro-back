@@ -4,11 +4,12 @@ namespace App\Http\Requests\File;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateFileRequest extends FormRequest
+class FromIcRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -17,8 +18,17 @@ class CreateFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => 'string|required',
-            'type' => 'string|required',
+            'id_1c' => ['string','required'],
+            'file' => ['string','required'],
+            'inn' => ['string','required', 'exists:users,inn'],
+            'type' => ['string', 'required', 'in:Акт,Договор,Заявка'],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'inn' => $this->route('inn'),
+        ]);
     }
 }

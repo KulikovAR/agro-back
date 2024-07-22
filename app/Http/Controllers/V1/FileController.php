@@ -7,14 +7,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\File\CreateFileRequest;
 use App\Http\Requests\File\CreateUserFileRequest;
 use App\Http\Requests\File\DeleteUserFileRequest;
+use App\Http\Requests\File\FromIcRequest;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\File;
+use App\Repositories\IcRepository;
 use App\Services\FileService;
+use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
     public function __construct(
-        private FIleService $service
+        private FileService $service,
+//        private IcRepository $repository,
     ) {
         $this->service = new FileService();
     }
@@ -24,7 +28,15 @@ class FileController extends Controller
         return new ApiJsonResponse(200, StatusEnum::OK, 'Документы получены', data: $this->service->index());
     }
 
-    public function show(File $file): ApiJsonResponse
+    public function getDocumentsForSigning(Request $request): ApiJsonResponse
+    {
+        return new ApiJsonResponse(200, StatusEnum::OK, '', data: $this->service->getDocumentsForSigning($request));
+    }
+    public function loadFileFrom1C(FromIcRequest $request, string $inn): ApiJsonResponse
+    {
+        return new ApiJsonResponse(200, StatusEnum::OK, '', data: $this->service->loadFileFrom1C($request, $inn));
+    }
+    public function show(File $file): ApiJsonResonse
     {
         return new ApiJsonResponse(200, StatusEnum::OK, 'Документ получен', data: $this->service->show($file));
     }
