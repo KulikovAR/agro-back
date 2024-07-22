@@ -25,6 +25,17 @@ trait FileTrait
         return File::create(['path' => $path,'type'=>$type]);
     }
 
+    public function loadFileInBase64(string $file, string $type, string $IcId): File
+    {
+        preg_match('/^data:(.*?);base64,(.*)$/', $file, $matches);
+        $mimeType = $matches[1];
+        $fileContent = base64_decode($matches[2]);
+        $extension = explode('/', $mimeType)[1];
+        $fileName = uniqid().'.'.$extension;
+        $path = '/filesBase64/' . $fileName;
+        $result = Storage::disk('public')->put($path, $fileContent);
+        return File::create(['path' => $path,'type'=>$type, 'id_1c'=>$IcId]);
+    }
     public function deleteFile(File $file): null|bool
     {
         $fileInStorage = Storage::disk('public')->delete($file->path);

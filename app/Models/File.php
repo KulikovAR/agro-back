@@ -17,7 +17,7 @@ class File extends Model
 
     protected $fillable = [
         'path',
-        '1c_id',
+        'id_1c',
         'is_signed',
         'type'
     ];

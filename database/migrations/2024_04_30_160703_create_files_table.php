@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('path');
             $table->string('type');
-            $table->string('1c_id')->nullable();
+            $table->string('id_1c')->nullable();
             $table->boolean('is_signed')->nullable();
             $table->timestamps();
         });

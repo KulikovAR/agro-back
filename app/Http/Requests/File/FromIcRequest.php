@@ -18,10 +18,17 @@ class FromIcRequest extends FormRequest
     public function rules(): array
     {
         return [
-            '1c_id' => ['string','required'],
-            'file' => ['file','required'],
-            '{inn}' => ['string','required', 'exists:users,inn'],
-            'type' => ['string', 'required'],
+            'id_1c' => ['string','required'],
+            'file' => ['string','required'],
+            'inn' => ['string','required', 'exists:users,inn'],
+            'type' => ['string', 'required', 'in:Акт,Договор,Заявка'],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'inn' => $this->route('inn'),
+        ]);
     }
 }

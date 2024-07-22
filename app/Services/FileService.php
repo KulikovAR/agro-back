@@ -13,6 +13,7 @@ use App\Http\Requests\File\FileFilterRequest;
 use App\Http\Requests\File\FromIcRequest;
 use App\Http\Resources\File\FileCollection;
 use App\Http\Resources\File\FileResource;
+use App\Http\Resources\File\GetDataFrom1CResource;
 use App\Http\Resources\FileType\FileTypeCollection;
 use App\Models\File;
 use App\Models\FileType;
@@ -25,14 +26,12 @@ use Illuminate\Http\Request;
 
 class FileService
 {
-//    public function __construct(
-//        private IcRepository $IcRepository = new IcRepository(),
-//        private $IcClient,
-//    )
-//    {
-//        $this->IcClient = new IcClient();
-//        $this->IcRepository = new IcRepository($this->IcClient);
-//    }
+    public function __construct(
+        private IcRepository $IcRepository = new IcRepository(),
+    )
+    {
+//        $this->IcRepository = new IcRepository;
+    }
     use FileTrait;
     public function index(): FileCollection
     {
@@ -45,14 +44,14 @@ class FileService
     }
 
 //    public function create(CreateFileRequest $request): FileResource
+//{
+//    return new FileResource($this->loadFileInBase64($request->file, $request->type));
+//}
+//
+//    public function update(CreateFileRequest $request, File $file): FileResource
 //    {
-//        return new FileResource($this->loadFile($request->file('file')));
+//        return new FileResource($this->updateFile($request->file('file'), $file));
 //    }
-
-    public function update(CreateFileRequest $request, File $file): FileResource
-    {
-        return new FileResource($this->updateFile($request->file('file'), $file));
-    }
 
     public function getDocumentsForSigning(Request $request): FileCollection
     {
@@ -71,12 +70,16 @@ class FileService
             $user->files()->attach($file);
         }
     }
-//    public function loadFileFrom1C(FromIcRequest $request, string $inn): FileResource
-//    {
-//        $this->IcRepository->IcFile($request->)
-//    }
+    public function loadFileFrom1C(FromIcRequest $request, string $inn): GetDataFrom1CResource
+    {
+        $user = User::where('inn', $inn)->first();
+        $fileFromIc = $this->IcRepository->IcFile($request->file, $request->type, $request->id_1c);
+        $user->files()->attach($fileFromIc);
+        return new GetDataFrom1CResource($fileFromIc);
+    }
     public function loadFilesForUser(CreateUserFileRequest $request)
     {
+//        dd($request);
         $user = $request->user();
         $files = $this->loadFiles($request->documents);
         $this->userAttachFiles($files, $user);

@@ -29,7 +29,8 @@ class UserFactory extends Factory
             'code'                    => $this->faker->randomNumber(),
             'code_hash'               => Hash::make('stroka'),
             'code_expire_at'          => now(),
-            'remember_token'          => Str::random(10)
+            'remember_token'          => Str::random(10),
+            'inn' => $this->faker->numerify('##########'),
         ];
 
     }
