@@ -43,7 +43,7 @@ class IC
      *         response=422,
      *         description="Несуществующий пользователь",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="user does not exists")
+     *             @OA\Property(property="message", type="string", example="The selected inn is invalid.")
      *         )
      *     )
      * )
