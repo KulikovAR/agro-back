@@ -21,5 +21,8 @@ class FileTypeSeeder extends Seeder
         FileType::create(['title' => 'Патент']);
         FileType::create(['title' => 'УСН']);
         FileType::create(['title' => 'НДС']);
+        FileType::create(['title' => 'Договор']);
+        FileType::create(['title' => 'Акт']);
+        FileType::create(['title' => 'Заявка']);
     }
 }

@@ -9,22 +9,33 @@ use Illuminate\Support\Facades\Storage;
 
 trait FileTrait
 {
-    public function loadFiles(array $uploadedFiles): array|null
+    public function loadFiles(array $documents): array|null
     {
         $files = [];
-        foreach ($uploadedFiles as $file) {
-            $files[] = $this->loadFile($file);
+        foreach ($documents as $item) {
+            $files[] = $this->loadFile($item['file'], $item['file_type']);
         }
         return $files;
     }
 
-    public function loadFile(UploadedFile $file): File
+    public function loadFile(UploadedFile $file, string $type): File
     {
         $ext = $file->extension();
         $path = Storage::disk('public')->put('/files', $file);
-        return File::create(['path' => $path]);
+        return File::create(['path' => $path,'type'=>$type]);
     }
 
+    public function loadFileInBase64(string $file, string $type, string $IcId): File
+    {
+        preg_match('/^data:(.*?);base64,(.*)$/', $file, $matches);
+        $mimeType = $matches[1];
+        $fileContent = base64_decode($matches[2]);
+        $extension = explode('/', $mimeType)[1];
+        $fileName = uniqid().'.'.$extension;
+        $path = '/filesBase64/' . $fileName;
+        $result = Storage::disk('public')->put($path, $fileContent);
+        return File::create(['path' => $path,'type'=>$type, 'id_1c'=>$IcId]);
+    }
     public function deleteFile(File $file): null|bool
     {
         $fileInStorage = Storage::disk('public')->delete($file->path);
@@ -34,10 +45,10 @@ trait FileTrait
         return $file->delete();
     }
 
-    public function updateFile(UploadedFile $uploadedFile, File $file = null): File
+    public function updateFile(UploadedFile $uploadedFile, File $file, string $type): File
     {
         $this->deleteFile($file);
-        return $this->loadFile($uploadedFile);
+        return $this->loadFile($uploadedFile, $type);
     }
 
     public function deleteFiles(Collection $files): void
@@ -48,9 +59,9 @@ trait FileTrait
     }
 
 
-    public function updateFiles(array $uploadedFiles,  Collection $files): array
+    public function updateFiles(array $documents, Collection $files): array
     {
         $this->deleteFiles($files);
-        return $this->loadFiles($uploadedFiles);
+        return $this->loadFiles($documents);
     }
 }
