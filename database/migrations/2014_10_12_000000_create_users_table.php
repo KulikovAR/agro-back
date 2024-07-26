@@ -33,6 +33,7 @@ return new class extends MigrationService
             $table->string('surname')->nullable();
             $table->string('patronymic')->nullable();
             $table->string('inn')->unique()->nullable();
+            $table->string('region')->nullable();
             $table->string('kpp')->unique()->nullable();
             $table->string('ogrn')->unique()->nullable();
             $table->string('short_name')->nullable();
@@ -49,10 +50,10 @@ return new class extends MigrationService
             $table->string('department_code')->nullable();
             $table->string('snils')->nullable();
             $table->string('accountant_phone')->nullable();
-            $table->string('registration_country')->nullable();
             $table->string('director_name')->nullable();
             $table->string('director_surname')->nullable();
-            $table->string('director_patronymic')->nullable();
+            $table->unsignedInteger('sign_me_id')->nullable();
+            $table->boolean('is_signer')->default(false);
             $table->softDeletes();
             $table->timestamps();
             $table->rememberToken();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Counteragent;
 
+use App\Enums\ModerationStatusEnum;
 use App\Enums\OrganizationTypeEnum;
 use App\Enums\TaxSystemEnum;
 use Illuminate\Foundation\Http\FormRequest;
@@ -37,7 +38,9 @@ class CreateRequest extends FormRequest
             'name' => ['required', 'string'],
             'surname' => ['required', 'string'],
             'patronymic' => ['required', 'string'],
+            'issue_date_at' => ['required', 'string'],
             'kpp' => [
+                'required',
                 'string',
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::IP->value,
@@ -71,7 +74,12 @@ class CreateRequest extends FormRequest
             'department' => ['required', 'string'],
             'department_code' => ['required', 'string'],
             'snils' => ['required', 'string'],
-            "phone_number"   => ["regex:/^\+7\d{10}$/", 'string', 'required'],
+            'phone_number' => ["regex:/^\+7\d{10}$/", 'string', 'required'],
+            'email' => ['required', 'string', 'email', 'unique:users,email'],
+            'region' => ['required', 'string'],
+            'accountant_phone' => ['required', 'string'],
+            'director_name' => ['required', 'string'],
+            'director_surname' => ['required', 'string'],
         ];
     }
 }
