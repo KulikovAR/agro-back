@@ -4,9 +4,8 @@ namespace App\Http\Controllers\V1;
 
 use App\Enums\StatusEnum;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Counteragent\CreateCounteragentRequest;
 use App\Http\Requests\Counteragent\CreateRequest;
-use App\Http\Requests\Counteragent\UpdateCounteragentRequest;
+use App\Http\Requests\Counteragent\UpdateRequest;
 use App\Http\Resources\Counteragent\CounteragentCollection;
 use App\Http\Resources\Counteragent\CounteragentResource;
 use App\Http\Resources\User\UserCollection;
@@ -40,7 +39,7 @@ class CounteragentController extends Controller
         return new ApiJsonResponse(200, StatusEnum::OK, 'Контрагент создан', data: new UserResource($this->service->create($request)));
     }
 
-    public function update(UpdateCounteragentRequest $request, User $user): ApiJsonResponse
+    public function update(UpdateRequest $request, User $user): ApiJsonResponse
     {
         return new ApiJsonResponse(200, StatusEnum::OK, 'Контрагент обновлён', data: new UserResource($this->service->update($request, $user)));
     }

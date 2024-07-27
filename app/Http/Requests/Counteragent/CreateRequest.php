@@ -39,6 +39,7 @@ class CreateRequest extends FormRequest
             'surname' => ['required', 'string'],
             'patronymic' => ['required', 'string'],
             'issue_date_at' => ['required', 'string'],
+            'bdate' => ['required', 'string'],
             'kpp' => [
                 'required',
                 'string',
@@ -80,6 +81,8 @@ class CreateRequest extends FormRequest
             'accountant_phone' => ['required', 'string'],
             'director_name' => ['required', 'string'],
             'director_surname' => ['required', 'string'],
+            'bdate' => ['required', 'string'],
+            'gender' => ['required', 'string', 'in:M,F'],
         ];
     }
 }

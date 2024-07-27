@@ -22,7 +22,6 @@ class UpdateRequest extends FormRequest
         public function rules(): array
     {
         return [
-            'type'              => ['string','required', Rule::enum(OrganizationTypeEnum::class)],
             'inn'               => [
                 'string',
                 Rule::when(
@@ -76,6 +75,8 @@ class UpdateRequest extends FormRequest
             'department' => ['string'],
             'department_code' => ['string'],
             'snils' => ['string'],
+            'bdate' => ['string'],
+            'gender' => ['string', 'in:M,F'],
         ];
     }
 }

@@ -19,7 +19,8 @@ class File extends Model
         'path',
         'id_1c',
         'is_signed',
-        'type'
+        'type',
+        'md_5'
     ];
 
 

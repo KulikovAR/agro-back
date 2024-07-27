@@ -46,7 +46,9 @@ return new class extends MigrationService
             $table->string('series')->nullable();
             $table->string('number')->nullable();
             $table->timestamp('issue_date_at')->nullable();
+            $table->timestamp('bdate')->nullable();
             $table->text('department')->nullable();
+            $table->string('gender')->nullable();
             $table->string('department_code')->nullable();
             $table->string('snils')->nullable();
             $table->string('accountant_phone')->nullable();

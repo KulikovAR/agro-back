@@ -69,7 +69,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
            'accountant_phone',
            'director_name',
            'director_surname',
-           'cinn',
+           'bdate',
+           'gender'
     ];
 
     /**
@@ -195,7 +196,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
             'accountant_phone'  => null,
             'director_name'     => null,
             'director_surname'  => null,
-            'cinn'              => null,
             'sign_me_id'        => null,
             'is_signer'         => null,
         ];
@@ -207,6 +207,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     }
     public function counteragents(): HasMany
     {
-        return $this->hasMany(User::class, 'user_id', 'id');
+        return $this->hasMany(User::class, 'creator_id', 'id');
     }
 }

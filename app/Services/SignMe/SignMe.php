@@ -46,11 +46,19 @@ class SignMe
         if(strpos("error",$result->body())){
             return $result->body();
         }
-            return $result->body();
+            return config('app.sign_me_base_dev_url') . SignMeApiEnum::SIGNATURE->value . '/' . $result->body();
     }
 
-    public function signatureCheck()
+    public function signatureCheck(string $md5):bool|string
     {
-
+        $query = ['md5'=>$md5] + ['api_key' => $this->token];
+        $result = $this->signMeClient->client->post('app.sign_me_base_dev_url' . SignMeApiEnum::SIGNATURE_CHECK->value, $query);
+        if(strpos("error",$result->body())){
+            return $result->body();
+        }
+        if($result['count'] == 0){
+            return false;
+        }
+        return true;
     }
 }

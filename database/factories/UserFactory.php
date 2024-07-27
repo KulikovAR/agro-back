@@ -6,6 +6,7 @@ use App\Enums\ModerationStatusEnum;
 use App\Enums\OrganizationTypeEnum;
 use App\Enums\TaxSystemEnum;
 use App\Models\TakeOut;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -66,6 +67,8 @@ class UserFactory extends Factory
             'accountant_phone' => $this->faker->phoneNumber,
             'director_name' => $this->faker->firstName,
             'director_surname' => $this->faker->lastName,
+            'bdate' => Carbon::now(),
+            'gender' => "М",
         ];
 
     }

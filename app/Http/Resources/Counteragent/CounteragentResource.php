@@ -38,13 +38,14 @@ class CounteragentResource extends JsonResource
             'snils' => $this->snils,
             'issue_date_at' => $this->issue_date_at ? Carbon::parse($this->issue_date_at)->format('d.m.Y') : null,
             'email' => $this->email,
-            'salt' => $this->salt,
             'moderation_status' => $this->moderation_status,
             'creator_id' => $this->creator_id,
             'region' => $this->region,
             'accountant_phone' => $this->accountant_phone,
             'director_name' => $this->director_name,
             'director_surname' => $this->director_surname,
+            'bdate' => $this->bdate,
+            'gender' => $this->gender,
         ];
     }
 }
