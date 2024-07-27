@@ -34,30 +34,43 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'email_verified_at',
-        'password',
-        'phone_number',
-        'code_hash',
-        'moderation_status',
-        'phone_verified_at',
-        'code',
-        'whats_app_verify',
-        'inn',
-        'type',
-        'name',
-        'surname',
-        'patronymic',
-        'kpp',
-        'ogrn',
-        'short_name',
-        'full_name',
-        'juridical_address',
-        'office_address',
-        'tax_system',
-        'okved',
+       protected $fillable = [
+           'email',
+           'email_verified_at',
+           'phone_verified_at',
+           'salt',
+           'password',
+           'phone_number',
+           'moderation_status',
+           'code',
+           'code_hash',
+           'code_expire_at',
+           'creator_id',
+           'name',
+           'surname',
+           'patronymic',
+           'inn',
+           'region',
+           'kpp',
+           'ogrn',
+           'short_name',
+           'full_name',
+           'juridical_address',
+           'office_address',
+           'tax_system',
+           'okved',
+           'type',
+           'series',
+           'number',
+           'issue_date_at',
+           'department',
+           'department_code',
+           'snils',
+           'accountant_phone',
+           'director_name',
+           'director_surname',
+           'bdate',
+           'gender'
     ];
 
     /**
@@ -168,6 +181,23 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
             'department'        => null,
             'department_code'   => null,
             'snils'             => null,
+            'email'             => null,
+            'email_verified_at' => null,
+            'phone_verified_at' => null,
+            'salt'              => null,
+            'password'          => null,
+            'phone_number'      => null,
+            'moderation_status' => null,
+            'code'              => null,
+            'code_hash'         => null,
+            'code_expire_at'    => null,
+            'creator_id'        => null,
+            'region'            => null,
+            'accountant_phone'  => null,
+            'director_name'     => null,
+            'director_surname'  => null,
+            'sign_me_id'        => null,
+            'is_signer'         => null,
         ];
     }
 
@@ -177,6 +207,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     }
     public function counteragents(): HasMany
     {
-        return $this->hasMany(User::class, 'user_id', 'id');
+        return $this->hasMany(User::class, 'creator_id', 'id');
     }
 }

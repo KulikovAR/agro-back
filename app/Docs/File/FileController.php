@@ -9,6 +9,7 @@ class FileController
      *      path="/files/load-files",
      *      operationId="loadFiles",
      *      tags={"Files"},
+     *      security={{"bearerAuth":{}}},
      *      summary="Загрузить документы пользователя",
      *      description="Загружает документы пользователя.",
      *      @OA\RequestBody(
@@ -16,8 +17,8 @@ class FileController
      *          @OA\MediaType(
      *              mediaType="multipart/form-data",
      *              @OA\Schema(
-     *                  required={"user_id", "file_types", "load_files"},
-     *                  @OA\Property(property="user_id", type="string", example="9bdec27c-a40d-463e-a709-0ff9ab7efd11"),
+     *                  required={"file_types", "load_files"},
+     *                  @OA\Property(type="string", example="9bdec27c-a40d-463e-a709-0ff9ab7efd11"),
      *                  @OA\Property(
      *                      property="documents(file)",
      *                      type="array",
@@ -80,6 +81,7 @@ class FileController
      *      path="/files/update-files",
      *      operationId="updateFiles",
      *      tags={"Files"},
+     *      security={{"bearerAuth":{}}},
      *      summary="Обновить документы пользователя",
      *      description="Обновить документы пользователя.",
      *      @OA\RequestBody(
@@ -87,8 +89,8 @@ class FileController
      *          @OA\MediaType(
      *              mediaType="multipart/form-data",
      *              @OA\Schema(
-     *                  required={"user_id", "file_types", "load_files"},
-     *                  @OA\Property(property="user_id", type="string", example="9bdec27c-a40d-463e-a709-0ff9ab7efd11"),
+     *                  required={"file_types", "load_files"},
+     *                  @OA\Property(type="string", example="9bdec27c-a40d-463e-a709-0ff9ab7efd11"),
      *                  @OA\Property(
      *                      property="documents(file)",
      *                      type="array",

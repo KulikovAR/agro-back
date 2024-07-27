@@ -48,10 +48,15 @@ class UserPolicy
      */
     public function updateCounteragent(User $user, User $model): Response
     {
-        if((!$user->hasRole(RoleEnum::LOGISTICIAN->value) || !$user->counteragents->contains($model)) || (!$user->hasRole(RoleEnum::CLIENT->value) || !$user != $model)){
-            return Response::denyAsNotFound();
+        if($user->hasRole(RoleEnum::LOGISTICIAN->value) && $user->counteragents->contains($model)){
+            return Response::allow();
         }
-        return Response::allow();
+
+        if($user==$model && $user->hasRole(RoleEnum::CLIENT->value)){
+            return Response::allow();
+        }
+
+        return Response::denyAsNotFound();
     }
 
     /**
