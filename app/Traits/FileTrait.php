@@ -47,6 +47,11 @@ trait FileTrait
         return $file->delete();
     }
 
+    public function base64Encode(string $path): string
+    {
+        $file = Storage::disk('public')->get($path);
+        return $file = base64_encode($file);
+    }
     public function updateFile(UploadedFile $uploadedFile, File $file, string $type): File
     {
         $this->deleteFile($file);

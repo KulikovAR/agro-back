@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationContactController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\V1\SignMeController;
 use App\Http\Controllers\V1\UserProfileController;
 use App\Http\Controllers\V1\OfferController;
 use App\Http\Controllers\V1\ProductParserController;
@@ -82,6 +83,7 @@ Route::middleware('auth:sanctum')->group(function () {
 //        );
     });
 
+    Route::post('/sign-me', [SignMeController::class, 'signature'])->name('sign.me.signature');
     Route::prefix('counteragents')->group(function () {
         Route::post('/', [CounteragentController::class, 'create'])->name('counteragent.create');
         Route::put('/{user}', [CounteragentController::class, 'update'])->name('counteragent.update');

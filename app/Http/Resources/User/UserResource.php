@@ -50,7 +50,7 @@ class UserResource extends JsonResource
             'accountant_phone' => $this->accountant_phone,
             'director_name' => $this->director_name,
             'director_surname' => $this->director_surname,
-            'bdate' => $this->bdate ?  Carbon::parse($this->issue_date_at)->format('d.m.Y') : null,
+            'bdate' => $this->bdate ?  Carbon::parse($this->bdate)->format('d.m.Y') : null,
             'gender' => $this->gender,
             'roles' => new RoleCollection($this->roles),
             'files' => new FileCollection($this->files),

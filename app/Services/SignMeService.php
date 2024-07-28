@@ -3,12 +3,17 @@
 namespace App\Services;
 
 use App\Http\Requests\Counteragent\CreateRequest;
+use App\Http\Requests\SignMe\SignMeRequest;
+use App\Http\Resources\File\FileResource;
+use App\Models\File;
 use App\Services\Dadata\Dadata;
 use App\Services\SignMe\SignMe;
+use App\Traits\FileTrait;
+use Carbon\Carbon;
 
 class SignMeService
 {
-
+    use FileTrait;
     private SignMe $signMe;
     function __construct(
 
@@ -17,25 +22,78 @@ class SignMeService
         $this->signMe = new SignMe();
     }
 
-    public function signature(CreateRequest $request)
+    public function signature(SignMeRequest $request): string|FileResource
     {
-        $cfaddr = $request->juridical_address = 'cfaddr';
-        $caddr = $request->office_address = 'office_address';
-        $cname = $request->short_name = 'cname';
-        $cFullName = $request->full_name = 'cfullname';
-        $ceoName = $request->director_name = 'ceo_name';
-        $ceoSurname = $request->director_surname = 'ceo_surname';
-        $ps = $request->series = 'ps';
-        $pn = $request->number = 'pn';
-        $pdate = $request->issued_date_at = 'pdate';
-        $issued = $request->department = 'issued';
-        $pcode = $request->department_code = 'department_code';
-        $cogrn = $request->ogrn = 'cogrn';
-        $phone = $request->phone_number = 'phone';
-        $lastname = $request->patronymic = 'lastname';
-        $data = $request->except(['ogrn', 'juridical_address', 'office_address', 'full_name', 'short_name', 'director_name','director_surname', 'series','number', 'issued_date_at', 'department', 'department_code','phone_number', 'patronymic']);
-            + array('cinn'=>$request->inn, 'company'=>1, 'gender' => $request->gender, 'cfaddr' => $cfaddr, 'caddr' => $caddr, 'esia' => 1, 'regtype' => 2, 'cname' => $cname, 'cfullname' => $cFullName, 'ceo_name' => $ceoName, 'ceo_surname' => $ceoSurname, 'ps' => $ps, 'pn' => $pn, 'pdate' => $pdate, 'issued' => $issued, 'pcode' => $pcode, 'phone' => $phone, 'last_name' => $lastname, 'ca' => "NKEP12", 'ct' => "12");
+        $user = $request->user();
+
+        $data = array
+            (
+                'cinn'=>$user->inn,
+                'inn'=>$user->inn,
+                'company'=>1,
+                'gender' => $user->gender,
+                'cfaddr' => $user->juridical_address,
+                'caddr' => $user->office_address,
+                'esia' => 1,
+                'regtype' => 2,
+                'cname' => $user->short_name,
+                'cfullname' => $user->full_name,
+                'ceo_name' => $user->director_name,
+                'ceo_surname' => $user->director_surname,
+                'ps' => $user->series,
+                'pn' => $user->number,
+                'pdate' => Carbon::parse($user->issue_date_at)->toDateString(),
+                'bdate' =>  Carbon::parse($user->bdate)->toDateString(),
+                'issued' => $user->department,
+                'pcode' => $user->department_code,
+                'phone' => $user->phone_number,
+                'lastname' => $user->patronymic,
+                'cogrn' => $user->ogrn ,
+                'ca' => "NKEP12",
+                'ct' => "12",
+                'name' => $user->name,
+                'surname' => $user->surname,
+                'email' => $user->email,
+                'region' => $user->region,
+                'snils' => $user->snils,
+            );
+
+        $file = File::where('path', $request->path)->first();
+        $filet = $this->base64Encode($request->path);
+
+        $signatureQueryData = array('filet' => $filet, 'fname' => $file->type, 'md5' => $file->md5_hash);
 
         $registerResult = $this->signMe->register($data);
+
+        if(gettype($registerResult) == 'string'){
+            return response()->json(['message' => 'Произошла ошибка, обратитесь к администратору']);
+        }
+
+        $user->update(['sign_me_id' => $registerResult]);
+
+        $precheck = $this->signMe->prechek($data['inn']);
+
+        if(!$precheck){
+            return response()->json(['message' => 'Ожидает подтверждения регистрации в Sign.me ']);
+        }
+
+        $user->update(['is_signer'=>true]);
+
+        $signatureResult = $this->signMe->signature($signatureQueryData);
+
+        if($signatureResult == "error"){
+
+            return response()->json(['message' => 'Произошла ошибка при подписание документа']);
+        }
+
+
+        $signatureCheckResult = $this->signMe->signatureCheck($signatureQueryData['md5']);
+
+        if(!$signatureCheckResult){
+            return $signatureResult;
+        }
+        $file->update(['is_signed' => true]);
+        return new FileResource($file);
     }
 }
+

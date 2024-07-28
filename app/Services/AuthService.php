@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\ModerationStatusEnum;
 use App\Enums\StatusEnum;
 use App\Events\RegisteredUserEvent;
 use App\Http\Requests\Auth\LoginRequest;
@@ -45,7 +46,7 @@ class AuthService
         $clientRole = Role::where('name', 'client')->first();
         $logisticianRole = Role::where('name', 'logistician')->first();
 
-        $user = User::firstOrCreate(['phone_number' => $request->phone_number],['phone_number' => $request->phone_number]);
+        $user = User::firstOrCreate(['phone_number' => $request->phone_number],['phone_number' => $request->phone_number, 'moderation_status' => ModerationStatusEnum::PENDING->value]);
         if($user->hasRole($logisticianRole)) {
             $user->syncRoles($logisticianRole);
         }
