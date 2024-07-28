@@ -1,14 +1,19 @@
 <?php
 
-namespace App\Http\Requests\File;
+namespace App\Http\Requests\SignMe;
 
+use App\Enums\OrganizationTypeEnum;
+use App\Enums\TaxSystemEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class CreateFileRequest extends FormRequest
+class SignMeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
+
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -17,8 +22,7 @@ class CreateFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => 'file|required',
-            'type' => 'string|required',
+            'path' => ['required','string', 'exists:files,path']
         ];
     }
 }

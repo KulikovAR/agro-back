@@ -43,10 +43,10 @@ class FileService
         return new FileResource($file);
     }
 
-//    public function create(CreateFileRequest $request): FileResource
-//{
-//    return new FileResource($this->loadFileInBase64($request->file, $request->type));
-//}
+    public function create(CreateFileRequest $request): FileResource
+{
+    return new FileResource($this->loadFile($request->file, $request->type));
+}
 //
 //    public function update(CreateFileRequest $request, File $file): FileResource
 //    {

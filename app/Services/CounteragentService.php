@@ -19,7 +19,7 @@ class CounteragentService
         Gate::authorize('create-counteragent', User::class);
         $issue_date_at = Carbon::parse($request->issue_date_at);
         $bdate = Carbon::parse($request->bdate);
-        $user = User::create(['creator_id'=>$request->user()->id,'moderation_status' => ModerationStatusEnum::APPROVED->value, 'issue_date_at' => $issue_date_at] + $request->except(['issue_date_at', 'bdate']));
+        $user = User::create(['creator_id'=>$request->user()->id,'moderation_status' => ModerationStatusEnum::APPROVED->value, 'issue_date_at' => $issue_date_at, 'bdate' => $bdate] + $request->except(['issue_date_at', 'bdate']));
         $user->assignRole(RoleEnum::CLIENT->value);
         return new UserResource($user);
     }

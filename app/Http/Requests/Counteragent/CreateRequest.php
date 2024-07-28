@@ -41,15 +41,11 @@ class CreateRequest extends FormRequest
             'issue_date_at' => ['required', 'string'],
             'bdate' => ['required', 'string'],
             'kpp' => [
-                'required',
+                'nullable',
                 'string',
                 Rule::when(
-                    $this->input('type') == OrganizationTypeEnum::IP->value,
-                    'nullable'
-                ),
-                Rule::when(
                     $this->input('type') == OrganizationTypeEnum::COMPANY->value,
-                    'regex:/^\d{9}$/'
+                    ['regex:/^\d{9}$/','required']
                 )
             ],
             'ogrn' => [
@@ -81,7 +77,6 @@ class CreateRequest extends FormRequest
             'accountant_phone' => ['required', 'string'],
             'director_name' => ['required', 'string'],
             'director_surname' => ['required', 'string'],
-            'bdate' => ['required', 'string'],
             'gender' => ['required', 'string', 'in:M,F'],
         ];
     }
