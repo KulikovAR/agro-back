@@ -40,5 +40,13 @@ class RoleSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ]
         );
+        $client_role = Role::create(
+            [
+                'name' => '1C',
+                'slug' => '1C',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        );
     }
 }
