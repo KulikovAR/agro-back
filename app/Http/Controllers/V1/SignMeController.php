@@ -22,6 +22,6 @@ class SignMeController extends Controller
         if(gettype($this->signMeService->signature($request)) == 'string'){
             return new ApiJsonResponse(200, StatusEnum::OK, $this->signMeService->signature($request), data:[]);
         }
-        return new ApiJsonResponse(200, StatusEnum::OK, '', data:$this->signMeService->signature($request));
+        return new ApiJsonResponse(200, StatusEnum::OK, 'Файл подписан', data:$this->signMeService->signature($request));
     }
 }
