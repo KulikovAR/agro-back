@@ -58,7 +58,6 @@ class AuthService
 //        $this->sms->send($request->phone_number, $code_arr['code'] . '- Код для подтверждения');
         $user->update(['code' => $code_arr['code'], 'code_hash' => $code_arr['code_hash'], 'code_expire_at' => $code_arr['code_expire']]);
         $resource = new DevUserResource($user);
-
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
@@ -72,7 +71,8 @@ class AuthService
 
     public function verificationCheck(RegistrationSmsCodeRequest $request): array
     {
-        $user = User::where('phone_number', $request->phone_number)->first();
+
+        dd($request->phone_number);
         if ($user->code == $request->code) {
             $bearerToken = $this->createAuthToken($user);
             return array('user' => $user, 'token' => $bearerToken);

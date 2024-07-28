@@ -182,11 +182,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
             'department_code'   => null,
             'snils'             => null,
             'email'             => null,
-            'email_verified_at' => null,
-            'phone_verified_at' => null,
             'salt'              => null,
             'password'          => null,
-            'phone_number'      => null,
             'creator_id'        => null,
             'region'            => null,
             'accountant_phone'  => null,
@@ -195,6 +192,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
             'sign_me_id'        => null,
             'is_signer'         => null,
             'gender'            => null,
+            'bdate'             => null,
         ];
     }
 
