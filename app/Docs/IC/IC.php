@@ -10,6 +10,7 @@ class IC
      *     tags={"1С"},
      *     summary="Загрузить файл в формате Base64",
      *     description="Загрузка файла с указанием типа и id из 1C. Передаваемые значения в type ограничиваются такими, как Акт, Заявка, Договор",
+     *     security={{"bearerAuth":{}}},
      *     @OA\Parameter(
      *         name="inn",
      *         in="path",

@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Docs\IC\IC;
 use App\Enums\EnvironmentTypeEnum;
+use App\Enums\RoleEnum;
 use App\Models\File;
 use App\Models\FileType;
 use App\Models\Role;
@@ -58,6 +60,8 @@ class UserSeeder extends Seeder
         $client->files()->attach(File::inRandomOrder()->first()->id);
         $client->userProfile()->create((new UserinfoFactory())->definition());
 
+        $Ic = User::create([]);
+        $Ic->assignRole(RoleEnum::IC->value);
 
         $user = User::factory()->create(
             [

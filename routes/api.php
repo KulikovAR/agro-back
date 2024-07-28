@@ -44,7 +44,7 @@ Route::post('whatsapp/webhook', [WhatsAppController::class, 'webhook']);
 //    Route::get('/get-filters', [ProductParserController::class, 'getProductFilter'])->name('product-parser.get-filter');
 //    Route::get('/', [ProductParserController::class, 'index'])->name('product-parser.index');
 //});
-Route::post('files/from-1c/{inn}', [FileController::class, 'loadFileFrom1C'])->name('files.from-1c');
+
 Route::middleware(['guest'])->group(function () {
     Route::post('/registration/phone', [RegistrationController::class, 'registration'])->name('registration');
     Route::post('/registration/verification', [RegistrationController::class, 'verification'])->name(
@@ -111,6 +111,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/delete-files',[FileController::class, 'deleteUserFiles'])->name('files.delete_files');
         Route::get('/file-types', [FileController::class, 'getFileTypes'])->name('files.getFileTypes');
         Route::delete('/delete/{file}', [FileController::class, 'delete'])->name('files.update');
+        Route::post('/from-1c/{inn}', [FileController::class, 'loadFileFrom1C'])->name('files.from-1c');
     });
 
     Route::prefix('transport')->group(function () {
