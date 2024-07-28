@@ -52,7 +52,7 @@ class UserPolicy
             return Response::allow();
         }
 
-        if($user==$model && $user->hasRole(RoleEnum::CLIENT->value)){
+        if($model->id == $user->id && $user->hasRole(RoleEnum::CLIENT->value)){
             return Response::allow();
         }
 
