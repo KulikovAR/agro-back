@@ -71,8 +71,7 @@ class AuthService
 
     public function verificationCheck(RegistrationSmsCodeRequest $request): array
     {
-
-        dd($request->phone_number);
+        $user = User::where('phone_number', $request->phone_number)->first();
         if ($user->code == $request->code) {
             $bearerToken = $this->createAuthToken($user);
             return array('user' => $user, 'token' => $bearerToken);
