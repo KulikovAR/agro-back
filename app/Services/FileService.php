@@ -22,6 +22,7 @@ use App\Models\User;
 use App\Repositories\IcRepository;
 use App\Traits\FileTrait;
 use Faker\Core\Uuid;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 
 class FileService
@@ -72,6 +73,7 @@ class FileService
     }
     public function loadFileFrom1C(FromIcRequest $request, string $inn): GetDataFrom1CResource
     {
+        Gate::authorize('loadFileFrom1C', File::class);
         $user = User::where('inn', $inn)->first();
         $fileFromIc = $this->IcRepository->IcFile($request->file, $request->type, $request->id_1c);
         $user->files()->attach($fileFromIc);
