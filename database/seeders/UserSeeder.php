@@ -67,7 +67,7 @@ class UserSeeder extends Seeder
             [
                 'password' => Hash::make(self::USER_PASSWORD),
                 'email'    => self::USER_EMAIL,
-            ],
+            ]
         );
         $users = User::factory(10)->create();
         foreach ($users as $item) {

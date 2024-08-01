@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use App\Services\SignMe\SignMe;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -12,7 +13,7 @@ class SignMeTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_example(): void
+    public function test_example()
     {
         $data = array(
 //            'api_key' => "XBV62A0ZFWO9ATMF",

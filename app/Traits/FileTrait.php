@@ -26,16 +26,11 @@ trait FileTrait
         return File::create(['path' => $path,'type'=>$type, 'md5_hash'=>$md5]);
     }
 
-    public function loadFileInBase64(string $file, string $type, string $IcId): File
+    public function loadFileInBase64(UploadedFile $file, string $type, string $IcId): File
     {
-        preg_match('/^data:(.*?);base64,(.*)$/', $file, $matches);
-        $mimeType = $matches[1];
-        $fileContent = base64_decode($matches[2]);
-        $extension = explode('/', $mimeType)[1];
-        $fileName = uniqid().'.'.$extension;
-        $path = '/filesBase64/' . $fileName;
-        $md5 = md5($fileContent);
-        $result = Storage::disk('public')->put($path, $fileContent);
+        $ext = $file->extension();
+        $path = Storage::disk('public')->put('/files_from_1C', $file);
+        $md5 = md5_file($file);
         return File::create(['path' => $path,'type'=>$type, 'id_1c'=>$IcId,'md5_hash'=>$md5]);
     }
     public function deleteFile(File $file): null|bool
