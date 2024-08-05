@@ -22,7 +22,7 @@ class SignMeTest extends TestCase
             'lastname' => "Ашотович",
             'bdate' => "1996-08-09",
             'gender' => "M",
-            'snils' => "15879145522",
+            'snils' => "15879145521",
             'ps' => "6016",
             'pn' => "994242",
             'pdate' => "2016-09-08",
