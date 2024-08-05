@@ -20,7 +20,8 @@ class File extends Model
         'id_1c',
         'is_signed',
         'type',
-        'md5_hash'
+        'md5_hash',
+        'name',
     ];
 
 
