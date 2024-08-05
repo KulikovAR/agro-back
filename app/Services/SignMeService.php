@@ -66,7 +66,7 @@ class SignMeService
         $registerResult = $this->signMe->register($data);
 
         if(gettype($registerResult) == 'string'){
-            return response()->json(['message' => 'Произошла ошибка, обратитесь к администратору'])->getContent();
+            return response('Произошла ошибка, обратитесь к администратору')->getContent();
         }
 
         $user->update(['sign_me_id' => $registerResult]);
@@ -74,7 +74,7 @@ class SignMeService
         $precheck = $this->signMe->prechek($data['inn']);
 
         if(!$precheck){
-            return response()->json(['message' => 'Ожидает подтверждения регистрации в Sign.me '])->getContent();
+            return response('Ожидает подтверждения регистрации в Sign.me ')->getContent();
         }
 
         $user->update(['is_signer'=>true]);
@@ -83,7 +83,7 @@ class SignMeService
 
         if($signatureResult == "error"){
 
-            return response()->json(['message' => 'Произошла ошибка при подписание документа'])->getContent();
+            return response('Произошла ошибка при подписание документа')->getContent();
         }
 
 
