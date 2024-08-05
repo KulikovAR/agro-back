@@ -27,6 +27,7 @@ class FileFactory extends Factory
             'path' => $mockFile->path,
             'type' => $mockFile->type,
             'md5_hash' => md5($fakeFile),
+            'name' => $fakeFile->getClientOriginalName(),
         ];
     }
 }
