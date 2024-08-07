@@ -59,6 +59,15 @@ class UserPolicy
         return Response::denyAsNotFound();
     }
 
+    public function indexCounteragent(User $user): Response
+    {
+        if($user->hasRole(RoleEnum::LOGISTICIAN->value)){
+            return Response::allow();
+        }
+
+        return Response::denyAsNotFound();
+    }
+
     /**
      * Determine whether the user can delete the model.
      */

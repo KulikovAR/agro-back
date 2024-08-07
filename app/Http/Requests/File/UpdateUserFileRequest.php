@@ -6,11 +6,12 @@ use App\Enums\FileTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class DeleteUserFileRequest extends FormRequest
+class UpdateUserFileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
+
 
     /**
      * Get the validation rules that apply to the request.
@@ -20,8 +21,10 @@ class DeleteUserFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file_id'  => ['array', 'required'],
-            'file_id.*' => ['string', 'exists:files,id'],
+            'documents' => ['required', 'array'],
+            'documents.*.file' => ['file'],
+            'documents.*.file_type' => ['string', Rule::enum(FileTypeEnum::class)],
+            'documents.*.file_id' => ['uuid','exists:files,id']
         ];
     }
 }

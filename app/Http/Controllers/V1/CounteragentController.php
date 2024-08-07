@@ -10,6 +10,7 @@ use App\Http\Resources\Counteragent\CounteragentCollection;
 use App\Http\Resources\Counteragent\CounteragentResource;
 use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\User\UserResource;
+use App\Http\Responses\ApiJsonPaginationResponse;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\UserProfile;
 use App\Models\User;
@@ -24,14 +25,17 @@ class CounteragentController extends Controller
     ) {
         $this->service = new CounteragentService;
     }
-    public function index(): ApiJsonResponse
+    public function index(Request $request): ApiJsonResponse|ApiJsonPaginationResponse
     {
-        return new ApiJsonResponse(200, StatusEnum::OK, 'Все контрагенты получены', data: new UserCollection($this->service->index()));
+        if($request->has('page')){
+            return new ApiJsonPaginationResponse(200, StatusEnum::OK, '', data: new UserCollection($this->service->index($request)));
+        }
+        return new ApiJsonResponse(200, StatusEnum::OK, 'Все контрагенты получены', data: new UserCollection($this->service->index($request)));
     }
 
-    public function show(User $user): ApiJsonResponse
+    public function show(Request $request,User $user): ApiJsonResponse
     {
-        return new ApiJsonResponse(200, StatusEnum::OK, 'Контрагент получен', data: new UserResource($this->service->show($user)));
+        return new ApiJsonResponse(200, StatusEnum::OK, 'Контрагент получен', data: new UserResource($this->service->show($request,$user)));
     }
 
     public function create(CreateRequest $request): ApiJsonResponse

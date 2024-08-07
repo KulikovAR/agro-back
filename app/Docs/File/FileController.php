@@ -100,7 +100,12 @@ class FileController
      *                       property="documents(file_type)",
      *                       type="array",
      *                       @OA\Items(type="string")
-     *                   )
+     *                   ),
+     *                        @OA\Property(
+     *                        property="documents(file_id)",
+     *                        type="array",
+     *                        @OA\Items(type="string")
+     *                    ),
      *              )
      *          )
      *      ),

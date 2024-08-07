@@ -11,6 +11,7 @@ use App\Http\Requests\File\CreateUserFileRequest;
 use App\Http\Requests\File\DeleteUserFileRequest;
 use App\Http\Requests\File\FileFilterRequest;
 use App\Http\Requests\File\FromIcRequest;
+use App\Http\Requests\File\UpdateUserFileRequest;
 use App\Http\Resources\File\FileCollection;
 use App\Http\Resources\File\FileResource;
 use App\Http\Resources\File\GetDataFrom1CResource;
@@ -20,6 +21,7 @@ use App\Models\FileType;
 use App\Models\Order;
 use App\Models\User;
 use App\Repositories\IcRepository;
+use App\Services\SignMe\SignMe;
 use App\Traits\FileTrait;
 use Faker\Core\Uuid;
 use Illuminate\Support\Facades\Gate;
@@ -29,6 +31,7 @@ class FileService
 {
     public function __construct(
         private IcRepository $IcRepository = new IcRepository(),
+        private SignMe $signMe = new SignMe(),
     )
     {
 //        $this->IcRepository = new IcRepository;
@@ -58,6 +61,12 @@ class FileService
     {
         $user = $request->user();
         $files = $user->files()->orWhere(['type'=>FileTypeEnum::REQUEST->value, 'type'=>FileTypeEnum::CONTRACT->value, 'type'=>FileTypeEnum::ACT->value])->get();
+        foreach ($files as $file) {
+            $signatureCheckResult = $this->signMe->signatureCheck($file->md5);
+            if($signatureCheckResult){
+                $file->update(['is_signed' => true]);
+            }
+        }
         return new FileCollection($files);
     }
 
@@ -88,15 +97,15 @@ class FileService
         return new FileCollection($files);
     }
 
-    public function updateFilesForUser(CreateUserFileRequest $request)
+    public function updateFilesForUser(UpdateUserFileRequest $request)
     {
 //        dd($request);
         $user = $request->user();
         $types = [];
         foreach($request->documents as $item) {
-         $types[] = $item['file_type'];
+         $ids[] = $item['file_id'];
         }
-        $files = $user->files()->whereIn('type',$types)->get();
+        $files = $user->files()->whereIn('files.id',$ids)->get();
 //        dd($files);
         $uploadFiles = $this->updateFiles($request->documents, $files);
         $this->userAttachFiles($uploadFiles, $user);
@@ -106,7 +115,7 @@ class FileService
     public function deleteUserFiles(DeleteUserFileRequest $request):void
     {
         $user = $request->user();
-        $files = $user->files()->whereIn('type',$request->file_types)->get();
+        $files = $user->files()->whereIn('files.id',$request->file_id)->get();
         $this->deleteFiles($files);
     }
 

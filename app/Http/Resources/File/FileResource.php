@@ -24,6 +24,8 @@ class FileResource extends JsonResource
             'path' => $this->path,
             'type' => $this->type,
             'name' => $this->name,
+            'created_at' => $this->created_at,
+            'is_signed' => $this->is_signed,
 //            'userFile' => new UserFileResource($this->userFile),
         ];
     }

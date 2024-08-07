@@ -85,6 +85,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/sign-me', [SignMeController::class, 'signature'])->name('sign.me.signature');
     Route::prefix('counteragents')->group(function () {
+        Route::get('/', [CounteragentController::class, 'index'])->name('counteragents.index');
+        Route::get('/{user}', [CounteragentController::class, 'index'])->name('counteragents.index');
         Route::post('/', [CounteragentController::class, 'create'])->name('counteragent.create');
         Route::put('/{user}', [CounteragentController::class, 'update'])->name('counteragent.update');
     });

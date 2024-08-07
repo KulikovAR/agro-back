@@ -22,7 +22,7 @@ class SignMeService
         $this->signMe = new SignMe();
     }
 
-    public function signature(SignMeRequest $request): string|FileResource
+    public function signature(SignMeRequest $request): string
     {
         $user = $request->user();
 
@@ -58,10 +58,15 @@ class SignMeService
                 'snils' => $user->snils,
             );
 
+        if(!is_null($user->kpp)){
+            $data += ['ckpp' => $user->kpp];
+        }
+
         $file = File::where('path', $request->path)->first();
         $filet = $this->base64Encode($request->path);
 
         $signatureQueryData = array('filet' => $filet, 'fname' => $file->type, 'md5' => $file->md5_hash);
+
 
         $registerResult = $this->signMe->register($data);
 
@@ -86,14 +91,9 @@ class SignMeService
             return response('Произошла ошибка при подписание документа')->getContent();
         }
 
+        return $signatureResult;
 
-        $signatureCheckResult = $this->signMe->signatureCheck($signatureQueryData['md5']);
-
-        if(!$signatureCheckResult){
-            return $signatureResult;
-        }
-        $file->update(['is_signed' => true]);
-        return new FileResource($file);
+//        return new FileResource($file);
     }
 }
 

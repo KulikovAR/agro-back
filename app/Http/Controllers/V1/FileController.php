@@ -8,6 +8,7 @@ use App\Http\Requests\File\CreateFileRequest;
 use App\Http\Requests\File\CreateUserFileRequest;
 use App\Http\Requests\File\DeleteUserFileRequest;
 use App\Http\Requests\File\FromIcRequest;
+use App\Http\Requests\File\UpdateUserFileRequest;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\File;
 use App\Repositories\IcRepository;
@@ -56,7 +57,7 @@ class FileController extends Controller
         );
     }
 
-    public function updateFilesForUser(CreateUserFileRequest $request): ApiJsonResponse
+    public function updateFilesForUser(UpdateUserFileRequest $request): ApiJsonResponse
     {
         return new ApiJsonResponse(
             200, StatusEnum::OK, 'Документы обновлены', data: $this->service->updateFilesForUser($request)

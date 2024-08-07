@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\FileTypeEnum;
 use App\Enums\TaxSystemEnum;
 use App\Http\Requests\UserProfile\AvatarRequest;
 use App\Http\Requests\UserProfile\UserPasswordUpdateRequest;
@@ -28,27 +29,21 @@ class UserProfileService
 
     public function loadAvatar(AvatarRequest $request): FileResource
     {
-        $avatarType = FileType::where('title', 'Аватар')->first();
-        $avatar = $this->loadFile($request->file('avatar'));
-        $request->user()->files()->attach($avatar, ['file_type_id' => $avatarType->id, 'id' => uuid_create()]);
+        $avatar = $this->loadFile($request->file('avatar'),FileTypeEnum::AVATAR->value);
+        $request->user()->files()->attach($avatar);
         return new FileResource($avatar);
     }
 
     public function updateAvatar(AvatarRequest $request): FileResource
     {
-        $avatarType = FileType::where('title', 'Аватар')->first();
-
         $user = $request->user();
 
-        $file = File::whereHas('userFiles', function ($query) use ($user) {
-            $query->where('user_id', $user->id);
-        })->whereHas('fileType', function ($query) {
-            $query->where('title', 'Аватар');
-        })->with(['userFiles', 'fileType'])->first();
+        $file = $user->files()->where('type', FileTypeEnum::AVATAR->value)->first();
 
-        $avatar = $this->updateFile($request->file('avatar'), $file);
+        $avatar = $this->updateFile($request->file('avatar'), $file, FileTypeEnum::AVATAR->value);
 
-        $user->files()->attach($avatar, ['file_type_id' => $avatarType->id, 'id' => uuid_create()]);
+        $user->files()->attach($avatar);
+
         return new FileResource($avatar);
     }
 

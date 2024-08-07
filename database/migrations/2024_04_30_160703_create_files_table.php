@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('id_1c')->nullable();
             $table->string('md5_hash');
-            $table->boolean('is_signed')->nullable();
+            $table->boolean('is_signed')->default(false);
             $table->string('name');
             $table->timestamps();
         });

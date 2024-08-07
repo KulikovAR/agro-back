@@ -23,6 +23,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'inn'               => [
+                Rule::unique('users', 'inn')->ignore($this->route('user')->id),
                 'string',
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::IP->value,
@@ -37,6 +38,7 @@ class UpdateRequest extends FormRequest
             'surname'           => ['string'],
             'patronymic'        => ['string'],
             'kpp'               => [
+                Rule::unique('users', 'kpp')->ignore($this->route('user')->id),
                 'string',
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::IP->value,
@@ -47,7 +49,8 @@ class UpdateRequest extends FormRequest
                     'regex:/^\d{9}$/'
                 )
             ],
-            'orgn'               => [
+            'ogrn'               => [
+                Rule::unique('users', 'ogrn')->ignore($this->route('user')->id),
                 'string',
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::IP->value,
@@ -64,8 +67,9 @@ class UpdateRequest extends FormRequest
             'office_address'     => ['string'],
             'tax_system'         => ['string'],
             'okved'              => ['string'],
-            'phone_number' => ["regex:/^\+7\d{10}$/", 'string'],
-            'email' => ['string', 'email', 'unique:users,email'],
+            'phone_number' => ["regex:/^\+7\d{10}$/", 'string',
+                Rule::unique('users', 'phone_number')->ignore($this->route('user')->id)],
+            'email' => ['string', 'email', Rule::unique('users', 'email')->ignore($this->route('user')->id)],
             'region' => [ 'string'],
             'accountant_phone' => [ 'string'],
             'director_name' => [ 'string'],
@@ -74,7 +78,7 @@ class UpdateRequest extends FormRequest
             'series' => ['string'],
             'department' => ['string'],
             'department_code' => ['string'],
-            'snils' => ['string'],
+            'snils' => ['string',Rule::unique('users', 'snils')->ignore($this->route('user')->id)],
             'bdate' => ['string'],
             'gender' => ['string', 'in:M,F'],
         ];
