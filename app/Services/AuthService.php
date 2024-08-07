@@ -46,7 +46,7 @@ class AuthService
         $clientRole = Role::where('name', 'client')->first();
         $logisticianRole = Role::where('name', 'logistician')->first();
 
-        $user = User::firstOrCreate(['phone_number' => $request->phone_number],['phone_number' => $request->phone_number, 'moderation_status' => ModerationStatusEnum::PENDING->value]);
+        $user = User::firstOrCreate(['phone_number' => $request->phone_number],['phone_number' => $request->phone_number]);
         if($user->hasRole($logisticianRole)) {
             $user->syncRoles($logisticianRole);
         }

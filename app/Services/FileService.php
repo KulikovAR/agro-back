@@ -61,8 +61,11 @@ class FileService
     {
         $user = $request->user();
         $files = $user->files()->orWhere(['type'=>FileTypeEnum::REQUEST->value, 'type'=>FileTypeEnum::CONTRACT->value, 'type'=>FileTypeEnum::ACT->value])->get();
+        if(is_null($files)){
+            return new FileCollection([]);
+        }
         foreach ($files as $file) {
-            $signatureCheckResult = $this->signMe->signatureCheck($file->md5);
+            $signatureCheckResult = $this->signMe->signatureCheck($file->md5_hash);
             if($signatureCheckResult){
                 $file->update(['is_signed' => true]);
             }
