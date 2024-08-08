@@ -46,8 +46,8 @@ class AuthService
         $clientRole = Role::where('name', 'client')->first();
         $logisticianRole = Role::where('name', 'logistician')->first();
 
-        $user = User::firstOrNew(['phone_number' => $request->phone_number],['phone_number' => $request->phone_number]);
-        if(!User::where('phone_number',$request->phone_number)->exists()))
+        $user = User::firstOrNew(['phone_number' => $request->phone_number],['phone_number' => $request->phone_number, 'moderation_status'=> ModerationStatusEnum::APPROVED->value]);
+        if(!User::where('phone_number',$request->phone_number)->exists())
             {
                 $user->save();
                 $user->update($user->clearProfile());
