@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\File;
 
+use App\Enums\FileTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class DeleteUserFileRequest extends FormRequest
 {
@@ -18,8 +20,8 @@ class DeleteUserFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file_types'   => ['array', 'required'],
-            'file_types.*' => ['string', 'exists:file_types,id']
+            'file_id'  => ['array', 'required'],
+            'file_id.*' => ['string', 'exists:files,id'],
         ];
     }
 }

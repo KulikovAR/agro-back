@@ -115,7 +115,7 @@
                                                             "example": "2024-03-04T10:02:26.000000Z"
                                                         },
                                                         "counteragent": {
-                                                            "$ref": "#/components/schemas/Counteragent"
+                                                            "$ref": "#/components/schemas/UserProfile"
                                                         }
                                                     },
                                                     "type": "object"
@@ -290,7 +290,7 @@
                                                             "example": "2024-03-04T10:02:26.000000Z"
                                                         },
                                                         "counteragent": {
-                                                            "$ref": "#/components/schemas/Counteragent"
+                                                            "$ref": "#/components/schemas/UserProfile"
                                                         }
                                                     },
                                                     "type": "object"
@@ -423,7 +423,7 @@
                                                             "example": "2024-03-04T10:02:26.000000Z"
                                                         },
                                                         "counteragent": {
-                                                            "$ref": "#/components/schemas/Counteragent"
+                                                            "$ref": "#/components/schemas/UserProfile"
                                                         }
                                                     },
                                                     "type": "object"
@@ -538,7 +538,7 @@
                                                             "example": "2024-03-04T10:02:26.000000Z"
                                                         },
                                                         "counteragent": {
-                                                            "$ref": "#/components/schemas/Counteragent"
+                                                            "$ref": "#/components/schemas/UserProfile"
                                                         }
                                                     },
                                                     "type": "object"
@@ -645,6 +645,1817 @@
                                         "message": {
                                             "type": "string",
                                             "example": "User not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bank-accounts/": {
+            "get": {
+                "tags": [
+                    "Bank Accounts"
+                ],
+                "summary": "Get all bank accounts of a user",
+                "description": "Получение перевозчиком своих счетов",
+                "operationId": "c30c30e4b14a2067128add7b305d0639",
+                "responses": {
+                    "200": {
+                        "description": "Bank accounts retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Все банковские счета пользователя получены"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/BankAccount"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Запись не найдена"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Пользователь не авторизован"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Bank Accounts"
+                ],
+                "summary": "Create a new bank account",
+                "description": "Create a new bank account for a user.",
+                "operationId": "269b05a307fae9545dd9be691beca8fd",
+                "requestBody": {
+                    "description": "Bank account details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "is_main",
+                                    "bik",
+                                    "correspondent_number",
+                                    "title",
+                                    "number"
+                                ],
+                                "properties": {
+                                    "is_main": {
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "bik": {
+                                        "type": "string",
+                                        "example": "2151235123"
+                                    },
+                                    "correspondent_number": {
+                                        "type": "string",
+                                        "example": "5916590596703657"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "CHERNOZEM"
+                                    },
+                                    "number": {
+                                        "type": "string",
+                                        "example": "21516122"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Bank account created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Банковский счёт создан"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user_id": {
+                                                    "type": "string",
+                                                    "format": "uuid",
+                                                    "example": "9baaa8c9-c2b7-44a5-9135-7aca6ed412fe"
+                                                },
+                                                "is_main": {
+                                                    "type": "string",
+                                                    "example": "1"
+                                                },
+                                                "bik": {
+                                                    "type": "string",
+                                                    "example": "2151235123"
+                                                },
+                                                "correspondent_number": {
+                                                    "type": "string",
+                                                    "example": "5916590596703657"
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "CHERNOZEM"
+                                                },
+                                                "number": {
+                                                    "type": "string",
+                                                    "example": "21516122"
+                                                },
+                                                "id": {
+                                                    "type": "string",
+                                                    "format": "uuid",
+                                                    "example": "9babed86-88e7-4977-9be8-98b35791bdaa"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-03-28T12:01:07.000000Z"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-03-28T12:01:07.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Запись не найдена"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Пользователь не авторизован"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/bank-accounts/{id}": {
+            "get": {
+                "tags": [
+                    "Bank Accounts"
+                ],
+                "summary": "Get a bank account by ID",
+                "description": "Получение перевозчиком своего счёта",
+                "operationId": "9bf9f95ec21ad0950feb766162d0eb92",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the bank account",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Bank account retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Банковский счёт пользователя получен"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "format": "uuid",
+                                                    "example": "9baaa8c9-f418-47ab-a542-d84b58107c77"
+                                                },
+                                                "bik": {
+                                                    "type": "string",
+                                                    "example": "WLIJICW33Q1"
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "sint"
+                                                },
+                                                "number": {
+                                                    "type": "string",
+                                                    "example": "WF"
+                                                },
+                                                "correspondent_number": {
+                                                    "type": "string",
+                                                    "example": "4916590596703657"
+                                                },
+                                                "is_main": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "user_id": {
+                                                    "type": "string",
+                                                    "format": "uuid",
+                                                    "example": "9baaa8c9-c2b7-44a5-9135-7aca6ed412fe"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-03-27T20:53:05.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-03-27T20:53:05.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Запись не найдена"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Пользователь не авторизован"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Bank Accounts"
+                ],
+                "summary": "Update a bank account",
+                "description": "Update an existing bank account for a user.",
+                "operationId": "67f8381fccd4b36f46ac179acdf26bdf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the bank account to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Bank account details",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "is_main": {
+                                        "type": "string"
+                                    },
+                                    "bik": {
+                                        "type": "string"
+                                    },
+                                    "correspondent_number": {
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "number": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Bank account updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Банковский счёт обновлён"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user_id": {
+                                                    "type": "string",
+                                                    "format": "uuid"
+                                                },
+                                                "is_main": {
+                                                    "type": "string"
+                                                },
+                                                "bik": {
+                                                    "type": "string"
+                                                },
+                                                "correspondent_number": {
+                                                    "type": "string"
+                                                },
+                                                "title": {
+                                                    "type": "string"
+                                                },
+                                                "number": {
+                                                    "type": "string"
+                                                },
+                                                "id": {
+                                                    "type": "string",
+                                                    "format": "uuid"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Запись не найдена"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Пользователь не авторизован"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Bank Accounts"
+                ],
+                "summary": "Delete a bank account",
+                "description": "Delete an existing bank account by its ID.",
+                "operationId": "1c65f1173895976ffa58a4460f01ee72",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the bank account to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Bank account deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Банковский счёт удалён"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Запись не найдена"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Пользователь не авторизован"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/counteragents": {
+            "post": {
+                "tags": [
+                    "Counteragents"
+                ],
+                "summary": "Создание контрагента",
+                "description": "Создает нового контрагента",
+                "operationId": "createCounteragent",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "example": "ИП"
+                                    },
+                                    "inn": {
+                                        "type": "string",
+                                        "example": "123456789021"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Иван"
+                                    },
+                                    "surname": {
+                                        "type": "string",
+                                        "example": "Иванов"
+                                    },
+                                    "patronymic": {
+                                        "type": "string",
+                                        "example": "Иванович"
+                                    },
+                                    "kpp": {
+                                        "type": "string",
+                                        "example": "123456781"
+                                    },
+                                    "ogrn": {
+                                        "type": "string",
+                                        "example": "123456789012322"
+                                    },
+                                    "short_name": {
+                                        "type": "string",
+                                        "example": "ООО Рога и Копыта"
+                                    },
+                                    "full_name": {
+                                        "type": "string",
+                                        "example": "Общество с ограниченной ответственностью Рога и Копыта"
+                                    },
+                                    "juridical_address": {
+                                        "type": "string",
+                                        "example": "ул. Примерная, д. 1, г. Москва"
+                                    },
+                                    "office_address": {
+                                        "type": "string",
+                                        "example": "ул. Примерная, д. 1, офис 101, г. Москва"
+                                    },
+                                    "tax_system": {
+                                        "type": "string",
+                                        "example": "ОСНО"
+                                    },
+                                    "okved": {
+                                        "type": "string",
+                                        "example": "62.01"
+                                    },
+                                    "number": {
+                                        "type": "string",
+                                        "example": "12345678"
+                                    },
+                                    "series": {
+                                        "type": "string",
+                                        "example": "1234"
+                                    },
+                                    "department": {
+                                        "type": "string",
+                                        "example": "Примерный отдел"
+                                    },
+                                    "department_code": {
+                                        "type": "string",
+                                        "example": "1234"
+                                    },
+                                    "snils": {
+                                        "type": "string",
+                                        "example": "12345678900"
+                                    },
+                                    "phone_number": {
+                                        "type": "string",
+                                        "example": "+71232567890"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "example@exampl2.com"
+                                    },
+                                    "region": {
+                                        "type": "string",
+                                        "example": "Москва"
+                                    },
+                                    "accountant_phone": {
+                                        "type": "string",
+                                        "example": "+71224567891"
+                                    },
+                                    "director_name": {
+                                        "type": "string",
+                                        "example": "Иван"
+                                    },
+                                    "director_surname": {
+                                        "type": "string",
+                                        "example": "Петров"
+                                    },
+                                    "gender": {
+                                        "type": "string",
+                                        "example": "M"
+                                    },
+                                    "bdate": {
+                                        "type": "string",
+                                        "example": "1990-01-01"
+                                    },
+                                    "issue_date_at": {
+                                        "type": "string",
+                                        "example": "2023-01-01"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Контрагент создан",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Контрагент создан"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "9ca00a89-98ad-4f78-9cb9-16923a32a491"
+                                                },
+                                                "phone_number": {
+                                                    "type": "string",
+                                                    "example": "+71232567890"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "example@exampl2.com"
+                                                },
+                                                "moderation_status": {
+                                                    "type": "string",
+                                                    "example": "approved"
+                                                },
+                                                "inn": {
+                                                    "type": "string",
+                                                    "example": "123456789021"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Иван"
+                                                },
+                                                "surname": {
+                                                    "type": "string",
+                                                    "example": "Иванов"
+                                                },
+                                                "patronymic": {
+                                                    "type": "string",
+                                                    "example": "Иванович"
+                                                },
+                                                "kpp": {
+                                                    "type": "string",
+                                                    "example": "123456781"
+                                                },
+                                                "ogrn": {
+                                                    "type": "string",
+                                                    "example": "123456789012322"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "ИП"
+                                                },
+                                                "short_name": {
+                                                    "type": "string",
+                                                    "example": "ООО Рога и Копыта"
+                                                },
+                                                "full_name": {
+                                                    "type": "string",
+                                                    "example": "Общество с ограниченной ответственностью Рога и Копыта"
+                                                },
+                                                "juridical_address": {
+                                                    "type": "string",
+                                                    "example": "ул. Примерная, д. 1, г. Москва"
+                                                },
+                                                "office_address": {
+                                                    "type": "string",
+                                                    "example": "ул. Примерная, д. 1, офис 101, г. Москва"
+                                                },
+                                                "tax_system": {
+                                                    "type": "string",
+                                                    "example": "ОСНО"
+                                                },
+                                                "okved": {
+                                                    "type": "string",
+                                                    "example": "62.01"
+                                                },
+                                                "series": {
+                                                    "type": "string",
+                                                    "example": "1234"
+                                                },
+                                                "number": {
+                                                    "type": "string",
+                                                    "example": "12345678"
+                                                },
+                                                "department": {
+                                                    "type": "string",
+                                                    "example": "Примерный отдел"
+                                                },
+                                                "department_code": {
+                                                    "type": "string",
+                                                    "example": "1234"
+                                                },
+                                                "snils": {
+                                                    "type": "string",
+                                                    "example": "12345678900"
+                                                },
+                                                "issue_date_at": {
+                                                    "type": "string",
+                                                    "example": "01.01.2023"
+                                                },
+                                                "creator_id": {
+                                                    "type": "string",
+                                                    "example": "9c9fe49d-dd0c-41eb-aebb-e4179c8e4407"
+                                                },
+                                                "region": {
+                                                    "type": "string",
+                                                    "example": "Москва"
+                                                },
+                                                "accountant_phone": {
+                                                    "type": "string",
+                                                    "example": "+71224567891"
+                                                },
+                                                "director_name": {
+                                                    "type": "string",
+                                                    "example": "Иван"
+                                                },
+                                                "director_surname": {
+                                                    "type": "string",
+                                                    "example": "Петров"
+                                                },
+                                                "bdate": {
+                                                    "type": "string",
+                                                    "example": null
+                                                },
+                                                "gender": {
+                                                    "type": "string",
+                                                    "example": "M"
+                                                },
+                                                "roles": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string",
+                                                                "example": "9c8dc716-13eb-445d-ae73-2cdd1740197b"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Клиент"
+                                                            },
+                                                            "slug": {
+                                                                "type": "string",
+                                                                "example": "client"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "files": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Вы не авторизованы",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "вы не авторизованы"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Запись не найдена",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "запись не найдена"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/counteragents/{user}": {
+            "put": {
+                "tags": [
+                    "Counteragents"
+                ],
+                "summary": "Обновление контрагента",
+                "description": "Обновление контрагента",
+                "operationId": "updateCounteragent",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of user",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "example": "ИП"
+                                    },
+                                    "inn": {
+                                        "type": "string",
+                                        "example": "123456789021"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Иван"
+                                    },
+                                    "surname": {
+                                        "type": "string",
+                                        "example": "Иванов"
+                                    },
+                                    "patronymic": {
+                                        "type": "string",
+                                        "example": "Иванович"
+                                    },
+                                    "kpp": {
+                                        "type": "string",
+                                        "example": "123456781"
+                                    },
+                                    "ogrn": {
+                                        "type": "string",
+                                        "example": "123456789012322"
+                                    },
+                                    "short_name": {
+                                        "type": "string",
+                                        "example": "ООО Рога и Копыта"
+                                    },
+                                    "full_name": {
+                                        "type": "string",
+                                        "example": "Общество с ограниченной ответственностью Рога и Копыта"
+                                    },
+                                    "juridical_address": {
+                                        "type": "string",
+                                        "example": "ул. Примерная, д. 1, г. Москва"
+                                    },
+                                    "office_address": {
+                                        "type": "string",
+                                        "example": "ул. Примерная, д. 1, офис 101, г. Москва"
+                                    },
+                                    "tax_system": {
+                                        "type": "string",
+                                        "example": "ОСНО"
+                                    },
+                                    "okved": {
+                                        "type": "string",
+                                        "example": "62.01"
+                                    },
+                                    "number": {
+                                        "type": "string",
+                                        "example": "12345678"
+                                    },
+                                    "series": {
+                                        "type": "string",
+                                        "example": "1234"
+                                    },
+                                    "department": {
+                                        "type": "string",
+                                        "example": "Примерный отдел"
+                                    },
+                                    "department_code": {
+                                        "type": "string",
+                                        "example": "1234"
+                                    },
+                                    "snils": {
+                                        "type": "string",
+                                        "example": "12345678900"
+                                    },
+                                    "phone_number": {
+                                        "type": "string",
+                                        "example": "+71232567890"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "example@exampl2.com"
+                                    },
+                                    "region": {
+                                        "type": "string",
+                                        "example": "Москва"
+                                    },
+                                    "accountant_phone": {
+                                        "type": "string",
+                                        "example": "+71224567891"
+                                    },
+                                    "director_name": {
+                                        "type": "string",
+                                        "example": "Иван"
+                                    },
+                                    "director_surname": {
+                                        "type": "string",
+                                        "example": "Петров"
+                                    },
+                                    "gender": {
+                                        "type": "string",
+                                        "example": "M"
+                                    },
+                                    "bdate": {
+                                        "type": "string",
+                                        "example": "1990-01-01"
+                                    },
+                                    "issue_date_at": {
+                                        "type": "string",
+                                        "example": "2023-01-01"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Контрагент обновлён",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Контрагент создан"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "9ca00a89-98ad-4f78-9cb9-16923a32a491"
+                                                },
+                                                "phone_number": {
+                                                    "type": "string",
+                                                    "example": "+71232567890"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "example@exampl2.com"
+                                                },
+                                                "moderation_status": {
+                                                    "type": "string",
+                                                    "example": "approved"
+                                                },
+                                                "inn": {
+                                                    "type": "string",
+                                                    "example": "123456789021"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Иван"
+                                                },
+                                                "surname": {
+                                                    "type": "string",
+                                                    "example": "Иванов"
+                                                },
+                                                "patronymic": {
+                                                    "type": "string",
+                                                    "example": "Иванович"
+                                                },
+                                                "kpp": {
+                                                    "type": "string",
+                                                    "example": "123456781"
+                                                },
+                                                "ogrn": {
+                                                    "type": "string",
+                                                    "example": "123456789012322"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "ИП"
+                                                },
+                                                "short_name": {
+                                                    "type": "string",
+                                                    "example": "ООО Рога и Копыта"
+                                                },
+                                                "full_name": {
+                                                    "type": "string",
+                                                    "example": "Общество с ограниченной ответственностью Рога и Копыта"
+                                                },
+                                                "juridical_address": {
+                                                    "type": "string",
+                                                    "example": "ул. Примерная, д. 1, г. Москва"
+                                                },
+                                                "office_address": {
+                                                    "type": "string",
+                                                    "example": "ул. Примерная, д. 1, офис 101, г. Москва"
+                                                },
+                                                "tax_system": {
+                                                    "type": "string",
+                                                    "example": "ОСНО"
+                                                },
+                                                "okved": {
+                                                    "type": "string",
+                                                    "example": "62.01"
+                                                },
+                                                "series": {
+                                                    "type": "string",
+                                                    "example": "1234"
+                                                },
+                                                "number": {
+                                                    "type": "string",
+                                                    "example": "12345678"
+                                                },
+                                                "department": {
+                                                    "type": "string",
+                                                    "example": "Примерный отдел"
+                                                },
+                                                "department_code": {
+                                                    "type": "string",
+                                                    "example": "1234"
+                                                },
+                                                "snils": {
+                                                    "type": "string",
+                                                    "example": "12345678900"
+                                                },
+                                                "issue_date_at": {
+                                                    "type": "string",
+                                                    "example": "01.01.2023"
+                                                },
+                                                "creator_id": {
+                                                    "type": "string",
+                                                    "example": "9c9fe49d-dd0c-41eb-aebb-e4179c8e4407"
+                                                },
+                                                "region": {
+                                                    "type": "string",
+                                                    "example": "Москва"
+                                                },
+                                                "accountant_phone": {
+                                                    "type": "string",
+                                                    "example": "+71224567891"
+                                                },
+                                                "director_name": {
+                                                    "type": "string",
+                                                    "example": "Иван"
+                                                },
+                                                "director_surname": {
+                                                    "type": "string",
+                                                    "example": "Петров"
+                                                },
+                                                "bdate": {
+                                                    "type": "string",
+                                                    "example": null
+                                                },
+                                                "gender": {
+                                                    "type": "string",
+                                                    "example": "M"
+                                                },
+                                                "roles": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string",
+                                                                "example": "9c8dc716-13eb-445d-ae73-2cdd1740197b"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Клиент"
+                                                            },
+                                                            "slug": {
+                                                                "type": "string",
+                                                                "example": "client"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "files": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Вы не авторизованы",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "вы не авторизованы"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Запись не найдена",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "запись не найдена"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/files/load-files": {
+            "post": {
+                "tags": [
+                    "Files"
+                ],
+                "summary": "Загрузить документы пользователя",
+                "description": "Загружает документы пользователя.",
+                "operationId": "loadFiles",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "file_types",
+                                    "load_files"
+                                ],
+                                "properties": {
+                                    "": {
+                                        "type": "string",
+                                        "example": "9bdec27c-a40d-463e-a709-0ff9ab7efd11"
+                                    },
+                                    "documents(file)": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "file"
+                                        }
+                                    },
+                                    "documents(file_type)": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешный запрос",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Документы пользователя загружены"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "9bdf09f2-f0a7-458f-acc6-5a94a5c88fbc"
+                                                    },
+                                                    "path_url": {
+                                                        "type": "string",
+                                                        "example": "http://localhost/storage/files/4R0V5abSTtHNxfJudzlAWuB8NdIWvnmOMafrJip4.jpg"
+                                                    },
+                                                    "size": {
+                                                        "type": "integer",
+                                                        "example": "12213"
+                                                    },
+                                                    "original_name": {
+                                                        "type": "string",
+                                                        "example": "file.jpeg"
+                                                    },
+                                                    "optimize_path": {
+                                                        "type": "string",
+                                                        "example": "http://localhost/storage/optimized/6661647d4479e.jpg"
+                                                    },
+                                                    "is_signed": {
+                                                        "type": "boolean",
+                                                        "example": "false"
+                                                    },
+                                                    "signer_id": {
+                                                        "type": "string",
+                                                        "example": "9bdf01f2-f0a7-428f-acc6-5a94a34gq88fbc"
+                                                    },
+                                                    "mime_type": {
+                                                        "type": "string",
+                                                        "example": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                                    },
+                                                    "extension": {
+                                                        "type": "string",
+                                                        "example": "jpeg"
+                                                    },
+                                                    "fileType": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string",
+                                                                "example": "9bdec27c-8c53-4155-8646-c60bdbbe3ff3"
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "ЭТРН"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "userFiles": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 27
+                                                                },
+                                                                "user_id": {
+                                                                    "type": "string",
+                                                                    "example": "9bdec27c-a40d-463e-a709-0ff9ab7efd11"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/files/update-files": {
+            "post": {
+                "tags": [
+                    "Files"
+                ],
+                "summary": "Обновить документы пользователя",
+                "description": "Обновить документы пользователя.",
+                "operationId": "updateFiles",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "file_types",
+                                    "load_files"
+                                ],
+                                "properties": {
+                                    "": {
+                                        "type": "string",
+                                        "example": "9bdec27c-a40d-463e-a709-0ff9ab7efd11"
+                                    },
+                                    "documents(file)": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "file"
+                                        }
+                                    },
+                                    "documents(file_type)": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешный запрос",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Документы пользователя загружены"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "9bdf09f2-f0a7-458f-acc6-5a94a5c88fbc"
+                                                    },
+                                                    "path_url": {
+                                                        "type": "string",
+                                                        "example": "http://localhost/storage/files/4R0V5abSTtHNxfJudzlAWuB8NdIWvnmOMafrJip4.jpg"
+                                                    },
+                                                    "size": {
+                                                        "type": "integer",
+                                                        "example": "12213"
+                                                    },
+                                                    "original_name": {
+                                                        "type": "string",
+                                                        "example": "file.jpeg"
+                                                    },
+                                                    "optimize_path": {
+                                                        "type": "string",
+                                                        "example": "http://localhost/storage/optimized/6661647d4479e.jpg"
+                                                    },
+                                                    "is_signed": {
+                                                        "type": "boolean",
+                                                        "example": "false"
+                                                    },
+                                                    "signer_id": {
+                                                        "type": "string",
+                                                        "example": "9bdf01f2-f0a7-428f-acc6-5a94a34gq88fbc"
+                                                    },
+                                                    "mime_type": {
+                                                        "type": "string",
+                                                        "example": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                                    },
+                                                    "extension": {
+                                                        "type": "string",
+                                                        "example": "jpeg"
+                                                    },
+                                                    "fileType": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string",
+                                                                "example": "9bdec27c-8c53-4155-8646-c60bdbbe3ff3"
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "ЭТРН"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "userFiles": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 27
+                                                                },
+                                                                "user_id": {
+                                                                    "type": "string",
+                                                                    "example": "9bdec27c-a40d-463e-a709-0ff9ab7efd11"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "files/on-signing": {
+            "get": {
+                "tags": [
+                    "Files"
+                ],
+                "summary": "Получить список подписанных документов",
+                "operationId": "0d7daab0f4e82801e28fe8583b38eb1d",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": ""
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "9c93b119-2f88-47e7-9446-cbcb959bf529"
+                                                    },
+                                                    "path_url": {
+                                                        "type": "string",
+                                                        "example": "http://localhost/storage/files/Z0UI0ef03HX2pUCXgQwIFPrfmxTIY6YCExFJbDLj.jpg"
+                                                    },
+                                                    "path": {
+                                                        "type": "string",
+                                                        "example": "files/Z0UI0ef03HX2pUCXgQwIFPrfmxTIY6YCExFJbDLj.jpg"
+                                                    },
+                                                    "type": {
+                                                        "type": "string",
+                                                        "example": "Акт"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "files/file-types": {
+            "get": {
+                "tags": [
+                    "Files"
+                ],
+                "summary": "Получить все типы документов",
+                "operationId": "d65449aacba1313742e67db1a1b552cc",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Получены все типы документов"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "Акт"
+                                            },
+                                            "example": [
+                                                "Акт",
+                                                "Заявка",
+                                                "Договор",
+                                                "Аватар",
+                                                "ПСФЛ",
+                                                "ЕФС",
+                                                "Реквизиты",
+                                                "Патент",
+                                                "УСН",
+                                                "НДС"
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/files/from-1c/{inn}": {
+            "post": {
+                "tags": [
+                    "1С"
+                ],
+                "summary": "Загрузить файл в формате Base64",
+                "description": "Загрузка файла с указанием типа и id из 1C. Передаваемые значения в type ограничиваются такими, как Акт, Заявка, Договор",
+                "operationId": "af213364d4ab6dacd5b1d214d6be8f3e",
+                "parameters": [
+                    {
+                        "name": "inn",
+                        "in": "path",
+                        "description": "ИНН пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "type",
+                                    "file",
+                                    "id_1c"
+                                ],
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "example": "Акт"
+                                    },
+                                    "file": {
+                                        "type": "string",
+                                        "format": "base64",
+                                        "example": "fileInBase64"
+                                    },
+                                    "id_1c": {
+                                        "type": "string",
+                                        "example": "someUuid"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешная загрузка",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "example": "9c957503-fcfb-4951-993b-93e3893137d0"
+                                        },
+                                        "path_url": {
+                                            "type": "string",
+                                            "example": "http://localhost/storage/filesBase64/669e67b886cb9.jpg"
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "example": "/filesBase64/669e67b886cb9.jpg"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "example": "Акт"
+                                        },
+                                        "id_1c": {
+                                            "type": "string",
+                                            "example": "44bc5645-63f6-42f5-b3b5-f1852a539f4c"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Несуществующий пользователь",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The selected inn is invalid."
                                         }
                                     },
                                     "type": "object"
@@ -3213,8 +5024,66 @@
     },
     "components": {
         "schemas": {
+            "BankAccount": {
+                "title": "BankAccount",
+                "description": "Bank Account model",
+                "required": [
+                    "id",
+                    "bik",
+                    "title",
+                    "number",
+                    "correspondent_number",
+                    "is_main",
+                    "user_id",
+                    "created_at",
+                    "updated_at"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "9baaa8c9-f418-47ab-a542-d84b58107c77"
+                    },
+                    "bik": {
+                        "type": "string",
+                        "example": "WLIJICW33Q1"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "sint"
+                    },
+                    "number": {
+                        "type": "string",
+                        "example": "WF"
+                    },
+                    "correspondent_number": {
+                        "type": "string",
+                        "example": "4916590596703657"
+                    },
+                    "is_main": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "9baaa8c9-c2b7-44a5-9135-7aca6ed412fe"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-03-27T20:53:05.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-03-27T20:53:05.000000Z"
+                    }
+                },
+                "type": "object"
+            },
             "Counteragent": {
-                "title": "Counteragent",
+                "title": "UserProfile",
                 "description": "User information model",
                 "properties": {
                     "id": {
@@ -3667,7 +5536,7 @@
                         "nullable": true
                     },
                     "counteragent": {
-                        "$ref": "#/components/schemas/Counteragent"
+                        "$ref": "#/components/schemas/UserProfile"
                     }
                 },
                 "type": "object",
@@ -3775,6 +5644,12 @@
                         }
                     }
                 }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
             }
         }
     },

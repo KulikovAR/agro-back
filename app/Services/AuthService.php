@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\ModerationStatusEnum;
 use App\Enums\StatusEnum;
 use App\Events\RegisteredUserEvent;
 use App\Http\Requests\Auth\LoginRequest;
@@ -45,19 +46,23 @@ class AuthService
         $clientRole = Role::where('name', 'client')->first();
         $logisticianRole = Role::where('name', 'logistician')->first();
 
-        $user = User::firstOrCreate(['phone_number' => $request->phone_number],['phone_number' => $request->phone_number]);
+        $user = User::firstOrNew(['phone_number' => $request->phone_number],['phone_number' => $request->phone_number, 'moderation_status'=> ModerationStatusEnum::APPROVED->value]);
+        if(!User::where('phone_number',$request->phone_number)->exists())
+            {
+                $user->save();
+                $user->update($user->clearProfile());
+            }
+
         if($user->hasRole($logisticianRole)) {
             $user->syncRoles($logisticianRole);
         }
         else{
         $user->syncRoles([$clientRole]);
         }
-        $user->userProfile()->firstOrCreate(['user_id' => $user->id],$user->clearProfile());
 
-        $this->sms->send($request->phone_number, $code_arr['code'] . '- Код для подтверждения');
+//        $this->sms->send($request->phone_number, $code_arr['code'] . '- Код для подтверждения');
         $user->update(['code' => $code_arr['code'], 'code_hash' => $code_arr['code_hash'], 'code_expire_at' => $code_arr['code_expire']]);
-        $resource = new UserResource($user);
-
+        $resource = new DevUserResource($user);
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,

@@ -7,6 +7,7 @@ enum RoleEnum: string
     case ADMIN = 'admin';
     case LOGISTICIAN = 'logistician';
     case CLIENT = 'client';
+    case IC = '1C';
 
     public static function getWithDescription()
     {
@@ -14,6 +15,7 @@ enum RoleEnum: string
             self::ADMIN->value       => 'Администратор',
             self::LOGISTICIAN->value => 'Логист',
             self::CLIENT->value      => 'Клиент',
+            self::IC->value => '1C'
         ];
     }
 }

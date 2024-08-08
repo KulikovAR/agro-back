@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\File;
 
+use App\Enums\FileTypeEnum;
+use App\Rules\MimeTypeValidation;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateUserFileRequest extends FormRequest
 {
@@ -17,10 +20,9 @@ class CreateUserFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'load_files'   => ['array', 'required'],
-            'load_files.*' => ['file'],
-            'file_types'   => ['array', 'required'],
-            'file_types.*' => ['string', 'exists:file_types,id']
+            'documents' => ['required', 'array'],
+            'documents.*.file' => ['file'],
+            'documents.*.file_type' => ['string', Rule::enum(FileTypeEnum::class)],
         ];
     }
 }

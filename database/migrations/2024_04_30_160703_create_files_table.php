@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('path');
+            $table->string('type');
+            $table->string('id_1c')->nullable();
+            $table->string('md5_hash');
+            $table->boolean('is_signed')->default(false);
+            $table->string('name');
             $table->timestamps();
         });
     }

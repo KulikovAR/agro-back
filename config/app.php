@@ -57,6 +57,12 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'sign_me_token' => env('SIGN_ME_TOKEN'),
+
+    'sign_me_base_dev_url' => env('SIGN_ME_BASE_DEV_URL'),
+
+    'sign_me_ct' => env('SIGN_ME_CT'),
+
     'asset_url' => env('ASSET_URL'),
 
     /*

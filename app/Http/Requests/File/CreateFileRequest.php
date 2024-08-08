@@ -17,7 +17,8 @@ class CreateFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => 'file'
+            'file' => 'file|required',
+            'type' => 'string|required',
         ];
     }
 }

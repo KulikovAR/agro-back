@@ -7,12 +7,12 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationContactController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\V1\SignMeController;
 use App\Http\Controllers\V1\UserProfileController;
 use App\Http\Controllers\V1\OfferController;
 use App\Http\Controllers\V1\ProductParserController;
 use App\Http\Controllers\V1\TransportController;
 use Telegram\Bot\Laravel\Facades\Telegram;
-
 use App\Models\Role;
 use App\Models\User;
 use App\Notifications\AdminNotification;
@@ -24,6 +24,7 @@ use App\Http\Controllers\V1\CounteragentController;
 use App\Http\Controllers\V1\TransportBrandController;
 use App\Http\Controllers\V1\TransportTypeController;
 use \App\Http\Controllers\V1\FileController;
+use \App\Http\Controllers\V1\BankAccountController;
 use App\Http\Controllers\V1\WhatsAppController;
 
 /*
@@ -43,13 +44,7 @@ Route::post('whatsapp/webhook', [WhatsAppController::class, 'webhook']);
 //    Route::get('/get-filters', [ProductParserController::class, 'getProductFilter'])->name('product-parser.get-filter');
 //    Route::get('/', [ProductParserController::class, 'index'])->name('product-parser.index');
 //});
-//Route::prefix('counteragents')->group(function () {
-//    Route::get('/', [CounteragentController::class, 'index'])->name('counteragent.index');
-//    Route::get('/{user}', [CounteragentController::class, 'show'])->name('counteragent.show');
-//    Route::post('/create', [CounteragentController::class, 'create'])->name('counteragent.create');
-//    Route::put('/update/{user}', [CounteragentController::class, 'update'])->name('counteragent.update');
-//    Route::delete('/delete/{user}', [CounteragentController::class, 'delete'])->name('counteragent.update');
-//});
+
 Route::middleware(['guest'])->group(function () {
     Route::post('/registration/phone', [RegistrationController::class, 'registration'])->name('registration');
     Route::post('/registration/verification', [RegistrationController::class, 'verification'])->name(
@@ -87,16 +82,38 @@ Route::middleware('auth:sanctum')->group(function () {
 //            'userprofile.password.update'
 //        );
     });
+
+    Route::post('/sign-me', [SignMeController::class, 'signature'])->name('sign.me.signature');
+    Route::prefix('counteragents')->group(function () {
+        Route::get('/', [CounteragentController::class, 'index'])->name('counteragents.index');
+        Route::get('/{user}', [CounteragentController::class, 'index'])->name('counteragents.index');
+        Route::post('/', [CounteragentController::class, 'create'])->name('counteragent.create');
+        Route::put('/{user}', [CounteragentController::class, 'update'])->name('counteragent.update');
+    });
+
+    Route::prefix('bank-accounts')->group(function () {
+        Route::get('/', [BankAccountController::class, 'index'])->name(
+            'bank_accounts.index.logistician'
+        );
+        Route::get('/{bankAccount}', [BankAccountController::class, 'show'])->name(
+            'bank_accounts.show.carrier'
+        );
+        Route::post('/', [BankAccountController::class, 'create'])->name('bank_accounts.create');
+        Route::put('/{bankAccount}', [BankAccountController::class, 'update'])->name('bank_accounts.update');
+        Route::delete('/{bankAccount}', [BankAccountController::class, 'delete'])->name('bank_accounts.delete');
+    });
     Route::prefix('files')->group(function () {
         Route::get('/', [FileController::class, 'index'])->name('files.index');
+        Route::get('/on-signing', [FileController::class, 'getDocumentsForSigning'])->name('files.signing');
         Route::get('show/{file}', [FileController::class, 'show'])->name('files.show');
         Route::post('/create/', [FileController::class, 'create'])->name('files.create');
         Route::put('/update/{file}', [FileController::class, 'update'])->name('files.update');
-        Route::post('/load_files', [FileController::class, 'loadFilesForUser'])->name('files.load_files');
+        Route::post('/load-files', [FileController::class, 'loadFilesForUser'])->name('files.load_files');
         Route::post('/update-files',[FileController::class, 'updateFilesForUser'])->name('files.update_files');
         Route::delete('/delete-files',[FileController::class, 'deleteUserFiles'])->name('files.delete_files');
-        Route::get('/file_types', [FileController::class, 'getFileTypes'])->name('files.getFileTypes');
+        Route::get('/file-types', [FileController::class, 'getFileTypes'])->name('files.getFileTypes');
         Route::delete('/delete/{file}', [FileController::class, 'delete'])->name('files.update');
+        Route::post('/from-1c/{inn}', [FileController::class, 'loadFileFrom1C'])->name('files.from-1c');
     });
 
     Route::prefix('transport')->group(function () {

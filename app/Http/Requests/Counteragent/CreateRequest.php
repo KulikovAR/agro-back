@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Requests\UserProfile;
+namespace App\Http\Requests\Counteragent;
 
+use App\Enums\ModerationStatusEnum;
 use App\Enums\OrganizationTypeEnum;
+use App\Enums\TaxSystemEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UserProfileCreateRequest extends FormRequest
+class CreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -36,18 +38,17 @@ class UserProfileCreateRequest extends FormRequest
             'name' => ['required', 'string'],
             'surname' => ['required', 'string'],
             'patronymic' => ['required', 'string'],
+            'issue_date_at' => ['required', 'string'],
+            'bdate' => ['required', 'string'],
             'kpp' => [
+                'nullable',
                 'string',
                 Rule::when(
-                    $this->input('type') == OrganizationTypeEnum::IP->value,
-                    'nullable'
-                ),
-                Rule::when(
                     $this->input('type') == OrganizationTypeEnum::COMPANY->value,
-                    'regex:/^\d{9}$/'
+                    ['regex:/^\d{9}$/','required']
                 )
             ],
-            'orgn' => [
+            'ogrn' => [
                 'required',
                 'string',
                 Rule::when(
@@ -56,7 +57,6 @@ class UserProfileCreateRequest extends FormRequest
                 ),
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::COMPANY->value,
-                    'required',
                     'regex:/^\d{13}$/'
                 )
             ],
@@ -64,14 +64,20 @@ class UserProfileCreateRequest extends FormRequest
             'full_name' => ['required', 'string'],
             'juridical_address' => ['required', 'string'],
             'office_address' => ['required', 'string'],
-            'tax_system' => ['required', 'string'],
+            'tax_system' => ['required', 'string', Rule::enum(TaxSystemEnum::class)],
             'okved' => ['required', 'string'],
-            'password' => ['required', 'string'],
             'number' => ['required', 'string'],
             'series' => ['required', 'string'],
             'department' => ['required', 'string'],
             'department_code' => ['required', 'string'],
             'snils' => ['required', 'string'],
+            'phone_number' => ["regex:/^\+7\d{10}$/", 'string', 'required'],
+            'email' => ['required', 'string', 'email', 'unique:users,email'],
+            'region' => ['required', 'string'],
+            'accountant_phone' => ['required', 'string'],
+            'director_name' => ['required', 'string'],
+            'director_surname' => ['required', 'string'],
+            'gender' => ['required', 'string', 'in:M,F'],
         ];
     }
 }

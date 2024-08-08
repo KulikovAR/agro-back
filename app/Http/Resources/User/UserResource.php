@@ -5,6 +5,7 @@ namespace App\Http\Resources\User;
 use App\Http\Resources\Counteragent\CounteragentResource;
 use App\Http\Resources\File\FileCollection;
 use App\Http\Resources\Role\RoleCollection;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,13 +21,37 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'phone_number' => $this->phone_number,
-            'phone_verified_at' => $this->phone_verified_at,
             'email' => $this->email,
-            'email_verified_at' => $this->email_verified_at,
-            'password' => $this->password,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'userinfo' => new CounteragentResource($this->userProfile),
+            'moderation_status' => $this->moderation_status,
+            'inn' => $this->inn,
+            'name' => $this->name,
+            'surname' => $this->surname,
+            'patronymic' => $this->patronymic,
+            'kpp' => $this->kpp,
+            'ogrn' => $this->ogrn,
+            'type' => $this->type,
+            'short_name' => $this->short_name,
+            'full_name' => $this->full_name,
+            'juridical_address' => $this->juridical_address,
+            'office_address' => $this->office_address,
+            'tax_system' => $this->tax_system,
+            'okved' => $this->okved,
+            // 'bank_accounts'     => $this->bank_accounts,
+            'series'     => $this->series,
+            'number'     => $this->number,
+            'department' => $this->department,
+            'department_code' => $this->department_code,
+            'snils'           => $this->snils,
+            'issue_date_at'  => $this->issue_date_at ? Carbon::parse($this->issue_date_at)->format('d.m.Y') : null ,
+            'email' => $this->email,
+            'moderation_status' => $this->moderation_status,
+            'creator_id' => $this->creator_id,
+            'region' => $this->region,
+            'accountant_phone' => $this->accountant_phone,
+            'director_name' => $this->director_name,
+            'director_surname' => $this->director_surname,
+            'bdate' => $this->bdate ?  Carbon::parse($this->bdate)->format('d.m.Y') : null,
+            'gender' => $this->gender,
             'roles' => new RoleCollection($this->roles),
             'files' => new FileCollection($this->files),
         ];

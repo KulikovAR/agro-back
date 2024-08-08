@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\FileTypeEnum;
 use App\Services\FileService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\UploadedFile;
@@ -20,8 +21,13 @@ class FileFactory extends Factory
     {
         $fileService = new FileService();
         $fakeFile = UploadedFile::fake()->create('test_file.jpg');
+        $mockFile = $fileService->loadFile($fakeFile, FileTypeEnum::randomCase());
+
         return [
-            'path' => $fileService->loadFile($fakeFile),
+            'path' => $mockFile->path,
+            'type' => $mockFile->type,
+            'md5_hash' => md5($fakeFile),
+            'name' => $fakeFile->getClientOriginalName(),
         ];
     }
 }

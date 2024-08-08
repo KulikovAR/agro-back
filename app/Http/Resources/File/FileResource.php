@@ -22,8 +22,11 @@ class FileResource extends JsonResource
             'id' => $this->id,
             'path_url' => $this->path ? Storage::disk('public')->url($this->path) : null,
             'path' => $this->path,
-            'fileType' => new FileTypeResource($this->fileType),
-            'userFile' => new UserFileResource($this->userFile),
+            'type' => $this->type,
+            'name' => $this->name,
+            'created_at' => $this->created_at,
+            'is_signed' => $this->is_signed,
+//            'userFile' => new UserFileResource($this->userFile),
         ];
     }
 }
