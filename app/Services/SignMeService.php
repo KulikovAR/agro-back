@@ -50,7 +50,7 @@ class SignMeService
                 'lastname' => $user->patronymic,
                 'cogrn' => $user->ogrn ,
                 'ca' => "NKEP12",
-                'ct' => "12",
+                'ct' => config('app.sign_me_ct'),
                 'name' => $user->name,
                 'surname' => $user->surname,
                 'email' => $user->email,

@@ -60,7 +60,7 @@ class FileService
     public function getDocumentsForSigning(Request $request): FileCollection
     {
         $user = $request->user();
-        $files = $user->files()->orWhere(['type'=>FileTypeEnum::REQUEST->value, 'type'=>FileTypeEnum::CONTRACT->value, 'type'=>FileTypeEnum::ACT->value])->get();
+        $files = $user->files()->where('type',FileTypeEnum::REQUEST->value)->orWhere('type',FileTypeEnum::CONTRACT->value)->orWhere('type',FileTypeEnum::ACT->value)->get();
         if(is_null($files)){
             return new FileCollection([]);
         }
