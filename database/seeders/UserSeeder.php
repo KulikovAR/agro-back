@@ -36,6 +36,17 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         if (App::environment(EnvironmentTypeEnum::productEnv())) {
+            $admin = User::create([
+                'email'             => 'admin@admin.ru',
+                'phone_number'      => '79202149563',
+                'password'          => '12345678',
+                'phone_verified_at' => Carbon::now()
+            ]);
+
+            $admin_role = Role::where('name', 'admin')->first();
+            $admin->assignRole($admin_role);
+            $Ic = User::create([]);
+            $Ic->assignRole(RoleEnum::IC->value);
             return;
         }
         $clientRole = Role::where('slug', 'client')->first();
