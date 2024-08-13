@@ -20,7 +20,7 @@ class IcRepository
 
     public function IcFile(UploadedFile $file, string $type,string $Id1c): File
     {
-        $fileFromIc = $this->loadFileInBase64($file,$type,$Id1c);
+        $fileFromIc = $this->loadFile($file,$type,$Id1c);
         return $fileFromIc;
     }
 }
