@@ -63,6 +63,8 @@ return [
 
     'sign_me_ct' => env('SIGN_ME_CT'),
 
+    'sign_me_ca' => env('SIGN_ME_CA'),
+
     'asset_url' => env('ASSET_URL'),
 
     /*

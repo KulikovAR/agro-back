@@ -49,7 +49,7 @@ class SignMeService
                 'phone' => $user->phone_number,
                 'lastname' => $user->patronymic,
                 'cogrn' => $user->ogrn ,
-                'ca' => "NKEP12",
+                'ca' => config('app.sign_me_ca'),
                 'ct' => config('app.sign_me_ct'),
                 'name' => $user->name,
                 'surname' => $user->surname,
