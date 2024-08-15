@@ -60,7 +60,13 @@ class FileService
     public function getDocumentsForSigning(Request $request): FileCollection
     {
         $user = $request->user();
-        $files = $user->files()->where('type',FileTypeEnum::REQUEST->value)->orWhere('type',FileTypeEnum::CONTRACT->value)->orWhere('type',FileTypeEnum::ACT->value)->get();
+
+        $files = $user->files()->where(function ($query) {
+            $query->where('type', FileTypeEnum::REQUEST->value)
+                ->orWhere('type', FileTypeEnum::CONTRACT->value)
+                ->orWhere('type', FileTypeEnum::ACT->value);
+        })->get();
+
         if(is_null($files)){
             return new FileCollection([]);
         }
@@ -88,7 +94,7 @@ class FileService
         Gate::authorize('loadFileFrom1C', File::class);
         $user = User::where('inn', $inn)->first();
         $fileFromIc = $this->IcRepository->IcFile($request->file, $request->type, $request->id_1c);
-        $user->files()->attach($fileFromIc);
+            $user->files()->attach($fileFromIc);
         return new GetDataFrom1CResource($fileFromIc);
     }
     public function loadFilesForUser(CreateUserFileRequest $request)
