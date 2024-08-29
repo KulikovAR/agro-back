@@ -7,6 +7,6 @@ use Illuminate\Http\UploadedFile;
 
 interface ToIcRepositoryInterface
 {
-    public function IcFile(UploadedFile $file, string $type,string $Id1c): File;
+    public function loadFileToIc(string $file, string $filename): int;
 
 }

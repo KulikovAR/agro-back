@@ -9,6 +9,7 @@ use App\Models\File;
 use App\Repositories\IcRepository;
 use App\Repositories\IcRespoitoryInterface;
 use App\Repositories\FromIcRepositoryInterface;
+use App\Repositories\ToIcRepositoryInterface;
 use App\Services\Dadata\Dadata;
 use App\Services\SignMe\SignMe;
 use App\Traits\FileTrait;
@@ -20,7 +21,7 @@ class SignMeService
     private SignMe $signMe;
 
     function __construct(
-        private FromIcRepositoryInterface $icRespoitory,
+        private ToIcRepositoryInterface $icRespoitory,
     )
     {
         $this->signMe = new SignMe();
