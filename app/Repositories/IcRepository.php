@@ -8,19 +8,29 @@ use App\Services\ProductParser\Client\RifClient;
 use App\Traits\FileTrait;
 use Illuminate\Http\UploadedFile;
 
-class IcRepository
+class IcRepository implements ToIcRepositoryInterface, FromIcRepositoryInterface
 {
     use FileTrait;
 
-    public function __construct(
-        private IcClient $client = new IcClient(),
-    )
+    private $client;
+    public function __construct()
     {
+        $this->client = new IcClient();
     }
 
     public function IcFile(UploadedFile $file, string $type,string $Id1c): File
     {
         $fileFromIc = $this->loadFile($file,$type,$Id1c);
         return $fileFromIc;
+    }
+
+    public function loadFileToIc(string $file, string $filename): int
+    {
+        $query = [
+            'file' => $file,
+            'filename' => $filename,
+        ];
+        $result = $this->client->worker->post(config("1c.url"),$query);
+        return $result->status();
     }
 }
