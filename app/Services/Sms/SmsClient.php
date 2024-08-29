@@ -10,7 +10,7 @@ class SmsClient
     {
         $this->client = Http::withHeaders(
             [
-                "Authorization" => "Basic " . base64_encode (config('1c.login').':'.config('1c.password')),
+                "Authorization" => "Basic " . base64_encode (config('sms.login').':'.config('sms.passwd')),
             ]
         );
     }

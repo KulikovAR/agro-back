@@ -11,7 +11,7 @@ class IcClient
     {
         $this->worker = Http::withHeaders(
             [
-                "Authorization" => "Basic " . base64_encode (config('sms.login').':'.config('sms.passwd')),
+                "Authorization" => "Basic " . base64_encode (config('1c.login').':'.config('1c.password')),
             ]
         );
     }
