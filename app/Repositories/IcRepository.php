@@ -24,13 +24,13 @@ class IcRepository implements ToIcRepositoryInterface, FromIcRepositoryInterface
         return $fileFromIc;
     }
 
-    public function loadFileToIc(string $file, string $filename): int
+    public function loadFileToIc(string $file, string $fileName, string $fileId): int
     {
         $query = [
             'file' => $file,
-            'filename' => $filename,
+            'filename' => $fileName,
         ];
-        $result = $this->client->worker->post(config("1c.url"),$query);
+        $result = $this->client->worker->post(config("1c.url"). $fileId,$query);
         return $result->status();
     }
 }

@@ -96,7 +96,7 @@ class SignMeService
 
             return response('Произошла ошибка при подписание документа')->getContent();
         }
-        $this->icRespoitory->loadFileToIc($this->base64Encode($file->path), $file->name);
+        $this->icRespoitory->loadFileToIc($this->base64Encode($file->path), $file->name, $file->id_1c);
 
         return $signatureResult;
 

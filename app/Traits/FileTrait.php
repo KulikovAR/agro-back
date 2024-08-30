@@ -24,7 +24,7 @@ trait FileTrait
         $path = Storage::disk('public')->put('/files', $file);
         $name = $file->getClientOriginalName();
         $md5 = md5_file($file);
-        return File::create(['path' => $path,'type'=>$type, 'md5_hash'=>$md5,'name'=>$name,'is_signed'=>false]);
+        return File::create(['path' => $path,'type'=>$type, 'md5_hash'=>$md5,'name'=>$name,'is_signed'=>false, 'id_1c' => $IcId]);
     }
 
 //    public function loadFileInBase64(UploadedFile $file, string $type, string $IcId): File

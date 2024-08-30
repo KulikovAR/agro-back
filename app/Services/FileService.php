@@ -24,6 +24,7 @@ use App\Repositories\IcRepository;
 use App\Services\SignMe\SignMe;
 use App\Traits\FileTrait;
 use Faker\Core\Uuid;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 
@@ -60,7 +61,7 @@ class FileService
     public function getDocumentsForSigning(Request $request): FileCollection
     {
         $user = $request->user();
-
+        User::all();
         $files = $user->files()->where(function ($query) {
             $query->where('type', FileTypeEnum::REQUEST->value)
                 ->orWhere('type', FileTypeEnum::CONTRACT->value)
@@ -70,15 +71,23 @@ class FileService
         if(is_null($files)){
             return new FileCollection([]);
         }
+        $this->checkSignature($files);
+
+        return new FileCollection($files);
+    }
+
+    private function checkSignature(Collection $files ){
         foreach ($files as $file) {
+            if($file->is_signed){
+                continue;
+            }
             $signatureCheckResult = $this->signMe->signatureCheck($file->md5_hash);
-            if($signatureCheckResult){
+            if(!$signatureCheckResult) {
                 $file->update(['is_signed' => true]);
             }
         }
         return new FileCollection($files);
     }
-
     public function getFileTypes(): array
     {
         return FileTypeEnum::getValues();
