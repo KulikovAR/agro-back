@@ -72,7 +72,7 @@ class FileService
         }
         foreach ($files as $file) {
             $signatureCheckResult = $this->signMe->signatureCheck($file->md5_hash);
-            if($signatureCheckResult){
+            if($signatureCheckResult) {
                 $file->update(['is_signed' => true]);
             }
         }
