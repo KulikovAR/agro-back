@@ -6,6 +6,10 @@ use App\Http\Requests\Counteragent\CreateRequest;
 use App\Http\Requests\SignMe\SignMeRequest;
 use App\Http\Resources\File\FileResource;
 use App\Models\File;
+use App\Repositories\IcRepository;
+use App\Repositories\IcRespoitoryInterface;
+use App\Repositories\FromIcRepositoryInterface;
+use App\Repositories\ToIcRepositoryInterface;
 use App\Services\Dadata\Dadata;
 use App\Services\SignMe\SignMe;
 use App\Traits\FileTrait;
@@ -15,11 +19,13 @@ class SignMeService
 {
     use FileTrait;
     private SignMe $signMe;
-    function __construct(
 
+    function __construct(
+        private ToIcRepositoryInterface $icRespoitory,
     )
     {
         $this->signMe = new SignMe();
+        $this->icRespoitory = new IcRepository();
     }
 
     public function signature(SignMeRequest $request): string
@@ -90,6 +96,7 @@ class SignMeService
 
             return response('Произошла ошибка при подписание документа')->getContent();
         }
+        $this->icRespoitory->loadFileToIc($this->base64Encode($file->path), $file->name, $file->id_1c);
 
         return $signatureResult;
 

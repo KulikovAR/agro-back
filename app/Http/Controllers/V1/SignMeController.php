@@ -6,6 +6,7 @@ use App\Enums\StatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignMe\SignMeRequest;
 use App\Http\Responses\ApiJsonResponse;
+use App\Repositories\IcRepository;
 use App\Services\SignMeService;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class SignMeController extends Controller
     private SignMeService $signMeService;
     public function __construct()
     {
-        $this->signMeService = new SignMeService();
+        $this->signMeService = new SignMeService(new IcRepository());
     }
 
     public function signature (SignMeRequest $request): ApiJsonResponse
