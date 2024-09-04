@@ -21,6 +21,7 @@ use App\Models\FileType;
 use App\Models\Order;
 use App\Models\User;
 use App\Repositories\IcRepository;
+use App\Repositories\ToIcRepositoryInterface;
 use App\Services\SignMe\SignMe;
 use App\Traits\FileTrait;
 use Faker\Core\Uuid;
@@ -33,6 +34,7 @@ class FileService
     public function __construct(
         private IcRepository $IcRepository = new IcRepository(),
         private SignMe $signMe = new SignMe(),
+        private ToIcRepositoryInterface $ToIcRepositoryInterface
     )
     {
 //        $this->IcRepository = new IcRepository;
@@ -84,6 +86,7 @@ class FileService
             $signatureCheckResult = $this->signMe->signatureCheck($file->md5_hash);
             if($signatureCheckResult) {
                 $file->update(['is_signed' => true]);
+                $this->ToIcRepositoryInterface->loadFileToIc($this->base64Encode($file->path), $file->name, $file->id_1c);
             }
         }
         return new FileCollection($files);
