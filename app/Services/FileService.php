@@ -83,10 +83,10 @@ class FileService
             if($file->is_signed){
                 continue;
             }
-            $signatureCheckResult = $this->signMe->signatureCheck($file->md5_hash);
+            $signatureCheckResult = $this->signMe->signatureCheck($file->md5_hash, $this->base64Encode($file->path));
             if($signatureCheckResult) {
                 $file->update(['is_signed' => true]);
-                $this->ToIcRepositoryInterface->loadFileToIc($this->base64Encode($file->path), $file->name, $file->id_1c);
+                $this->ToIcRepositoryInterface->loadFileToIc($signatureCheckResult['pdf'], $file->name, $file->id_1c);
             }
         }
         return new FileCollection($files);
