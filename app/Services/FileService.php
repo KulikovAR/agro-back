@@ -31,13 +31,14 @@ use Illuminate\Http\Request;
 
 class FileService
 {
+         private IcRepository $IcRepository;
+        private SignMe $signMe;
     public function __construct(
-        private IcRepository $IcRepository = new IcRepository(),
-        private SignMe $signMe = new SignMe(),
-        private ToIcRepositoryInterface $ToIcRepositoryInterface
+
     )
     {
-//        $this->IcRepository = new IcRepository;
+        $this->IcRepository = new IcRepository();
+        $this->signMe = new SignMe();
     }
     use FileTrait;
     public function index(): FileCollection
@@ -86,7 +87,7 @@ class FileService
             $signatureCheckResult = $this->signMe->signatureCheck($file->md5_hash, $this->base64Encode($file->path));
             if($signatureCheckResult) {
                 $file->update(['is_signed' => true]);
-                $this->ToIcRepositoryInterface->loadFileToIc($signatureCheckResult['pdf'], $file->name, $file->id_1c);
+                $this->IcRepository->loadFileToIc($signatureCheckResult['pdf'], $file->name, $file->id_1c);
             }
         }
         return new FileCollection($files);
