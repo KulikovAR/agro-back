@@ -32,7 +32,8 @@ class IcRepository implements ToIcRepositoryInterface, FromIcRepositoryInterface
             'filename' => $fileName,
         ];
         $result = $this->client->worker->post(config("1c.url"). $fileId,$query);
-        Log::info("Подписанный файл ушёл в 1с. Тело ответа:{$result->body()} ");
+
+        Log::info("Подписанный файл ушёл в 1с. Тело ответа: {$result->body()}. Статус: {$result->status()}");
 
         return $result->status();
     }
