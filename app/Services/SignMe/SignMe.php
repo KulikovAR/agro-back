@@ -49,9 +49,9 @@ class SignMe
             return config('app.sign_me_base_dev_url') . SignMeApiEnum::SIGNATURE->value . '/' . $result->body();
     }
 
-    public function signatureCheck(string $md5):bool|string
+    public function signatureCheck(string $md5, string $file, int $isPdf = 1):bool|string
     {
-        $query = ['md5'=>$md5] + ['api_key' => $this->token];
+        $query = ['md5'=>$md5, 'pdf' => $isPdf, 'filet' => $file] + ['api_key' => $this->token];
         $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url') . SignMeApiEnum::SIGNATURE_CHECK->value, $query);
         if(strpos("error",$result->body())){
             return $result->body();

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Requests\File\FromIcRequest;
 use App\Models\BankAccount;
 use App\Models\File;
 use App\Models\Offer;
@@ -13,6 +14,9 @@ use App\Policies\BankAccountPolicy;
 use App\Policies\FilePolicy;
 use App\Policies\MultipleUserPolicy;
 use App\Policies\UserPolicy;
+use App\Repositories\FromIcRepositoryInterface;
+use App\Repositories\IcRepository;
+use App\Repositories\ToIcRepositoryInterface;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
@@ -24,7 +28,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(ToIcRepositoryInterface::class, IcRepository::class);
+        $this->app->bind(FromIcRepositoryInterface::class, IcRepository::class);
     }
 
     /**
