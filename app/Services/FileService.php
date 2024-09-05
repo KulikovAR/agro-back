@@ -28,6 +28,7 @@ use Faker\Core\Uuid;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class FileService
 {
@@ -88,6 +89,7 @@ class FileService
             if($signatureCheckResult) {
                 $file->update(['is_signed' => true]);
                 $this->IcRepository->loadFileToIc($signatureCheckResult['pdf'], $file->name, $file->id_1c);
+                Log::info("Подписанный файл ушёл в 1с. id:{$file->id_1c} ");
             }
         }
         return new FileCollection($files);

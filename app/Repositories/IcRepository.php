@@ -7,6 +7,7 @@ use App\Models\File;
 use App\Services\ProductParser\Client\RifClient;
 use App\Traits\FileTrait;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 
 class IcRepository implements ToIcRepositoryInterface, FromIcRepositoryInterface
 {
@@ -31,6 +32,8 @@ class IcRepository implements ToIcRepositoryInterface, FromIcRepositoryInterface
             'filename' => $fileName,
         ];
         $result = $this->client->worker->post(config("1c.url"). $fileId,$query);
+        Log::info("Подписанный файл ушёл в 1с. Тело ответа:{$result->body()} ");
+
         return $result->status();
     }
 }
