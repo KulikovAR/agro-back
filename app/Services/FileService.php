@@ -72,14 +72,10 @@ class FileService
     private function checkSignature(Collection $files)
     {
         foreach ($files as $file) {
-            // // if($file->id != '9cf1dc70-d435-4728-b7ed-88c32290e129') {
-            if($file->id != '9cedead3-3d75-4a05-a28b-95582a5af9e6') {
-                continue;
-            }
-
             if ($file->is_signed) {
                 continue;
             }
+            
             $signatureCheckResult = $this->signMe->signatureCheck($file->md5_hash, $this->base64Encode($file->path));
 
             if (!isset($signatureCheckResult['count']) || $signatureCheckResult['count'] < 1) {
