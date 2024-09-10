@@ -40,15 +40,15 @@ class SignMe
         }
         return $result['cogrn']['created'];
     }
-    public function register(array $data): string|bool
+    public function register(array $data): array|string
     {
 
         $query = $data + ['api_key' => $this->token];
         $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url') . SignMeApiEnum::REGISTER->value, $query);
         if ($result->json() == null) {
-            return false;
+            return $result->body();
         }
-        return $result;
+        return json_decode($result->body(), true);
     }
 
     public function signature(array $data): string
