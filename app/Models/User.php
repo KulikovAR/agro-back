@@ -3,6 +3,7 @@
 namespace App\Models;
 
 
+use App\Enums\OrganizationTypeEnum;
 use App\Notifications\PasswordResetNotification;
 use App\Notifications\VerifyEmailNotification;
 use App\Traits\BearerTokenTrait;
@@ -203,5 +204,78 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     public function counteragents(): HasMany
     {
         return $this->hasMany(User::class, 'creator_id', 'id');
+    }
+
+    public function dataForSignMe(self $user): array
+    {
+        if($user->type == OrganizationTypeEnum::IP->value){
+            $data = array
+            (
+                'cinn'=>$user->inn,
+                'inn'=>$user->inn,
+                'company'=>1,
+                'gender' => $user->gender,
+                'cfaddr' => $user->juridical_address,
+                'caddr' => $user->office_address,
+                'esia' => 1,
+                'regtype' => 2,
+                'cname' => $user->short_name,
+                'cfullname' => $user->full_name,
+                'ceo_name' => $user->director_name,
+                'ceo_surname' => $user->director_surname,
+                'ps' => $user->series,
+                'pn' => $user->number,
+                'pdate' => Carbon::parse($user->issue_date_at)->toDateString(),
+                'bdate' =>  Carbon::parse($user->bdate)->toDateString(),
+                'issued' => $user->department,
+                'pcode' => $user->department_code,
+                'phone' => $user->phone_number,
+                'lastname' => $user->patronymic,
+                'cogrn' => $user->ogrn ,
+                'ca' => config('app.sign_me_ca'),
+                'ct' => config('app.sign_me_ct'),
+                'name' => $user->name,
+                'surname' => $user->surname,
+                'email' => $user->email,
+                'region' => $user->region,
+                'snils' => $user->snils,
+            );
+            return $data;
+        }
+
+        $data = array
+        (
+            'cinn'=>$user->сinn,
+            'ckpp'=>$user->ckpp,
+            'inn'=>$user->inn,
+            'company'=>1,
+            'gender' => $user->gender,
+            'cfaddr' => $user->juridical_address,
+            'caddr' => $user->office_address,
+            'esia' => 1,
+            'regtype' => 2,
+            'cname' => $user->short_name,
+            'cfullname' => $user->full_name,
+            'ceo_name' => $user->director_name,
+            'ceo_surname' => $user->director_surname,
+            'ps' => $user->series,
+            'pn' => $user->number,
+            'pdate' => Carbon::parse($user->issue_date_at)->toDateString(),
+            'bdate' =>  Carbon::parse($user->bdate)->toDateString(),
+            'issued' => $user->department,
+            'pcode' => $user->department_code,
+            'phone' => $user->phone_number,
+            'lastname' => $user->patronymic,
+            'cogrn' => $user->ogrn ,
+            'ca' => config('app.sign_me_ca'),
+            'ct' => config('app.sign_me_ct'),
+            'name' => $user->name,
+            'surname' => $user->surname,
+            'email' => $user->email,
+            'region' => $user->region,
+            'cregion' => $user->cregion,
+            'snils' => $user->snils,
+        );
+        return $data;
     }
 }

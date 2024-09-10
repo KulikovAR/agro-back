@@ -80,7 +80,12 @@ class UpdateRequest extends FormRequest
             'department_code' => ['string'],
             'snils' => ['string',Rule::unique('users', 'snils')->ignore($this->route('user')->id)],
             'bdate' => ['string'],
+            'director_lastname' => ['string'],
             'gender' => ['string', 'in:M,F'],
+            'cinn' => [
+                'string',
+                'regex:/^\d{10}$/'
+            ],
         ];
     }
 }

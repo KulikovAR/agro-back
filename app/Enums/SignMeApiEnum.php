@@ -8,4 +8,5 @@ enum SignMeApiEnum:string
     case REGISTER = "/register/api";
     case SIGNATURE = "/signapi/sjson";
     case SIGNATURE_CHECK = "/signaturecheck/json";
+    case COMACTIVAE = "/register/comactivate";
 }

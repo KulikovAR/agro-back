@@ -25,17 +25,19 @@ class SignMe
         if ($result->body() == "{}") {
             return null;
         }
+        dd($result->body());
         return $result['inn']['approved'];
     }
 
     public function register(array $data): string|int
     {
-        $query  = $data + ['api_key' => $this->token];
+
+        $query = $data + ['api_key' => $this->token];
         $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url') . SignMeApiEnum::REGISTER->value, $query);
         if ($result->json() == null) {
             return $result->body();
         }
-        return $result['id'];
+        return $result;
     }
 
     public function signature(array $data): string
@@ -55,5 +57,16 @@ class SignMe
         $data   = json_decode($result->body(), true);
 
         return $data;
+    }
+
+    public function comactivate (int $id): string
+    {
+        $query = ['cid'=>$id] + ['api_key' => $this->token];
+        $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url') . SignMeApiEnum::COMACTIVAE->value, $query);
+        if ($result->body() == 0){
+            $error = "Произошла ошибка, обратитесь в SignMe";
+            return $error;
+        }
+        return $result->body();
     }
 }

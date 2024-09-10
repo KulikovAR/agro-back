@@ -77,7 +77,13 @@ class CreateRequest extends FormRequest
             'accountant_phone' => ['required', 'string'],
             'director_name' => ['required', 'string'],
             'director_surname' => ['required', 'string'],
+            'director_lastname' => ['string'],
             'gender' => ['required', 'string', 'in:M,F'],
+            'cinn' => [
+                'required',
+                'string',
+                'regex:/^\d{10}$/'
+            ],
         ];
     }
 }

@@ -32,41 +32,7 @@ class SignMeService
     {
         $user = $request->user();
 
-        $data = array
-            (
-                'cinn'=>$user->inn,
-                'inn'=>$user->inn,
-                'company'=>1,
-                'gender' => $user->gender,
-                'cfaddr' => $user->juridical_address,
-                'caddr' => $user->office_address,
-                'esia' => 1,
-                'regtype' => 2,
-                'cname' => $user->short_name,
-                'cfullname' => $user->full_name,
-                'ceo_name' => $user->director_name,
-                'ceo_surname' => $user->director_surname,
-                'ps' => $user->series,
-                'pn' => $user->number,
-                'pdate' => Carbon::parse($user->issue_date_at)->toDateString(),
-                'bdate' =>  Carbon::parse($user->bdate)->toDateString(),
-                'issued' => $user->department,
-                'pcode' => $user->department_code,
-                'phone' => $user->phone_number,
-                'lastname' => $user->patronymic,
-                'cogrn' => $user->ogrn ,
-                'ca' => config('app.sign_me_ca'),
-                'ct' => config('app.sign_me_ct'),
-                'name' => $user->name,
-                'surname' => $user->surname,
-                'email' => $user->email,
-                'region' => $user->region,
-                'snils' => $user->snils,
-            );
-
-        if(!is_null($user->kpp)){
-            $data += ['ckpp' => $user->kpp];
-        }
+        $data = $user->dataForSignMe($user);
 
         $file = File::where('path', $request->path)->first();
         $filet = $this->base64Encode($request->path);
@@ -80,7 +46,7 @@ class SignMeService
             return response('Произошла ошибка, обратитесь к администратору')->getContent();
         }
 
-        $user->update(['sign_me_id' => $registerResult]);
+        $user->update(['sign_me_id' => $registerResult['id'], 'sign_me_cid' => $registerResult['cid']]);
 
         $precheck = $this->signMe->prechek($data['inn']);
 

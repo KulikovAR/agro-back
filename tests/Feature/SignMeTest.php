@@ -46,10 +46,12 @@ class SignMeTest extends TestCase
             'regtype' => "2",
             'cname' => "ИП Ваник Габриелян Ашотович",
             'cfullname' => "Индивидуальный предпринимаетль Ваник Габриелян Ашотович",
-            'ca' => "NKEP12",
+            'ca' => "ESIA01",
             'ct' => "12"
         );
         $signMe = new SignMe();
+//        dd($signMe->comactivate(3796));
+//        dd($signMe->prechek( 616306253080));
         dd($signMe->register($data));
 //        dd($signMe->prechek('616306253082'));
     }
