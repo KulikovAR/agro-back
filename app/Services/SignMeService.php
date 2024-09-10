@@ -42,7 +42,7 @@ class SignMeService
 
         $registerResult = $this->signMe->register($data);
 
-        if(gettype($registerResult) == 'string'){
+        if(!$registerResult){
             return response('Произошла ошибка, обратитесь к администратору')->getContent();
         }
 
