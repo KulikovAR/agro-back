@@ -25,10 +25,21 @@ class SignMe
         if ($result->body() == "{}") {
             return null;
         }
-        dd($result->body());
         return $result['inn']['approved'];
     }
 
+    public function prechekActivation(string $ogrn): bool|null
+    {
+        $query  = array(
+            'cogrn'     => $ogrn,
+            'api_key' => $this->token,
+        );
+        $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url') . SignMeApiEnum::PRECHEK->value, $query);
+        if ($result->body() == "{}") {
+            return null;
+        }
+        return $result['cogrn']['created'];
+    }
     public function register(array $data): string|int
     {
 

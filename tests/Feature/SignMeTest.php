@@ -51,8 +51,8 @@ class SignMeTest extends TestCase
         );
         $signMe = new SignMe();
 //        dd($signMe->comactivate(3796));
-//        dd($signMe->prechek( 616306253080));
-        dd($signMe->register($data));
+        dd($signMe->prechek( 323619600140689));
+//        dd($signMe->register($data));
 //        dd($signMe->prechek('616306253082'));
     }
 }

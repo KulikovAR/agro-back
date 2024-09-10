@@ -56,6 +56,15 @@ class SignMeService
 
         $user->update(['is_signer'=>true]);
 
+        $precheckActivation = $this->signMe->prechekActivation($data['cogrn']);
+
+        if(!$precheckActivation){
+            $comactivate = $this->signMe->comactivate($user->sign_me_cid);
+            return $comactivate;
+        }
+
+        $user->update(['company_activate' => true]);
+
         $signatureResult = $this->signMe->signature($signatureQueryData);
 
         if($signatureResult == "error"){

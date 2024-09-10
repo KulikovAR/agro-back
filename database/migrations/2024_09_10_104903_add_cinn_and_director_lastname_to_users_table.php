@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('cinn')->unique()->nullable();
             $table->string('sign_me_cid')->nullable();
+            $table->boolean('company_activate')->nullable();
             $table->string('director_lastname')->nullable();
         });
     }
