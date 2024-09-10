@@ -43,7 +43,7 @@ class SignMeService
         $registerResult = $this->signMe->register($data);
 
         if(!$registerResult){
-            return response('Произошла ошибка, обратитесь к администратору')->getContent();
+            return response('Произошла ошибка, обратитесь к администратору. Текст ошибки: '.$registerResult)->getContent();
         }
 
         $user->update(['sign_me_id' => $registerResult['id'], 'sign_me_cid' => $registerResult['cid']]);
