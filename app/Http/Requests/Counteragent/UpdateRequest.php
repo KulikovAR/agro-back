@@ -65,7 +65,6 @@ class UpdateRequest extends FormRequest
             'department' => ['required', 'string'],
             'department_code' => ['required', 'string'],
             'snils' => ['required', 'string'],
-            'phone_number' => ["regex:/^\+7\d{10}$/", 'string', 'required'],
             'email' => ['required', 'string', 'email', 'unique:users,email'],
             'region' => ['required', 'string'],
             'accountant_phone' => ['required', 'string'],
