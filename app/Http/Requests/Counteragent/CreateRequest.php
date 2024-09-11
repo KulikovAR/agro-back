@@ -79,6 +79,7 @@ class CreateRequest extends FormRequest
             'director_surname' => ['required', 'string'],
             'director_lastname' => ['string'],
             'gender' => ['required', 'string', 'in:M,F'],
+            'cregion' => ['required', 'string'],
             'cinn' => [
                 'required',
                 'string',
