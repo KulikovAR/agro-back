@@ -4,6 +4,7 @@ namespace App\Http\Requests\Counteragent;
 
 use App\Enums\ModerationStatusEnum;
 use App\Enums\OrganizationTypeEnum;
+use App\Enums\TaxSystemEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -19,38 +20,30 @@ class UpdateRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-        public function rules(): array
+    public function rules(): array
     {
         return [
-            'inn'               => [
-                Rule::unique('users', 'inn')->ignore($this->route('user')->id),
+            'type' => ['required', 'string', Rule::enum(OrganizationTypeEnum::class)],
+            'inn' => [
+                'required',
+                'string',
+                'regex:/^\d{12}$/',
+            ],
+            'name' => ['required', 'string'],
+            'surname' => ['required', 'string'],
+            'patronymic' => ['required', 'string'],
+            'issue_date_at' => ['required', 'string'],
+            'bdate' => ['required', 'string'],
+            'kpp' => [
+                'nullable',
                 'string',
                 Rule::when(
-                    $this->input('type') == OrganizationTypeEnum::IP->value,
-                    'regex:/^\d{12}$/'
-                ),
-                Rule::when(
                     $this->input('type') == OrganizationTypeEnum::COMPANY->value,
-                    'regex:/^\d{10}$/'
+                    ['regex:/^\d{9}$/','required']
                 )
             ],
-            'name'              => ['string'],
-            'surname'           => ['string'],
-            'patronymic'        => ['string'],
-            'kpp'               => [
-                Rule::unique('users', 'kpp')->ignore($this->route('user')->id),
-                'string',
-                Rule::when(
-                    $this->input('type') == OrganizationTypeEnum::IP->value,
-                    'nullable'
-                ),
-                Rule::when(
-                    $this->input('type') == OrganizationTypeEnum::COMPANY->value,
-                    'regex:/^\d{9}$/'
-                )
-            ],
-            'ogrn'               => [
-                Rule::unique('users', 'ogrn')->ignore($this->route('user')->id),
+            'ogrn' => [
+                'required',
                 'string',
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::IP->value,
@@ -61,30 +54,37 @@ class UpdateRequest extends FormRequest
                     'regex:/^\d{13}$/'
                 )
             ],
-            'short_name'         => ['string'],
-            'full_name'          => ['string'],
-            'juridical_address'  => ['string'],
-            'office_address'     => ['string'],
-            'tax_system'         => ['string'],
-            'okved'              => ['string'],
-            'phone_number' => ["regex:/^\+7\d{10}$/", 'string',
-                Rule::unique('users', 'phone_number')->ignore($this->route('user')->id)],
-            'email' => ['string', 'email', Rule::unique('users', 'email')->ignore($this->route('user')->id)],
-            'region' => [ 'string'],
-            'accountant_phone' => [ 'string'],
-            'director_name' => [ 'string'],
-            'director_surname' => [ 'string'],
-            'number' => ['string'],
-            'series' => ['string'],
-            'department' => ['string'],
-            'department_code' => ['string'],
-            'snils' => ['string',Rule::unique('users', 'snils')->ignore($this->route('user')->id)],
-            'bdate' => ['string'],
+            'short_name' => ['required', 'string'],
+            'full_name' => ['required', 'string'],
+            'juridical_address' => ['required', 'string'],
+            'office_address' => ['required', 'string'],
+            'tax_system' => ['required', 'string', Rule::enum(TaxSystemEnum::class)],
+            'okved' => ['required', 'string'],
+            'number' => ['required', 'string'],
+            'series' => ['required', 'string'],
+            'department' => ['required', 'string'],
+            'department_code' => ['required', 'string'],
+            'snils' => ['required', 'string'],
+            'phone_number' => ["regex:/^\+7\d{10}$/", 'string', 'required'],
+            'email' => ['required', 'string', 'email', 'unique:users,email'],
+            'region' => ['required', 'string'],
+            'accountant_phone' => ['required', 'string'],
+            'director_name' => ['required', 'string'],
+            'director_surname' => ['required', 'string'],
             'director_lastname' => ['string'],
-            'gender' => ['string', 'in:M,F'],
+            'gender' => ['required', 'string', 'in:M,F'],
+            'cregion' => ['required', 'string'],
             'cinn' => [
+                'required',
                 'string',
-                'regex:/^\d{10}$/'
+                Rule::when(
+                    $this->input('type') == OrganizationTypeEnum::IP->value,
+                    'regex:/^\d{12}$/'
+                ),
+                Rule::when(
+                    $this->input('type') == OrganizationTypeEnum::COMPANY->value,
+                    'regex:/^\d{10}$/'
+                )
             ],
         ];
     }
