@@ -26,14 +26,7 @@ class CreateRequest extends FormRequest
             'inn' => [
                 'required',
                 'string',
-                Rule::when(
-                    $this->input('type') == OrganizationTypeEnum::IP->value,
-                    'regex:/^\d{12}$/'
-                ),
-                Rule::when(
-                    $this->input('type') == OrganizationTypeEnum::COMPANY->value,
-                    'regex:/^\d{10}$/'
-                )
+                'regex:/^\d{12}$/',
             ],
             'name' => ['required', 'string'],
             'surname' => ['required', 'string'],
@@ -83,7 +76,14 @@ class CreateRequest extends FormRequest
             'cinn' => [
                 'required',
                 'string',
-                'regex:/^\d{10}$/'
+                Rule::when(
+                    $this->input('type') == OrganizationTypeEnum::IP->value,
+                    'regex:/^\d{12}$/'
+                ),
+                Rule::when(
+                    $this->input('type') == OrganizationTypeEnum::COMPANY->value,
+                    'regex:/^\d{10}$/'
+                )
             ],
         ];
     }
