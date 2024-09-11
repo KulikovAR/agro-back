@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('cinn')->unique()->nullable();
-            $table->string('sign_me_cid')->nullable();
-            $table->boolean('company_activate')->nullable();
-            $table->string('director_lastname')->nullable();
+            $table->string('cregion')->unique()->nullable();
+
+
         });
     }
 
@@ -25,10 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('cinn');
-            $table->dropColumn('sign_me_cid');
-            $table->dropColumn('company_activate');
-            $table->dropColumn('director_lastname');
+            $table->dropColumn('cregion');
         });
     }
 };
