@@ -75,7 +75,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
            'director_lastname',
            'cinn',
            'company_activate',
-           'gender'
+           'gender',
+           'cregion',
     ];
 
     /**
