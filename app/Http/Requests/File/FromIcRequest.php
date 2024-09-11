@@ -20,7 +20,7 @@ class FromIcRequest extends FormRequest
         return [
             'id_1c' => ['string','required'],
             'file' => ['file','required'],
-            'inn' => ['string','required', 'exists:users,inn'],
+            'inn' => ['string','required', 'exists:users,cinn'],
             'type' => ['string', 'required', 'in:Акт,Договор,Заявка'],
         ];
     }
