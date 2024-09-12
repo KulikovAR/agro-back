@@ -75,11 +75,11 @@ class FileService
             if ($file->is_signed) {
                 continue;
             }
-            
+
             $signatureCheckResult = $this->signMe->signatureCheck($file->md5_hash, $this->base64Encode($file->path));
 
             if (!isset($signatureCheckResult['count']) || $signatureCheckResult['count'] < 1) {
-                continue;  
+                continue;
             }
 
             if (!isset($signatureCheckResult['pdf'])) {
@@ -87,11 +87,11 @@ class FileService
             }
 
             $file->update(['is_signed' => true]);
-            
+
             if(is_null($file->id_1c) || !isset($signatureCheckResult['pdf'])) {
                 continue;
             }
-   
+
             $this->IcRepository->loadFileToIc($signatureCheckResult['pdf'], $file->name, $file->id_1c);
             Log::info("Подписанный файл ушёл в 1с. id:{$file->id_1c} ");
         }
@@ -110,7 +110,7 @@ class FileService
     public function loadFileFrom1C(FromIcRequest $request, string $inn): GetDataFrom1CResource
     {
         Gate::authorize('loadFileFrom1C', File::class);
-        $user       = User::where('inn', $inn)->first();
+        $user       = User::where('cinn', $inn)->first();
         $fileFromIc = $this->IcRepository->IcFile($request->file, $request->type, $request->id_1c);
         $user->files()->attach($fileFromIc);
         return new GetDataFrom1CResource($fileFromIc);
