@@ -250,7 +250,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
         $data = array
         (
-            'cinn'=>$user->сinn,
+            'cinn'=>$user->cinn,
             'ckpp'=>$user->kpp,
             'inn'=>$user->inn,
             'company'=>1,
