@@ -2,9 +2,7 @@
 
 namespace App\Http\Responses;
 
-use App\Http\Responses\ApiJsonResponse;
 use App\Traits\ApiJsonPaginationData;
-use App\Traits\PaginationData;
 use Illuminate\Http\JsonResponse;
 
 class ApiJsonPaginationResponse extends ApiJsonResponse
@@ -15,7 +13,7 @@ class ApiJsonPaginationResponse extends ApiJsonResponse
     {
         return response()->json(
             array_merge(
-                $this->getData(), 
+                $this->getData(),
                 $this->getPaginationData($this->data)
             ),
             $this->httpCode

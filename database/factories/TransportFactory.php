@@ -20,12 +20,12 @@ class TransportFactory extends Factory
         return [
             'type' => 1,
             'number' => $this->faker->unique()->word(),
-            'model'  => 'Moskvich',
+            'model' => 'Moskvich',
             'description' => $this->faker->text(10),
-            'free'  => true,
+            'free' => true,
             'is_active' => true,
             'volume_cm' => $this->faker->randomNumber(),
-            'capacity'  => $this->faker->randomNumber(),
+            'capacity' => $this->faker->randomNumber(),
 
         ];
     }

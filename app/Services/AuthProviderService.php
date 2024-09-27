@@ -5,8 +5,8 @@ namespace App\Services;
 use App\Models\Role;
 use App\Models\User;
 use App\Traits\BearerTokenTrait;
-use Laravel\Socialite\Two\User as UserSocialite;
 use Illuminate\Support\Str;
+use Laravel\Socialite\Two\User as UserSocialite;
 
 class AuthProviderService
 {
@@ -28,10 +28,10 @@ class AuthProviderService
         }
 
         if (empty($user)) {
-            $user                    = new User;
-            $user->email             = $email;
+            $user = new User;
+            $user->email = $email;
             $user->email_verified_at = now();
-            $user->language          = empty($data->user['locale'])
+            $user->language = empty($data->user['locale'])
                 ? config('app.locale')
                 : strtolower(substr($data->user['locale'], 0, 2));
 

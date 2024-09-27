@@ -12,10 +12,10 @@ enum RoleEnum: string
     public static function getWithDescription()
     {
         return [
-            self::ADMIN->value       => 'Администратор',
+            self::ADMIN->value => 'Администратор',
             self::LOGISTICIAN->value => 'Логист',
-            self::CLIENT->value      => 'Клиент',
-            self::IC->value => '1C'
+            self::CLIENT->value => 'Клиент',
+            self::IC->value => '1C',
         ];
     }
 }

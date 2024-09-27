@@ -25,20 +25,19 @@ class AuthProviderRequest extends FormRequest
         return [
             'provider' => [
                 'required',
-                Rule::in(config('auth-providers.all'))
-            ]
+                Rule::in(config('auth-providers.all')),
+            ],
         ];
     }
 
     /**
      * Get the validated data from the request.
-     *
      */
     public function validated($key = null, $default = null): string
     {
         $data = $this->validator->validated();
 
-        return strtolower($data['provider'] ?? "");
+        return strtolower($data['provider'] ?? '');
     }
 
     protected function prepareForValidation(): void

@@ -2,7 +2,6 @@
 
 namespace App\Telegram\Commands;
 
-use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Keyboard\Keyboard;
 
@@ -13,6 +12,7 @@ use Telegram\Bot\Keyboard\Keyboard;
 class StartCommand extends Command
 {
     protected string $name = 'start';
+
     protected string $description = 'Start Command to get you started';
 
     public function handle()
@@ -21,11 +21,11 @@ class StartCommand extends Command
             ->setResizeKeyboard(true)
             ->setOneTimeKeyboard(true)
             ->row([
-                Keyboard::button(['text' => 'Отправьте свой телефон', 'request_contact' => true])
+                Keyboard::button(['text' => 'Отправьте свой телефон', 'request_contact' => true]),
             ]);
         $this->replyWithMessage([
             'text' => 'Здравствуйте, пришлите свой телефон для прохождения авторизации',
-            'reply_markup' => $reply_markup
+            'reply_markup' => $reply_markup,
         ]);
     }
 }

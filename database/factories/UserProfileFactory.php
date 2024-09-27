@@ -17,16 +17,16 @@ class UserProfileFactory extends Factory
     public function definition(): array
     {
         return [
-            "firstname"        => strtoupper($this->faker->word),
-            "lastname"         => strtoupper($this->faker->word)
+            'firstname' => strtoupper($this->faker->word),
+            'lastname' => strtoupper($this->faker->word),
         ];
     }
 
     public function definitionRequest(): array
     {
         return [
-            "firstname"        => strtoupper($this->faker->word),
-            "lastname"         => strtoupper($this->faker->word)
+            'firstname' => strtoupper($this->faker->word),
+            'lastname' => strtoupper($this->faker->word),
         ];
     }
 }

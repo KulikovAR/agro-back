@@ -10,8 +10,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TransportResource extends Resource
 {
@@ -115,7 +113,7 @@ class TransportResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\UserRelationManager::class
+            RelationManagers\UserRelationManager::class,
         ];
     }
 

@@ -20,8 +20,8 @@ class UserProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type'              => ['string','required', Rule::enum(OrganizationTypeEnum::class)],
-            'inn'               => [
+            'type' => ['string', 'required', Rule::enum(OrganizationTypeEnum::class)],
+            'inn' => [
                 'string',
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::IP->value,
@@ -30,12 +30,12 @@ class UserProfileUpdateRequest extends FormRequest
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::COMPANY->value,
                     'regex:/^\d{10}$/'
-                )
+                ),
             ],
-            'name'              => ['string'],
-            'surname'           => ['string'],
-            'patronymic'        => ['string'],
-            'kpp'               => [
+            'name' => ['string'],
+            'surname' => ['string'],
+            'patronymic' => ['string'],
+            'kpp' => [
                 'string',
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::IP->value,
@@ -44,9 +44,9 @@ class UserProfileUpdateRequest extends FormRequest
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::COMPANY->value,
                     'regex:/^\d{9}$/'
-                )
+                ),
             ],
-            'orgn'               => [
+            'orgn' => [
                 'string',
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::IP->value,
@@ -55,15 +55,15 @@ class UserProfileUpdateRequest extends FormRequest
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::COMPANY->value,
                     'regex:/^\d{13}$/'
-                )
+                ),
             ],
-            'short_name'         => ['string'],
-            'full_name'          => ['string'],
-            'juridical_address'  => ['string'],
-            'office_address'     => ['string'],
-            'tax_system'         => ['string'],
-            'okved'              => ['string'],
-            'password'           => ['string'],
+            'short_name' => ['string'],
+            'full_name' => ['string'],
+            'juridical_address' => ['string'],
+            'office_address' => ['string'],
+            'tax_system' => ['string'],
+            'okved' => ['string'],
+            'password' => ['string'],
         ];
     }
 }

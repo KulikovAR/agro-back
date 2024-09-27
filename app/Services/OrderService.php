@@ -7,7 +7,6 @@ use App\Enums\LoadMethodEnum;
 use App\Enums\OrderClarificationDayEnum;
 use App\Enums\OrderStatusEnum;
 use App\Enums\OrderTimeslotEnum;
-use App\Enums\StatusEnum;
 use App\Filters\OrderFilter;
 use App\Http\Requests\Order\OrderCitiesRequest;
 use App\Http\Requests\Order\OrderCreateRequest;
@@ -18,13 +17,9 @@ use App\Http\Resources\Order\OrderCreateResource;
 use App\Http\Resources\Order\OrderIndexCollection;
 use App\Http\Resources\Order\OrderResource;
 use App\Http\Resources\UnloadMethodCollection;
-use App\Http\Responses\ApiJsonResponse;
 use App\Models\LoadType;
-use App\Models\Offer;
 use App\Models\Order;
-use App\Models\TgUser;
 use App\Models\UnloadMethod;
-use App\Models\User;
 use App\Services\Dadata\Dadata;
 use Illuminate\Http\Request;
 
@@ -42,7 +37,7 @@ class OrderService
         $data = $request->validated();
         $filter = app()->make(OrderFilter::class, ['queryParams' => $data]);
         $order = Order::filter($filter);
-        if($request->user()->orders != null){
+        if ($request->user()->orders != null) {
             $userOrders = $request->user()->orders;
             if (is_null($request->sort)) {
                 $order->orderBy('order_number', 'desc');
@@ -50,6 +45,7 @@ class OrderService
             $orderCollection = $order->get()->reject(function ($item) use ($userOrders) {
                 return $userOrders->contains($item);
             });
+
             return new OrderIndexCollection($orderCollection);
 
         }
@@ -65,6 +61,7 @@ class OrderService
     {
         $order->view_counter++;
         $order->save();
+
         return new OrderResource($order);
     }
 
@@ -75,9 +72,9 @@ class OrderService
         $dadataLoadPlaceInfo = $this->dadata->getAddressArray([$request->load_place_name]);
         $dadataUnloadPlaceInfo = $this->dadata->getAddressArray([$request->unload_place_name]);
         $load_city = $dadataLoadPlaceInfo['city'] != null ? $dadataLoadPlaceInfo['city'] : $request->load_place_name;
-        $load_region = $dadataLoadPlaceInfo['region'] . " " . $dadataLoadPlaceInfo['region_type_full'] != null ? $dadataLoadPlaceInfo['region'] . " " . $dadataLoadPlaceInfo['region_type_full'] : $request->load_place_name;
+        $load_region = $dadataLoadPlaceInfo['region'].' '.$dadataLoadPlaceInfo['region_type_full'] != null ? $dadataLoadPlaceInfo['region'].' '.$dadataLoadPlaceInfo['region_type_full'] : $request->load_place_name;
         $unload_city = $dadataUnloadPlaceInfo['city'] != null ? $dadataUnloadPlaceInfo['city'] : $request->unload_place_name;
-        $unload_region = $dadataUnloadPlaceInfo['region'] . " " . $dadataUnloadPlaceInfo['region_type_full'] != null ? $dadataUnloadPlaceInfo['region'] . " " . $dadataUnloadPlaceInfo['region_type_full'] : $request->unload_place_name;
+        $unload_region = $dadataUnloadPlaceInfo['region'].' '.$dadataUnloadPlaceInfo['region_type_full'] != null ? $dadataUnloadPlaceInfo['region'].' '.$dadataUnloadPlaceInfo['region_type_full'] : $request->unload_place_name;
         $load_longitude = $loadDadataCoords[0]['lon'];
         $load_latitude = $loadDadataCoords[0]['lat'];
         $unload_latitude = $unloadDadataCoords[0]['lat'];
@@ -91,9 +88,9 @@ class OrderService
             'unload_longitude' => $unload_longitude,
             'load_latitude' => $load_latitude,
             'unload_latitude' => $unload_latitude,
-            'load_latitude'    => $load_latitude,
-            'unload_latitude'  => $unload_latitude,
-            'creator_id'       => $request->user()->id,
+            'load_latitude' => $load_latitude,
+            'unload_latitude' => $unload_latitude,
+            'creator_id' => $request->user()->id,
             'status' => OrderStatusEnum::ACTIVE->value,
         ];
         $queryData = array_merge($request->except(['load_types', 'unload_methods']), $data);
@@ -104,7 +101,7 @@ class OrderService
             $order->loadTypes()->attach($load_type);
         }
 
-        if (!empty($request->unload_methods)) {
+        if (! empty($request->unload_methods)) {
             foreach ($request->unload_methods as $unload_method) {
                 $order->unloadMethods()->attach($unload_method);
             }
@@ -119,11 +116,12 @@ class OrderService
         foreach ($request->load_types as $load_type) {
             $order->loadTypes()->sync($load_type);
         }
-        if (!is_null($request->unload_methods)) {
+        if (! is_null($request->unload_methods)) {
             foreach ($request->unload_methods as $unload_method) {
                 $order->unloadMethods()->sync($unload_method);
             }
         }
+
         return new OrderResource($order);
     }
 
@@ -155,7 +153,7 @@ class OrderService
 
         $data = [
             'load_regions' => $load_regions,
-            'unload_regions' => $unload_regions
+            'unload_regions' => $unload_regions,
         ];
 
         return $data;
@@ -166,19 +164,20 @@ class OrderService
         if ($request->mode == 'load') {
             $cities = Order::where('load_region', $request->load_region)->get()->pluck('load_city')->toArray();
             $cities = array_unique($cities);
+
             return $cities;
         }
 
         $cities = Order::where('unload_region', $request->unload_region)->get()->pluck('unload_city')->toArray();
         $cities = array_unique($cities);
+
         return $cities;
     }
 
     public function getOrdersWithUserOffers(Request $request)
     {
         $user = $request->user();
+
         return new OrderIndexCollection($user->orders);
     }
-
-
 }

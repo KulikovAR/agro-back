@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\App;
 
 class AdminNotification extends BaseNotification
 {
-
     private string $message;
 
     /**
@@ -51,7 +50,7 @@ class AdminNotification extends BaseNotification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => $this->message
+            'message' => $this->message,
         ];
     }
 }

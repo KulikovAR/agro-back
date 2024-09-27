@@ -6,15 +6,14 @@ namespace App\Docs\Schemas\UserProfile;
  * @OA\Schema(
  *     title="UserProfile",
  *     description="UserProfile model",
+ *
  *     @OA\Xml(
  *         name="UserProfile"
  *     )
  * )
  */
-
 class UserProfile
 {
-  
     /**
      * @OA\Property(
      *     title="firstname",
@@ -26,7 +25,8 @@ class UserProfile
      * @var string
      */
     private $firstname;
-       /**
+
+    /**
      * @OA\Property(
      *     title="lastname",
      *     description="Фамилия пользователя",

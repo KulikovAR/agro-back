@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Telegram\TelegramChannel;
@@ -12,6 +11,7 @@ use NotificationChannels\Telegram\TelegramMessage;
 class OrderNotification extends Notification
 {
     use Queueable;
+
     protected $message;
 
     /**
@@ -21,7 +21,6 @@ class OrderNotification extends Notification
     {
         $this->message = $message;
     }
-
 
     /**
      * Get the notification's delivery channels.
@@ -41,6 +40,7 @@ class OrderNotification extends Notification
         return TelegramMessage::create($this->message)
             ->to(562494573);
     }
+
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)

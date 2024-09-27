@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\UserProfile;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CounterAgentSeeder extends Seeder
@@ -13,6 +12,6 @@ class CounterAgentSeeder extends Seeder
      */
     public function run(): void
     {
-         UserProfile::factory()->count(10)->create();
+        UserProfile::factory()->count(10)->create();
     }
 }

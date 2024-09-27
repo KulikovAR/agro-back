@@ -1,11 +1,11 @@
 <?php
 
-use App\Models\UserProfile;
 use App\Services\MigrationService;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends MigrationService {
+return new class extends MigrationService
+{
     /**
      * Run the migrations.
      */
@@ -21,10 +21,10 @@ return new class extends MigrationService {
 
             $table->uuid('user_id');
             $table->foreign('user_id')
-                  ->references('id')
-                  ->on('users')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->timestamps();
 

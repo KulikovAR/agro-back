@@ -9,7 +9,7 @@ class StorageService
 {
     public static function getUrl(?string $path, int $duration = 30)
     {
-        if(is_null($path)) {
+        if (is_null($path)) {
             return null;
         }
 
@@ -17,7 +17,7 @@ class StorageService
             'storage.public',
             Carbon::now()->addMinutes($duration),
             [
-                'filePath' => $path
+                'filePath' => $path,
             ]
         );
     }

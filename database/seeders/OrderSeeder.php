@@ -6,8 +6,6 @@ use App\Enums\EnvironmentTypeEnum;
 use App\Models\LoadType;
 use App\Models\Order;
 use App\Models\UnloadMethod;
-use Database\Factories\LoadTypeFactory;
-use Database\Factories\OrderFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
 
@@ -27,5 +25,4 @@ class OrderSeeder extends Seeder
             $order->unloadMethods()->attach(UnloadMethod::inRandomOrder()->first()->id);
         }
     }
-
 }

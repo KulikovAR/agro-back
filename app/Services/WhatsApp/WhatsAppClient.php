@@ -16,23 +16,22 @@ class WhatsAppClient
     {
         $response = Http::withOptions(['verify' => false, 'allow_redirects' => true])
             ->withHeaders([
-                'Authorization' => config('whatsapp.api_token')
+                'Authorization' => config('whatsapp.api_token'),
             ])
             ->withQueryParameters(['profile_id' => config('whatsapp.profile_id')])
             ->withBody(json_encode($requestData), 'application/json')
-            ->post(config('whatsapp.host') . $url);
+            ->post(config('whatsapp.host').$url);
 
         $responseJson = $response->json();
 
         return $responseJson;
     }
 
-
     public function sendMessage(string $body, string $phoneNumber): array
     {
         return $this->makeRequest([
-            'body'      => $body,
-            'recipient' => $phoneNumber
+            'body' => $body,
+            'recipient' => $phoneNumber,
         ], self::SEND_MESSAGE);
     }
 }

@@ -22,9 +22,9 @@ class DadataRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'path'   =>['string','required'],
-            'body'   =>['string','required'],
-            'method' => ['string','required'],
+            'path' => ['string', 'required'],
+            'body' => ['string', 'required'],
+            'method' => ['string', 'required'],
         ];
     }
 }

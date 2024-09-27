@@ -11,7 +11,7 @@ enum OrderStatusEnum: string
 
     public static function getOrderStatus(): array
     {
-       return [
+        return [
             self::ACTIVE->value,
             self::PAUSED->value,
             self::DONE->value,

@@ -4,14 +4,13 @@ namespace App\Enums;
 
 enum OrganizationTypeEnum: string
 {
-    case IP              = 'ИП';
-    case COMPANY         = 'ООО';
+    case IP = 'ИП';
+    case COMPANY = 'ООО';
 
-
-    public static function randomCase ()
+    public static function randomCase()
     {
-        $arr = [self::IP->value,self::COMPANY->value];
+        $arr = [self::IP->value, self::COMPANY->value];
+
         return $arr[array_rand($arr)];
     }
-
 }

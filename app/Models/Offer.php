@@ -11,16 +11,18 @@ use Illuminate\Notifications\Notifiable;
 class Offer extends Model
 {
     use HasFactory, HasUuids, Notifiable;
+
     protected $fillable = [
         'user_id',
-        'order_id'
+        'order_id',
     ];
-    public function user():BelongsTo
+
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function order():BelongsTo
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
     }

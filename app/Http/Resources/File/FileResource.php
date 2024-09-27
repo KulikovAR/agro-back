@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\File;
 
-use App\Http\Resources\FileType\FileTypeResource;
-use App\Http\Resources\UserFile\UserFileCollection;
 use App\Http\Resources\UserFile\UserFileResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -26,7 +24,7 @@ class FileResource extends JsonResource
             'name' => $this->name,
             'created_at' => $this->created_at,
             'is_signed' => $this->is_signed,
-//            'userFile' => new UserFileResource($this->userFile),
+            //            'userFile' => new UserFileResource($this->userFile),
         ];
     }
 }

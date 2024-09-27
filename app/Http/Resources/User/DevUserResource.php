@@ -18,19 +18,19 @@ class DevUserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'                      => $this->id,
-            'phone_number'            => $this->phone_number,
-            'code'                    => $this->code,
-            'code_hash'               => $this->code_hash,
-            'phone_verified_at'       => $this->phone_verified_at,
-            'email'                   => $this->email,
-            'email_verified_at'       => $this->email_verified_at,
-            'password'                => $this->password,
-            'created_at'              => $this->created_at,
-            'updated_at'              => $this->updated_at,
-            'userinfo'                => new CounteragentResource($this->userProfile),
-            'roles'                   => new RoleCollection($this->roles),
-            'files'                   => new FileCollection($this->files),
+            'id' => $this->id,
+            'phone_number' => $this->phone_number,
+            'code' => $this->code,
+            'code_hash' => $this->code_hash,
+            'phone_verified_at' => $this->phone_verified_at,
+            'email' => $this->email,
+            'email_verified_at' => $this->email_verified_at,
+            'password' => $this->password,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'userinfo' => new CounteragentResource($this->userProfile),
+            'roles' => new RoleCollection($this->roles),
+            'files' => new FileCollection($this->files),
         ];
     }
 }

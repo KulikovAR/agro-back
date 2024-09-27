@@ -12,6 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        '/6463765571:AAFmZ_Ty-3r7Vq7HTIFYCnkjt_-Qqmtw2GY/https://agro-back.pisateli-studio.ru/api/v1/bot/send-message'
+        '/6463765571:AAFmZ_Ty-3r7Vq7HTIFYCnkjt_-Qqmtw2GY/https://agro-back.pisateli-studio.ru/api/v1/bot/send-message',
     ];
 }

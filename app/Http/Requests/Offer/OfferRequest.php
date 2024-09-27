@@ -17,7 +17,7 @@ class OfferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'order_id' => ['string','required','exists:orders,id'],
+            'order_id' => ['string', 'required', 'exists:orders,id'],
         ];
     }
 }

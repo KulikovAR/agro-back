@@ -22,9 +22,9 @@ class DadataSuggestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'url' => ['required','string'],
-            'body' => ['array','required'],
-            'body.*' =>['required'],
+            'url' => ['required', 'string'],
+            'body' => ['array', 'required'],
+            'body.*' => ['required'],
         ];
     }
 }

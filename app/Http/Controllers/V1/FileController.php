@@ -19,7 +19,7 @@ class FileController extends Controller
 {
     public function __construct(
         private FileService $service,
-//        private IcRepository $repository,
+        //        private IcRepository $repository,
     ) {
         $this->service = new FileService();
     }
@@ -33,10 +33,12 @@ class FileController extends Controller
     {
         return new ApiJsonResponse(200, StatusEnum::OK, '', data: $this->service->getDocumentsForSigning($request));
     }
+
     public function loadFileFrom1C(FromIcRequest $request, string $inn): ApiJsonResponse
     {
         return new ApiJsonResponse(200, StatusEnum::OK, '', data: $this->service->loadFileFrom1C($request, $inn));
     }
+
     public function show(File $file): ApiJsonResonse
     {
         return new ApiJsonResponse(200, StatusEnum::OK, 'Документ получен', data: $this->service->show($file));
@@ -51,9 +53,9 @@ class FileController extends Controller
     {
         return new ApiJsonResponse(
             200, StatusEnum::OK, 'Документ обновлён', data: $this->service->update(
-            $request,
-            $file
-        )
+                $request,
+                $file
+            )
         );
     }
 
@@ -67,6 +69,7 @@ class FileController extends Controller
     public function deleteUserFiles(DeleteUserFileRequest $request): ApiJsonResponse
     {
         $this->service->deleteUserFiles($request);
+
         return new ApiJsonResponse(
             200, StatusEnum::OK, 'Документы удалены', data: []
         );
@@ -75,6 +78,7 @@ class FileController extends Controller
     public function delete(File $file): ApiJsonResponse
     {
         $this->service->delete($file);
+
         return new ApiJsonResponse(200, StatusEnum::OK, 'Документ удалён', data: []);
     }
 

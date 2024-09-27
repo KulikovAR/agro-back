@@ -11,14 +11,15 @@ class UserPolicy
     /**
      * Determine whether the user can view any models.
      */
-
-    public function before($user, $ability): bool|null
+    public function before($user, $ability): ?bool
     {
         if ($user->hasRole(RoleEnum::ADMIN->value)) {
             return true;
         }
+
         return null;
     }
+
     public function viewAny(User $user): bool
     {
         //
@@ -37,9 +38,10 @@ class UserPolicy
      */
     public function createCounteragent(User $user): Response
     {
-        if($user->hasRole(RoleEnum::LOGISTICIAN->value)){
+        if ($user->hasRole(RoleEnum::LOGISTICIAN->value)) {
             return Response::allow();
         }
+
         return Response::denyAsNotFound();
     }
 
@@ -48,11 +50,11 @@ class UserPolicy
      */
     public function updateCounteragent(User $user, User $model): Response
     {
-        if($user->hasRole(RoleEnum::LOGISTICIAN->value) && $user->counteragents->contains($model)){
+        if ($user->hasRole(RoleEnum::LOGISTICIAN->value) && $user->counteragents->contains($model)) {
             return Response::allow();
         }
 
-        if($model->id == $user->id && $user->hasRole(RoleEnum::CLIENT->value)){
+        if ($model->id == $user->id && $user->hasRole(RoleEnum::CLIENT->value)) {
             return Response::allow();
         }
 
@@ -61,7 +63,7 @@ class UserPolicy
 
     public function indexCounteragent(User $user): Response
     {
-        if($user->hasRole(RoleEnum::LOGISTICIAN->value)){
+        if ($user->hasRole(RoleEnum::LOGISTICIAN->value)) {
             return Response::allow();
         }
 

@@ -9,19 +9,25 @@ class AuthTokenController
      *     path="/login",
      *     summary="Авторизация пользователя",
      *     tags={"Login"},
+     *
      *     @OA\RequestBody(
      *         required=true,
      *         description="Тело запроса",
+     *
      *         @OA\JsonContent(
      *             required={"phone_number"},
+     *
      *             @OA\Property(property="phone_number", type="string", example="79202149572", description="Номер телефона пользователя"),
      *         ),
      *     ),
-        *     @OA\Response(
+     *
+     *     @OA\Response(
      *         response=200,
      *         description="Успешное подтверждение авторизации",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="string", example="OK"),
      *             @OA\Property(property="message", type="string", example="login.verify_phone"),
      *             @OA\Property(property="data", type="object",
@@ -41,11 +47,14 @@ class AuthTokenController
      *             ),
      *         ),
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Неудачная авторизация",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="string", example="Unauthorized"),
      *             @OA\Property(property="message", type="string", example="Invalid credentials"),
      *         ),
@@ -57,25 +66,29 @@ class AuthTokenController
     }
 
     /**
-     *
      * @OA\Delete(
      *     path="/logout",
      *     operationId="logout",
      *     tags={"Login"},
      *     summary="Logout",
      *     security={{"api": {}}},
+     *
      *     @OA\Response(
      *          response="200",
      *          description="Success",
+     *
      *          @OA\MediaType(
      *              mediaType="application/json",
+     *
      *              @OA\Schema(
+     *
      *                @OA\Property(property="status", type="string", example="OK"),
      *                @OA\Property(property="message", type="string", example=""),
      *                @OA\Property(property="data", example="[]"),
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *          response="401",
      *          ref="#/components/responses/401"
@@ -91,20 +104,26 @@ class AuthTokenController
      *     path="/login/verification",
      *     summary="Подтверждение авторизации пользователя",
      *     tags={"Login"},
+     *
      * @OA\RequestBody(
      *         required=true,
      *         description="Verification data",
+     *
      *         @OA\JsonContent(
      *             required={"phone_number", "code"},
+     *
      *             @OA\Property(property="phone_number", type="string", description="User's phone number"),
      *             @OA\Property(property="code", type="string", description="Verification code"),
      *         ),
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Успешное подтверждение авторизации",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="string", example="OK"),
      *             @OA\Property(property="message", type="string", example="login.verify_phone"),
      *             @OA\Property(property="data", type="object",
@@ -125,11 +144,14 @@ class AuthTokenController
      *             ),
      *         ),
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Неудачное подтверждение авторизации",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="string", example="Unauthorized"),
      *             @OA\Property(property="message", type="string", example="Invalid verification code"),
      *         ),

@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\TakeOut;
 use App\Enums\ModerationStatusEnum;
 use App\Services\MigrationService;
 use Illuminate\Database\Schema\Blueprint;

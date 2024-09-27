@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Sms;
 
-use Tests\TestCase;
 use App\Services\Sms\SmsVerification;
+use Tests\TestCase;
 
 class SmsTest extends TestCase
 {
@@ -13,7 +13,7 @@ class SmsTest extends TestCase
     public function test_example(): void
     {
         $cock = new SmsVerification;
-        $cock->send('79202149572','Тест');
+        $cock->send('79202149572', 'Тест');
 
     }
 }

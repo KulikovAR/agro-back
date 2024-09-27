@@ -7,25 +7,24 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationContactController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\V1\SignMeController;
-use App\Http\Controllers\V1\UserProfileController;
+use App\Http\Controllers\V1\BankAccountController;
+use App\Http\Controllers\V1\CounteragentController;
+use App\Http\Controllers\V1\FileController;
 use App\Http\Controllers\V1\OfferController;
+use App\Http\Controllers\V1\OrderController;
 use App\Http\Controllers\V1\ProductParserController;
+use App\Http\Controllers\V1\SignMeController;
+use App\Http\Controllers\V1\TransportBrandController;
 use App\Http\Controllers\V1\TransportController;
-use Telegram\Bot\Laravel\Facades\Telegram;
+use App\Http\Controllers\V1\TransportTypeController;
+use App\Http\Controllers\V1\UserProfileController;
+use App\Http\Controllers\V1\WhatsAppController;
 use App\Models\Role;
 use App\Models\User;
 use App\Notifications\AdminNotification;
 use App\Notifications\PasswordResetNotification;
 use Database\Seeders\UserSeeder;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\V1\OrderController;
-use App\Http\Controllers\V1\CounteragentController;
-use App\Http\Controllers\V1\TransportBrandController;
-use App\Http\Controllers\V1\TransportTypeController;
-use \App\Http\Controllers\V1\FileController;
-use \App\Http\Controllers\V1\BankAccountController;
-use App\Http\Controllers\V1\WhatsAppController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,12 +59,7 @@ Route::middleware(['guest'])->group(function () {
     // Route::post('/password/reset', [PasswordController::class, 'store'])->name('password.reset');
 });
 
-
 Route::post('/bot/send-message', [\App\Http\Controllers\V1\TgBotController::class, 'sendMessage']);
-
-
-
-
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('userprofile')->group(function () {
@@ -78,9 +72,9 @@ Route::middleware('auth:sanctum')->group(function () {
         );
         Route::put('/delete', [UserProfileController::class, 'delete'])->name('userprofile.delete');
         Route::put('/update', [UserProfileController::class, 'update'])->name('userprofile.update');
-//        Route::put('password/update', [UserProfileController::class, 'updatePassword'])->name(
-//            'userprofile.password.update'
-//        );
+        //        Route::put('password/update', [UserProfileController::class, 'updatePassword'])->name(
+        //            'userprofile.password.update'
+        //        );
     });
 
     Route::post('/sign-me', [SignMeController::class, 'signature'])->name('sign.me.signature');
@@ -109,8 +103,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/create/', [FileController::class, 'create'])->name('files.create');
         Route::put('/update/{file}', [FileController::class, 'update'])->name('files.update');
         Route::post('/load-files', [FileController::class, 'loadFilesForUser'])->name('files.load_files');
-        Route::post('/update-files',[FileController::class, 'updateFilesForUser'])->name('files.update_files');
-        Route::delete('/delete-files',[FileController::class, 'deleteUserFiles'])->name('files.delete_files');
+        Route::post('/update-files', [FileController::class, 'updateFilesForUser'])->name('files.update_files');
+        Route::delete('/delete-files', [FileController::class, 'deleteUserFiles'])->name('files.delete_files');
         Route::get('/file-types', [FileController::class, 'getFileTypes'])->name('files.getFileTypes');
         Route::delete('/delete/{file}', [FileController::class, 'delete'])->name('files.update');
         Route::post('/from-1c/{inn}', [FileController::class, 'loadFileFrom1C'])->name('files.from-1c');
@@ -135,8 +129,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{order}', [OrderController::class, 'show'])->name('order.show');
     });
 
-        Route::get('/user-orders', [OrderController::class, 'getOrdersWithUserOffers'])->name('order.user.orders');
-
+    Route::get('/user-orders', [OrderController::class, 'getOrdersWithUserOffers'])->name('order.user.orders');
 
     Route::prefix('offers')->group(function () {
         Route::post('/create', [OfferController::class, 'create'])->name('offer.create');
@@ -167,7 +160,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
-
 Route::get('/auth/{provider}/redirect', [AuthProviderController::class, 'redirectToProvider'])->middleware(
     'throttle:10,1'
 )->name('provider.redirect');
@@ -178,8 +170,6 @@ Route::get('/verification/{id}/{hash}', [VerificationContactController::class, '
 )->name('verification.email.url');
 
 Route::get('/assets/{locale?}', [AssetsController::class, 'show'])->name('assets.index');
-
-
 
 Route::get('/mail', function () {
     $admin = User::role(Role::ROLE_ADMIN)->get()->first();
@@ -196,4 +186,4 @@ Route::get('/mail', function () {
     return $markdown->render('vendor.notifications.email', $message->toArray());
 });
 
-Route::post('/bot-update',[\App\Http\Controllers\V1\TgBotController::class,'update']);
+Route::post('/bot-update', [\App\Http\Controllers\V1\TgBotController::class, 'update']);

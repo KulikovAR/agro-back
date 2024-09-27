@@ -14,5 +14,4 @@ class ProductLog extends Model
         'price',
         'created_at',
     ];
-    
 }

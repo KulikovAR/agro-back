@@ -18,7 +18,7 @@ class VerificationContactController extends Controller
 
     public function sendEmailVerification(SendEmailVerifyRequest $request): ApiJsonResponse
     {
-        $user  = $request->user();
+        $user = $request->user();
         $email = Str::lower($request->email);
 
         if ($user->hasVerifiedEmail()) {
@@ -41,7 +41,6 @@ class VerificationContactController extends Controller
             __('registration.verification_sent')
         );
     }
-
 
     public function isNewEmail(mixed $user, mixed $email): bool
     {

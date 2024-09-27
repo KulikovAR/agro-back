@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Docs\Schemas\BankAccount;
+
 /**
  * @OA\Schema(
  *      schema="BankAccount",
  *      title="BankAccount",
  *      description="Bank Account model",
  *      required={"id", "bik", "title", "number", "correspondent_number", "is_main", "user_id", "created_at", "updated_at"},
+ *
  *      @OA\Property(
  *          property="id",
  *          type="string",
@@ -58,8 +60,6 @@ namespace App\Docs\Schemas\BankAccount;
  *      )
  * )
  */
-
 class BankAccount
 {
-
 }

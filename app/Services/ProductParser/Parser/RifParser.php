@@ -11,20 +11,21 @@ use phpQueryObject;
 class RifParser
 {
     private $prices;
+
     private phpQueryObject $document;
+
     private array $arr = [];
+
     public function __construct(
         private int $count_from,
         private int $count_to,
         private int $type,
         private RifClient $client = new RifClient(),
     ) {
-        if($type==ParserProductTypeEnum::WHEAT->value)
-        {
+        if ($type == ParserProductTypeEnum::WHEAT->value) {
             $document = $this->client->wheatBodyHttp();
         }
-        if($type==ParserProductTypeEnum::BARLEY->value)
-        {
+        if ($type == ParserProductTypeEnum::BARLEY->value) {
             $document = $this->client->barleyBodyHttp();
         }
         $this->document = phpQuery::newDocumentHTML($document);
@@ -38,8 +39,9 @@ class RifParser
 
     public function callParse()
     {
-       $this->parse();
+        $this->parse();
     }
+
     private function parse()
     {
         $count = 0;
@@ -53,18 +55,16 @@ class RifParser
                 if ($count == $this->count_to) {
                     $company = 'АО "ЗЕРНОВОЙ ТЕРМИНАЛ "КСК"';
                 }
-                $pg =  pq($price);
+                $pg = pq($price);
                 $products = $pg->find('tbody tr');
                 foreach ($products as $key => $product) {
-                    $products_pq =  pq($product);
+                    $products_pq = pq($product);
 
                     if ($key % 2 == 0) {
 
-
-                        $this->productArrayInit($count,$k,$key);
+                        $this->productArrayInit($count, $k, $key);
                         // Название
                         $this->getName($products_pq, $k, $count, $key);
-
 
                         // Характеристики
                         $this->getAttributes($products_pq, $k, $count, $key);
@@ -76,10 +76,10 @@ class RifParser
                     } else {
                         $name = $products_pq->find('td:first')->text();
                         $names = explode(' ', $name);
-                        $clean_names = array_diff($names, array('', NULL, false));
+                        $clean_names = array_diff($names, ['', null, false]);
                         $clean_names = array_values($clean_names);
-                        if (!empty($clean_names)) {
-                            $this->arr[$count][$k + $key - 1]['price'] = (float)str_replace(',', '.', $clean_names[1]);
+                        if (! empty($clean_names)) {
+                            $this->arr[$count][$k + $key - 1]['price'] = (float) str_replace(',', '.', $clean_names[1]);
                         }
                     }
                 }
@@ -92,21 +92,22 @@ class RifParser
     {
         $name = $products_pq->find('th div.name')->text();
         $names = explode(' ', $name);
-        $clean_names = array_diff($names, array('', NULL, false));
+        $clean_names = array_diff($names, ['', null, false]);
         $clean_names = array_values($clean_names);
-        if (!empty($clean_names)) {
+        if (! empty($clean_names)) {
             $this->arr[$count][$k + $key]['name'] = trim($clean_names[1], ',');
             $this->arr[$count][$k + $key]['class'] = isset($clean_names[2]) ? $clean_names[2] : '';
         }
     }
+
     private function getAttributes($products_pq, $k, $count, $key)
     {
         $attr = $products_pq->find('span span')->text();
         $attrs = explode(' ', $attr);
-        $clean_attrs = array_diff($attrs, array('', NULL, false));
+        $clean_attrs = array_diff($attrs, ['', null, false]);
         $clean_attrs = array_values($clean_attrs);
         $this->arr[$count][$k + $key]['attr'] = null;
-        if (!empty($clean_attrs)) {
+        if (! empty($clean_attrs)) {
             $this->arr[$count][$k + $key]['attr'] = str_replace('.', ',', $clean_attrs[1]);
         }
     }
@@ -117,13 +118,13 @@ class RifParser
         $descr_arr = explode(';', $descr);
 
         foreach ($descr_arr as $d) {
-            $this->getElementInDescription($d, '≥', $count, $k, $key, 'клейковина','gluten');
-            $this->getElementInDescription($d, '≤', $count, $k, $key, 'ИДК','idk');
-            $this->getElementInDescription($d, '≥', $count, $k, $key, 'ЧП','chp');
-            $this->getElementInDescription($d, '≥', $count, $k, $key, 'натура','nature');
-            $this->getElementInDescription($d, '≤', $count, $k, $key, 'влажность','humidity');
-            $this->getElementInDescription($d, '≤', $count, $k, $key, 'сорная примесь','weed_impurity');
-            $this->getElementInDescription($d, '≤', $count, $k, $key, 'клоп','chinch');
+            $this->getElementInDescription($d, '≥', $count, $k, $key, 'клейковина', 'gluten');
+            $this->getElementInDescription($d, '≤', $count, $k, $key, 'ИДК', 'idk');
+            $this->getElementInDescription($d, '≥', $count, $k, $key, 'ЧП', 'chp');
+            $this->getElementInDescription($d, '≥', $count, $k, $key, 'натура', 'nature');
+            $this->getElementInDescription($d, '≤', $count, $k, $key, 'влажность', 'humidity');
+            $this->getElementInDescription($d, '≤', $count, $k, $key, 'сорная примесь', 'weed_impurity');
+            $this->getElementInDescription($d, '≤', $count, $k, $key, 'клоп', 'chinch');
         }
     }
 
@@ -143,13 +144,14 @@ class RifParser
         // if(!array_key_exists($element_key,$this->arr[$count][$k+$key])){
         //     $this->arr[$count][$k + $key][$element_key] = null;
         // }
-      
+
         $this->arr[$count][$k + $key][$element_key] = trim($gluten_arr[1], ' ');
         // dd($this->arr[$count][$k+$key]);
-     
+
     }
 
-    private function productArrayInit($count,$k,$key){
+    private function productArrayInit($count, $k, $key)
+    {
         $this->arr[$count][$k + $key]['name'] = null;
         $this->arr[$count][$k + $key]['attr'] = null;
         $this->arr[$count][$k + $key]['class'] = null;

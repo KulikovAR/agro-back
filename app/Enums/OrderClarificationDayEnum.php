@@ -8,16 +8,12 @@ enum OrderClarificationDayEnum: string
     case SUNDAY = 'воскресенье';
     case SATURDAY_AND_SUNDAY = 'суббота и воскресенье';
 
-    public static function getValue():array
+    public static function getValue(): array
     {
-        return   [
+        return [
             self::SATURDAY->value,
             self::SUNDAY->value,
             self::SATURDAY_AND_SUNDAY->value,
         ];
     }
-
 }
-
-
-

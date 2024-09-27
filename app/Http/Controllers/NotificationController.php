@@ -14,6 +14,7 @@ class NotificationController extends Controller
      * Display all unread notifications.
      *
      * @return \App\Http\Resources\Notification\NotificationCollection
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index(Request $request)
@@ -50,7 +51,6 @@ class NotificationController extends Controller
     /**
      * Mark notification as read.
      *
-     * @param \App\Http\Requests\UuidRequest $request
      *
      * @return \App\Http\Responses\ApiJsonResponse
      */
@@ -62,7 +62,6 @@ class NotificationController extends Controller
 
         return new ApiJsonResponse();
     }
-
 
     /**
      * Remove the specified resource from storage.

@@ -17,7 +17,7 @@ class TransportBrandFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => "KAMAZ",
+            'title' => 'KAMAZ',
             'image' => $this->faker->imageUrl(),
         ];
     }

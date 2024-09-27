@@ -61,12 +61,15 @@ return [
 
     'sign_me_base_dev_url' => env('SIGN_ME_BASE_DEV_URL'),
 
-    'sign_me_ct' => env('SIGN_ME_CT'),
+    'sign_me_ct' => env('SIGN_ME_CT', '12'),
 
     'sign_me_ca' => env('SIGN_ME_CA'),
 
-    'asset_url' => env('ASSET_URL'),
+    'sign_me_ckey' => env('SIGN_ME_CKEY', '1'),
 
+    'sign_me_cr' => env('SIGN_ME_CR', '1'),
+
+    'asset_url' => env('ASSET_URL'),
 
     /*
     |--------------------------------------------------------------------------

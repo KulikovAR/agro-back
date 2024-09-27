@@ -6,10 +6,7 @@ use App\Enums\StatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Offer\OfferRequest;
 use App\Http\Responses\ApiJsonResponse;
-use App\Models\Offer;
-use App\Services\CounteragentService;
 use App\Services\OfferService;
-use Illuminate\Http\Request;
 
 class OfferController extends Controller
 {
@@ -18,7 +15,6 @@ class OfferController extends Controller
     ) {
         $this->service = new OfferService;
     }
-
 
     public function create(OfferRequest $request): ApiJsonResponse
     {

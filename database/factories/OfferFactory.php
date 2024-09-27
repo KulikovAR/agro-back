@@ -20,7 +20,7 @@ class OfferFactory extends Factory
     {
         return [
             'order_id' => Order::factory(),
-            'user_id'  => User::factory(),
+            'user_id' => User::factory(),
         ];
     }
 }

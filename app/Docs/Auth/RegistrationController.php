@@ -9,19 +9,25 @@ class RegistrationController
      *     path="/registration/phone",
      *     summary="User Registration",
      *     tags={"Registration"},
+     *
      *     @OA\RequestBody(
      *         required=true,
      *         description="User registration data",
+     *
      *         @OA\JsonContent(
      *             required={"phone_number"},
+     *
      *             @OA\Property(property="phone_number", type="string", example="79202149572", description="User's phone number"),
      *         ),
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Успешное подтверждение авторизации",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="string", example="OK"),
      *             @OA\Property(property="message", type="string", example="login.verify_phone"),
      *             @OA\Property(property="data", type="object",
@@ -52,20 +58,26 @@ class RegistrationController
      *     path="/registration/verification",
      *     summary="Verify User Registration",
      *     tags={"Registration"},
+     *
      *     @OA\RequestBody(
      *         required=true,
      *         description="Verification data",
+     *
      *         @OA\JsonContent(
      *             required={"phone_number", "code"},
+     *
      *             @OA\Property(property="phone_number", type="string", example="79202149572", description="User's phone number"),
      *             @OA\Property(property="code", type="string", example="89021", description="Verification code"),
      *         ),
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Успешное подтверждение авторизации",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="string", example="OK"),
      *             @OA\Property(property="message", type="string", example="login.verify_phone"),
      *             @OA\Property(property="data", type="object",
@@ -97,38 +109,49 @@ class RegistrationController
      *     path="/code/update/{id}",
      *     summary="Обновление кода пользователя по идентификатору",
      *     tags={"Registration"},
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         description="Идентификатор пользователя",
      *         required=true,
+     *
      *         @OA\Schema(type="string"),
      *     ),
+     *
      *     @OA\RequestBody(
      *         required=true,
      *         description="Тело запроса",
+     *
      *         @OA\JsonContent(
      *             required={"status", "message", "data"},
+     *
      *             @OA\Property(property="status", type="string", example="OK"),
      *             @OA\Property(property="message", type="string", example=""),
      *             @OA\Property(property="data", type="string", example="[]"),
      *         ),
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Успешное обновление кода пользователя",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="string", example="OK"),
      *             @OA\Property(property="message", type="string", example=""),
      *             @OA\Property(property="data", type="string", example="[]"),
      *         ),
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Пользователь не найден",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="string", example="Not Found"),
      *             @OA\Property(property="message", type="string", example="User not found"),
      *         ),

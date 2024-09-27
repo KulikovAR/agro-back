@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class MigrationService extends Migration
 {
-
     public function registerDoctrineEnumType(): void
     {
         //for Filament and DBAL auto type recognition

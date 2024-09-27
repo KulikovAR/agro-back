@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use App\Enums\PassengerTypeEnum;
 use Carbon\Carbon;
 
 trait DateFormats
@@ -39,4 +38,3 @@ trait DateFormats
         return Carbon::parse($date)->toISOString();
     }
 }
-

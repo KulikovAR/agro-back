@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use Eloquent;
@@ -25,6 +24,7 @@ use Laravel\Sanctum\PersonalAccessToken as PersonalAccessTokenAlias;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Model|\Eloquent $tokenable
+ *
  * @method static Builder|PersonalAccessToken newModelQuery()
  * @method static Builder|PersonalAccessToken newQuery()
  * @method static Builder|PersonalAccessToken query()
@@ -38,7 +38,9 @@ use Laravel\Sanctum\PersonalAccessToken as PersonalAccessTokenAlias;
  * @method static Builder|PersonalAccessToken whereTokenableId($value)
  * @method static Builder|PersonalAccessToken whereTokenableType($value)
  * @method static Builder|PersonalAccessToken whereUpdatedAt($value)
+ *
  * @mixin Eloquent
+ *
  * @noinspection PhpFullyQualifiedNameUsageInspection
  * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
  */
@@ -54,13 +56,12 @@ class PersonalAccessTokens extends PersonalAccessTokenAlias
         'token',
         'abilities',
         'device_name',
-        'temp'
+        'temp',
     ];
 
     protected $casts = [
         'abilities' => 'json',
         'last_used_at' => 'datetime',
-        'device_name' => 'string'
+        'device_name' => 'string',
     ];
-
 }

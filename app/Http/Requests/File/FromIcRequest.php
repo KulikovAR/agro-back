@@ -18,9 +18,9 @@ class FromIcRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_1c' => ['string','required'],
-            'file' => ['file','required'],
-            'inn' => ['string','required', 'exists:users,inn'],
+            'id_1c' => ['string', 'required'],
+            'file' => ['file', 'required'],
+            'inn' => ['string', 'required', 'exists:users,cinn'],
             'type' => ['string', 'required', 'in:Акт,Договор,Заявка'],
         ];
     }

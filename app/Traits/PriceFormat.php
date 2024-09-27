@@ -34,13 +34,12 @@ trait PriceFormat
         return self::where('tag', $price_tag)->where('field_name', $field_name)->first()?->data;
     }
 
-
     private static function getValuesWithFieldNameAsKey($settings, array $field_names, bool $int_values = false): array
     {
         $data = [];
 
         foreach ($field_names as $field_name) {
-            $value             = $settings->where('field_name', $field_name)->first()?->data;
+            $value = $settings->where('field_name', $field_name)->first()?->data;
             $data[$field_name] = $int_values ? (int) $value : $value;
         }
 

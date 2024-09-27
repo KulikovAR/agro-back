@@ -6,6 +6,7 @@ namespace App\Docs\Schemas\Transport;
  * @OA\Schema(
  *      title="Transport",
  *      description="Transport model",
+ *
  *      @OA\Property(property="id", type="string", format="uuid", example="9b519d54-ac2b-4aa3-857c-ff41a3b3e6b3"),
  *      @OA\Property(property="driver", type="object",
  *          @OA\Property(property="id", type="string", format="uuid", example="9b519d54-9806-4309-bb3e-0462a96ac9ed"),
@@ -32,5 +33,4 @@ namespace App\Docs\Schemas\Transport;
  */
 class Transport
 {
-
 }

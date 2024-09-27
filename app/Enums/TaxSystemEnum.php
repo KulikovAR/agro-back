@@ -4,13 +4,14 @@ namespace App\Enums;
 
 enum TaxSystemEnum: string
 {
-    case USN_SIX_PERСENT = "УСН 6%";
-    case USN_TEN_PERCENT_DIFFERENCE = "УСН (доходы минус расходы 10%)";
-    case USN_FIFTEEN_PERCENT_DIFFERENCE = "УСН (доходы минус расходы 15%)";
-    case OSNO = "ОСНО";
-    case PATENT = "Патент";
-    CASE UNIFIED_AGRICULTURAL_TAX = "ЕСХН";
-    case SELF_EMPLOYED = "Самозанятый";
+    case USN_SIX_PERСENT = 'УСН 6%';
+    case USN_TEN_PERCENT_DIFFERENCE = 'УСН (доходы минус расходы 10%)';
+    case USN_FIFTEEN_PERCENT_DIFFERENCE = 'УСН (доходы минус расходы 15%)';
+    case OSNO = 'ОСНО';
+    case PATENT = 'Патент';
+    case UNIFIED_AGRICULTURAL_TAX = 'ЕСХН';
+    case SELF_EMPLOYED = 'Самозанятый';
+
     public static function getValues()
     {
         return [
@@ -24,5 +25,3 @@ enum TaxSystemEnum: string
         ];
     }
 }
-
-

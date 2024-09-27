@@ -12,7 +12,6 @@ class UpdateUserFileRequest extends FormRequest
      * Determine if the user is authorized to make this request.
      */
 
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,7 +23,7 @@ class UpdateUserFileRequest extends FormRequest
             'documents' => ['required', 'array'],
             'documents.*.file' => ['file'],
             'documents.*.file_type' => ['string', Rule::enum(FileTypeEnum::class)],
-            'documents.*.file_id' => ['uuid','exists:files,id']
+            'documents.*.file_id' => ['uuid', 'exists:files,id'],
         ];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum OrderCityModeEnum:string
+enum OrderCityModeEnum: string
 {
     case LOAD = 'load';
     case UNLOAD = 'unload';

@@ -15,11 +15,11 @@ class EmailVerifyLinkRequest extends FormRequest
     {
         $user = $this->getUserFromUrl();
 
-        if (!hash_equals((string)$user?->getKey(), (string)$this->route('id'))) {
+        if (! hash_equals((string) $user?->getKey(), (string) $this->route('id'))) {
             return redirect(config('front-end.email_verified_error'));
         }
 
-        if (!hash_equals(sha1((string)$user?->getEmailForVerification()), (string)$this->route('hash'))) {
+        if (! hash_equals(sha1((string) $user?->getEmailForVerification()), (string) $this->route('hash'))) {
             return redirect(config('front-end.email_verified_error'));
         }
 
@@ -28,6 +28,6 @@ class EmailVerifyLinkRequest extends FormRequest
 
     public function getUserFromUrl(): User
     {
-        return User::find((string)$this->route('id'));
+        return User::find((string) $this->route('id'));
     }
 }

@@ -32,8 +32,6 @@ class ProductFactory extends Factory
             'chinch' => $this->faker->word(),
             'exporter' => $this->faker->word(),
 
-            
-            
         ];
     }
 }

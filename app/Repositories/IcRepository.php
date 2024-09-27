@@ -4,23 +4,25 @@ namespace App\Repositories;
 
 use App\Clients\IcClient;
 use App\Models\File;
-use App\Services\ProductParser\Client\RifClient;
 use App\Traits\FileTrait;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 
-class IcRepository implements ToIcRepositoryInterface, FromIcRepositoryInterface
+class IcRepository implements FromIcRepositoryInterface, ToIcRepositoryInterface
 {
     use FileTrait;
 
     private $client;
+
     public function __construct()
     {
         $this->client = new IcClient();
     }
 
-    public function IcFile(UploadedFile $file, string $type,string $Id1c): File
+    public function IcFile(UploadedFile $file, string $type, string $Id1c): File
     {
-        $fileFromIc = $this->loadFile($file,$type,$Id1c);
+        $fileFromIc = $this->loadFile($file, $type, $Id1c);
+
         return $fileFromIc;
     }
 
@@ -30,7 +32,10 @@ class IcRepository implements ToIcRepositoryInterface, FromIcRepositoryInterface
             'file' => $file,
             'filename' => $fileName,
         ];
-        $result = $this->client->worker->post(config("1c.url"). $fileId,$query);
+        $result = $this->client->worker->post(config('1c.url').$fileId, $query);
+
+        Log::info("Подписанный файл ушёл в 1с. Тело ответа: {$result->body()}. Статус: {$result->status()}");
+
         return $result->status();
     }
 }

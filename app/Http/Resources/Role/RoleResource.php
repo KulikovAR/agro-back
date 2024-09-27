@@ -3,8 +3,6 @@
 namespace App\Http\Resources\Role;
 
 use App\Enums\RoleEnum;
-use App\Models\Role;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,8 +21,9 @@ class RoleResource extends JsonResource
                 $this->name = $value;
             }
         }
+
         return [
-            'id'   => $this->id,
+            'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
         ];
