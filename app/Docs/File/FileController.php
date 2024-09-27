@@ -12,44 +12,52 @@ class FileController
      *      security={{"bearerAuth":{}}},
      *      summary="Загрузить документы пользователя",
      *      description="Загружает документы пользователя.",
+     *
      *      @OA\RequestBody(
      *          required=true,
+     *
      *          @OA\MediaType(
      *              mediaType="multipart/form-data",
+     *
      *              @OA\Schema(
      *                  required={"file_types", "load_files"},
+     *
      *                  @OA\Property(type="string", example="9bdec27c-a40d-463e-a709-0ff9ab7efd11"),
      *                  @OA\Property(
      *                      property="documents(file)",
      *                      type="array",
+     *
      *                      @OA\Items(type="file")
      *                  ),
+     *
      *                       @OA\Property(
      *                       property="documents(file_type)",
      *                       type="array",
+     *
      *                       @OA\Items(type="string")
      *                   )
      *              )
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Успешный запрос",
+     *
      *          @OA\JsonContent(
      *              type="object",
+     *
      *              @OA\Property(property="status", type="string", example="OK"),
      *              @OA\Property(property="message", type="string", example="Документы пользователя загружены"),
      *              @OA\Property(
      *                  property="data",
      *                  type="array",
+     *
      *                  @OA\Items(
+     *
      *                      @OA\Property(property="id", type="string", example="9bdf09f2-f0a7-458f-acc6-5a94a5c88fbc"),
      *                      @OA\Property(property="path_url", type="string", example="http://localhost/storage/files/4R0V5abSTtHNxfJudzlAWuB8NdIWvnmOMafrJip4.jpg"),
-    @OA\Property(property="size", type="integer", example="12213"),
      *                      @OA\Property(property="original_name", type="string", example="file.jpeg"),
-    @OA\Property(property="optimize_path", type="string", example="http://localhost/storage/optimized/6661647d4479e.jpg"),
-    @OA\Property(property="is_signed", type="boolean", example="false"),
-    @OA\Property(property="signer_id", type="string", example="9bdf01f2-f0a7-428f-acc6-5a94a34gq88fbc"),
     @OA\Property(property="mime_type", type="string", example="application/vnd.openxmlformats-officedocument.wordprocessingml.document"),     *     @OA\Property(property="extension", type="string", example="jpeg"),
      *                          @OA\Property(
      *                          property="fileType",
@@ -60,7 +68,9 @@ class FileController
      *                      @OA\Property(
      *                          property="userFiles",
      *                          type="array",
+     *
      *                          @OA\Items(
+     *
      *                              @OA\Property(property="id", type="integer", example=27),
      *                              @OA\Property(property="user_id", type="string", example="9bdec27c-a40d-463e-a709-0ff9ab7efd11")
      *                          )
@@ -71,7 +81,6 @@ class FileController
      *      )
      * )
      */
-
     public function loadFilesForUser()
     {
     }
@@ -84,49 +93,59 @@ class FileController
      *      security={{"bearerAuth":{}}},
      *      summary="Обновить документы пользователя",
      *      description="Обновить документы пользователя.",
+     *
      *      @OA\RequestBody(
      *          required=true,
+     *
      *          @OA\MediaType(
      *              mediaType="multipart/form-data",
+     *
      *              @OA\Schema(
      *                  required={"file_types", "load_files"},
+     *
      *                  @OA\Property(type="string", example="9bdec27c-a40d-463e-a709-0ff9ab7efd11"),
      *                  @OA\Property(
      *                      property="documents(file)",
      *                      type="array",
+     *
      *                      @OA\Items(type="file")
      *                  ),
+     *
      *                       @OA\Property(
      *                       property="documents(file_type)",
      *                       type="array",
+     *
      *                       @OA\Items(type="string")
      *                   ),
+     *
      *                        @OA\Property(
      *                        property="documents(file_id)",
      *                        type="array",
+     *
      *                        @OA\Items(type="string")
      *                    ),
      *              )
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Успешный запрос",
+     *
      *          @OA\JsonContent(
      *              type="object",
+     *
      *              @OA\Property(property="status", type="string", example="OK"),
      *              @OA\Property(property="message", type="string", example="Документы пользователя загружены"),
      *              @OA\Property(
      *                  property="data",
      *                  type="array",
+     *
      *                  @OA\Items(
+     *
      *                      @OA\Property(property="id", type="string", example="9bdf09f2-f0a7-458f-acc6-5a94a5c88fbc"),
      *                      @OA\Property(property="path_url", type="string", example="http://localhost/storage/files/4R0V5abSTtHNxfJudzlAWuB8NdIWvnmOMafrJip4.jpg"),
-    @OA\Property(property="size", type="integer", example="12213"),
      *                      @OA\Property(property="original_name", type="string", example="file.jpeg"),
-    @OA\Property(property="optimize_path", type="string", example="http://localhost/storage/optimized/6661647d4479e.jpg"),
-    @OA\Property(property="is_signed", type="boolean", example="false"),
-    @OA\Property(property="signer_id", type="string", example="9bdf01f2-f0a7-428f-acc6-5a94a34gq88fbc"),
     @OA\Property(property="mime_type", type="string", example="application/vnd.openxmlformats-officedocument.wordprocessingml.document"),     *     @OA\Property(property="extension", type="string", example="jpeg"),
      *                          @OA\Property(
      *                          property="fileType",
@@ -137,7 +156,9 @@ class FileController
      *                      @OA\Property(
      *                          property="userFiles",
      *                          type="array",
+     *
      *                          @OA\Items(
+     *
      *                              @OA\Property(property="id", type="integer", example=27),
      *                              @OA\Property(property="user_id", type="string", example="9bdec27c-a40d-463e-a709-0ff9ab7efd11")
      *                          )
@@ -159,11 +180,14 @@ class FileController
      *     summary="Получить список подписанных документов",
      *     tags={"Files"},
      *     security={{"bearerAuth":{}}},
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Успешный ответ",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(
      *                 property="status",
      *                 type="string",
@@ -177,8 +201,10 @@ class FileController
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
+     *
      *                 @OA\Items(
      *                     type="object",
+     *
      *                     @OA\Property(
      *                         property="id",
      *                         type="string",
@@ -203,11 +229,14 @@ class FileController
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(
      *                 property="status",
      *                 type="string",
@@ -233,11 +262,14 @@ class FileController
      *     summary="Получить все типы документов",
      *     tags={"Files"},
      *     security={{"bearerAuth":{}}},
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Успешный ответ",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(
      *                 property="status",
      *                 type="string",
@@ -251,6 +283,7 @@ class FileController
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
+     *
      *                 @OA\Items(
      *                     type="string",
      *                     example="Акт"
@@ -270,11 +303,14 @@ class FileController
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(
      *                 property="status",
      *                 type="string",
@@ -289,10 +325,8 @@ class FileController
      *     )
      * )
      */
-
     public function getFileTypes()
     {
 
     }
-
 }

@@ -15,6 +15,7 @@ class WhatsAppController extends Controller
     {
         $this->service = new WhatsAppService();
     }
+
     public function webhook(Request $request)
     {
         Storage::put('whatsapp.json', json_encode($request->all()));

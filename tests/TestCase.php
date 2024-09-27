@@ -14,4 +14,3 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame(json_decode($resource->toJson(), true), $responseArray);
     }
 }
-

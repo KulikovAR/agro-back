@@ -2,8 +2,6 @@
 
 namespace Tests\Feature\ProductParser;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ProductParserTest extends TestCase
@@ -16,9 +14,8 @@ class ProductParserTest extends TestCase
         $response = $this->json('get', route('product-parser.index'));
         // dd($response);
         $response->assertStatus(200)
-
-        ->assertJsonStructure(
-            [
+            ->assertJsonStructure(
+                [
                     'status',
                     'message',
                     'data' => [
@@ -41,9 +38,9 @@ class ProductParserTest extends TestCase
                             'parser',
                             'created_at',
                             'updated_at',
-                            'logs'
-                        ]
-                    ]
+                            'logs',
+                        ],
+                    ],
                 ]);
     }
 }

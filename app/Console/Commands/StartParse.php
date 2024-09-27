@@ -10,9 +10,11 @@ class StartParse extends Command
 {
     public function __construct(
         public ProductParserService $service,
-       
-    ){ parent::__construct();
-     }
+
+    ) {
+        parent::__construct();
+    }
+
     /**
      * The name and signature of the console command.
      *
@@ -31,8 +33,9 @@ class StartParse extends Command
      * Execute the console command.
      */
     public function handle()
-    {    $this->service->saveAndParse(0,9,ParserProductTypeEnum::BARLEY->value);
-         $this->service->saveAndParse(0,10,ParserProductTypeEnum::WHEAT->value);
-       
+    {
+        $this->service->saveAndParse(0, 9, ParserProductTypeEnum::BARLEY->value);
+        $this->service->saveAndParse(0, 10, ParserProductTypeEnum::WHEAT->value);
+
     }
 }

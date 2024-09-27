@@ -8,7 +8,6 @@ use Illuminate\Validation\Rule;
 
 class OrderCitiesRequest extends FormRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -17,8 +16,8 @@ class OrderCitiesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'mode'           => ['string', 'required', Rule::enum(OrderCityModeEnum::class)],
-            'load_region'    => ['string', Rule::when($this->input('mode') == 'load', 'required')],
+            'mode' => ['string', 'required', Rule::enum(OrderCityModeEnum::class)],
+            'load_region' => ['string', Rule::when($this->input('mode') == 'load', 'required')],
             'unload_regions' => ['string', Rule::when($this->input('mode') == 'unload', 'required')],
 
         ];

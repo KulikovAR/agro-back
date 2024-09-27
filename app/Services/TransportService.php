@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Http\Requests\Transport\CreateTransportRequest;
-use App\Http\Requests\Transport\CreateUpdateTransportRequest;
 use App\Http\Requests\Transport\UpdateTransportRequest;
 use App\Http\Requests\UuidRequest;
 use App\Models\Transport;
@@ -19,38 +18,40 @@ class TransportService
     public function create(CreateTransportRequest $request): Transport
     {
         $transport = Transport::create([
-            'driver_id'   => $request->driver_id,
-            'type'        => $request->type,
-            'number'      => $request->number,
-            'model'       => $request->model,
+            'driver_id' => $request->driver_id,
+            'type' => $request->type,
+            'number' => $request->number,
+            'model' => $request->model,
             'description' => $request->description,
-            'free'        => $request->free,
-            'is_active'   => $request->is_active,
-            'capacity'    => $request->capacity,
-            'volume_cm'   => $request->volume_cm,
+            'free' => $request->free,
+            'is_active' => $request->is_active,
+            'capacity' => $request->capacity,
+            'volume_cm' => $request->volume_cm,
         ]);
 
         return $transport;
     }
 
-    public function show (UuidRequest $request):Transport
+    public function show(UuidRequest $request): Transport
     {
         $transport = Transport::findOrFail($request->id);
+
         return $transport;
     }
 
     public function update(UpdateTransportRequest $request, Transport $transport): Transport
     {
         $transport->update([
-           $request->all()
+            $request->all(),
         ]);
 
         return $transport;
     }
 
-    public function delete (Transport $transport): string
+    public function delete(Transport $transport): string
     {
         $transport->delete();
+
         return 'Транспорт удалён';
     }
 }

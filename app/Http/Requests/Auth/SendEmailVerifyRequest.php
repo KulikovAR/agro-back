@@ -14,7 +14,7 @@ class SendEmailVerifyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => $this->emailInputRules()
+            'email' => $this->emailInputRules(),
         ];
     }
 
@@ -28,7 +28,7 @@ class SendEmailVerifyRequest extends FormRequest
                         __('validation.unique', ['attribute' => 'email'])
                     );
                 }
-            }
+            },
         ];
     }
 

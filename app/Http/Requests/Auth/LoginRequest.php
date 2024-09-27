@@ -4,7 +4,6 @@ namespace App\Http\Requests\Auth;
 
 use App\Traits\EmailPasswordRules;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Validator;
 
 class LoginRequest extends FormRequest
 {
@@ -18,9 +17,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "phone_number"   => ["regex:/^\+7\d{10}$/", 'string', 'required'],
+            'phone_number' => ["regex:/^\+7\d{10}$/", 'string', 'required'],
         ];
     }
-
-
 }

@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserProfile extends Model
 {
-
     use HasFactory, HasUuids;
+
     protected $table = 'userinfos';
+
     protected $fillable = [
         'id',
         'inn',
@@ -34,9 +35,8 @@ class UserProfile extends Model
         'password',
     ];
 
-
-    public function user():BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class,'user_id','id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

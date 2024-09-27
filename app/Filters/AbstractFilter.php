@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Filters;
-
 
 use Illuminate\Database\Eloquent\Builder;
 
@@ -10,11 +8,11 @@ abstract class AbstractFilter implements FilterInterface
 {
     /** @var array */
     private $queryParams = [];
+
     protected $delimiter = ',';
+
     /**
      * AbstractFilter constructor.
-     *
-     * @param array $queryParams
      */
     public function __construct(array $queryParams)
     {
@@ -34,17 +32,12 @@ abstract class AbstractFilter implements FilterInterface
         }
     }
 
-    /**
-     * @param Builder $builder
-     */
     protected function before(Builder $builder)
     {
     }
 
     /**
-     * @param string $key
-     * @param mixed|null $default
-     *
+     * @param  mixed|null  $default
      * @return mixed|null
      */
     protected function getQueryParam(string $key, $default = null)
@@ -53,8 +46,7 @@ abstract class AbstractFilter implements FilterInterface
     }
 
     /**
-     * @param string[] $keys
-     *
+     * @param  string[]  $keys
      * @return AbstractFilter
      */
     protected function removeQueryParam(string ...$keys)
@@ -65,8 +57,9 @@ abstract class AbstractFilter implements FilterInterface
 
         return $this;
     }
+
     protected function paramToArray($param)
-{
-    return explode($this->delimiter, $param);
-}
+    {
+        return explode($this->delimiter, $param);
+    }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Docs\Schemas\TransportBrand;
 
-
 /**
  * @OA\Schema(
  *     title="TransportBrand",
  *     description="TransportBrand model",
+ *
  *     @OA\Xml(
  *         name="TransportBrand"
  *     )
@@ -25,6 +25,7 @@ class TransportBrand
      * @var string
      */
     private $id;
+
     /**
      * @OA\Property(
      *         property="name",
@@ -36,6 +37,7 @@ class TransportBrand
      * @var string
      */
     private $title;
+
     /**
      *     @OA\Property(
      *         property="class",
@@ -43,6 +45,7 @@ class TransportBrand
      *         description="Название",
      *         example="KAMAZ"
      *     ),
+     *
      * @var string
      */
     private $image;
@@ -54,7 +57,7 @@ class TransportBrand
      *         description="Изображение",
      *         example="https://via.placeholder.com/640x480.png/009966?text=suscipit"
      *     ),
+     *
      * @var string
      */
-
 }

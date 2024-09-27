@@ -11,7 +11,6 @@ class FileFilterRequest extends FormRequest
      * Determine if the user is authorized to make this request.
      */
 
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -20,7 +19,7 @@ class FileFilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-//            'sort' => ['string'],
+            //            'sort' => ['string'],
             'type' => ['string', FileTypeEnum::class],
         ];
     }

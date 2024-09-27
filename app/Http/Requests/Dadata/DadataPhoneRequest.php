@@ -22,7 +22,7 @@ class DadataPhoneRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => ['required','string']
+            'phone' => ['required', 'string'],
         ];
     }
 }

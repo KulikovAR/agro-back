@@ -17,18 +17,16 @@ enum ModerationStatusEnum: string
         ];
     }
 
-    public static function getModerationStatus($value): string|null
+    public static function getModerationStatus($value): ?string
     {
         if ($value != null) {
-        return match ($value) {
-            self::PENDING->value => 'На модерации',
-            self::APPROVED->value => 'Профиль подтвержден',
-            self::REJECTED->value => 'Профиль не подтвержден',
-        };
-    }
+            return match ($value) {
+                self::PENDING->value => 'На модерации',
+                self::APPROVED->value => 'Профиль подтвержден',
+                self::REJECTED->value => 'Профиль не подтвержден',
+            };
+        }
+
         return null;
     }
-
 }
-
-

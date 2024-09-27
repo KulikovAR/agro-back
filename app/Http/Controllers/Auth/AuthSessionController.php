@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Enums\StatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginEmailRequest;
 use App\Http\Responses\ApiJsonResponse;

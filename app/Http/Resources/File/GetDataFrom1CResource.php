@@ -21,7 +21,7 @@ class GetDataFrom1CResource extends JsonResource
             'path' => $this->path,
             'type' => $this->type,
             'id_1c' => $this->id_1c,
-//            'userFile' => new UserFileResource($this->userFile),
+            //            'userFile' => new UserFileResource($this->userFile),
         ];
     }
 }

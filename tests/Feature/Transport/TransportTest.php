@@ -4,14 +4,13 @@ namespace Tests\Feature\Transport;
 
 use App\Models\Driver;
 use App\Models\Transport;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class TransportTest extends TestCase
 {
-
     use WithFaker;
+
     /**
      * A basic feature test example.
      */
@@ -58,11 +57,10 @@ class TransportTest extends TestCase
         ]);
     }
 
-
     public function test_show_transport_api()
     {
         // Отправляем GET-запрос на /api/v1/transport
-        $response = $this->json('GET', route('transport.show',['id'=>Transport::first()->id]));
+        $response = $this->json('GET', route('transport.show', ['id' => Transport::first()->id]));
 
         // Проверяем статус ответа
         $response->assertStatus(200);
@@ -104,7 +102,7 @@ class TransportTest extends TestCase
     {
         // Создаем тестовые данные (замените на ваш способ создания данных)
         $driver = Driver::inRandomOrder('id')->first();
-        $number = $this->faker->randomLetter(). $this->faker->randomLetter() . $this->faker->randomNumber() . $this->faker->randomNumber() . $this->faker->randomNumber() .  $this->faker->randomLetter();
+        $number = $this->faker->randomLetter().$this->faker->randomLetter().$this->faker->randomNumber().$this->faker->randomNumber().$this->faker->randomNumber().$this->faker->randomLetter();
         $yourData = [
             'driver_id' => $driver->id,
             'is_active' => true,
@@ -170,7 +168,7 @@ class TransportTest extends TestCase
         ];
 
         // Отправляем POST-запрос на создание экземпляра модели
-        $response = $this->json('PUT', route('transport.update',['transport'=>Transport::first()->id]), $yourData);
+        $response = $this->json('PUT', route('transport.update', ['transport' => Transport::first()->id]), $yourData);
 
         // Проверяем статус ответа
         $response->assertStatus(200);
@@ -213,8 +211,8 @@ class TransportTest extends TestCase
     {
         // Создаем тестовую запись в базе данных
         $driver = Driver::inRandomOrder('id')->first();
-        $number = $this->faker->randomLetter(). $this->faker->randomLetter() . $this->faker->randomNumber() . $this->faker->randomNumber() . $this->faker->randomNumber() .  $this->faker->randomLetter();
-        $model = Transport::create( [
+        $number = $this->faker->randomLetter().$this->faker->randomLetter().$this->faker->randomNumber().$this->faker->randomNumber().$this->faker->randomNumber().$this->faker->randomLetter();
+        $model = Transport::create([
             'driver_id' => $driver->id,
             'is_active' => true,
             'type' => 1,
@@ -227,19 +225,17 @@ class TransportTest extends TestCase
         ]);
 
         // Отправляем DELETE-запрос на endpoint, который обрабатывает удаление ресурса
-        $response = $this->delete(route('transport.delete',['transport'=>$model->id])); // Замените на ваш реальный маршрут
+        $response = $this->delete(route('transport.delete', ['transport' => $model->id])); // Замените на ваш реальный маршрут
 
         // Проверяем, что удаление прошло успешно
         $response->assertStatus(200)
-                 ->assertJson([
-                    'status' => 'OK',
-                    'message' => 'Транспорт удалён',
-                    'data' => [],
-                 ]);
+            ->assertJson([
+                'status' => 'OK',
+                'message' => 'Транспорт удалён',
+                'data' => [],
+            ]);
 
         // Проверяем, что запись действительно удалена из базы данных
-        $this->assertDatabaseMissing('transports', ['id'=>$model->id]); // Замените на вашу таблицу
+        $this->assertDatabaseMissing('transports', ['id' => $model->id]); // Замените на вашу таблицу
     }
-
-    
 }

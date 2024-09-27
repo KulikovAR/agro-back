@@ -22,8 +22,8 @@ class RegistrationSmsCodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "phone_number"   => ["regex:/^\+7\d{10}$/", 'string', 'required'],
-            "code"           => ['string','required'],
+            'phone_number' => ["regex:/^\+7\d{10}$/", 'string', 'required'],
+            'code' => ['string', 'required'],
         ];
     }
 }

@@ -22,9 +22,9 @@ class GetProductFilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'types'   => ['required','array'],
+            'types' => ['required', 'array'],
             'types.*' => ['string'],
-            
+
         ];
     }
 }

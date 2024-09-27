@@ -19,7 +19,7 @@ class DriverResource extends JsonResource
             'id' => $this->id,
             'user' => new UserResource($this->user),
             'company_id' => $this->company_id,
-            'is_active'  => $this->is_active
+            'is_active' => $this->is_active,
         ];
     }
 }

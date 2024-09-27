@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 class Transport extends Model
 {
     use HasFactory,HasUuids;
-    
+
     protected $fillable = [
         'driver_id',
         'is_active',
@@ -21,16 +21,16 @@ class Transport extends Model
         'description',
         'free',
         'volume_cm',
-        'capacity'
+        'capacity',
     ];
+
     public function driver(): BelongsTo
     {
-       return $this->belongsTo(Driver::class);
+        return $this->belongsTo(Driver::class);
     }
 
-    public function user():HasOneThrough
+    public function user(): HasOneThrough
     {
-        return $this->hasOneThrough(User::class,Driver::class,'id','id','driver_id','user_id');
+        return $this->hasOneThrough(User::class, Driver::class, 'id', 'id', 'driver_id', 'user_id');
     }
-    
 }

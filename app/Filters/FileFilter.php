@@ -3,14 +3,13 @@
 namespace App\Filters;
 
 use App\Models\File;
-use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder;
 
 class FileFilter extends AbstractFilter
 {
     public const TYPE = 'type';
-    public const SORT = 'sort';
 
+    public const SORT = 'sort';
 
     protected function getCallbacks(): array
     {
@@ -31,7 +30,7 @@ class FileFilter extends AbstractFilter
 
         $field = trim($value, '-');
 
-        if (!in_array($field, File::sortFields())) {
+        if (! in_array($field, File::sortFields())) {
             return;
         }
 

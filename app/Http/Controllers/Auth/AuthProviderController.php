@@ -19,14 +19,15 @@ class AuthProviderController extends Controller
     public function redirectToProvider(AuthProviderRequest $request)
     {
         $providerName = $request->validated();
-        $urlRedirect  = url(route('provider.callback', $providerName));
+        $urlRedirect = url(route('provider.callback', $providerName));
+
         return Socialite::driver($providerName)->redirectUrl($urlRedirect)->stateless()->redirect();
     }
 
     public function loginOrRegister(AuthProviderRequest $request)
     {
         $providerName = $request->validated();
-        $userData     = Socialite::driver($providerName)->stateless()->user();
+        $userData = Socialite::driver($providerName)->stateless()->user();
 
         return $this->authProvider->authenticate($userData);
     }

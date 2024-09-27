@@ -4,6 +4,6 @@ namespace App\Enums;
 
 enum ParserProductTypeEnum: int
 {
-    case WHEAT          = 1;
-    case BARLEY         = 2;
+    case WHEAT = 1;
+    case BARLEY = 2;
 }

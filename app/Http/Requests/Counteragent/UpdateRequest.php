@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Counteragent;
 
-use App\Enums\ModerationStatusEnum;
 use App\Enums\OrganizationTypeEnum;
 use App\Enums\TaxSystemEnum;
 use Illuminate\Foundation\Http\FormRequest;
@@ -13,7 +12,6 @@ class UpdateRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-
 
     /**
      * Get the validation rules that apply to the request.
@@ -39,8 +37,8 @@ class UpdateRequest extends FormRequest
                 'string',
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::COMPANY->value,
-                    ['regex:/^\d{9}$/','required']
-                )
+                    ['regex:/^\d{9}$/', 'required']
+                ),
             ],
             'ogrn' => [
                 'required',
@@ -52,7 +50,7 @@ class UpdateRequest extends FormRequest
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::COMPANY->value,
                     'regex:/^\d{13}$/'
-                )
+                ),
             ],
             'short_name' => ['required', 'string'],
             'full_name' => ['required', 'string'],
@@ -83,7 +81,7 @@ class UpdateRequest extends FormRequest
                 Rule::when(
                     $this->input('type') == OrganizationTypeEnum::COMPANY->value,
                     'regex:/^\d{10}$/'
-                )
+                ),
             ],
         ];
     }

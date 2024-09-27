@@ -4,7 +4,6 @@ namespace App\Docs\Order;
 
 class OrderController
 {
-
     /**
      * @OA\Get(
      *      path="/orders",
@@ -12,10 +11,13 @@ class OrderController
      *      tags={"Orders"},
      *      summary="Get list of orders",
      *      description="Returns list of orders",
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(
      *                  property="status",
      *                  type="string",
@@ -29,7 +31,9 @@ class OrderController
      *              @OA\Property(
      *                  property="data",
      *                  type="array",
+     *
      *                  @OA\Items(
+     *
      *                      @OA\Property(
      *                          property="id",
      *                          type="string",
@@ -129,19 +133,24 @@ class OrderController
      *      tags={"Orders"},
      *      summary="Get order by ID",
      *      description="Returns a single order by its ID",
+     *
      *      @OA\Parameter(
      *          name="id",
      *          in="path",
      *          required=true,
      *          description="ID of the order",
+     *
      *          @OA\Schema(
      *              type="string",
      *          ),
      *      ),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(
      *                  property="status",
      *                  type="string",
@@ -155,7 +164,9 @@ class OrderController
      *              @OA\Property(
      *                  property="data",
      *                  type="array",
+     *
      *                  @OA\Items(
+     *
      *                      @OA\Property(
      *                          property="crop",
      *                          type="string",
@@ -380,7 +391,9 @@ class OrderController
      *                      @OA\Property(
      *                          property="load_types",
      *                          type="array",
+     *
      *                          @OA\Items(
+     *
      *                              @OA\Property(
      *                                  property="id",
      *                                  type="string",
@@ -397,6 +410,7 @@ class OrderController
      *              )
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=404,
      *          description="Order not found"
@@ -415,11 +429,14 @@ class OrderController
      *      tags={"Orders"},
      *      summary="Create a new order",
      *      description="Creates a new order with the provided data",
+     *
      *      @OA\RequestBody(
      *          required=true,
      *          description="Order data",
+     *
      *          @OA\JsonContent(
      *              required={"crop","volume","distance","tariff","nds_percent","terminal_name","terminal_address","terminal_inn","exporter_name","exporter_inn","is_semi_truck","is_tonar","scale_length","height_limit","is_overload","timeslot","outage_begin","outage_price","daily_load_rate","contact_name","contact_phone","cargo_shortage_rate","unit_of_measurement_for_cargo_shortage_rate","cargo_price","load_place","approach","work_time","clarification_of_the_weekend","loader_power","load_method","tolerance_to_the_norm","start_order_at","end_order_at","load_latitude","load_longitude","unload_latitude","unload_longitude","load_place_name","unload_place_name","cargo_weight","description","load_types"},
+     *
      *              @OA\Property(property="crop", type="string", example="corn"),
      *              @OA\Property(property="volume", type="string", example="1000 kg"),
      *              @OA\Property(property="distance", type="integer", example=50),
@@ -467,16 +484,21 @@ class OrderController
      *              @OA\Property(property="load_types", type="array", @OA\Items(type="string", example="type1")),
      *          ),
      *      ),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="status", type="string", example="OK"),
      *              @OA\Property(property="message", type="string", example="Заявка создана"),
      *              @OA\Property(
      *                  property="data",
      *                  type="array",
+     *
      *                  @OA\Items(
+     *
      *                      @OA\Property(property="id", type="string", example="9bb23060-4d95-4832-ad93-9dd8170e59e2"),
      *                      @OA\Property(property="order_number", type="null")
      *                  )
@@ -497,21 +519,26 @@ class OrderController
      *      tags={"Orders"},
      *      summary="Update an existing order",
      *      description="Updates an existing order with the provided data",
+     *
      *      @OA\Parameter(
      *          name="id",
      *          in="path",
      *          required=true,
      *          description="ID of the order to update",
+     *
      *          @OA\Schema(
      *              type="string",
      *              format="uuid"
      *          )
      *      ),
+     *
      *      @OA\RequestBody(
      *          required=true,
      *          description="Order data",
+     *
      *          @OA\JsonContent(
      *              required={"crop","volume","distance","tariff","nds_percent","terminal_name","terminal_address","terminal_inn","exporter_name","exporter_inn","is_semi_truck","is_tonar","scale_length","height_limit","is_overload","timeslot","outage_begin","outage_price","daily_load_rate","contact_name","contact_phone","cargo_shortage_rate","unit_of_measurement_for_cargo_shortage_rate","cargo_price","load_place","approach","work_time","clarification_of_the_weekend","loader_power","load_method","tolerance_to_the_norm","start_order_at","end_order_at","load_latitude","load_longitude","unload_latitude","unload_longitude","load_place_name","unload_place_name","cargo_weight","description","load_types"},
+     *
      *              @OA\Property(property="crop", type="string", example="corn"),
      *              @OA\Property(property="volume", type="string", example="1000 kg"),
      *              @OA\Property(property="distance", type="integer", example=50),
@@ -559,10 +586,13 @@ class OrderController
      *              @OA\Property(property="load_types", type="array", @OA\Items(type="string", example="type1")),
      *          ),
      *      ),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="status", type="string", example="OK"),
      *              @OA\Property(property="message", type="string", example="Заявка получена"),
      *              @OA\Property(
@@ -616,25 +646,30 @@ class OrderController
      *              ),
      *          ),
      *      ),
+     *
      *      @OA\Response(
      *          response=404,
      *          description="Order not found",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="status", type="string", example="Error"),
      *              @OA\Property(property="message", type="string", example="Order not found")
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=422,
      *          description="Invalid data provided",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="status", type="string", example="Error"),
      *              @OA\Property(property="message", type="string", example="Invalid data provided")
      *          )
      *      )
      * )
      */
-
     public function update()
     {
 
@@ -647,36 +682,43 @@ class OrderController
      *      tags={"Orders"},
      *      summary="Delete an existing order",
      *      description="Deletes an existing order",
+     *
      *      @OA\Parameter(
      *          name="id",
      *          in="path",
      *          required=true,
      *          description="ID of the order to delete",
+     *
      *          @OA\Schema(
      *              type="string",
      *              format="uuid"
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="status", type="string", example="OK"),
      *              @OA\Property(property="message", type="string", example="Заявка удалена"),
      *              @OA\Property(property="data", type="array", @OA\Items())
      *          )
      *      ),
+     *
      *      @OA\Response(
      *          response=404,
      *          description="Order not found",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="status", type="string", example="Error"),
      *              @OA\Property(property="message", type="string", example="Order not found")
      *          )
      *      )
      * )
      */
-
     public function delete()
     {
 
@@ -687,11 +729,14 @@ class OrderController
      *     path="/load_types/",
      *     summary="Получить список типов загрузок",
      *     tags={"Load Types"},
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Список типов загрузок",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(
      *                 property="status",
      *                 type="string",
@@ -705,8 +750,10 @@ class OrderController
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
+     *
      *                 @OA\Items(
      *                     type="object",
+     *
      *                     @OA\Property(
      *                         property="id",
      *                         type="string",
@@ -723,23 +770,24 @@ class OrderController
      *     )
      * )
      */
-
     public function getLoadTypes()
     {
 
     }
-
 
     /**
      * @OA\Get(
      *     path="/orders/regions",
      *     summary="Retrieve a list of regions for orders",
      *     tags={"Orders"},
+     *
      *     @OA\Response(
      *         response=200,
      *         description="A list of regions retrieved successfully",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(
      *                 property="status",
      *                 type="string",
@@ -753,6 +801,7 @@ class OrderController
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
+     *
      *                 @OA\Items(type="string"),
      *                 example={"Liechtenstein", "Northern Mariana Islands", "Barbados", "Lesotho", "Moldova"}
      *             )
@@ -760,31 +809,35 @@ class OrderController
      *     ),
      * )
      */
-
-    public function getRegions() {
+    public function getRegions()
+    {
 
     }
-
 
     /**
      * @OA\Get(
      *     path="/orders/cities",
      *     summary="Retrieve a list of cities for a specific region",
      *     tags={"Orders"},
+     *
      *     @OA\Parameter(
      *         name="region",
      *         in="query",
      *         required=true,
      *         description="Name of the region for which cities are to be retrieved",
+     *
      *         @OA\Schema(
      *             type="string"
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="A list of cities retrieved successfully",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(
      *                 property="status",
      *                 type="string",
@@ -798,6 +851,7 @@ class OrderController
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
+     *
      *                 @OA\Items(type="string"),
      *                 example={"Emmerichbury"}
      *             )
@@ -805,8 +859,8 @@ class OrderController
      *     ),
      * )
      */
-
-    public function getCities() {
+    public function getCities()
+    {
 
     }
 }

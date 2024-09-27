@@ -22,15 +22,15 @@ class CreateTransportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'driver_id'        => ['required', 'string', 'exists:drivers,id'],
-            'type'             => ['integer','required'],
-            'number'           => ['required', 'string'],
-            'model'            => ['required', 'string'],
-            'description'      => ['string'],
-            'free'             => ['boolean', 'required'],
-            'is_active'        => ['boolean', 'required'],
-            'capacity'         => ['integer', 'required'],
-            'volume_cm'        => ['string', 'required'],
+            'driver_id' => ['required', 'string', 'exists:drivers,id'],
+            'type' => ['integer', 'required'],
+            'number' => ['required', 'string'],
+            'model' => ['required', 'string'],
+            'description' => ['string'],
+            'free' => ['boolean', 'required'],
+            'is_active' => ['boolean', 'required'],
+            'capacity' => ['integer', 'required'],
+            'volume_cm' => ['string', 'required'],
         ];
-    }   
+    }
 }

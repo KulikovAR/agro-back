@@ -8,111 +8,161 @@ use Illuminate\Database\Eloquent\Builder;
 class OrderFilter extends AbstractFilter
 {
     public const CROP = 'crop';
+
     public const VOLUME = 'volume';
+
     public const DISTANCE_FROM = 'distance_from';
+
     public const DISTANCE_TO = 'distance_to';
+
     public const TARIFF = 'tariff';
+
     public const NDS_PERCENT = 'nds_percent';
+
     public const TERMINAL_NAME = 'terminal_name';
+
     public const TERMINAL_ADDRESS = 'terminal_address';
+
     public const TERMINAL_INN = 'terminal_inn';
+
     public const EXPORTER_NAME = 'exporter_name';
+
     public const EXPORTER_INN = 'exporter_inn';
+
     public const SCALE_LENGTH = 'scale_length';
+
     public const HEIGHT_LIMIT = 'height_limit';
+
     public const IS_OVERLOAD = 'is_overload';
+
     public const TIMESLOT = 'timeslot';
+
     public const OUTAGE_BEGIN = 'outage_begin';
+
     public const OUTAGE_PRICE = 'outage_price';
+
     public const DAILY_LOAD_RATE = 'daily_load_rate';
+
     public const CONTACT_NAME = 'contact_name';
+
     public const CONTACT_PHONE = 'contact_phone';
+
     public const CARGO_SHORTAGE_RATE = 'cargo_shortage_rate';
+
     public const UNIT_OF_MEASUREMENT_FOR_CARGO_SHORTAGE_RATE = 'unit_of_measurement_for_cargo_shortage_rate';
+
     public const CARGO_PRICE = 'cargo_price';
+
     public const LOAD_PLACE = 'load_place';
+
     public const APPROACH = 'approach';
+
     public const WORK_TIME = 'work_time';
+
     public const IS_LOAD_IN_WEEKEND = 'is_load_in_weekend';
+
     public const CLARIFICATION_OF_THE_WEEKEND = 'clarification_of_the_weekend';
+
     public const LOADER_POWER = 'loader_power';
+
     public const LOAD_METHOD = 'load_method';
+
     public const TOLERANCE_TO_THE_NORM = 'tolerance_to_the_norm';
+
     public const START_ORDER_AT = 'start_order_at';
+
     public const END_ORDER_AT = 'end_order_at';
+
     public const LOAD_LATITUDE = 'load_latitude';
+
     public const LOAD_LONGITUDE = 'load_longitude';
+
     public const UNLOAD_LATITUDE = 'unload_latitude';
+
     public const UNLOAD_LONGITUDE = 'unload_longitude';
+
     public const LOAD_PLACE_NAME = 'load_place_name';
+
     public const UNLOAD_PLACE_NAME = 'unload_place_name';
+
     public const DESCRIPTION = 'description';
+
     public const LOAD_TYPES = 'load_types';
+
     public const UNLOAD_METHODS = 'unload_methods';
+
     public const LOAD_REGION = 'load_region';
+
     public const LOAD_CITY = 'load_city';
+
     public const UNLOAD_REGION = 'unload_region';
+
     public const UNLOAD_CITY = 'unload_city';
+
     public const WITH_NDS = 'with_nds';
+
     public const SORT = 'sort';
+
     public const IS_FULL_CHARTER = 'is_full_charter';
+
     public const TARIFF_FROM = 'tariff_from';
+
     public const TARIFF_TO = 'tariff_to';
 
     protected function getCallbacks(): array
     {
         return [
-            self::CROP                                        => [$this, 'crop'],
-            self::VOLUME                                      => [$this, 'volume'],
-            self::DISTANCE_FROM                               => [$this, 'distance_from'],
-            self::DISTANCE_TO                                 => [$this, 'distance_to'],
-            self::TARIFF                                      => [$this, 'tariff'],
-            self::NDS_PERCENT                                 => [$this, 'nds_percent'],
-            self::TERMINAL_NAME                               => [$this, 'terminal_name'],
-            self::TERMINAL_ADDRESS                            => [$this, 'terminal_address'],
-            self::TERMINAL_INN                                => [$this, 'terminal_inn'],
-            self::EXPORTER_NAME                               => [$this, 'exporter_name'],
-            self::EXPORTER_INN                                => [$this, 'exporter_inn'],
-            self::SCALE_LENGTH                                => [$this, 'scale_length'],
-            self::HEIGHT_LIMIT                                => [$this, 'height_limit'],
-            self::IS_OVERLOAD                                 => [$this, 'is_overload'],
-            self::TIMESLOT                                    => [$this, 'timeslot'],
-            self::OUTAGE_BEGIN                                => [$this, 'outage_begin'],
-            self::OUTAGE_PRICE                                => [$this, 'outage_price'],
-            self::DAILY_LOAD_RATE                             => [$this, 'daily_load_rate'],
-            self::CONTACT_NAME                                => [$this, 'contact_name'],
-            self::CONTACT_PHONE                               => [$this, 'contact_phone'],
-            self::CARGO_SHORTAGE_RATE                         => [$this, 'cargo_shortage_rate'],
+            self::CROP => [$this, 'crop'],
+            self::VOLUME => [$this, 'volume'],
+            self::DISTANCE_FROM => [$this, 'distance_from'],
+            self::DISTANCE_TO => [$this, 'distance_to'],
+            self::TARIFF => [$this, 'tariff'],
+            self::NDS_PERCENT => [$this, 'nds_percent'],
+            self::TERMINAL_NAME => [$this, 'terminal_name'],
+            self::TERMINAL_ADDRESS => [$this, 'terminal_address'],
+            self::TERMINAL_INN => [$this, 'terminal_inn'],
+            self::EXPORTER_NAME => [$this, 'exporter_name'],
+            self::EXPORTER_INN => [$this, 'exporter_inn'],
+            self::SCALE_LENGTH => [$this, 'scale_length'],
+            self::HEIGHT_LIMIT => [$this, 'height_limit'],
+            self::IS_OVERLOAD => [$this, 'is_overload'],
+            self::TIMESLOT => [$this, 'timeslot'],
+            self::OUTAGE_BEGIN => [$this, 'outage_begin'],
+            self::OUTAGE_PRICE => [$this, 'outage_price'],
+            self::DAILY_LOAD_RATE => [$this, 'daily_load_rate'],
+            self::CONTACT_NAME => [$this, 'contact_name'],
+            self::CONTACT_PHONE => [$this, 'contact_phone'],
+            self::CARGO_SHORTAGE_RATE => [$this, 'cargo_shortage_rate'],
             self::UNIT_OF_MEASUREMENT_FOR_CARGO_SHORTAGE_RATE => [$this, 'unit_of_measurement_for_cargo_shortage_rate'],
-            self::CARGO_PRICE                                 => [$this, 'cargo_price'],
-            self::LOAD_PLACE                                  => [$this, 'load_place'],
-            self::APPROACH                                    => [$this, 'approach'],
-            self::WORK_TIME                                   => [$this, 'work_time'],
-            self::IS_LOAD_IN_WEEKEND                          => [$this, 'is_load_in_weekend'],
-            self::CLARIFICATION_OF_THE_WEEKEND                => [$this, 'clarification_of_the_weekend'],
-            self::LOADER_POWER                                => [$this, 'loader_power'],
-            self::LOAD_METHOD                                 => [$this, 'load_method'],
-            self::TOLERANCE_TO_THE_NORM                       => [$this, 'tolerance_to_the_norm'],
-            self::START_ORDER_AT                              => [$this, 'start_order_at'],
-            self::END_ORDER_AT                                => [$this, 'end_order_at'],
-            self::LOAD_LATITUDE                               => [$this, 'load_latitude'],
-            self::LOAD_LONGITUDE                              => [$this, 'load_longitude'],
-            self::UNLOAD_LATITUDE                             => [$this, 'unload_latitude'],
-            self::UNLOAD_LONGITUDE                            => [$this, 'unload_longitude'],
-            self::LOAD_PLACE_NAME                             => [$this, 'load_place_name'],
-            self::UNLOAD_PLACE_NAME                           => [$this, 'unload_place_name'],
-            self::DESCRIPTION                                 => [$this, 'description'],
-            self::LOAD_TYPES                                  => [$this, 'load_types'],
-            self::UNLOAD_METHODS                              => [$this, 'unload_methods'],
-            self::LOAD_REGION                                 => [$this, 'load_region'],
-            self::LOAD_CITY                                   => [$this, 'load_city'],
-            self::UNLOAD_REGION                               => [$this, 'unload_region'],
-            self::UNLOAD_CITY                                 => [$this, 'unload_city'],
-            self::WITH_NDS                                    => [$this, 'with_nds'],
-            self::SORT                                        => [$this, 'sort'],
-            self::TARIFF_FROM                                 => [$this, 'tariff_from'],
-            self::TARIFF_TO                                   => [$this, 'tariff_to'],
-            self::IS_FULL_CHARTER                             => [$this, 'is_full_charter'],
+            self::CARGO_PRICE => [$this, 'cargo_price'],
+            self::LOAD_PLACE => [$this, 'load_place'],
+            self::APPROACH => [$this, 'approach'],
+            self::WORK_TIME => [$this, 'work_time'],
+            self::IS_LOAD_IN_WEEKEND => [$this, 'is_load_in_weekend'],
+            self::CLARIFICATION_OF_THE_WEEKEND => [$this, 'clarification_of_the_weekend'],
+            self::LOADER_POWER => [$this, 'loader_power'],
+            self::LOAD_METHOD => [$this, 'load_method'],
+            self::TOLERANCE_TO_THE_NORM => [$this, 'tolerance_to_the_norm'],
+            self::START_ORDER_AT => [$this, 'start_order_at'],
+            self::END_ORDER_AT => [$this, 'end_order_at'],
+            self::LOAD_LATITUDE => [$this, 'load_latitude'],
+            self::LOAD_LONGITUDE => [$this, 'load_longitude'],
+            self::UNLOAD_LATITUDE => [$this, 'unload_latitude'],
+            self::UNLOAD_LONGITUDE => [$this, 'unload_longitude'],
+            self::LOAD_PLACE_NAME => [$this, 'load_place_name'],
+            self::UNLOAD_PLACE_NAME => [$this, 'unload_place_name'],
+            self::DESCRIPTION => [$this, 'description'],
+            self::LOAD_TYPES => [$this, 'load_types'],
+            self::UNLOAD_METHODS => [$this, 'unload_methods'],
+            self::LOAD_REGION => [$this, 'load_region'],
+            self::LOAD_CITY => [$this, 'load_city'],
+            self::UNLOAD_REGION => [$this, 'unload_region'],
+            self::UNLOAD_CITY => [$this, 'unload_city'],
+            self::WITH_NDS => [$this, 'with_nds'],
+            self::SORT => [$this, 'sort'],
+            self::TARIFF_FROM => [$this, 'tariff_from'],
+            self::TARIFF_TO => [$this, 'tariff_to'],
+            self::IS_FULL_CHARTER => [$this, 'is_full_charter'],
         ];
     }
 
@@ -189,7 +239,6 @@ class OrderFilter extends AbstractFilter
         $builder->where('exporter_inn', $value);
     }
 
-
     public function scale_length(Builder $builder, $value)
     {
         $builder->where('scale_length', '>=', $value);
@@ -265,17 +314,14 @@ class OrderFilter extends AbstractFilter
         $builder->where('work_time', $value);
     }
 
-
     public function clarification_of_the_weekend(Builder $builder, $value)
     {
-        if($value == 'суббота и воскресенье'){
+        if ($value == 'суббота и воскресенье') {
             $builder->whereNotNull('clarification_of_the_weekend');
-        }
-        elseif ($value=='суббота') {
+        } elseif ($value == 'суббота') {
             $builder->where('clarification_of_the_weekend', 'суббота')
-            ->orWhere('clarification_of_the_weekend', 'суббота и воскресенье');
-        }
-        elseif ($value=='воскресенье') {
+                ->orWhere('clarification_of_the_weekend', 'суббота и воскресенье');
+        } elseif ($value == 'воскресенье') {
             $builder->where('clarification_of_the_weekend', 'воскресенье')
                 ->orWhere('clarification_of_the_weekend', 'суббота и воскресенье');
         }
@@ -379,6 +425,7 @@ class OrderFilter extends AbstractFilter
     {
         if ($value) {
             $builder->whereNotNull('nds_percent');
+
             return;
         }
 
@@ -391,7 +438,7 @@ class OrderFilter extends AbstractFilter
 
         $field = trim($value, '-');
 
-        if (!in_array($field, Order::sortFields())) {
+        if (! in_array($field, Order::sortFields())) {
             return;
         }
 

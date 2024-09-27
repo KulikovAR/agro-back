@@ -15,7 +15,7 @@ class ProductParserLogResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-          $this->created_at => $this->prices,  
+            $this->created_at => $this->prices,
         ];
     }
 }

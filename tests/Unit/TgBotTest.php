@@ -3,12 +3,11 @@
 namespace Tests\Unit;
 
 use App\Models\Offer;
-use App\Models\Order;
 use App\Services\OrderService;
 use Tests\TestCase;
+
 class TgBotTest extends TestCase
 {
-
     /*
      * @test
      */
@@ -17,6 +16,6 @@ class TgBotTest extends TestCase
         $offer = Offer::factory()->create();
         $service = new OrderService();
         $text = $service->textToBot($offer);
-        $this->assertTrue($text!=null);
+        $this->assertTrue($text != null);
     }
 }

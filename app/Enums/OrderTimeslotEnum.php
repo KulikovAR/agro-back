@@ -9,7 +9,7 @@ enum OrderTimeslotEnum: string
 
     public static function getTimselot(): array
     {
-        return  [
+        return [
             self::TARGET->value,
             self::IN_THE_PUBLIC_DOMAIN->value,
         ];

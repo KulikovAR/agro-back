@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
-    use HasFactory,DistinctValueTrait, Filterable;
+    use DistinctValueTrait,Filterable, HasFactory;
+
     protected $fillable = [
         'name',
         'idk',
@@ -29,9 +30,9 @@ class Product extends Model
         'exporter',
         'chinch',
     ];
+
     public function logs(): HasMany
     {
         return $this->hasMany(ProductLog::class);
-    }   
-
+    }
 }

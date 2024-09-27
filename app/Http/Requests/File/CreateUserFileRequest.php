@@ -3,7 +3,6 @@
 namespace App\Http\Requests\File;
 
 use App\Enums\FileTypeEnum;
-use App\Rules\MimeTypeValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

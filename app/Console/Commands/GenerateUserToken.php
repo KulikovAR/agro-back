@@ -27,11 +27,12 @@ class GenerateUserToken extends Command
      */
     public function handle()
     {
-        if (!is_null($this->argument('role'))) {
+        if (! is_null($this->argument('role'))) {
             $role = Role::where('name', $this->argument('role'))->first();
-            echo User::inRandomOrder()->role($role)->first()->createToken('')->plainTextToken . "\n";
+            echo User::inRandomOrder()->role($role)->first()->createToken('')->plainTextToken."\n";
+
             return;
         }
-        echo User::first()->createToken('')->plainTextToken . "\n";
+        echo User::first()->createToken('')->plainTextToken."\n";
     }
 }

@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Role;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
@@ -28,7 +27,7 @@ class RoleSeeder extends Seeder
                 'name' => 'logistician',
                 'slug' => 'logistician',
                 'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'updated_at' => Carbon::now(),
             ]
         );
 
@@ -37,7 +36,7 @@ class RoleSeeder extends Seeder
                 'name' => 'client',
                 'slug' => 'client',
                 'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'updated_at' => Carbon::now(),
             ]
         );
         $IC_role = Role::create(
@@ -45,7 +44,7 @@ class RoleSeeder extends Seeder
                 'name' => '1C',
                 'slug' => '1C',
                 'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'updated_at' => Carbon::now(),
             ]
         );
     }

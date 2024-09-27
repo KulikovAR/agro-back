@@ -2,11 +2,11 @@
 
 namespace App\Docs\Schemas\TransportType;
 
-
 /**
  * @OA\Schema(
  *     title="TransportType",
  *     description="TransportType model",
+ *
  *     @OA\Xml(
  *         name="TransportType"
  *     )
@@ -25,6 +25,7 @@ class TransportType
      * @var string
      */
     private $id;
+
     /**
      *     @OA\Property(
      *         property="class",
@@ -32,6 +33,7 @@ class TransportType
      *         description="Название",
      *         example="KAMAZ"
      *     ),
+     *
      * @var string
      */
     private $title;
@@ -45,6 +47,7 @@ class TransportType
      *         description="Тип",
      *         example="Fura"
      *     ),
+     *
      * @var string
      */
 }

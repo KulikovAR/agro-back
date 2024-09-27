@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class File extends Model
 {
-    use HasFactory,FileTrait,HasUuids,Filterable;
+    use FileTrait,Filterable,HasFactory,HasUuids;
 
     protected $fillable = [
         'path',
@@ -24,11 +24,11 @@ class File extends Model
         'name',
     ];
 
-
     const SORT = [
         'created_at',
         'is_signed',
     ];
+
     public function fileType(): HasOneThrough
     {
         return $this->hasOneThrough(FileType::class, UserFile::class, 'file_id', 'id', 'id', 'file_type_id');

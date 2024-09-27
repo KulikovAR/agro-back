@@ -10,11 +10,12 @@ use stdClass;
 class ApiJsonResponse implements Responsable
 {
     public function __construct(
-        public readonly int          $httpCode = 200,
-        public readonly StatusEnum   $status = StatusEnum::OK,
-        public readonly string       $message = "",
+        public readonly int $httpCode = 200,
+        public readonly StatusEnum $status = StatusEnum::OK,
+        public readonly string $message = '',
         public readonly object|array $data = new stdClass(),
-    ) {}
+    ) {
+    }
 
     public function toResponse($request): JsonResponse
     {
@@ -24,11 +25,12 @@ class ApiJsonResponse implements Responsable
         );
     }
 
-    protected function getData() {
+    protected function getData()
+    {
         return [
-            "status"  => $this->status->value,
-            "message" => $this->message,
-            "data"    => $this->data
+            'status' => $this->status->value,
+            'message' => $this->message,
+            'data' => $this->data,
         ];
-    } 
+    }
 }

@@ -14,6 +14,6 @@ class Setting extends Model
         'tag',
         'field_name',
         'field_description',
-        'data'
+        'data',
     ];
 }

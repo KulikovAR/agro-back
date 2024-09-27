@@ -4,7 +4,6 @@ namespace App\Docs\BankAccount;
 
 class BankAccountController
 {
-
     /**
      * @OA\Get(
      *     path="/bank-accounts/",
@@ -12,31 +11,41 @@ class BankAccountController
      *     description="Получение перевозчиком своих счетов",
      *     tags={"Bank Accounts"},
      *          security={{"bearerAuth": {}}},
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Bank accounts retrieved successfully",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="string", example="OK"),
      *             @OA\Property(property="message", type="string", example="Все банковские счета пользователя получены"),
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
+     *
      *                 @OA\Items(ref="#/components/schemas/BankAccount")
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      * *         response=404,
      * *         description="Not Found",
+     *
      * *         @OA\JsonContent(
+     *
      * *             @OA\Property(property="message", type="string", example="Запись не найдена")
      * *         )
      * *     ),
+     *
      * *     @OA\Response(
      * *         response=401,
      * *         description="Unauthorized",
+     *
      * *         @OA\JsonContent(
+     *
      * *             @OA\Property(property="message", type="string", example="Пользователь не авторизован")
      * *         )
      * *     )
@@ -46,7 +55,6 @@ class BankAccountController
     {
     }
 
-
     /**
      * @OA\Get(
      *     path="/bank-accounts/{id}",
@@ -54,21 +62,26 @@ class BankAccountController
      *     description="Получение перевозчиком своего счёта",
      *     tags={"Bank Accounts"},
      *          security={{"bearerAuth": {}}},
+     *
      *          @OA\Parameter(
      *          name="id",
      *          in="path",
      *          required=true,
      *          description="ID of the bank account",
+     *
      *          @OA\Schema(
      *              type="string",
      *              format="uuid"
      *          )
      *      ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Bank account retrieved successfully",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="string", example="OK"),
      *             @OA\Property(property="message", type="string", example="Банковский счёт пользователя получен"),
      *             @OA\Property(
@@ -86,17 +99,23 @@ class BankAccountController
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      * *         response=404,
      * *         description="Not Found",
+     *
      * *         @OA\JsonContent(
+     *
      * *             @OA\Property(property="message", type="string", example="Запись не найдена")
      * *         )
      * *     ),
+     *
      * *     @OA\Response(
      * *         response=401,
      * *         description="Unauthorized",
+     *
      * *         @OA\JsonContent(
+     *
      * *             @OA\Property(property="message", type="string", example="Пользователь не авторизован")
      * *         )
      * *     )
@@ -113,11 +132,14 @@ class BankAccountController
      *     description="Create a new bank account for a user.",
      *     tags={"Bank Accounts"},
      *          security={{"bearerAuth": {}}},
+     *
      *     @OA\RequestBody(
      *         required=true,
      *         description="Bank account details",
+     *
      *         @OA\JsonContent(
      *             required={"is_main", "bik", "correspondent_number", "title", "number"},
+     *
      *             @OA\Property(property="is_main", type="string", example="1"),
      *             @OA\Property(property="bik", type="string", example="2151235123"),
      *             @OA\Property(property="correspondent_number", type="string", example="5916590596703657"),
@@ -125,11 +147,14 @@ class BankAccountController
      *             @OA\Property(property="number", type="string", example="21516122")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=201,
      *         description="Bank account created successfully",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="string", example="OK"),
      *             @OA\Property(property="message", type="string", example="Банковский счёт создан"),
      *             @OA\Property(
@@ -147,17 +172,23 @@ class BankAccountController
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      * *         response=404,
      * *         description="Not Found",
+     *
      * *         @OA\JsonContent(
+     *
      * *             @OA\Property(property="message", type="string", example="Запись не найдена")
      * *         )
      * *     ),
+     *
      * *     @OA\Response(
      * *         response=401,
      * *         description="Unauthorized",
+     *
      * *         @OA\JsonContent(
+     *
      * *             @OA\Property(property="message", type="string", example="Пользователь не авторизован")
      * *         )
      * *     )
@@ -167,7 +198,6 @@ class BankAccountController
     {
     }
 
-
     /**
      * @OA\Put(
      *     path="/bank-accounts/{id}",
@@ -175,20 +205,25 @@ class BankAccountController
      *     description="Update an existing bank account for a user.",
      *     tags={"Bank Accounts"},
      *          security={{"bearerAuth": {}}},
+     *
      *          @OA\Parameter(
      *          name="id",
      *          in="path",
      *          required=true,
      *          description="ID of the bank account to delete",
+     *
      *          @OA\Schema(
      *              type="string",
      *              format="uuid"
      *          )
      *      ),
+     *
      *     @OA\RequestBody(
      *         required=true,
      *         description="Bank account details",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="is_main", type="string"),
      *             @OA\Property(property="bik", type="string"),
      *             @OA\Property(property="correspondent_number", type="string"),
@@ -196,11 +231,14 @@ class BankAccountController
      *             @OA\Property(property="number", type="string")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Bank account updated successfully",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="string", example="OK"),
      *             @OA\Property(property="message", type="string", example="Банковский счёт обновлён"),
      *             @OA\Property(
@@ -218,17 +256,23 @@ class BankAccountController
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      * *         response=404,
      * *         description="Not Found",
+     *
      * *         @OA\JsonContent(
+     *
      * *             @OA\Property(property="message", type="string", example="Запись не найдена")
      * *         )
      * *     ),
+     *
      * *     @OA\Response(
      * *         response=401,
      * *         description="Unauthorized",
+     *
      * *         @OA\JsonContent(
+     *
      * *             @OA\Property(property="message", type="string", example="Пользователь не авторизован")
      * *         )
      * *     )
@@ -245,37 +289,48 @@ class BankAccountController
      *     description="Delete an existing bank account by its ID.",
      *     tags={"Bank Accounts"},
      *          security={{"bearerAuth": {}}},
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
      *         description="ID of the bank account to delete",
+     *
      *         @OA\Schema(
      *             type="string",
      *             format="uuid"
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Bank account deleted successfully",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="string", example="OK"),
      *             @OA\Property(property="message", type="string", example="Банковский счёт удалён"),
      *             @OA\Property(property="data", type="array", @OA\Items())
      *         )
      *     ),
+     *
      *     @OA\Response(
      * *         response=404,
      * *         description="Not Found",
+     *
      * *         @OA\JsonContent(
+     *
      * *             @OA\Property(property="message", type="string", example="Запись не найдена")
      * *         )
      * *     ),
+     *
      * *     @OA\Response(
      * *         response=401,
      * *         description="Unauthorized",
+     *
      * *         @OA\JsonContent(
+     *
      * *             @OA\Property(property="message", type="string", example="Пользователь не авторизован")
      * *         )
      * *     )

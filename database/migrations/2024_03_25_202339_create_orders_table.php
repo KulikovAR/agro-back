@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -53,7 +54,7 @@ return new class extends Migration {
             $table->string('unload_longitude')->nullable();
             $table->string('load_place_name');
             $table->string('unload_place_name');
-//            $table->integer('cargo_weight');
+            //            $table->integer('cargo_weight');
             $table->boolean('is_full_charter')->nullable();
             $table->text('description')->nullable();
             $table->uuid('creator_id');

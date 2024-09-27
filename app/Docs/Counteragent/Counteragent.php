@@ -12,10 +12,13 @@ class Counteragent
      *     operationId="createCounteragent",
      *     tags={"Counteragents"},
      *     security={{"bearerAuth":{}}},
+     *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="type", type="string", example="ИП"),
      * *             @OA\Property(property="inn", type="string", example="123456789021"),
      * *             @OA\Property(property="name", type="string", example="Иван"),
@@ -45,11 +48,14 @@ class Counteragent
      * *             @OA\Property(property="issue_date_at", type="string", example="2023-01-01")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Контрагент создан",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="string", example="OK"),
      *             @OA\Property(property="message", type="string", example="Контрагент создан"),
      *             @OA\Property(
@@ -88,8 +94,10 @@ class Counteragent
      *                 @OA\Property(
      *                     property="roles",
      *                     type="array",
+     *
      *                     @OA\Items(
      *                         type="object",
+     *
      *                         @OA\Property(property="id", type="string", example="9c8dc716-13eb-445d-ae73-2cdd1740197b"),
      *                         @OA\Property(property="name", type="string", example="Клиент"),
      *                         @OA\Property(property="slug", type="string", example="client")
@@ -98,24 +106,31 @@ class Counteragent
      *                 @OA\Property(
      *                     property="files",
      *                     type="array",
+     *
      *                     @OA\Items(type="object")
      *                 )
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Вы не авторизованы",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="вы не авторизованы")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Запись не найдена",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="запись не найдена")
      *         )
      *     )
@@ -134,18 +149,22 @@ class Counteragent
      *     operationId="updateCounteragent",
      *     tags={"Counteragents"},
      *     security={{"bearerAuth":{}}},
+     *
      *               @OA\Parameter(
      *           name="id",
      *           in="path",
      *           required=true,
      *           description="ID of user",
+     *
      *           @OA\Schema(
      *               type="string",
      *               format="uuid"
      *           )
      *       ),
+     *
      *     @OA\RequestBody(
      *         required=false,
+     *
      *         @OA\JsonContent(
      *             type="object",
     @OA\Property(property="type", type="string", example="ИП"),
@@ -177,11 +196,14 @@ class Counteragent
      *              @OA\Property(property="issue_date_at", type="string", example="2023-01-01")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Контрагент обновлён",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="status", type="string", example="OK"),
      *             @OA\Property(property="message", type="string", example="Контрагент создан"),
      *             @OA\Property(
@@ -220,8 +242,10 @@ class Counteragent
      *                 @OA\Property(
      *                     property="roles",
      *                     type="array",
+     *
      *                     @OA\Items(
      *                         type="object",
+     *
      *                         @OA\Property(property="id", type="string", example="9c8dc716-13eb-445d-ae73-2cdd1740197b"),
      *                         @OA\Property(property="name", type="string", example="Клиент"),
      *                         @OA\Property(property="slug", type="string", example="client")
@@ -230,30 +254,36 @@ class Counteragent
      *                 @OA\Property(
      *                     property="files",
      *                     type="array",
+     *
      *                     @OA\Items(type="object")
      *                 )
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Вы не авторизованы",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="вы не авторизованы")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Запись не найдена",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="message", type="string", example="запись не найдена")
      *         )
      *     )
      * )
      */
-
     public function update()
     {
 

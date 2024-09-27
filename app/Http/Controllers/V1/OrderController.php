@@ -13,10 +13,8 @@ use App\Models\Order;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 
-
 class OrderController extends Controller
 {
-
     public function __construct(
         private OrderService $service
     ) {
@@ -32,7 +30,6 @@ class OrderController extends Controller
             data: $this->service->index($request)
         );
     }
-
 
     public function show(Order $order): ApiJsonResponse
     {
@@ -51,7 +48,7 @@ class OrderController extends Controller
             StatusEnum::OK,
             'Заявка создана',
             data: [
-                $this->service->create($request)
+                $this->service->create($request),
             ]
         );
     }
@@ -63,15 +60,15 @@ class OrderController extends Controller
             StatusEnum::OK,
             'Заявка обновлена',
             data: [
-                $this->service->update($request, $order)
+                $this->service->update($request, $order),
             ]
         );
     }
 
-
     public function delete(Order $order): ApiJsonResponse
     {
         $this->service->delete($order);
+
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
@@ -116,4 +113,3 @@ class OrderController extends Controller
 
     }
 }
-

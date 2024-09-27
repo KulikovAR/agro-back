@@ -2,8 +2,6 @@
 
 namespace App\Enums;
 
-use App\Models\FileType;
-
 enum FileTypeEnum: string
 {
     case ACT = 'Акт';
@@ -16,9 +14,10 @@ enum FileTypeEnum: string
     case PATENT = 'Патент';
     case USN = 'УСН';
     case NDS = 'НДС';
+
     public static function getValues(): array
     {
-        return array(
+        return [
             self::ACT->value,
             self::REQUEST->value,
             self::CONTRACT->value,
@@ -29,17 +28,17 @@ enum FileTypeEnum: string
             self::PATENT->value,
             self::USN->value,
             self::NDS->value,
-        );
+        ];
     }
 
-    public static function randomCase ()
+    public static function randomCase()
     {
-        $arr = array(
-        self::ACT->value,
-        self::REQUEST->value,
-        self::CONTRACT->value,
-    );
+        $arr = [
+            self::ACT->value,
+            self::REQUEST->value,
+            self::CONTRACT->value,
+        ];
+
         return $arr[array_rand($arr)];
     }
-
 }

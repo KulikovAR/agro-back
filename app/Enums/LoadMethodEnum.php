@@ -15,7 +15,7 @@ enum LoadMethodEnum: string
 
     public static function getLoadMethods(): array
     {
-        return  [
+        return [
             self::MANITU->value,
             self::GRAIN_MILL->value,
             self::KUN->value,
@@ -27,5 +27,3 @@ enum LoadMethodEnum: string
         ];
     }
 }
-
-

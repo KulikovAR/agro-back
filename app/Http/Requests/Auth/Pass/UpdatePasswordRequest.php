@@ -26,7 +26,7 @@ class UpdatePasswordRequest extends FormRequest
     {
         return [
             'current_password' => ['required', 'string', 'current_password:sanctum'],
-            'password'         => $this->passwordCreationRules(),
+            'password' => $this->passwordCreationRules(),
         ];
     }
 }

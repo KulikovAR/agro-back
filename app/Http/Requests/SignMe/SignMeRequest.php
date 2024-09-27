@@ -2,17 +2,13 @@
 
 namespace App\Http\Requests\SignMe;
 
-use App\Enums\OrganizationTypeEnum;
-use App\Enums\TaxSystemEnum;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class SignMeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
-
 
     /**
      * Get the validation rules that apply to the request.
@@ -22,7 +18,7 @@ class SignMeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'path' => ['required','string', 'exists:files,path']
+            'path' => ['required', 'string', 'exists:files,path'],
         ];
     }
 }

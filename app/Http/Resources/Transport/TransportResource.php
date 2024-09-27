@@ -19,15 +19,15 @@ class TransportResource extends JsonResource
         return [
             'id' => $this->id,
             'driver' => new DriverResource($this->driver),
-            'type'   => $this->type,
+            'type' => $this->type,
             'number' => $this->number,
-            'model'  => $this->model,
+            'model' => $this->model,
             'description' => $this->description,
-            'free'        => $this->free,
-            'is_active'   => $this->is_active,
-            'volume_cm'   => $this->volume_cm,
-            'capacity'    => $this->capacity,
-            'created_at'  => Carbon::parse($this->created_at)
+            'free' => $this->free,
+            'is_active' => $this->is_active,
+            'volume_cm' => $this->volume_cm,
+            'capacity' => $this->capacity,
+            'created_at' => Carbon::parse($this->created_at),
         ];
     }
 }

@@ -21,9 +21,10 @@ class BankAccountPolicy
      */
     public function view(User $user, BankAccount $bankAccount): Response
     {
-        if(!$bankAccount->user == $user){
+        if (! $bankAccount->user == $user) {
             return Response::denyAsNotFound();
         }
+
         return Response::allow();
     }
 
@@ -40,9 +41,10 @@ class BankAccountPolicy
      */
     public function update(User $user, BankAccount $bankAccount): Response
     {
-        if(!$bankAccount->user == $user){
+        if (! $bankAccount->user == $user) {
             return Response::denyAsNotFound();
         }
+
         return Response::allow();
     }
 
@@ -51,9 +53,10 @@ class BankAccountPolicy
      */
     public function delete(User $user, BankAccount $bankAccount): Response
     {
-        if(!$bankAccount->user == $user){
+        if (! $bankAccount->user == $user) {
             return Response::denyAsNotFound();
         }
+
         return Response::allow();
     }
 

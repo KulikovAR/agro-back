@@ -17,14 +17,14 @@ class UpdateTransportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type'             => ['integer'],
-            'number'           => ['string'],
-            'model'            => ['string'],
-            'description'      => ['string'],
-            'free'             => ['boolean'],
-            'is_active'        => ['boolean'],
-            'capacity'         => ['integer'],
-            'volume_cm'        => ['string'],
+            'type' => ['integer'],
+            'number' => ['string'],
+            'model' => ['string'],
+            'description' => ['string'],
+            'free' => ['boolean'],
+            'is_active' => ['boolean'],
+            'capacity' => ['integer'],
+            'volume_cm' => ['string'],
         ];
     }
 }

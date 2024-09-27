@@ -6,7 +6,6 @@ use App\Enums\StatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BankAccount\CreateRequest;
 use App\Http\Requests\BankAccount\UpdateRequest;
-use App\Http\Responses\ApiJsonPaginationResponse;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\BankAccount;
 use App\Services\BankAccountService;
@@ -16,12 +15,11 @@ class BankAccountController extends Controller
 {
     public function __construct(
         private BankAccountService $bankAccountService
-    )
-    {
+    ) {
         $this->bankAccountService = new BankAccountService();
     }
 
-    public function index(Request $request):ApiJsonResponse
+    public function index(Request $request): ApiJsonResponse
     {
         return new ApiJsonResponse(200, StatusEnum::OK, 'Банковский счета получены', data: $this->bankAccountService->index($request));
     }
@@ -44,6 +42,7 @@ class BankAccountController extends Controller
     public function delete(BankAccount $bankAccount): ApiJsonResponse
     {
         $this->bankAccountService->delete($bankAccount);
+
         return new ApiJsonResponse(200, StatusEnum::OK, 'Банковский счёт удалён', data: []);
     }
 }

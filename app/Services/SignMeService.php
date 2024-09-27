@@ -2,28 +2,23 @@
 
 namespace App\Services;
 
-use App\Http\Requests\Counteragent\CreateRequest;
 use App\Http\Requests\SignMe\SignMeRequest;
 use App\Http\Resources\File\FileResource;
 use App\Models\File;
 use App\Repositories\IcRepository;
-use App\Repositories\IcRespoitoryInterface;
-use App\Repositories\FromIcRepositoryInterface;
 use App\Repositories\ToIcRepositoryInterface;
-use App\Services\Dadata\Dadata;
 use App\Services\SignMe\SignMe;
 use App\Traits\FileTrait;
-use Carbon\Carbon;
 
 class SignMeService
 {
     use FileTrait;
+
     private SignMe $signMe;
 
-    function __construct(
+    public function __construct(
         private ToIcRepositoryInterface $icRespoitory,
-    )
-    {
+    ) {
         $this->signMe = new SignMe();
         $this->icRespoitory = new IcRepository();
     }
@@ -37,12 +32,11 @@ class SignMeService
         $file = File::where('path', $request->path)->first();
         $filet = $this->base64Encode($request->path);
 
-        $signatureQueryData = array('filet' => $filet, 'fname' => $file->type, 'md5' => $file->md5_hash);
-
+        $signatureQueryData = ['filet' => $filet, 'fname' => $file->type, 'md5' => $file->md5_hash];
 
         $registerResult = $this->signMe->register($data);
 
-        if(!$registerResult){
+        if (! $registerResult) {
             return response('Произошла ошибка, обратитесь к администратору. Текст ошибки: '.$registerResult)->getContent();
         }
 
@@ -50,16 +44,17 @@ class SignMeService
 
         $precheck = $this->signMe->prechek($data['inn']);
 
-        if(!$precheck){
+        if (! $precheck) {
             return response('Ожидает подтверждения регистрации в Sign.me ')->getContent();
         }
 
-        $user->update(['is_signer'=>true]);
+        $user->update(['is_signer' => true]);
 
         $precheckActivation = $this->signMe->prechekActivation($data['cogrn']);
 
-        if(!$precheckActivation){
+        if (! $precheckActivation) {
             $comactivate = $this->signMe->comactivate($user->sign_me_cid);
+
             return $comactivate;
         }
 
@@ -67,7 +62,7 @@ class SignMeService
 
         $signatureResult = $this->signMe->signature($signatureQueryData);
 
-        if($signatureResult == "error"){
+        if ($signatureResult == 'error') {
 
             return response('Произошла ошибка при подписание документа')->getContent();
         }
@@ -75,7 +70,6 @@ class SignMeService
 
         return $signatureResult;
 
-//        return new FileResource($file);
+        //        return new FileResource($file);
     }
 }
-

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\Pass\ResetPasswordRequest;
 use App\Http\Requests\Auth\Pass\UpdatePasswordRequest;
 use App\Http\Responses\ApiJsonResponse;
-use App\Models\User;
 use App\Traits\PasswordHash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -19,8 +18,8 @@ class PasswordController extends Controller
     public function sendPasswordLink(Request $request): ApiJsonResponse
     {
         $request->validate([
-                               'email' => ['required', 'email', Rule::exists('users', 'email')],
-                           ]);
+            'email' => ['required', 'email', Rule::exists('users', 'email')],
+        ]);
 
         $status = Password::sendResetLink(
             $request->only('email')
@@ -35,8 +34,8 @@ class PasswordController extends Controller
             $request->validated(),
             function ($user) use ($request) {
                 $user->forceFill([
-                                     'password' => $this->hashMake($request->password),
-                                 ])->save();
+                    'password' => $this->hashMake($request->password),
+                ])->save();
             }
         );
 
@@ -46,9 +45,9 @@ class PasswordController extends Controller
     public function update(UpdatePasswordRequest $request): ApiJsonResponse
     {
         $request->user()
-                ->forceFill([
-                                'password' => $this->hashMake($request->password),
-                            ])->save();
+            ->forceFill([
+                'password' => $this->hashMake($request->password),
+            ])->save();
 
         return new ApiJsonResponse(message: __('registration.password_updated')
         );

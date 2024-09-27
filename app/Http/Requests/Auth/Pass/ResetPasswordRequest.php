@@ -17,8 +17,8 @@ class ResetPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'token'    => ['required'],
-            'email'    => $this->emailInputRules(),
+            'token' => ['required'],
+            'email' => $this->emailInputRules(),
             'password' => $this->passwordResetRules(),
         ];
     }
