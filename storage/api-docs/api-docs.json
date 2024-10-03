@@ -2101,6 +2101,12 @@
                                         "items": {
                                             "type": "string"
                                         }
+                                    },
+                                    "documents(file_id)": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
                                     }
                                 },
                                 "type": "object"
@@ -2370,7 +2376,7 @@
                 "tags": [
                     "1С"
                 ],
-                "summary": "Загрузить файл в формате Base64",
+                "summary": "Загрузить файл",
                 "description": "Загрузка файла с указанием типа и id из 1C. Передаваемые значения в type ограничиваются такими, как Акт, Заявка, Договор",
                 "operationId": "af213364d4ab6dacd5b1d214d6be8f3e",
                 "parameters": [
@@ -2387,7 +2393,7 @@
                 "requestBody": {
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
                                 "required": [
                                     "type",
@@ -2401,8 +2407,7 @@
                                     },
                                     "file": {
                                         "type": "string",
-                                        "format": "base64",
-                                        "example": "fileInBase64"
+                                        "format": "binary"
                                     },
                                     "id_1c": {
                                         "type": "string",
@@ -2427,11 +2432,11 @@
                                         },
                                         "path_url": {
                                             "type": "string",
-                                            "example": "http://localhost/storage/filesBase64/669e67b886cb9.jpg"
+                                            "example": "http://localhost/storage/files/669e67b886cb9.jpg"
                                         },
                                         "path": {
                                             "type": "string",
-                                            "example": "/filesBase64/669e67b886cb9.jpg"
+                                            "example": "/files/669e67b886cb9.jpg"
                                         },
                                         "type": {
                                             "type": "string",
@@ -2463,7 +2468,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/orders": {
@@ -4046,6 +4056,166 @@
                         }
                     }
                 }
+            }
+        },
+        "/sign-me": {
+            "post": {
+                "tags": [
+                    "SignMe"
+                ],
+                "summary": "Sign a document",
+                "operationId": "2e1c2a620e40dc7b0bb037660109ad33",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "path": {
+                                        "description": "path to file",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "OK"
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "https://test.sign.me/signapi/sjson/320186/df7977a1763a0a056a670913d96b9904"
+                                                },
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {}
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "OK"
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Произошла ошибка, обратитесь к администратору"
+                                                },
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {}
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "OK"
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Произошла ошибка при подписание документа"
+                                                },
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {}
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "OK"
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Документ успешно подписан"
+                                                },
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {}
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "OK"
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Ожидает подтверждения регистрации в Sign.me"
+                                                },
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {}
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Resource not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/transport/": {

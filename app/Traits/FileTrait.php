@@ -50,7 +50,27 @@ trait FileTrait
     {
         $file = Storage::disk('public')->get($path);
 
-        return $file = base64_encode($file);
+        // Получаем расширение файла
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+
+        // Кодируем содержимое файла в base64
+        $base64File = base64_encode($file);
+
+        // Формируем Data URI
+        // $base64File = 'data:application/' . $extension . ';base64,' . $base64File;
+
+        // Если нужно, можно вернуть результат
+        return $base64File;
+    }
+
+    public function getExtension(string $path): string
+    {
+        Storage::disk('public')->get($path);
+
+        // Получаем расширение файла
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+
+        return $extension;
     }
 
     public function updateFile(UploadedFile $uploadedFile, File $file, string $type): File
