@@ -22,12 +22,30 @@ class SignMe
             'inn' => $inn,
             'api_key' => $this->token,
         ];
+    
         $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url').SignMeApiEnum::PRECHEK->value, $query);
+
+        if ($result->body() == '{}') {
+            return null;
+        }   
+
+        return $result['inn']['approved'] && isset($result['inn']['apprtype']) && $result['inn']['apprtype'] == 1;
+    }
+
+    public function prechekRegister(string $inn): ?bool
+    {
+        $query = [
+            'inn'     => $inn,
+            'api_key' => $this->token,
+        ];
+
+        $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url') . SignMeApiEnum::PRECHEK->value, $query);
+        
         if ($result->body() == '{}') {
             return null;
         }
 
-        return $result['inn']['approved'] && isset($result['inn']['apprtype']) && $result['inn']['apprtype'] == 1;
+        return isset($result['inn']);
     }
 
     public function prechekActivation(string $ogrn): ?bool
@@ -48,6 +66,7 @@ class SignMe
     {
 
         $query = $data + ['api_key' => $this->token];
+
         $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url').SignMeApiEnum::REGISTER->value, $query);
         if ($result->json() == null) {
             return $result->body();
@@ -59,7 +78,9 @@ class SignMe
     public function signature(array $data): string
     {
         $query = $data + ['api_key' => $this->token];
+        // dd($query);
         $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url').SignMeApiEnum::SIGNATURE->value, $query);
+        // dd(json_encode($result->body()));
         if (strpos('error', $result->body())) {
             return 'error';
         }
@@ -73,7 +94,7 @@ class SignMe
         $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url').SignMeApiEnum::SIGNATURE_CHECK->value, $query);
         $data = json_decode($result->body(), true);
 
-        return $data;
+        return $data ?? [];
     }
 
     public function comactivate(int $id): string
