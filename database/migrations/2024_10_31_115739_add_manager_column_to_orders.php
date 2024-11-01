@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->uuid('manager_id');
+            $table->uuid('manager_id')->nullable();
             $table->foreign('manager_id')
                 ->references('id')
                 ->on('users')
