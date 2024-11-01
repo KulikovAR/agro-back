@@ -13,7 +13,7 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin_role = Role::create(
+        Role::create(
             [
                 'name' => 'admin',
                 'slug' => 'admin',
@@ -22,7 +22,7 @@ class RoleSeeder extends Seeder
             ]
         );
 
-        $logistician_role = Role::create(
+        Role::create(
             [
                 'name' => 'logistician',
                 'slug' => 'logistician',
@@ -31,7 +31,7 @@ class RoleSeeder extends Seeder
             ]
         );
 
-        $client_role = Role::create(
+        Role::create(
             [
                 'name' => 'client',
                 'slug' => 'client',
@@ -39,7 +39,17 @@ class RoleSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ]
         );
-        $IC_role = Role::create(
+
+        Role::create(
+            [
+                'name'       => 'Менеджер',
+                'slug'       => 'manager',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]
+        );
+
+        Role::create(
             [
                 'name' => '1C',
                 'slug' => '1C',

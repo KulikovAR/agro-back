@@ -59,14 +59,15 @@ Route::middleware(['guest'])->group(function () {
     // Route::post('/password/send', [PasswordController::class, 'sendPasswordLink'])->middleware(['throttle:6,1'])->name('password.send');
     // Route::post('/password/reset', [PasswordController::class, 'store'])->name('password.reset');
 });
-Route::get('/managers', [ManagerContoller::class, 'list'])->name('managers.list');
 
 Route::post('/bot/send-message', [\App\Http\Controllers\V1\TgBotController::class, 'sendMessage']);
+
+Route::get('/managers', [ManagerContoller::class, 'list'])->name('managers.list');
+
 
 Route::middleware('auth:sanctum')->group(function () {
 
     //
-    Route::get('/managers', [ManagerContoller::class, 'list'])->name('managers.list');
 
     Route::prefix('userprofile')->group(function () {
         Route::get('/', [UserProfileController::class, 'getUserProfileByToken'])->name(
