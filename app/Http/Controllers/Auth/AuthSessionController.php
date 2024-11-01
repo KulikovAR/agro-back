@@ -21,7 +21,7 @@ class AuthSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return new ApiJsonResponse();
+        return new ApiJsonResponse;
     }
 
     public function destroy(Request $request): ApiJsonResponse
@@ -32,6 +32,6 @@ class AuthSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return new ApiJsonResponse();
+        return new ApiJsonResponse;
     }
 }

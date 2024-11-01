@@ -91,6 +91,7 @@ class OrderService
             'load_latitude' => $load_latitude,
             'unload_latitude' => $unload_latitude,
             'creator_id' => $request->user()->id,
+            'manager_id' => $request->manager_id,
             'status' => OrderStatusEnum::ACTIVE->value,
         ];
         $queryData = array_merge($request->except(['load_types', 'unload_methods']), $data);

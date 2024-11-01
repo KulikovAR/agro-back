@@ -15,7 +15,7 @@ class DriverSeeder extends Seeder
     {
         $drivers = Driver::factory()->count(30)->create();
         foreach ($drivers as $driver) {
-            $driver->transports()->create((new TransportFactory())->definition());
+            $driver->transports()->create((new TransportFactory)->definition());
 
         }
     }

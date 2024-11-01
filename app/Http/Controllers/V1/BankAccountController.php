@@ -16,7 +16,7 @@ class BankAccountController extends Controller
     public function __construct(
         private BankAccountService $bankAccountService
     ) {
-        $this->bankAccountService = new BankAccountService();
+        $this->bankAccountService = new BankAccountService;
     }
 
     public function index(Request $request): ApiJsonResponse

@@ -17,7 +17,7 @@ class WhatsAppServiceTest extends TestCase
      */
     public function test_handler(): void
     {
-        $whatsAppService = new WhatsAppService();
+        $whatsAppService = new WhatsAppService;
 
         $whatsAppService->handler($this->testData());
 

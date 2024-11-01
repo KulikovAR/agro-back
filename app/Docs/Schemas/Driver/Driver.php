@@ -19,6 +19,4 @@ namespace App\Docs\Schemas\Driver;
  *      @OA\Property(property="company_id", type="string", format="uuid", example="27f7468a-f4a6-4e3f-bfa1-b621c7a4d17e"),
  * )
  */
-class Driver
-{
-}
+class Driver {}

@@ -30,9 +30,7 @@ class TransportController
      *      ),
      * )
      */
-    public function index()
-    {
-    }
+    public function index() {}
 
     /**
      * @OA\Get(
@@ -88,9 +86,7 @@ class TransportController
      *      ),
      * )
      */
-    public function show()
-    {
-    }
+    public function show() {}
 
     /**
      * @OA\Post(
@@ -157,9 +153,7 @@ class TransportController
      *      ),
      * )
      */
-    public function create()
-    {
-    }
+    public function create() {}
 
     /**
      * @OA\Put(
@@ -235,9 +229,7 @@ class TransportController
      *      ),
      * )
      */
-    public function update()
-    {
-    }
+    public function update() {}
 
     /**
      * @OA\Delete(
@@ -283,7 +275,5 @@ class TransportController
      *      ),
      * )
      */
-    public function delete()
-    {
-    }
+    public function delete() {}
 }

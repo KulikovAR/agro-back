@@ -32,9 +32,7 @@ abstract class AbstractFilter implements FilterInterface
         }
     }
 
-    protected function before(Builder $builder)
-    {
-    }
+    protected function before(Builder $builder) {}
 
     /**
      * @param  mixed|null  $default

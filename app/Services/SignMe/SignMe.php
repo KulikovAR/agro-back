@@ -8,11 +8,11 @@ class SignMe
 {
     private SignMeClient $signMeClient;
 
-    private string $token;
+    private ?string $token;
 
     public function __construct(
     ) {
-        $this->signMeClient = new SignMeClient();
+        $this->signMeClient = new SignMeClient;
         $this->token = config('app.sign_me_token');
     }
 
@@ -22,12 +22,12 @@ class SignMe
             'inn' => $inn,
             'api_key' => $this->token,
         ];
-    
+
         $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url').SignMeApiEnum::PRECHEK->value, $query);
 
         if ($result->body() == '{}') {
             return null;
-        }   
+        }
 
         return $result['inn']['approved'] && isset($result['inn']['apprtype']) && $result['inn']['apprtype'] == 1;
     }
@@ -35,12 +35,12 @@ class SignMe
     public function prechekRegister(string $inn): ?bool
     {
         $query = [
-            'inn'     => $inn,
+            'inn' => $inn,
             'api_key' => $this->token,
         ];
 
-        $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url') . SignMeApiEnum::PRECHEK->value, $query);
-        
+        $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url').SignMeApiEnum::PRECHEK->value, $query);
+
         if ($result->body() == '{}') {
             return null;
         }

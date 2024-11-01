@@ -11,7 +11,7 @@ class RifClient
     public function __construct(
 
     ) {
-        $this->client = new Http();
+        $this->client = new Http;
     }
 
     private function bodyForParsing($api): string

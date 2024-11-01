@@ -28,6 +28,4 @@ namespace App\Docs\Responses;
  *         )
  *     ),
  */
-class Validation
-{
-}
+class Validation {}

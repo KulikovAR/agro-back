@@ -60,6 +60,4 @@ namespace App\Docs\Schemas\BankAccount;
  *      )
  * )
  */
-class BankAccount
-{
-}
+class BankAccount {}

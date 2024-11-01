@@ -8,9 +8,7 @@ class WhatsAppClient
 {
     const SEND_MESSAGE = '/api/sync/message/send';
 
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     protected function makeRequest(array $requestData, string $url): array
     {

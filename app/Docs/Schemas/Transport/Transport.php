@@ -31,6 +31,4 @@ namespace App\Docs\Schemas\Transport;
  *      @OA\Property(property="created_at", type="string", format="date-time", example="2024-02-12T14:32:22.000000Z"),
  * )
  */
-class Transport
-{
-}
+class Transport {}

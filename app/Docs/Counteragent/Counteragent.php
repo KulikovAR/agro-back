@@ -136,10 +136,7 @@ class Counteragent
      *     )
      * )
      */
-    public function create()
-    {
-
-    }
+    public function create() {}
 
     /**
      * @OA\Put(
@@ -284,8 +281,5 @@ class Counteragent
      *     )
      * )
      */
-    public function update()
-    {
-
-    }
+    public function update() {}
 }

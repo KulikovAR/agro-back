@@ -32,12 +32,12 @@ class OrderIndexResource extends JsonResource
             'order_number' => $this->order_number,
             'terminal_name' => $this->terminal_name,
             'load_coordinates' => [
-            'x' => $this->load_longitude,
-            'y' => $this->load_latitude,
+                'x' => $this->load_longitude,
+                'y' => $this->load_latitude,
             ],
             'unload_coordinates' => [
-            'x' => $this->unload_longitude,
-            'y' => $this->unload_latitude,
+                'x' => $this->unload_longitude,
+                'y' => $this->unload_latitude,
             ],
         ];
     }

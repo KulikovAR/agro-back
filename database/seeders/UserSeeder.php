@@ -63,7 +63,18 @@ class UserSeeder extends Seeder
         ]);
         $client->assignRole($clientRole);
         $client->files()->attach(File::inRandomOrder()->first()->id);
-        $client->userProfile()->create((new UserinfoFactory())->definition());
+        $client->userProfile()->create((new UserinfoFactory)->definition());
+
+        $managerRole = Role::where('slug', 'client')->first();
+
+        $manager = User::create([
+            'email' => 'manager@manager.ru',
+            'phone_number' => '+7 (889) 999-99-91',
+            'password' => '12345678',
+            'phone_verified_at' => Carbon::now(),
+        ]);
+        $manager->assignRole($managerRole);
+        $manager->userProfile()->create((new UserinfoFactory)->definition());
 
         $Ic = User::create([]);
         $Ic->assignRole(RoleEnum::IC->value);
@@ -77,7 +88,7 @@ class UserSeeder extends Seeder
         $users = User::factory(10)->create();
         foreach ($users as $item) {
             $item->files()->attach(File::inRandomOrder()->first()->id);
-            $item->userProfile()->create((new UserinfoFactory())->definition());
+            $item->userProfile()->create((new UserinfoFactory)->definition());
             $item->assignRole($clientRole);
         }
         // $user->assignRole(Role::ROLE_USER);

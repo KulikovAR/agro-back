@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name'                 => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'env'                  => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'debug'                => (bool) env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,25 +55,25 @@ return [
     |
     */
 
-    'url'                  => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://localhost'),
 
-    'sign_me_token'        => env('SIGN_ME_TOKEN'),
+    'sign_me_token' => env('SIGN_ME_TOKEN'),
 
     'sign_me_base_dev_url' => env('SIGN_ME_BASE_DEV_URL'),
 
-    'sign_me_regtype'      => env('SIGN_ME_REG_TYPE', '12'),
+    'sign_me_regtype' => env('SIGN_ME_REG_TYPE', '12'),
 
-    'sign_me_ct'           => env('SIGN_ME_CT', '12'),
+    'sign_me_ct' => env('SIGN_ME_CT', '12'),
 
-    'sign_me_ca'           => env('SIGN_ME_CA'),
+    'sign_me_ca' => env('SIGN_ME_CA'),
 
-    'sign_me_ckey'         => env('SIGN_ME_CKEY', '1'),
+    'sign_me_ckey' => env('SIGN_ME_CKEY', '1'),
 
-    'sign_me_cr'           => env('SIGN_ME_CR', '1'),
+    'sign_me_cr' => env('SIGN_ME_CR', '1'),
 
-    'sign_me_ccr'          => env('SIGN_ME_CCR', '1'),
+    'sign_me_ccr' => env('SIGN_ME_CCR', '1'),
 
-    'asset_url'            => env('ASSET_URL'),
+    'asset_url' => env('ASSET_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -86,7 +86,7 @@ return [
     |
     */
 
-    'timezone'             => 'UTC',
+    'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------
@@ -99,7 +99,7 @@ return [
     |
     */
 
-    'locale'               => 'ru',
+    'locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------
@@ -112,7 +112,7 @@ return [
     |
     */
 
-    'fallback_locale'      => 'en',
+    'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -125,7 +125,7 @@ return [
     |
     */
 
-    'faker_locale'         => 'en_US',
+    'faker_locale' => 'en_US',
 
     /*
     |--------------------------------------------------------------------------
@@ -138,9 +138,9 @@ return [
     |
     */
 
-    'key'                  => env('APP_KEY'),
+    'key' => env('APP_KEY'),
 
-    'cipher'               => 'AES-256-CBC',
+    'cipher' => 'AES-256-CBC',
 
     /*
     |--------------------------------------------------------------------------
@@ -155,7 +155,7 @@ return [
     |
     */
 
-    'maintenance'          => [
+    'maintenance' => [
         'driver' => 'file',
         // 'store' => 'redis',
     ],
@@ -171,7 +171,7 @@ return [
     |
     */
 
-    'providers'            => ServiceProvider::defaultProviders()->merge([
+    'providers' => ServiceProvider::defaultProviders()->merge([
         /*
          * Package Service Providers...
          */
@@ -198,7 +198,7 @@ return [
     |
     */
 
-    'aliases'              => Facade::defaultAliases()->merge([
+    'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 

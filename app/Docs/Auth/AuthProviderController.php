@@ -2,6 +2,4 @@
 
 namespace App\Docs\Auth;
 
-class AuthProviderController
-{
-}
+class AuthProviderController {}

@@ -66,6 +66,7 @@ class Order extends Model
         'load_region',
         'unload_region',
         'creator_id',
+        'manager_id',
     ];
 
     const SORT = [

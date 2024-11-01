@@ -19,7 +19,7 @@ class FileFactory extends Factory
      */
     public function definition(): array
     {
-        $fileService = new FileService();
+        $fileService = new FileService;
         $fakeFile = UploadedFile::fake()->create('test_file.jpg');
         $mockFile = $fileService->loadFile($fakeFile, FileTypeEnum::randomCase());
 

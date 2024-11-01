@@ -46,7 +46,7 @@ class SignMeTest extends TestCase
             'ca' => 'ESIA01',
             'ct' => '12',
         ];
-        $signMe = new SignMe();
+        $signMe = new SignMe;
         //        dd($signMe->comactivate(3796));
         dd($signMe->prechek(323619600140689));
         //        dd($signMe->register($data));

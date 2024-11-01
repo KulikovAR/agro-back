@@ -15,7 +15,7 @@ class SignMeController extends Controller
 
     public function __construct()
     {
-        $this->signMeService = new SignMeService(new IcRepository());
+        $this->signMeService = new SignMeService(new IcRepository);
     }
 
     public function signature(SignMeRequest $request): ApiJsonResponse

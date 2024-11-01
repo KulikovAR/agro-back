@@ -108,8 +108,5 @@ class OrderController extends Controller
         return new ApiJsonResponse(200, StatusEnum::OK, 'Заявки с откликами пользователя получены', data: $this->service->getOrdersWithUserOffers($request));
     }
 
-    public function notifyLogistician(Offer $offer): ApiJsonResponse
-    {
-
-    }
+    public function notifyLogistician(Offer $offer): ApiJsonResponse {}
 }

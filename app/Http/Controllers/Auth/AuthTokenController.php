@@ -61,6 +61,6 @@ class AuthTokenController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
 
-        return new ApiJsonResponse();
+        return new ApiJsonResponse;
     }
 }

@@ -49,9 +49,7 @@ class RegistrationController
      *     ),
      * )
      */
-    public function registration()
-    {
-    }
+    public function registration() {}
 
     /**
      * @OA\Post(
@@ -100,9 +98,7 @@ class RegistrationController
      *     ),
      * )
      */
-    public function verification()
-    {
-    }
+    public function verification() {}
 
     /**
      * @OA\Put(
@@ -158,7 +154,5 @@ class RegistrationController
      *     ),
      * )
      */
-    public function codeUpdate()
-    {
-    }
+    public function codeUpdate() {}
 }

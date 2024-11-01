@@ -16,7 +16,7 @@ class IcRepository implements FromIcRepositoryInterface, ToIcRepositoryInterface
 
     public function __construct()
     {
-        $this->client = new IcClient();
+        $this->client = new IcClient;
     }
 
     public function IcFile(UploadedFile $file, string $type, string $Id1c): File

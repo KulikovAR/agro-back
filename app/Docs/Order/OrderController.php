@@ -121,10 +121,7 @@ class OrderController
      *      )
      * )
      */
-    public function index()
-    {
-
-    }
+    public function index() {}
 
     /**
      * @OA\Get(
@@ -417,10 +414,7 @@ class OrderController
      *      )
      * )
      */
-    public function show()
-    {
-
-    }
+    public function show() {}
 
     /**
      * @OA\Post(
@@ -507,10 +501,7 @@ class OrderController
      *      ),
      * )
      */
-    public function create()
-    {
-
-    }
+    public function create() {}
 
     /**
      * @OA\Put(
@@ -670,10 +661,7 @@ class OrderController
      *      )
      * )
      */
-    public function update()
-    {
-
-    }
+    public function update() {}
 
     /**
      * @OA\Delete(
@@ -719,10 +707,7 @@ class OrderController
      *      )
      * )
      */
-    public function delete()
-    {
-
-    }
+    public function delete() {}
 
     /**
      * @OA\Get(
@@ -770,10 +755,7 @@ class OrderController
      *     )
      * )
      */
-    public function getLoadTypes()
-    {
-
-    }
+    public function getLoadTypes() {}
 
     /**
      * @OA\Get(
@@ -809,10 +791,7 @@ class OrderController
      *     ),
      * )
      */
-    public function getRegions()
-    {
-
-    }
+    public function getRegions() {}
 
     /**
      * @OA\Get(
@@ -859,8 +838,5 @@ class OrderController
      *     ),
      * )
      */
-    public function getCities()
-    {
-
-    }
+    public function getCities() {}
 }

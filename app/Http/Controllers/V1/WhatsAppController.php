@@ -13,7 +13,7 @@ class WhatsAppController extends Controller
 
     public function __construct()
     {
-        $this->service = new WhatsAppService();
+        $this->service = new WhatsAppService;
     }
 
     public function webhook(Request $request)

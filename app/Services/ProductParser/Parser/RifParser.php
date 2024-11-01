@@ -20,7 +20,7 @@ class RifParser
         private int $count_from,
         private int $count_to,
         private int $type,
-        private RifClient $client = new RifClient(),
+        private RifClient $client = new RifClient,
     ) {
         if ($type == ParserProductTypeEnum::WHEAT->value) {
             $document = $this->client->wheatBodyHttp();

@@ -15,8 +15,7 @@ class ProductParserController extends Controller
 {
     public function __construct(
         public ProductParserService $service,
-    ) {
-    }
+    ) {}
 
     public function getProductFilter(GetProductFilterRequest $request): ApiJsonResponse
     {

@@ -8,9 +8,7 @@ class LocalizationService
 {
     public function __construct(
         private Dadata $dadata
-    ) {
-
-    }
+    ) {}
 
     public static function checkInn(): array
     {

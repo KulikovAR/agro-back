@@ -15,7 +15,7 @@ class UserProfileController extends Controller
     public function __construct(
         private UserProfileService $service
     ) {
-        $this->service = new UserProfileService();
+        $this->service = new UserProfileService;
     }
 
     public function getUserProfileByToken(Request $request): ApiJsonResponse

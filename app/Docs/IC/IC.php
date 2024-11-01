@@ -76,8 +76,5 @@ class IC
      *     )
      * )
      */
-    public function loadFileFrom1C()
-    {
-
-    }
+    public function loadFileFrom1C() {}
 }

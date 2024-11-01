@@ -50,6 +50,4 @@ namespace App\Docs;
  *  *     securityScheme="bearerAuth"
  *  * )
  */
-class ApiDocs
-{
-}
+class ApiDocs {}

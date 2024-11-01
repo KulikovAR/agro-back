@@ -51,9 +51,7 @@ class BankAccountController
      * *     )
      * )
      */
-    public function index()
-    {
-    }
+    public function index() {}
 
     /**
      * @OA\Get(
@@ -121,9 +119,7 @@ class BankAccountController
      * *     )
      * )
      */
-    public function show()
-    {
-    }
+    public function show() {}
 
     /**
      * @OA\Post(
@@ -194,9 +190,7 @@ class BankAccountController
      * *     )
      * )
      */
-    public function create()
-    {
-    }
+    public function create() {}
 
     /**
      * @OA\Put(
@@ -278,9 +272,7 @@ class BankAccountController
      * *     )
      * )
      */
-    public function update()
-    {
-    }
+    public function update() {}
 
     /**
      * @OA\Delete(
@@ -336,7 +328,5 @@ class BankAccountController
      * *     )
      * )
      */
-    public function delete()
-    {
-    }
+    public function delete() {}
 }

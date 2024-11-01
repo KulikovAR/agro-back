@@ -13,9 +13,8 @@ class ApiJsonResponse implements Responsable
         public readonly int $httpCode = 200,
         public readonly StatusEnum $status = StatusEnum::OK,
         public readonly string $message = '',
-        public readonly object|array $data = new stdClass(),
-    ) {
-    }
+        public readonly object|array $data = new stdClass,
+    ) {}
 
     public function toResponse($request): JsonResponse
     {

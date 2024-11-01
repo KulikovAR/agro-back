@@ -47,7 +47,5 @@ class TransportTypeController
      *     ),
      * )
      */
-    public function index()
-    {
-    }
+    public function index() {}
 }

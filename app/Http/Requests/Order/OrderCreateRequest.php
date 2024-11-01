@@ -10,14 +10,6 @@ use Illuminate\Validation\Rule;
 class OrderCreateRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
@@ -54,7 +46,7 @@ class OrderCreateRequest extends FormRequest
             'start_order_at' => ['date', 'required'],
             'end_order_at' => ['date', 'required', 'after:start_order_at'],
             'load_place_name' => ['string', 'required'],
-            //            'status'                                      => ['string', Rule::enum(OrderStatusEnum::class)],
+            //            'status'                                      => ['tranекstring', Rule::enum(OrderStatusEnum::class)],
             'unload_method' => ['string'],
             'unload_place_name' => ['string', 'required'],
             'description' => ['string'],
@@ -63,7 +55,7 @@ class OrderCreateRequest extends FormRequest
             'load_types.*' => ['string', 'exists:load_types,id'],
             'unload_methods' => ['array'],
             'unload_methods.*' => ['string', 'exists:unload_methods,id'],
-
+            'manager_id' => ['string'],
         ];
     }
 }

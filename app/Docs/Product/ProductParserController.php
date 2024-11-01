@@ -68,9 +68,7 @@ class ProductParserController
      *     ),
      * )
      */
-    public function index()
-    {
-    }
+    public function index() {}
 
     /**
      * @OA\Get(
@@ -122,7 +120,5 @@ class ProductParserController
      *     )
      * )
      */
-    public function getProductFilter()
-    {
-    }
+    public function getProductFilter() {}
 }

@@ -12,7 +12,7 @@ class WhatsAppClientTest extends TestCase
      */
     public function test_send_message(): void
     {
-        $client = new WhatsAppClient();
+        $client = new WhatsAppClient;
 
         $client->sendMessage('test', '79202149572');
 

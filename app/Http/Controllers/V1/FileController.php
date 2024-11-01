@@ -21,7 +21,7 @@ class FileController extends Controller
         private FileService $service,
         //        private IcRepository $repository,
     ) {
-        $this->service = new FileService();
+        $this->service = new FileService;
     }
 
     public function index(): ApiJsonResponse

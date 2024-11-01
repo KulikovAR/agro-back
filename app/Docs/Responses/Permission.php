@@ -17,6 +17,4 @@ namespace App\Docs\Responses;
  *         )
  *     ),
  */
-class Permission
-{
-}
+class Permission {}

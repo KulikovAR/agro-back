@@ -81,9 +81,7 @@ class FileController
      *      )
      * )
      */
-    public function loadFilesForUser()
-    {
-    }
+    public function loadFilesForUser() {}
 
     /**
      * @OA\Post (
@@ -169,10 +167,7 @@ class FileController
      *      )
      * )
      */
-    public function updateFilesForUser()
-    {
-
-    }
+    public function updateFilesForUser() {}
 
     /**
      * @OA\Get(
@@ -325,8 +320,5 @@ class FileController
      *     )
      * )
      */
-    public function getFileTypes()
-    {
-
-    }
+    public function getFileTypes() {}
 }

@@ -13,7 +13,7 @@ class WhatsAppService
 
     public function __construct()
     {
-        $this->client = new WhatsAppClient();
+        $this->client = new WhatsAppClient;
     }
 
     public function handler(array $data): void

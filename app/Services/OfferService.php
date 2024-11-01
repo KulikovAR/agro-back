@@ -14,7 +14,7 @@ class OfferService
 
     public function __construct()
     {
-        $this->whatsAppService = new WhatsAppService();
+        $this->whatsAppService = new WhatsAppService;
     }
 
     public function create(OfferRequest $request)

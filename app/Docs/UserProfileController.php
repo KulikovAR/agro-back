@@ -47,9 +47,7 @@ class UserProfileController
      *      ),
      * )
      */
-    public function index()
-    {
-    }
+    public function index() {}
 
     /**
      * @OA\Post(
@@ -115,9 +113,7 @@ class UserProfileController
      *      ),
      * )
      */
-    public function store()
-    {
-    }
+    public function store() {}
 
     /**
      * @OA\Post(
@@ -180,7 +176,5 @@ class UserProfileController
      *      ),
      * )
      */
-    public function storeAvatar()
-    {
-    }
+    public function storeAvatar() {}
 }

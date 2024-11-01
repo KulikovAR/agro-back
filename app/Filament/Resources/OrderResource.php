@@ -31,7 +31,7 @@ class OrderResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $dadata = new Dadata();
+        $dadata = new Dadata;
 
         return $form
             ->schema([

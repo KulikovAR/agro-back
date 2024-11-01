@@ -109,6 +109,8 @@ class OrderFilter extends AbstractFilter
 
     public const TARIFF_TO = 'tariff_to';
 
+    public const MANAGER_ID = 'manager_id';
+
     protected function getCallbacks(): array
     {
         return [
@@ -163,6 +165,7 @@ class OrderFilter extends AbstractFilter
             self::TARIFF_FROM => [$this, 'tariff_from'],
             self::TARIFF_TO => [$this, 'tariff_to'],
             self::IS_FULL_CHARTER => [$this, 'is_full_charter'],
+            self::MANAGER_ID => [$this, 'manager'],
         ];
     }
 
@@ -430,6 +433,11 @@ class OrderFilter extends AbstractFilter
         }
 
         $builder->whereNull('nds_percent');
+    }
+
+    public function manager(Builder $builder, $value)
+    {
+        $builder->where('manager_id', $value);
     }
 
     public function sort(Builder $builder, $value)

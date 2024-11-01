@@ -47,7 +47,5 @@ class TransportBrandController
      *     ),
      * )
      */
-    public function index()
-    {
-    }
+    public function index() {}
 }

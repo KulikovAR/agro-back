@@ -14,7 +14,7 @@ class TgBotTest extends TestCase
     public function test_tg_text(): void
     {
         $offer = Offer::factory()->create();
-        $service = new OrderService();
+        $service = new OrderService;
         $text = $service->textToBot($offer);
         $this->assertTrue($text != null);
     }

@@ -61,9 +61,7 @@ class AuthTokenController
      *     ),
      * )
      */
-    public function store()
-    {
-    }
+    public function store() {}
 
     /**
      * @OA\Delete(
@@ -95,9 +93,7 @@ class AuthTokenController
      *      ),
      *)
      */
-    public function destroy()
-    {
-    }
+    public function destroy() {}
 
     /**
      * @OA\Post(
@@ -158,7 +154,5 @@ class AuthTokenController
      *     ),
      * )
      */
-    public function verification()
-    {
-    }
+    public function verification() {}
 }

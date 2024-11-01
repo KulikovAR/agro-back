@@ -32,8 +32,8 @@ class FileService
     public function __construct(
 
     ) {
-        $this->IcRepository = new IcRepository();
-        $this->signMe = new SignMe();
+        $this->IcRepository = new IcRepository;
+        $this->signMe = new SignMe;
     }
 
     public function index(): FileCollection
