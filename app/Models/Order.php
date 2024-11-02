@@ -94,6 +94,11 @@ class Order extends Model
         return $this->belongsTo(User::class, 'creator_id');
     }
 
+    public function manager(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'manager_id');
+    }
+
     public function setAttribute($key, $value)
     {
         if ($this->isFloatAttribute($key)) {
