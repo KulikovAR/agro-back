@@ -30,6 +30,15 @@ class UserResource extends Resource
                     ->email()
                     ->label('Электронная почта')
                     ->maxLength(255),
+                Forms\Components\TextInput::make('name')
+                    ->label('Имя')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('surname')
+                    ->label('Фамилия')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('patronymic')
+                    ->label('Отчество')
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('phone_number')
                     ->label('Номер телефона')
                     ->maxLength(255),
