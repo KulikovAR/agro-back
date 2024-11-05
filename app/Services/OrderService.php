@@ -93,8 +93,6 @@ class OrderService
             'unload_longitude' => $unload_longitude,
             'load_latitude'    => $load_latitude,
             'unload_latitude'  => $unload_latitude,
-            'load_latitude'    => $load_latitude,
-            'unload_latitude'  => $unload_latitude,
             'creator_id'       => $request->user()->id,
             'manager_id'       => $request->manager_id,
             'status'           => OrderStatusEnum::ACTIVE->value,
@@ -169,7 +167,7 @@ class OrderService
     {
         $data   = $request->validated();
         $filter = app()->make(OrderFilter::class, ['queryParams' => $data]);
-        $orders  = Order::filter($filter);
+        $orders = Order::filter($filter);
 
         if (is_null($request->sort)) {
             $orders->orderBy('order_number', 'desc');
@@ -209,26 +207,29 @@ class OrderService
         $text = '';
 
         foreach ($orders as $order) {
-            $text .= $order->load_place_name . ' ——> ' . $order->unload_place_name . "\n";
-            $text .= $order->crop . ' ' . $order->volume . "\n";
+            $text .= $order->load_place_name . ' ——> ' . $order->unload_place_name . ' ' . $order->terminal_name . '' . $order->exporter_name . "\n";
+            $text .= $order->crop . ' ' . $order->volume . " тонн \n";
             $text .= $order->distance . ' ' . 'км' . ' ' . '=' . ' ' . $order->tariff . ' ' . 'руб/тн' . "\n";
-            foreach ($order->unloadMethods as $unloadMethod) {
-                if (!next($order->unloadMethods)) {
-                    $text .= $unloadMethod->title . ',' . ' ';
-                } else {
-                    $text .= $unloadMethod->title . ',';
-                }
+
+
+            if (!is_null($order->nds_percent)) {
+                $text .= 'НДС +' . $order->nds_percent . '%, ';
             }
-            $text .= $order->scale_length . ' ' . 'м' . ',';
+
+            $text .= $order->load_method . ', ';
+            $text .= $order->tolerance_to_the_norm . ', ';
+            $text .= 'весы ' . (int) $order->scale_length . 'м, ';
+            $text .= 'высота до ' . (int) $order->height_limit . ', ';
+
+            $semi = 'нет';
             foreach ($order->loadTypes as $loadType) {
-                if (!next($order->loadTypes)) {
-                    $text .= $loadType->title . "\n";
-                } else {
-                    $text .= $unloadMethod->title . ',';
+                if ($loadType->title == 'Полуприцеп') {
+                    $semi = 'да';
                 }
             }
 
-            $text .= "\n";
+            $text .= 'полуприцеп ' . $semi . "\n";
+
             $text .= "\n";
             $text .= "\n";
         }
