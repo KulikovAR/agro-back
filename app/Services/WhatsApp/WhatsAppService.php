@@ -30,13 +30,13 @@ class WhatsAppService
             if (!isset($message_data['chatId'])) {
                 return;
             }
-            
+
             $chatId = $message_data['chatId'];
             $to     = str_replace('@c.us', '', $message_data['to']);
 
             ModelWhatsAppClient::create([
                 'name'    => isset($message_data['senderName']) ? $message_data['senderName'] : null,
-                'chatId'  => $chatId,
+                'chat_id'  => $chatId,
                 'type'    => $message_data['chat_type'],
                 'account' => $to
             ]);
