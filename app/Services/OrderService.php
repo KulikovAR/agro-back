@@ -169,10 +169,10 @@ class OrderService
     {
         $data   = $request->validated();
         $filter = app()->make(OrderFilter::class, ['queryParams' => $data]);
-        $order  = Order::filter($filter);
+        $orders  = Order::filter($filter);
 
         if (is_null($request->sort)) {
-            $order->orderBy('order_number', 'desc');
+            $orders->orderBy('order_number', 'desc');
         }
 
         $this->exportService->notifyGroups($this->textToBot($orders));
