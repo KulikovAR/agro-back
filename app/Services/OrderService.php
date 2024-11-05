@@ -175,6 +175,8 @@ class OrderService
             $orders->orderBy('order_number', 'desc');
         }
 
+        $orders = $orders->get();
+
         $this->exportService->notifyGroups($this->textToBot($orders));
 
         return [];
