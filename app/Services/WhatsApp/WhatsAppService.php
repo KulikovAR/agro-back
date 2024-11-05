@@ -15,7 +15,7 @@ class WhatsAppService
 
     public function __construct()
     {
-        $this->client = new WhatsAppClient(config('whatsapp.api_token'), config('whatsapp.profile_id'));
+        $this->client   = new WhatsAppClient(config('whatsapp.api_token'), config('whatsapp.profile_id'));
         $this->client_2 = new WhatsAppClient(config('whatsapp.api_token_2'), config('whatsapp.profile_id_2'));
     }
 
@@ -27,8 +27,12 @@ class WhatsAppService
 
         if (isset($data['messages'][0]['chat_type']) && isset($data['messages'][0]['chat_type']) == 'group') {
             $message_data = $data['messages'][0];
-            $chatId       = str_replace('@g.us', '', $message_data['chatId']);
-            $to           = str_replace('@c.us', '', $message_data['to']);
+            if (!isset($message_data['chatId'])) {
+                return;
+            }
+            
+            $chatId = $message_data['chatId'];
+            $to     = str_replace('@c.us', '', $message_data['to']);
 
             ModelWhatsAppClient::create([
                 'name'    => isset($message_data['senderName']) ? $message_data['senderName'] : null,
