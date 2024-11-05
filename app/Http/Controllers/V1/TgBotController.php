@@ -21,12 +21,6 @@ class TgBotController extends Controller
 
     public function sendMessage()
     {
-        //
-        //        Telegram::sendMessage([
-        //            'chat_id' => 562494573,
-        //            'text' => 'Спасибо, вам будут приходить уведомления об откликах на заявки созданные вами',
-        //        ]);
-        //        return 1;
         $update = Telegram::commandsHandler(true);
         $updateHook = Telegram::getWebhookUpdates();
 
@@ -46,11 +40,7 @@ class TgBotController extends Controller
             $user = User::where('phone_number', $phone_number)->exists();
             $userModel = User::where('phone_number', $phone_number)->first();
             $logistcianRole = Role::where('name', RoleEnum::LOGISTICIAN->value)->first();
-            //            Telegram::sendMessage([
-            //                'chat_id' => $chatId,
-            //                'text' => $user,
-            //            ]);
-            //            return 1;
+
             if ($user && $userModel->hasRole($logistcianRole)) {
                 if ((TgUser::where('phone_number', $phone_number)->exists())) {
                     Telegram::sendMessage([

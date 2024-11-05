@@ -31,6 +31,16 @@ class OrderController extends Controller
         );
     }
 
+    public function export(OrderFilterRequest $request): ApiJsonResponse
+    {
+        return new ApiJsonResponse(
+            200,
+            StatusEnum::OK,
+            'Заявки получены',
+            data: $this->service->export($request)
+        );
+    }
+
     public function show(Order $order): ApiJsonResponse
     {
         return new ApiJsonResponse(
@@ -107,6 +117,4 @@ class OrderController extends Controller
     {
         return new ApiJsonResponse(200, StatusEnum::OK, 'Заявки с откликами пользователя получены', data: $this->service->getOrdersWithUserOffers($request));
     }
-
-    public function notifyLogistician(Offer $offer): ApiJsonResponse {}
 }
