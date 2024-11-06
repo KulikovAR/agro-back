@@ -11,10 +11,8 @@ class ManagerContoller extends Controller
 {
     public function list()
     {
-        return new ApiJsonResponse(data: new ManagerCollection(User::with([
-            'roles' => function ($q) {
-                $q->where('name', 'manager');
-            },
-        ])->get()));
+        return new ApiJsonResponse(data: new ManagerCollection(User::whereHas('roles', function ($q) {
+            $q->where('slug', 'manager');
+        }, )->get()));
     }
 }
