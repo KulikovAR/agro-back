@@ -34,6 +34,10 @@ class WhatsAppService
             $chatId = $message_data['chatId'];
             $to     = str_replace('@c.us', '', $message_data['to']);
 
+            if(!is_null(ModelWhatsAppClient::where('chat_id', $chatId)->first())) {
+                return;
+            }
+
             ModelWhatsAppClient::createOrFirst([
                 'chat_id' => $chatId,
             ],[
