@@ -163,7 +163,7 @@ class OrderService
         return $data;
     }
 
-    public function export(OrderFilterRequest $request): array
+    public function exportLocal(OrderFilterRequest $request): array
     {
         $data   = $request->validated();
         $filter = app()->make(OrderFilter::class, ['queryParams' => $data]);
@@ -175,7 +175,24 @@ class OrderService
 
         $orders = $orders->get();
 
-        $this->exportService->notifyGroups($this->textToBot($orders));
+        $this->exportService->notifyLocalGroups($this->textToBotLocal($orders));
+
+        return [];
+    }
+
+    public function exportPublic(OrderFilterRequest $request): array
+    {
+        $data   = $request->validated();
+        $filter = app()->make(OrderFilter::class, ['queryParams' => $data]);
+        $orders = Order::filter($filter);
+
+        if (is_null($request->sort)) {
+            $orders->orderBy('order_number', 'desc');
+        }
+
+        $orders = $orders->get();
+
+        $this->exportService->notifyPublicGroups($this->textToBotPublic($orders));
 
         return [];
     }
@@ -202,37 +219,56 @@ class OrderService
         return new OrderIndexCollection($user->orders);
     }
 
-    public function textToBot(Collection $orders)
+    public function textToBotPublic(Collection $orders)
     {
         $text = '';
 
         foreach ($orders as $order) {
-            $text .= $order->load_place_name . ' ——> ' . $order->unload_place_name . ' ' . $order->terminal_name . '' . $order->exporter_name . "\n";
-            $text .= $order->crop . ' ' . $order->volume . " тонн \n";
-            $text .= $order->distance . ' ' . 'км' . ' ' . '=' . ' ' . $order->tariff . ' ' . 'руб/тн' . "\n";
-
-
-            if (!is_null($order->nds_percent)) {
-                $text .= 'НДС +' . $order->nds_percent . '%, ';
-            }
-
-            $text .= $order->load_method . ', ';
-            $text .= $order->tolerance_to_the_norm . ', ';
-            $text .= 'весы ' . (int) $order->scale_length . 'м, ';
-            $text .= 'высота до ' . (int) $order->height_limit . ', ';
-
-            $semi = 'нет';
-            foreach ($order->loadTypes as $loadType) {
-                if ($loadType->title == 'Полуприцеп') {
-                    $semi = 'да';
-                }
-            }
-
-            $text .= 'полуприцеп ' . $semi . "\n";
-
-            $text .= "\n";
-            $text .= "\n";
+            $text .= $this->orderMessageText($order);
         }
+
+        return $text;
+    }
+
+    public function textToBotLocal(Collection $orders)
+    {
+        $text = '';
+
+        foreach ($orders as $order) {
+            $text .= $this->orderMessageText($order);
+        }
+
+        return $text;
+    }
+
+    private function orderMessageText(Order $order) {
+        $text = '';
+
+        $text .= $order->load_place_name . ' ——> ' . $order->unload_place_name . ' ' . $order->terminal_name . '' . $order->exporter_name . "\n";
+        $text .= $order->crop . ' ' . $order->volume . " тонн \n";
+        $text .= $order->distance . ' ' . 'км' . ' ' . '=' . ' ' . $order->tariff . ' ' . 'руб/тн' . "\n";
+
+
+        if (!is_null($order->nds_percent)) {
+            $text .= 'НДС +' . $order->nds_percent . '%, ';
+        }
+
+        $text .= $order->load_method . ', ';
+        $text .= $order->tolerance_to_the_norm . ', ';
+        $text .= 'весы ' . (int) $order->scale_length . 'м, ';
+        $text .= 'высота до ' . (int) $order->height_limit . ', ';
+
+        $semi = 'нет';
+        foreach ($order->loadTypes as $loadType) {
+            if ($loadType->title == 'Полуприцеп') {
+                $semi = 'да';
+            }
+        }
+
+        $text .= 'полуприцеп ' . $semi . "\n";
+
+        $text .= "\n";
+        $text .= "\n";
 
         return $text;
     }

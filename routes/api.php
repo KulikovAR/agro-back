@@ -126,10 +126,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/manual/brands', [TransportBrandController::class, 'index'])->name('transport.brands');
         Route::get('/manual/types', [TransportTypeController::class, 'index'])->name('transport.types');
     });
-    
-    Route::get('/orders-export', [OrderController::class, 'export'])->name('order.export');
+
+
 
     Route::prefix('orders')->group(function () {
+        Route::get('/export/local', [OrderController::class, 'exportLocal'])->name('order.export-local');
+        Route::get('/export/public', [OrderController::class, 'exportPublic'])->name('order.export-public');
         Route::post('/create', [OrderController::class, 'create'])->name('order.create');
         Route::post('/update/{order}', [OrderController::class, 'update'])->name('order.update');
         Route::delete('/delete/{order}', [OrderController::class, 'delete'])->name('order.delete');

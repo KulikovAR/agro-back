@@ -34,15 +34,15 @@ class WhatsAppService
             $chatId = $message_data['chatId'];
             $to     = str_replace('@c.us', '', $message_data['to']);
 
-            if(!is_null(ModelWhatsAppClient::where('chat_id', $chatId)->first())) {
+            if (!is_null(ModelWhatsAppClient::where('chat_id', $chatId)->first())) {
                 return;
             }
 
             ModelWhatsAppClient::createOrFirst([
                 'chat_id' => $chatId,
-            ],[
+            ], [
                 'name'    => isset($message_data['senderName']) ? $message_data['senderName'] : null,
-                'chat_id'  => $chatId,
+                'chat_id' => $chatId,
                 'type'    => $message_data['chat_type'],
                 'account' => $to
             ]);
@@ -83,21 +83,29 @@ class WhatsAppService
         $this->client->sendMessage($message, $phoneNumber);
     }
 
-    public function notifyGroups(string $message): void
+    public function notifyLocalGroups(string $message): void
     {
-        $clients = ModelWhatsAppClient::all();
+        $clients = ModelWhatsAppClient::where('account', config('whatsapp.phone'))->get();
 
         foreach ($clients as $client) {
-            if ($client->account == config('whatsapp.phone')) {
-                $this->client->sendMessage($message, $client->chat_id);
-            }
-            if ($client->account == config('whatsapp.phone_2')) {
-                $this->client_2->sendMessage($message, $client->chat_id);
-            }
+            $this->client->sendMessage($message, $client->chat_id);
         }
 
         return;
     }
+
+    public function notifyPublicGroups(string $message): void
+    {
+        $clients = ModelWhatsAppClient::where('account', config('whatsapp.phone_2'))->get();
+
+        foreach ($clients as $client) {
+            $this->client_2->sendMessage($message, $client->chat_id);
+        }
+
+        return;
+    }
+
+
 
     protected function formatPhone(string $phoneNumber)
     {

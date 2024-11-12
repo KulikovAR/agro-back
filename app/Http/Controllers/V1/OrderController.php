@@ -31,13 +31,23 @@ class OrderController extends Controller
         );
     }
 
-    public function export(OrderFilterRequest $request): ApiJsonResponse
+    public function exportLocal(OrderFilterRequest $request): ApiJsonResponse
     {
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
             'Заявки получены',
-            data: $this->service->export($request)
+            data: $this->service->exportLocal($request)
+        );
+    }
+
+    public function exportPublic(OrderFilterRequest $request): ApiJsonResponse
+    {
+        return new ApiJsonResponse(
+            200,
+            StatusEnum::OK,
+            'Заявки получены',
+            data: $this->service->exportPublic($request)
         );
     }
 
