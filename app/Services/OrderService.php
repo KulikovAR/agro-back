@@ -256,7 +256,10 @@ class OrderService
         $text .= $order->load_method . ', ';
         $text .= $order->tolerance_to_the_norm . ', ';
         $text .= 'весы ' . (int) $order->scale_length . 'м, ';
-        $text .= 'высота до ' .  $order->height_limit . ' %, ';
+
+        if(!is_null($order->height_limit)) {
+            $text .= 'высота до ' . $order->height_limit . ' % нормы, ';
+        }
 
         $semi = 'нет';
         foreach ($order->loadTypes as $loadType) {
