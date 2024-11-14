@@ -31,6 +31,8 @@ class OrderService
 
     protected $exportService;
 
+    const AGRO_PHONE = '+79281699009';
+
     public function __construct()
     {
         $this->dadata        = new Dadata;
@@ -222,11 +224,17 @@ class OrderService
     public function textToBotPublic(Collection $orders)
     {
         $text = '';
+        
+        $text .= self::AGRO_PHONE;
+        
+        $text .= "\n";
+        $text .= "\n";
 
         foreach ($orders as $order) {
             $text .= $this->orderMessageText($order);
         }
 
+        $text .= self::AGRO_PHONE;
         return $text;
     }
 
