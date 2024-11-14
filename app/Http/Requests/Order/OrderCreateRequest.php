@@ -25,7 +25,7 @@ class OrderCreateRequest extends FormRequest
             'terminal_name' => ['string', 'nullable'],
             'exporter_name' => ['string', 'nullable'],
             'scale_length' => ['string', 'required'],
-            'height_limit' => ['required', 'string'],
+            'height_limit' => ['nullable', 'string'],
             'is_overload' => ['boolean'],
             'timeslot' => ['string'],
             'outage_begin' => ['nullable', 'integer'],
