@@ -271,9 +271,9 @@ class OrderService
 
         foreach ($order->loadTypes as $loadType) {
             if (!next($order->loadTypes)) {
-                $text .= $loadType->title . " да\n";
+                $text .= strtolower($loadType->title) . " да\n";
             } else {
-                $text .= $loadType->title . ' да,';
+                $text .= strtolower($loadType->title) . ' да,';
             }
         }
 
