@@ -63,7 +63,7 @@ class UpdateRequest extends FormRequest
             'department' => ['required', 'string'],
             'department_code' => ['required', 'string'],
             'snils' => ['required', 'string'],
-            'email' => ['required', 'string', 'email', 'unique:users,email'],
+            'email' => ['required', 'string', 'email', 'unique:users,email,'.$this->id],
             'region' => ['required', 'string'],
             'accountant_phone' => ['required', 'string'],
             'director_name' => ['required', 'string'],

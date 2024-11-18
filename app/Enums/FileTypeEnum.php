@@ -11,6 +11,7 @@ enum FileTypeEnum: string
     case PSFL = 'ПСФЛ';
     case EFS = 'ЕФС';
     case REQUISITES = 'Реквизиты';
+    case TAX_SERCET = 'Налоговая тайна';
     case PATENT = 'Патент';
     case USN = 'УСН';
     case NDS = 'НДС';
@@ -28,6 +29,7 @@ enum FileTypeEnum: string
             self::PATENT->value,
             self::USN->value,
             self::NDS->value,
+            self::TAX_SERCET->value,
         ];
     }
 
