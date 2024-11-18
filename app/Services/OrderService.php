@@ -269,14 +269,15 @@ class OrderService
             $text .= 'высота до ' . $order->height_limit . ' % нормы, ';
         }
 
-        $semi = 'нет';
+        $text .= 'полуприцеп ' .  "\n";
+
         foreach ($order->loadTypes as $loadType) {
-            if ($loadType->title == 'Полуприцеп') {
-                $semi = 'да';
+            if (!next($order->loadTypes)) {
+                $text .= $loadType->title . "да\n";
+            } else {
+                $text .= $loadType->title . 'да,';
             }
         }
-
-        $text .= 'полуприцеп ' . $semi . "\n";
 
         $text .= "\n";
         $text .= "\n";
