@@ -262,7 +262,10 @@ class OrderService
         }
 
         $text .= $order->load_method . ', ';
-        $text .= $order->tolerance_to_the_norm . ', ';
+        if($order->tolerance_to_the_norm) {
+            $text .= $order->tolerance_to_the_norm . '%, ';
+        }
+
         $text .= 'весы ' . (int) $order->scale_length . 'м, ';
 
         if(!is_null($order->height_limit)) {
