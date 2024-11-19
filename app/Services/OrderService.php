@@ -281,8 +281,10 @@ class OrderService
             }
         }
 
-        $isOverloadText = $order->is_overload ? 'да' : 'нет';
-        $text .= 'с перегрузом: '.  $isOverloadText;
+
+        if($order->is_overload) {
+            $text .= 'с перегрузом да';
+        }
 
         $text .= "\n";
         $text .= "\n";
