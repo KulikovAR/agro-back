@@ -224,9 +224,9 @@ class OrderService
     public function textToBotPublic(Collection $orders)
     {
         $text = '';
-        
+
         $text .= self::AGRO_PHONE;
-        
+
         $text .= "\n";
         $text .= "\n";
 
@@ -249,7 +249,8 @@ class OrderService
         return $text;
     }
 
-    private function orderMessageText(Order $order) {
+    private function orderMessageText(Order $order)
+    {
         $text = '';
 
         $text .= $order->load_place_name . ' ——> ' . $order->unload_place_name . ' ' . $order->terminal_name . '' . $order->exporter_name . "\n";
@@ -262,14 +263,14 @@ class OrderService
         }
 
         $text .= $order->load_method . ', ';
-        if($order->tolerance_to_the_norm) {
-            $text .= $order->tolerance_to_the_norm . '%, ';
+        if ($order->tolerance_to_the_norm) {
+            $text .= '+'.$order->tolerance_to_the_norm . '%, ';
         }
 
         $text .= 'весы ' . (int) $order->scale_length . 'м, ';
 
-        if(!is_null($order->height_limit)) {
-            $text .= 'высота до ' . $order->height_limit . ' % нормы, ';
+        if (!is_null($order->height_limit)) {
+            $text .= 'высота до ' . $order->height_limit . ' м, ';
         }
 
         foreach ($order->loadTypes as $loadType) {
@@ -280,9 +281,21 @@ class OrderService
             }
         }
 
+        $isOverloadText = $order->is_overload ? 'да' : 'нет';
+        $text .= 'с перегрузом: '.  $isOverloadText;
+
         $text .= "\n";
         $text .= "\n";
 
         return $text;
+    }
+
+    public function getLoadTypeDescr()
+    {
+        return [
+            'Сцепки'     => 'только сцепки',
+            'Полуприцеп' => 'полуприцеп да',
+            'Тонар'      => 'тонар да',
+        ];
     }
 }
