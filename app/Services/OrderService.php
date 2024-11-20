@@ -273,7 +273,7 @@ class OrderService
             $text .= 'высота до ' . $order->height_limit . ' м, ';
         }
 
-        $text .= $this->getLoadTypeDescr($order->loadTypes->toArray());
+        $text .= $this->getLoadTypeDescr($order->loadTypes->pluck('title')->toArray());
 
         if ($order->is_overload) {
             $text .= 'с перегрузом да';
