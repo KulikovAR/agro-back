@@ -276,7 +276,7 @@ class OrderService
         $text .= $this->getLoadTypeDescr($order->loadTypes->pluck('title')->toArray());
 
         if ($order->is_overload) {
-            $text .= 'с перегрузом да';
+            $text .= ', с перегрузом да';
         }
 
         $text .= "\n";
@@ -292,40 +292,40 @@ class OrderService
             && in_array('Тонар', $loadTypes)
             && in_array('Полуприцеп', $loadTypes)
         ) {
-            return 'любые авто, ';
+            return 'любые авто';
         }
 
         if (
             in_array('Тонар', $loadTypes)
             && in_array('Полуприцеп', $loadTypes)
         ) {
-            return 'любые авто, ';
+            return 'любые авто';
         }
 
         if (
             in_array('Сцепки', $loadTypes)
             && in_array('Полуприцеп', $loadTypes)
         ) {
-            return 'полуприцеп да, ';
+            return 'полуприцеп да';
         }
 
         if (
             in_array('Сцепки', $loadTypes)
             && in_array('Тонар', $loadTypes)
         ) {
-            return 'тонар да, ';
+            return 'тонар да';
         }
 
         if(count($loadTypes) == 1 && in_array('Сцепки', $loadTypes)) {
-            return 'только сцепки, ';
+            return 'только сцепки';
         }
 
         if (count($loadTypes) == 1 && in_array('Тонар', $loadTypes)) {
-            return 'тонар да, ';
+            return 'тонар да';
         }
 
         if (count($loadTypes) == 1 && in_array('Полуприцеп', $loadTypes)) {
-            return 'полуприцеп да, ';
+            return 'полуприцеп да';
         }
         
         return '';
