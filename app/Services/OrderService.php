@@ -264,7 +264,7 @@ class OrderService
 
         $text .= $order->load_method . ', ';
         if ($order->tolerance_to_the_norm) {
-            $text .= '+'.$order->tolerance_to_the_norm . '%, ';
+            $text .= '+' . $order->tolerance_to_the_norm . '%, ';
         }
 
         $text .= 'весы ' . (int) $order->scale_length . 'м, ';
@@ -273,16 +273,9 @@ class OrderService
             $text .= 'высота до ' . $order->height_limit . ' м, ';
         }
 
-        foreach ($order->loadTypes as $loadType) {
-            if (!next($order->loadTypes)) {
-                $text .= mb_strtolower($loadType->title) . " да\n";
-            } else {
-                $text .= mb_strtolower($loadType->title) . ' да,';
-            }
-        }
+        $text = $this->getLoadTypeDescr($order->loadTypes);
 
-
-        if($order->is_overload) {
+        if ($order->is_overload) {
             $text .= 'с перегрузом да';
         }
 
@@ -292,12 +285,49 @@ class OrderService
         return $text;
     }
 
-    public function getLoadTypeDescr()
+    public function getLoadTypeDescr(array $loadTypes): string
     {
-        return [
-            'Сцепки'     => 'только сцепки',
-            'Полуприцеп' => 'полуприцеп да',
-            'Тонар'      => 'тонар да',
-        ];
+        if (
+            in_array('Сцепки', $loadTypes)
+            && in_array('Тонар', $loadTypes)
+            && in_array('Полуприцеп', $loadTypes)
+        ) {
+            return 'любые авто, ';
+        }
+
+        if (
+            in_array('Тонар', $loadTypes)
+            && in_array('Полуприцеп', $loadTypes)
+        ) {
+            return 'любые авто, ';
+        }
+
+        if (
+            in_array('Сцепки', $loadTypes)
+            && in_array('Полуприцеп', $loadTypes)
+        ) {
+            return 'полуприцеп да, ';
+        }
+
+        if (
+            in_array('Сцепки', $loadTypes)
+            && in_array('Тонар', $loadTypes)
+        ) {
+            return 'тонар да, ';
+        }
+
+        if(count($loadTypes) == 1 && in_array('Сцепки', $loadTypes)) {
+            return 'только сцепки, ';
+        }
+
+        if (count($loadTypes) == 1 && in_array('Тонар', $loadTypes)) {
+            return 'тонар да, ';
+        }
+
+        if (count($loadTypes) == 1 && in_array('Полуприцеп', $loadTypes)) {
+            return 'полуприцеп да, ';
+        }
+        
+        return '';
     }
 }
