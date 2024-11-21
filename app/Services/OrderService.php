@@ -276,7 +276,7 @@ class OrderService
         $text .= $this->getLoadTypeDescr($order->loadTypes->pluck('title')->toArray());
 
         if ($order->is_overload) {
-            $text .= ', с перегрузом да';
+            $text .= ', с перегрузом';
         }
 
         $text .= "\n";
