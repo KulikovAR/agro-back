@@ -113,7 +113,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/update-files', [FileController::class, 'updateFilesForUser'])->name('files.update_files');
         Route::delete('/delete-files', [FileController::class, 'deleteUserFiles'])->name('files.delete_files');
         Route::get('/file-types', [FileController::class, 'getFileTypes'])->name('files.getFileTypes');
-        Route::delete('/delete/{file}', [FileController::class, 'delete'])->name('files.update');
+        Route::delete('/delete/{file}', [FileController::class, 'delete'])->name('files.delete');
         Route::post('/from-1c/{inn}', [FileController::class, 'loadFileFrom1C'])->name('files.from-1c');
     });
 
