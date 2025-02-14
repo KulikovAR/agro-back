@@ -19,7 +19,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
         $this->hideSensitiveRequestDetails();
 
         $isLocalOrDev = config('app.env') === 'dev' || config('app.env') === 'local';
-
+        $isLocalOrDev = true;
         Telescope::filter(function (IncomingEntry $entry) use ($isLocalOrDev) {
             return $isLocalOrDev ||
                    $entry->isReportableException() ||
