@@ -39,6 +39,11 @@ class AppServiceProvider extends ServiceProvider
             Url::forceScheme('https');
         }
 
+        if ((config('app.env') === 'dev' || config('app.env') === 'local' ) && class_exists(\Laravel\Telescope\TelescopeServiceProvider::class)) {
+            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
+        }
+
         Order::observe(OrderObserver::class);
         Offer::observe(OfferObserver::class);
         Gate::policy(User::class, UserPolicy::class);
