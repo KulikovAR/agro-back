@@ -23,7 +23,7 @@ class UserProfileService
 
     public function loadAvatar(AvatarRequest $request): FileResource
     {
-        $files = $user->files()->where('type', FileTypeEnum::AVATAR->value)->get();
+        $files = $request->user()->files()->where('type', FileTypeEnum::AVATAR->value)->get();
 
         foreach($files as $file) {
             $this->deleteFile($file);
