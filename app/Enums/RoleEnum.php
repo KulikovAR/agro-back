@@ -8,7 +8,8 @@ enum RoleEnum: string
     case LOGISTICIAN = 'logistician';
     case CLIENT = 'client';
     case MANAGER = 'manager';
-    case IC = '1C';
+
+    case IC = '1c';
 
     public static function getWithDescription()
     {
