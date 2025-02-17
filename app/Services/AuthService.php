@@ -48,7 +48,7 @@ class AuthService
             $user->syncRoles([$clientRole]);
         }
 
-        $this->sms->send($request->phone_number, $code_arr['code'].'- Код для подтверждения');
+//        $this->sms->send($request->phone_number, $code_arr['code'].'- Код для подтверждения');
         $user->update(['code' => $code_arr['code'], 'code_hash' => $code_arr['code_hash'], 'code_expire_at' => $code_arr['code_expire']]);
         $resource = new DevUserResource($user);
 
