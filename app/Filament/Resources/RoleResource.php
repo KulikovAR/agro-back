@@ -40,7 +40,7 @@ class RoleResource extends Resource
                     ->label('ID')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
-                    ->state(fn (Role $role) => RoleEnum::getWithDescription()[$role->name])
+                    ->state(fn (Role $role) => RoleEnum::getWithDescription()[strtolower($role->name)])
                     ->searchable()
                     ->label('Название роли'),
                 Tables\Columns\TextColumn::make('slug')
