@@ -7,6 +7,7 @@ use App\Enums\StatusEnum;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegistrationSmsCodeRequest;
 use App\Http\Resources\User\DevUserResource;
+use App\Http\Resources\User\LoginResource;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\Role;
 use App\Models\User;
@@ -48,9 +49,13 @@ class AuthService
             $user->syncRoles([$clientRole]);
         }
 
-//        $this->sms->send($request->phone_number, $code_arr['code'].'- Код для подтверждения');
+        if (config('app.env') === 'production') {
+            $this->sms->send($request->phone_number, $code_arr['code'].'- Код для подтверждения');
+        }
+
         $user->update(['code' => $code_arr['code'], 'code_hash' => $code_arr['code_hash'], 'code_expire_at' => $code_arr['code_expire']]);
-        $resource = new DevUserResource($user);
+
+        $resource = config('app.env') === 'production' ? new LoginResource($user) : new DevUserResource($user);
 
         return new ApiJsonResponse(
             200,
