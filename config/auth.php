@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    'mobile_test_user' => env("TEST_MOBILE_USER", null),
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults
