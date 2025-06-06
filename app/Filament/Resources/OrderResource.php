@@ -37,19 +37,19 @@ class OrderResource extends Resource
             ->schema([
                 Forms\Components\Select::make('crop')
                     ->label('Культура')
-                    ->required()
+                    ->required(fn ($operation) => $operation === 'create')
                     ->options(array_combine(array_values(CropOrderEnum::getCrop()), CropOrderEnum::getCrop())),
                 Forms\Components\TextInput::make('volume')
                     ->label('Объем')
-                    ->required()
+                    ->required(fn ($operation) => $operation === 'create')
                     ->numeric(),
                 Forms\Components\TextInput::make('distance')
                     ->label('Расстояние')
-                    ->required()
+                    ->required(fn ($operation) => $operation === 'create')
                     ->numeric(),
                 Forms\Components\TextInput::make('tariff')
                     ->label('Тариф')
-                    ->required()
+                    ->required(fn ($operation) => $operation === 'create')
                     ->numeric(),
                 Forms\Components\TextInput::make('nds_percent')
                     ->label('НДС %')
@@ -57,31 +57,30 @@ class OrderResource extends Resource
                 Forms\Components\Select::make('terminal_name')
                     ->label('Название терминала')
                     ->searchable()
-                    ->required()
-//                    ->options([]),
+                    ->required(fn ($operation) => $operation === 'create')
                     ->getSearchResultsUsing(fn (string $search): array => $dadata->sendCompanyForFilament($search, 'value')),
                 Forms\Components\TextInput::make('exporter_name')
                     ->label('Название экспортера')
-                    ->required()
+                    ->required(fn ($operation) => $operation === 'create')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('scale_length')
                     ->label('Длина весов')
-                    ->required()
+                    ->required(fn ($operation) => $operation === 'create')
                     ->numeric(),
                 Forms\Components\TextInput::make('height_limit')
                     ->label('Лимит высоты')
-                    ->required()
+                    ->required(fn ($operation) => $operation === 'create')
                     ->numeric(),
                 Forms\Components\Toggle::make('is_overload')
                     ->label('Перегрузка')
-                    ->required(),
+                    ->required(fn ($operation) => $operation === 'create'),
                 Forms\Components\Select::make('timeslot')
                     ->label('Таймслот')
-                    ->required()
+                    ->required(fn ($operation) => $operation === 'create')
                     ->options(array_combine(array_values(OrderTimeslotEnum::getTimselot()), OrderTimeslotEnum::getTimselot())),
                 Forms\Components\Select::make('status')
                     ->label('Статус')
-                    ->required()
+                    ->required(fn ($operation) => $operation === 'create')
                     ->options(array_combine(array_values(OrderStatusEnum::getOrderStatus()), OrderStatusEnum::getOrderStatus())),
                 Forms\Components\TextInput::make('outage_begin')
                     ->label('Начало простоя')
@@ -94,12 +93,12 @@ class OrderResource extends Resource
                     ->numeric(),
                 Forms\Components\TextInput::make('contact_name')
                     ->label('Имя контакта')
-                    ->required()
+                    ->required(fn ($operation) => $operation === 'create')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('contact_phone')
                     ->label('Телефон контакта')
                     ->tel()
-                    ->required()
+                    ->required(fn ($operation) => $operation === 'create')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('cargo_shortage_rate')
                     ->label('Ставка недостачи груза')
@@ -128,7 +127,7 @@ class OrderResource extends Resource
                 Forms\Components\Select::make('load_method')
                     ->label('Метод загрузки')
                     ->preload()
-                    ->required()
+                    ->required(fn ($operation) => $operation === 'create')
                     ->options(array_combine(array_values(LoadMethodEnum::getLoadMethods()), LoadMethodEnum::getLoadMethods())),
                 Forms\Components\Select::make('load_type_id')
                     ->relationship(name: 'loadTypes', titleAttribute: 'title')
@@ -150,17 +149,17 @@ class OrderResource extends Resource
                     ->numeric(),
                 Forms\Components\DateTimePicker::make('start_order_at')
                     ->label('Дата начала заявки')
-                    ->required(),
+                    ->required(fn ($operation) => $operation === 'create'),
                 Forms\Components\DateTimePicker::make('end_order_at')
                     ->label('дата окончания заявки')
-                    ->required(),
+                    ->required(fn ($operation) => $operation === 'create'),
                 Forms\Components\TextInput::make('load_place_name')
                     ->label('Адрес места загрузки')
-                    ->required()
+                    ->required(fn ($operation) => $operation === 'create')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('unload_place_name')
                     ->label('Адрес места выгрузки')
-                    ->required()
+                    ->required(fn ($operation) => $operation === 'create')
                     ->maxLength(255),
                 Forms\Components\Toggle::make('is_full_charter')
                     ->label('Полная хартия'),
