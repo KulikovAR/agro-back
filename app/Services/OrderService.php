@@ -177,7 +177,7 @@ class OrderService
 
         $orders = $orders->get();
 
-        $this->exportService->notifyLocalGroups($this->textToBotLocal($orders));
+        $this->exportService->notifyLocalGroups($this->textToBotPublic($orders));
 
         return [];
     }
@@ -253,11 +253,11 @@ class OrderService
     {
         $text = '';
 
-        $text .= $order->load_place_name . ' ——> ' . $order->unload_place_name . ' ' . $order->terminal_name . '' . $order->exporter_name . "\n";
+        $text .= '*'. $order->load_place_name . ' ——> ' . $order->unload_place_name . ' ' . $order->terminal_name . '' . $order->exporter_name . "* \n";
         $text .= $order->crop . ' ' . $order->volume . " тонн \n";
-        $text .= $order->distance . ' ' . 'км' . ' ' . '=' . ' ' . $order->tariff . ' ' . 'руб/тн' . "\n";
+        $text .= '*'. $order->distance . ' ' . 'км' . ' ' . '=' . ' ' . $order->tariff . ' ' . 'руб/тн' . "* \n";
 
-
+        $text .= '_';
         if (!is_null($order->nds_percent)) {
             $text .= 'НДС +' . $order->nds_percent . '%, ';
         }
@@ -278,6 +278,8 @@ class OrderService
         if ($order->is_overload) {
             $text .= ', с перегрузом';
         }
+        
+        $text .= '_';
 
         $text .= "\n";
         $text .= "\n";
@@ -327,7 +329,7 @@ class OrderService
         if (count($loadTypes) == 1 && in_array('Полуприцеп', $loadTypes)) {
             return 'полуприцеп да';
         }
-        
+
         return '';
     }
 }

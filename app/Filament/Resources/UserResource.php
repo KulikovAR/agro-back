@@ -11,6 +11,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Validation\Rule;
 
 class UserResource extends Resource
 {
@@ -29,7 +30,11 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->label('Электронная почта')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->unique(ignoreRecord: true)
+                    ->validationMessages([
+                        'unique' => 'Пользователь с таким email уже существует',
+                    ]),
                 Forms\Components\TextInput::make('name')
                     ->label('Имя')
                     ->maxLength(255),
