@@ -22,6 +22,11 @@ class EditOrder extends EditRecord
         return $data;
     }
 
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        return $data;
+    }
+
     protected function getFormSchema(): array
     {
         $dadata = new \App\Services\Dadata\Dadata;
