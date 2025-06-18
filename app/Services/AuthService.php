@@ -15,6 +15,7 @@ use App\Services\Sms\SmsVerification;
 use App\Traits\BearerTokenTrait;
 use App\Traits\PasswordHash;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\PersonalAccessToken;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class AuthService
@@ -38,7 +39,8 @@ class AuthService
         $logisticianRole = Role::where('name', 'logistician')->first();
 
         $user = User::firstOrNew(['phone_number' => $request->phone_number], ['phone_number' => $request->phone_number, 'moderation_status' => ModerationStatusEnum::APPROVED->value]);
-        if (! User::where('phone_number', $request->phone_number)->exists()) {
+
+        if (!User::where('phone_number', $request->phone_number)->exists()) {
             $user->save();
             $user->update($user->clearProfile());
         }
@@ -49,8 +51,8 @@ class AuthService
             $user->syncRoles([$clientRole]);
         }
 
-        if (config('app.env') === 'production') {
-            $this->sms->send($request->phone_number, $code_arr['code'].'- Код для подтверждения');
+        if (app()->environment('production')) {
+            $this->sms->send($request->phone_number, $code_arr['code'] . '- Код для подтверждения');
         }
 
         $user->update(['code' => $code_arr['code'], 'code_hash' => $code_arr['code_hash'], 'code_expire_at' => $code_arr['code_expire']]);
@@ -71,7 +73,7 @@ class AuthService
     {
         $user = User::where('phone_number', $request->phone_number)->first();
 
-        if($user->phone == config('auth.mobile_test_user')) {
+        if ($user->phone == config('auth.mobile_test_user')) {
             $bearerToken = $this->createAuthToken($user);
 
             return ['user' => $user, 'token' => $bearerToken];
@@ -88,7 +90,7 @@ class AuthService
     public function getUser(Request $request)
     {
         $token = $request->bearerToken();
-        $user_token = \Laravel\Sanctum\PersonalAccessToken::findToken($token);
+        $user_token = PersonalAccessToken::findToken($token);
 
         return User::where('id', $user_token->tokenable_id)->first();
     }
