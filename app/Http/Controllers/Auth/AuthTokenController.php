@@ -59,8 +59,16 @@ class AuthTokenController extends Controller
 
     public function destroy(Request $request): ApiJsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
-
+        $user = $request->user();
+        
+        $user->tokens()->delete();
+        
+        if ($request->device_token) {
+            $user->deviceTokens()
+                ->where('token', $request->device_token)
+                ->delete();
+        }
+    
         return new ApiJsonResponse;
     }
 }
