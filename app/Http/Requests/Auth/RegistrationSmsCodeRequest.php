@@ -24,7 +24,7 @@ class RegistrationSmsCodeRequest extends FormRequest
         return [
             'phone_number' => ["regex:/^\+7\d{10}$/", 'string', 'required'],
             'code' => ['string', 'required'],
-            'device_token' => ['string', 'sometimes']
+            'device_token' => ['string', 'nullable']
         ];
     }
 }
