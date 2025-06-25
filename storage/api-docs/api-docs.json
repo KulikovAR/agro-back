@@ -159,6 +159,24 @@
                 ],
                 "summary": "Logout",
                 "operationId": "logout",
+                "requestBody": {
+                    "description": "Logout data",
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "device_token": {
+                                        "description": "Device token to remove",
+                                        "type": "string",
+                                        "example": "device_token_example"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -219,6 +237,11 @@
                                     "code": {
                                         "description": "Verification code",
                                         "type": "string"
+                                    },
+                                    "device_token": {
+                                        "description": "Device token for push notifications",
+                                        "type": "string",
+                                        "example": "device_token_example"
                                     }
                                 },
                                 "type": "object"

@@ -300,4 +300,9 @@ class User extends Authenticatable implements FilamentUser, HasLocalePreference,
 
         return $data;
     }
+
+    public function deviceTokens(): HasMany
+    {
+        return $this->hasMany(DeviceToken::class, 'user_id', 'id');
+    }
 }

@@ -72,16 +72,28 @@ class AuthService
     public function verificationCheck(RegistrationSmsCodeRequest $request): array
     {
         $user = User::where('phone_number', $request->phone_number)->first();
-
+    
         if ($user->phone == config('auth.mobile_test_user')) {
             $bearerToken = $this->createAuthToken($user);
-
+            
+            if ($request->device_token) {
+                $user->deviceTokens()->updateOrCreate(
+                    ['token' => $request->device_token]
+                );
+            }
+    
             return ['user' => $user, 'token' => $bearerToken];
         }
-
+    
         if ($user->code == $request->code) {
             $bearerToken = $this->createAuthToken($user);
-
+            
+            if ($request->device_token) {
+                $user->deviceTokens()->updateOrCreate(
+                    ['token' => $request->device_token]
+                );
+            }
+    
             return ['user' => $user, 'token' => $bearerToken];
         }
         throw new BadRequestException('Неверный код');

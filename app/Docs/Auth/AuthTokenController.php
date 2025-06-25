@@ -71,6 +71,15 @@ class AuthTokenController
      *     summary="Logout",
      *     security={{"api": {}}},
      *
+     *     @OA\RequestBody(
+     *         required=false,
+     *         description="Logout data",
+     *
+     *         @OA\JsonContent(
+     *             @OA\Property(property="device_token", type="string", description="Device token to remove", example="device_token_example"),
+     *         ),
+     *     ),
+     *
      *     @OA\Response(
      *          response="200",
      *          description="Success",
@@ -110,6 +119,7 @@ class AuthTokenController
      *
      *             @OA\Property(property="phone_number", type="string", description="User's phone number"),
      *             @OA\Property(property="code", type="string", description="Verification code"),
+     *             @OA\Property(property="device_token", type="string", description="Device token for push notifications", example="device_token_example"),
      *         ),
      *     ),
      *
