@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\Order;
 use App\Services\ExpoNotificationService;
 use App\Enums\NotificationType;
+use Illuminate\Support\Facades\Log;
 
 class OrderObserver
 {
@@ -13,13 +14,27 @@ class OrderObserver
      */
     public function created(Order $order): void
     {
-        $order->order_number = $order->max('order_number') + 1;
-        $order->save();
+         $order->order_number = $order->max('order_number') + 1;
+         $order->save();
 
-        app(ExpoNotificationService::class)->broadcastToAllUsers(
-            NotificationType::ORDER_CREATED,
-            getOrderNotificationData($order)
-        );
+        try {
+            $notificationData = getOrderNotificationData($order);
+
+            Log::info('Sending ORDER_CREATED notification', [
+                'order_id' => $order->id,
+                'data' => $notificationData
+            ]);
+
+            app(ExpoNotificationService::class)->broadcastToAllUsers(
+                NotificationType::ORDER_CREATED,
+                $notificationData
+            );
+        } catch (\Exception $e) {
+            Log::error('Failed to send ORDER_CREATED notification', [
+                'order_id' => $order->id,
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -27,10 +42,24 @@ class OrderObserver
      */
     public function updated(Order $order): void
     {
-        app(ExpoNotificationService::class)->broadcastToAllUsers(
-            NotificationType::ORDER_UPDATED,
-            getOrderNotificationData($order)
-        );
+        try {
+            $notificationData = getOrderNotificationData($order);
+
+            Log::info('Sending ORDER_UPDATED notification', [
+                'order_id' => $order->id,
+                'data' => $notificationData
+            ]);
+
+            app(ExpoNotificationService::class)->broadcastToAllUsers(
+                NotificationType::ORDER_UPDATED,
+                $notificationData
+            );
+        } catch (\Exception $e) {
+            Log::error('Failed to send ORDER_UPDATED notification', [
+                'order_id' => $order->id,
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
