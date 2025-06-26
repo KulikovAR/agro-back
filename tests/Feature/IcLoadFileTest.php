@@ -24,7 +24,7 @@ class IcLoadFileTest extends TestCase
             'Authorization' => 'Bearer '.$token,
         ]);
         //        dd($response->json());
-        dd($response);
+        // dd($response);
         $response->assertStatus(200)->assertJsonStructure([
             'status',
             'message',

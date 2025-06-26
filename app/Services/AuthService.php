@@ -15,7 +15,6 @@ use App\Services\Sms\SmsVerification;
 use App\Traits\BearerTokenTrait;
 use App\Traits\PasswordHash;
 use Illuminate\Http\Request;
-use Laravel\Sanctum\PersonalAccessToken;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class AuthService
@@ -83,12 +82,9 @@ class AuthService
             ->delete();
     }
 
-    public function getUser(Request $request)
+    public function getUser(Request $request): User
     {
-        $token = $request->bearerToken();
-        $user_token = PersonalAccessToken::findToken($token);
-
-        return User::where('id', $user_token->tokenable_id)->first();
+        return $request->user();
     }
 
 

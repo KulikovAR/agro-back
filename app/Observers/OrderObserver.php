@@ -3,6 +3,8 @@
 namespace App\Observers;
 
 use App\Models\Order;
+use App\Services\ExpoNotificationService;
+use App\Enums\NotificationType;
 
 class OrderObserver
 {
@@ -13,6 +15,11 @@ class OrderObserver
     {
         $order->order_number = $order->max('order_number') + 1;
         $order->save();
+
+        app(ExpoNotificationService::class)->broadcastToAllUsers(
+            NotificationType::ORDER_CREATED,
+            getOrderNotificationData($order)
+        );
     }
 
     /**
@@ -20,7 +27,10 @@ class OrderObserver
      */
     public function updated(Order $order): void
     {
-        //
+        app(ExpoNotificationService::class)->broadcastToAllUsers(
+            NotificationType::ORDER_UPDATED,
+            getOrderNotificationData($order)
+        );
     }
 
     /**

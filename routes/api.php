@@ -13,7 +13,6 @@ use App\Http\Controllers\V1\FileController;
 use App\Http\Controllers\V1\ManagerContoller;
 use App\Http\Controllers\V1\OfferController;
 use App\Http\Controllers\V1\OrderController;
-use App\Http\Controllers\V1\ProductParserController;
 use App\Http\Controllers\V1\SignMeController;
 use App\Http\Controllers\V1\TgBotController;
 use App\Http\Controllers\V1\TransportBrandController;
