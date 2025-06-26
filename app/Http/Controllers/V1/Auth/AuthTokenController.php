@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\V1\Auth;
 
 use App\Enums\StatusEnum;
 use App\Http\Controllers\Controller;
@@ -24,10 +24,7 @@ class AuthTokenController extends Controller
 
     public function store(LoginRequest $request): ApiJsonResponse
     {
-
-        $user = $this->auth_service->login($request);
-
-        return $user;
+        return $this->auth_service->login($request);
     }
 
     public function verification(RegistrationSmsCodeRequest $request): ApiJsonResponse
@@ -59,8 +56,9 @@ class AuthTokenController extends Controller
 
     public function destroy(Request $request): ApiJsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
+        $this->auth_service->destroy($request->user(), $request->device_token);
 
         return new ApiJsonResponse;
     }
 }
+

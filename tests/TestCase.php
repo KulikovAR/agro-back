@@ -84,10 +84,22 @@ abstract class TestCase extends BaseTestCase
             ],
         ];
 
-        if (! empty($data)) {
+        if (!empty($data)) {
             $data_with_pagination['data'] = $data;
         }
 
         return $data_with_pagination;
+    }
+
+    public function generateRandomPhoneNumber(): string
+    {
+        $prefix = '+7';
+
+        $randomDigits = '';
+        for ($i = 0; $i < 10; $i++) {
+            $randomDigits .= rand(0, 9);
+        }
+
+        return $prefix . $randomDigits;
     }
 }
