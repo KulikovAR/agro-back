@@ -69,8 +69,9 @@ class OrderController extends Controller
         $order = $this->service->create($request);
         
         $this->pushService->broadcastToAllUsers(
-            NotificationType::ORDER_CREATED,
+            NotificationType::ORDER,
             [
+                'action' => 'created',
                 'order_id' => $order->id,
                 'load_place' => $order->load_place,
                 'unload_place' => $order->unload_place_name,
@@ -94,8 +95,9 @@ class OrderController extends Controller
         $updatedOrder = $this->service->update($request, $order);
         
         $this->pushService->broadcastToAllUsers(
-            NotificationType::ORDER_UPDATED,
+            NotificationType::ORDER,
             [
+                'action' => 'updated',
                 'order_id' => $updatedOrder->id,
                 'load_place' => $updatedOrder->load_place,
                 'unload_place' => $updatedOrder->unload_place_name,

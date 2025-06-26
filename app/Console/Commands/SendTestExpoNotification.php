@@ -53,7 +53,7 @@ class SendTestExpoNotification extends Command
 
             $this->info("Отправляем тестовое уведомление...");
 
-            $expoService->send($user, NotificationType::ORDER_CREATED, $testData);
+            $expoService->send($user, NotificationType::ORDER, $testData);
 
             $this->info("✅ Тестовое уведомление успешно отправлено!");
             $this->info("📱 Device tokens: " . $user->deviceTokens->pluck('token')->implode(', '));
