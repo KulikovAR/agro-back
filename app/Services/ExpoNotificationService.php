@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Enums\NotificationType;
+use NotificationChannels\Expo\ExpoChannel;
 use NotificationChannels\Expo\ExpoMessage;
 use Illuminate\Notifications\Notification;
 
@@ -15,10 +16,10 @@ class ExpoNotificationService
             return;
         }
 
-        $notificationObject = $notification instanceof Notification 
-            ? $notification 
+        $notificationObject = $notification instanceof Notification
+            ? $notification
             : $this->createNotification($notification, $data);
-            
+
         $user->notify($notificationObject);
     }
 
@@ -33,7 +34,7 @@ class ExpoNotificationService
 
             public function via($notifiable): array
             {
-                return ['expo'];
+                return [ExpoChannel::class];
             }
 
             public function toExpo($notifiable): ExpoMessage
@@ -41,15 +42,24 @@ class ExpoNotificationService
                 return ExpoMessage::create()
                     ->title($this->getTitle())
                     ->body($this->getMessage())
-                    ->data(array_merge($this->data, ['type' => $this->type->value]));
+                    ->setJsonData(array_merge($this->data, ['type' => $this->type->value]));
             }
 
             private function getTitle(): string
             {
+                if ($this->type === NotificationType::ORDER) {
+                    $action = $this->data['action'] ?? null;
+
+                    return match($action) {
+                        'created' => 'Агро-Логистика / Новая заявка',
+                        'updated' => 'Агро-Логистика / Изменения в Заявке',
+                        default => 'Агро-Логистика',
+                    };
+                }
+
                 return match($this->type) {
-                    NotificationType::ORDER_CREATED => 'Агро-Логистика / Новая заявка',
-                    NotificationType::ORDER_UPDATED => 'Агро-Логистика / Изменения в Заявке',
-                    default => 'Агро-Логистика'
+                    NotificationType::REGULAR => 'Агро-Логистика',
+                    default => 'Агро-Логистика',
                 };
             }
 
@@ -66,12 +76,12 @@ class ExpoNotificationService
             {
                 return sprintf(
                     '%s -> %s / %s / %s / %d км / %d р/тн',
-                    $this->data['load_place'],
-                    $this->data['unload_place'],
-                    $this->data['date'],
-                    $this->data['crop'],
-                    $this->data['distance'],
-                    $this->data['tariff']
+                    $this->data['load_place'] ?? null,
+                    $this->data['unload_place'] ?? null,
+                    $this->data['date'] ?? null,
+                    $this->data['crop'] ?? null,
+                    $this->data['distance'] ?? null,
+                    $this->data['tariff'] ?? null
                 );
             }
         };
@@ -80,7 +90,7 @@ class ExpoNotificationService
     public function broadcastToAllUsers(NotificationType|Notification $notification, ?array $data = null): void
     {
         $users = User::whereHas('deviceTokens')->get();
-        
+
         foreach ($users as $user) {
             $this->send($user, $notification, $data);
         }
@@ -97,7 +107,7 @@ class ExpoNotificationService
 
             public function via($notifiable): array
             {
-                return ['expo'];
+                return [ExpoChannel::class];
             }
 
             public function toExpo($notifiable): ExpoMessage
@@ -105,7 +115,7 @@ class ExpoNotificationService
                 return ExpoMessage::create()
                     ->title($this->title)
                     ->body($this->message)
-                    ->data(['type' => 'custom']);
+                    ->setJsonData(['type' => 'custom']);
             }
         };
 

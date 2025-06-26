@@ -107,8 +107,9 @@ class OrderTest extends TestCase
         $this->mockPushService->shouldReceive('broadcastToAllUsers')
             ->once()
             ->with(
-                NotificationType::ORDER_CREATED,
+                NotificationType::ORDER,
                 [
+                    'action' => 'created',
                     'order_id' => $order->id,
                     'load_place' => $order->load_place,
                     'unload_place' => $order->unload_place_name,
@@ -121,8 +122,9 @@ class OrderTest extends TestCase
     
         $notificationService = app(ExpoNotificationService::class);
         $notificationService->broadcastToAllUsers(
-            NotificationType::ORDER_CREATED,
+            NotificationType::ORDER,
             [
+                'action' => 'created',
                 'order_id' => $order->id,
                 'load_place' => $order->load_place,
                 'unload_place' => $order->unload_place_name,
@@ -153,8 +155,9 @@ class OrderTest extends TestCase
         $this->mockPushService->shouldReceive('broadcastToAllUsers')
             ->once()
             ->with(
-                NotificationType::ORDER_UPDATED,
+                NotificationType::ORDER,
                 [
+                    'action' => 'updated',
                     'order_id' => $order->id,
                     'load_place' => $order->load_place,
                     'unload_place' => $order->unload_place_name,
@@ -167,8 +170,9 @@ class OrderTest extends TestCase
     
         $notificationService = app(ExpoNotificationService::class);
         $notificationService->broadcastToAllUsers(
-            NotificationType::ORDER_UPDATED,
+            NotificationType::ORDER,
             [
+                'action' => 'updated',
                 'order_id' => $order->id,
                 'load_place' => $order->load_place,
                 'unload_place' => $order->unload_place_name,
