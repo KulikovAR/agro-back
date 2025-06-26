@@ -44,7 +44,7 @@ class OrderService
         $data = $request->validated();
         $filter = app()->make(OrderFilter::class, ['queryParams' => $data]);
         $order = Order::filter($filter);
-        if ($request->user()->orders != null) {
+        if ($request->user()->orders !== null) {
             $userOrders = $request->user()->orders;
             if (is_null($request->sort)) {
                 $order->orderBy('order_number', 'desc');
@@ -157,10 +157,7 @@ class OrderService
         $load_regions = array_unique($load_regions);
         $unload_regions = array_unique($unload_regions);
 
-        $data = [
-            'load_regions' => $load_regions,
-            'unload_regions' => $unload_regions,
-        ];
+        $data = compact('load_regions', 'unload_regions');
 
         return $data;
     }
@@ -235,17 +232,6 @@ class OrderService
         }
 
         $text .= self::AGRO_PHONE;
-        return $text;
-    }
-
-    public function textToBotLocal(Collection $orders)
-    {
-        $text = '';
-
-        foreach ($orders as $order) {
-            $text .= $this->orderMessageText($order);
-        }
-
         return $text;
     }
 

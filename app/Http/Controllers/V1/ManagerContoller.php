@@ -13,6 +13,6 @@ class ManagerContoller extends Controller
     {
         return new ApiJsonResponse(data: new ManagerCollection(User::whereHas('roles', function ($q) {
             $q->where('slug', 'manager');
-        }, )->get()));
+        })->get()));
     }
 }

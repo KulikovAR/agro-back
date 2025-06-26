@@ -54,7 +54,7 @@ class UserProfileService
         if ($request->has('issue_date_at')) {
             $issue_date_at = Carbon::parse($request->issue_date_at);
             $user->update(
-                array_merge($request->except('issue_date_at'), ['issue_date_at' => $issue_date_at])
+                [...$request->except('issue_date_at'), 'issue_date_at' => $issue_date_at]
             );
 
             return new UserResource($user);
