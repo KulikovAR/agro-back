@@ -15,7 +15,6 @@ use App\Services\Sms\SmsVerification;
 use App\Traits\BearerTokenTrait;
 use App\Traits\PasswordHash;
 use Illuminate\Http\Request;
-use Laravel\Sanctum\PersonalAccessToken;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class AuthService
@@ -72,38 +71,35 @@ class AuthService
     public function verificationCheck(RegistrationSmsCodeRequest $request): array
     {
         $user = User::where('phone_number', $request->phone_number)->first();
-    
+
         if ($user->phone == config('auth.mobile_test_user')) {
             $bearerToken = $this->createAuthToken($user);
-            
+
             if ($request->device_token) {
                 $user->deviceTokens()->updateOrCreate(
                     ['token' => $request->device_token]
                 );
             }
-    
+
             return ['user' => $user, 'token' => $bearerToken];
         }
-    
+
         if ($user->code == $request->code) {
             $bearerToken = $this->createAuthToken($user);
-            
+
             if ($request->device_token) {
                 $user->deviceTokens()->updateOrCreate(
                     ['token' => $request->device_token]
                 );
             }
-    
+
             return ['user' => $user, 'token' => $bearerToken];
         }
         throw new BadRequestException('Неверный код');
     }
 
-    public function getUser(Request $request)
+    public function getUser(Request $request): User
     {
-        $token = $request->bearerToken();
-        $user_token = PersonalAccessToken::findToken($token);
-
-        return User::where('id', $user_token->tokenable_id)->first();
+        return $request->user();
     }
 }

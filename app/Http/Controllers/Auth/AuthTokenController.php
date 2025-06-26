@@ -17,7 +17,8 @@ class AuthTokenController extends Controller
 {
     public function __construct(
         private AuthService $auth_service,
-    ) {
+    )
+    {
         $this->auth_service = new AuthService;
     }
 
@@ -53,7 +54,7 @@ class AuthTokenController extends Controller
             StatusEnum::OK,
             __('login.verify_phone'),
             data: [
-                'user' => new UserResource($this->auth_service->getUser($request)),
+                'user' => new UserResource($request->user()),
             ]
         );
     }
@@ -61,15 +62,15 @@ class AuthTokenController extends Controller
     public function destroy(LogoutRequest $request): ApiJsonResponse
     {
         $user = $request->user();
-        
+
         $user->tokens()->delete();
-        
+
         if ($request->device_token) {
             $user->deviceTokens()
                 ->where('token', $request->device_token)
                 ->delete();
         }
-    
+
         return new ApiJsonResponse;
     }
 }
