@@ -13,7 +13,6 @@ use App\Http\Controllers\V1\FileController;
 use App\Http\Controllers\V1\ManagerContoller;
 use App\Http\Controllers\V1\OfferController;
 use App\Http\Controllers\V1\OrderController;
-use App\Http\Controllers\V1\ProductParserController;
 use App\Http\Controllers\V1\SignMeController;
 use App\Http\Controllers\V1\TransportBrandController;
 use App\Http\Controllers\V1\TransportController;
@@ -54,7 +53,6 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login', [AuthTokenController::class, 'store'])->name('login.stateless');
     Route::post('/login/verification', [AuthTokenController::class, 'verification'])->name('login.verification');
     Route::delete('/logout', [AuthTokenController::class, 'destroy'])->name('logout');
-    Route::get('/user', [AuthTokenController::class, 'getUser'])->name('get_user');
 
     // Route::post('/password/send', [PasswordController::class, 'sendPasswordLink'])->middleware(['throttle:6,1'])->name('password.send');
     // Route::post('/password/reset', [PasswordController::class, 'store'])->name('password.reset');
@@ -66,8 +64,7 @@ Route::get('/managers', [ManagerContoller::class, 'list'])->name('managers.list'
 
 
 Route::middleware('auth:sanctum')->group(function () {
-
-    //
+    Route::get('/user', [AuthTokenController::class, 'getUser'])->name('get_user');
 
     Route::prefix('userprofile')->group(function () {
         Route::get('/', [UserProfileController::class, 'getUserProfileByToken'])->name(
@@ -126,7 +123,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/manual/brands', [TransportBrandController::class, 'index'])->name('transport.brands');
         Route::get('/manual/types', [TransportTypeController::class, 'index'])->name('transport.types');
     });
-
 
 
     Route::prefix('orders')->group(function () {
