@@ -19,6 +19,7 @@ class OrderObserver
 
         try {
             $notificationData = getOrderNotificationData($order);
+            $notificationData['action'] = 'created';
 
             Log::info('Sending ORDER_CREATED notification', [
                 'order_id' => $order->id,
@@ -26,7 +27,7 @@ class OrderObserver
             ]);
 
             app(ExpoNotificationService::class)->broadcastToAllUsers(
-                NotificationType::ORDER_CREATED,
+                NotificationType::ORDER,
                 $notificationData
             );
         } catch (\Exception $e) {
@@ -44,6 +45,7 @@ class OrderObserver
     {
         try {
             $notificationData = getOrderNotificationData($order);
+            $notificationData['action'] = 'updated';
 
             Log::info('Sending ORDER_UPDATED notification', [
                 'order_id' => $order->id,
@@ -51,7 +53,7 @@ class OrderObserver
             ]);
 
             app(ExpoNotificationService::class)->broadcastToAllUsers(
-                NotificationType::ORDER_UPDATED,
+                NotificationType::ORDER,
                 $notificationData
             );
         } catch (\Exception $e) {
