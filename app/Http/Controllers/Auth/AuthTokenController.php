@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Enums\StatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\LogoutRequest;
 use App\Http\Requests\Auth\RegistrationSmsCodeRequest;
 use App\Http\Resources\User\UserResource;
 use App\Http\Responses\ApiJsonResponse;
@@ -58,7 +59,7 @@ class AuthTokenController extends Controller
         );
     }
 
-    public function destroy(Request $request): ApiJsonResponse
+    public function destroy(LogoutRequest $request): ApiJsonResponse
     {
         $user = $request->user();
 
