@@ -187,6 +187,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
         App\Providers\ServicesProvider::class,
+        App\Providers\ExpoNotificationServiceProvider::class,
         NotificationChannels\Expo\ExpoServiceProvider::class,
     ])->toArray(),
 
