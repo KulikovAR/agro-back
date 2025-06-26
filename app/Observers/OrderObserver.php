@@ -14,11 +14,16 @@ class OrderObserver
      */
     public function created(Order $order): void
     {
-         $order->order_number = $order->max('order_number') + 1;
-         $order->save();
+        $order->order_number = $order->max('order_number') + 1;
+        $order->save();
+
+        if (!$order->is_moderated) {
+            return;
+        }
 
         try {
             $notificationData = getOrderNotificationData($order);
+            $notificationData['action'] = 'created';
 
             Log::info('Sending ORDER_CREATED notification', [
                 'order_id' => $order->id,
@@ -26,7 +31,7 @@ class OrderObserver
             ]);
 
             app(ExpoNotificationService::class)->broadcastToAllUsers(
-                NotificationType::ORDER_CREATED,
+                NotificationType::ORDER,
                 $notificationData
             );
         } catch (\Exception $e) {
@@ -42,8 +47,13 @@ class OrderObserver
      */
     public function updated(Order $order): void
     {
+        if (!$order->is_moderated) {
+            return;
+        }
+        
         try {
             $notificationData = getOrderNotificationData($order);
+            $notificationData['action'] = 'updated';
 
             Log::info('Sending ORDER_UPDATED notification', [
                 'order_id' => $order->id,
@@ -51,7 +61,7 @@ class OrderObserver
             ]);
 
             app(ExpoNotificationService::class)->broadcastToAllUsers(
-                NotificationType::ORDER_UPDATED,
+                NotificationType::ORDER,
                 $notificationData
             );
         } catch (\Exception $e) {

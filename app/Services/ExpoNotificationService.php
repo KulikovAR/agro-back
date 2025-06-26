@@ -47,10 +47,19 @@ class ExpoNotificationService
 
             private function getTitle(): string
             {
+                if ($this->type === NotificationType::ORDER) {
+                    $action = $this->data['action'] ?? null;
+
+                    return match($action) {
+                        'created' => 'Агро-Логистика / Новая заявка',
+                        'updated' => 'Агро-Логистика / Изменения в Заявке',
+                        default => 'Агро-Логистика',
+                    };
+                }
+
                 return match($this->type) {
-                    NotificationType::ORDER_CREATED => 'Агро-Логистика / Новая заявка',
-                    NotificationType::ORDER_UPDATED => 'Агро-Логистика / Изменения в Заявке',
-                    default => 'Агро-Логистика'
+                    NotificationType::REGULAR => 'Агро-Логистика',
+                    default => 'Агро-Логистика',
                 };
             }
 
