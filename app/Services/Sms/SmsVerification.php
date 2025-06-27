@@ -18,31 +18,40 @@ class SmsVerification
         $this->sender = new SmsClient;
     }
 
-    public function send($phone_number, $message): void
+    public function send(string $phoneNumber, string $message): void
     {
+        if (!app()->environment('production')) {
+            return;
+        }
+
         $params = [
-            'number' => $phone_number,
+            'number' => $phoneNumber,
             'text' => $message,
             'sign' => 'SMS Aero',
         ];
 
         $response = $this->sender->client->get(SmsApiEnum::API->value, $params);
+
         if (!$response->successful()) {
-            throw new BadRequestHttpException('SMS not sent.');
+            throw new BadRequestHttpException('Ошибка отправки SMS-сообщения, попробуйте позже');
         }
     }
 
     public function setCode(): array
     {
-        $code = (string)rand(10000, 99999);
+        $code = $this->generateCode();
+        $codeHash = Hash::make($code);
+        $codeExpire = Carbon::now()->addSeconds(60);
 
+        return compact('code', 'codeHash', 'codeExpire');
+    }
+
+    private function generateCode(): string
+    {
         if (!app()->environment('production')) {
-            $code = self::DEFAULT_SMS_CODE;
+            return self::DEFAULT_SMS_CODE;
         }
 
-        $code_hash = Hash::make($code);
-        $code_expire = Carbon::now()->addSeconds(60);
-
-        return compact('code', 'code_hash', 'code_expire');
+        return (string)rand(10000, 99999);
     }
 }

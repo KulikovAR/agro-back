@@ -17,7 +17,8 @@ class TransportController extends Controller
 {
     public function __construct(
         private TransportService $service
-    ) {
+    )
+    {
         $this->service = new TransportService;
     }
 
@@ -71,9 +72,7 @@ class TransportController extends Controller
             200,
             StatusEnum::OK,
             __($this->service->delete($transport)),
-            data: [
-
-            ]
+            data: []
         );
     }
 }

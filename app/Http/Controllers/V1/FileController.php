@@ -11,7 +11,6 @@ use App\Http\Requests\File\FromIcRequest;
 use App\Http\Requests\File\UpdateUserFileRequest;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\File;
-use App\Repositories\IcRepository;
 use App\Services\FileService;
 use Illuminate\Http\Request;
 
@@ -19,8 +18,8 @@ class FileController extends Controller
 {
     public function __construct(
         private FileService $service,
-        //        private IcRepository $repository,
-    ) {
+    )
+    {
         $this->service = new FileService;
     }
 
@@ -39,7 +38,7 @@ class FileController extends Controller
         return new ApiJsonResponse(200, StatusEnum::OK, '', data: $this->service->loadFileFrom1C($request, $inn));
     }
 
-    public function show(File $file): ApiJsonResonse
+    public function show(File $file): ApiJsonResponse
     {
         return new ApiJsonResponse(200, StatusEnum::OK, 'Документ получен', data: $this->service->show($file));
     }
@@ -53,9 +52,9 @@ class FileController extends Controller
     {
         return new ApiJsonResponse(
             200, StatusEnum::OK, 'Документ обновлён', data: $this->service->update(
-                $request,
-                $file
-            )
+            $request,
+            $file
+        )
         );
     }
 

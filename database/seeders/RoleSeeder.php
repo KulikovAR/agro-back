@@ -51,8 +51,8 @@ class RoleSeeder extends Seeder
 
         Role::create(
             [
-                'name' => '1C',
-                'slug' => '1C',
+                'name' => '1c',
+                'slug' => '1c',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]
