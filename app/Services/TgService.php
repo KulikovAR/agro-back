@@ -11,7 +11,8 @@ class TgService
     public static function notifyUser(User $user, string $text): void
     {
         $tgUser = TgUser::where('user_id', $user->id)->first();
-        if (is_null($tgUser)) {
+
+        if ($tgUser === null) {
             return;
         }
         Telegram::sendMessage([

@@ -10,17 +10,12 @@ use App\Models\User;
 use App\Notifications\UserAppNotification;
 use Carbon\Carbon;
 use Database\Factories\UserinfoFactory;
-use Database\Factories\UserProfileFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-    const ADMIN_PASSWORD = 'admin@admin';
-
-    const ADMIN_EMAIL = 'admin@admin';
-
     const USER_PASSWORD = 'test@test.ru';
 
     const USER_EMAIL = 'test@test.ru';
@@ -40,6 +35,7 @@ class UserSeeder extends Seeder
 
             $admin_role = Role::where('name', 'admin')->first();
             $admin->assignRole($admin_role);
+
             $Ic = User::create([]);
             $Ic->assignRole(RoleEnum::IC->value);
         }
@@ -79,22 +75,19 @@ class UserSeeder extends Seeder
         $Ic = User::create([]);
         $Ic->assignRole(RoleEnum::IC->value);
 
-        $user = User::factory()->create(
+        User::factory()->create(
             [
                 'password' => Hash::make(self::USER_PASSWORD),
                 'email' => self::USER_EMAIL,
             ]
         );
+
         $users = User::factory(10)->create();
+
         foreach ($users as $item) {
             $item->files()->attach(File::inRandomOrder()->first()->id);
             $item->userProfile()->create((new UserinfoFactory)->definition());
             $item->assignRole($clientRole);
         }
-        // $user->assignRole(Role::ROLE_USER);
-
-        // $user->userProfile()->create((new UserProfileFactory())->definition());
-
-        // $user->notify(new UserAppNotification('Тестовое уведомление'));
     }
 }

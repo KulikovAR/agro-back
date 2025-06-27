@@ -11,7 +11,8 @@ class TransportTypeController extends Controller
 {
     public function __construct(
         private TransportManualService $service
-    ) {
+    )
+    {
         $this->service = new TransportManualService;
     }
 

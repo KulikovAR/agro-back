@@ -29,9 +29,8 @@ class FileService
 
     private SignMe $signMe;
 
-    public function __construct(
-
-    ) {
+    public function __construct()
+    {
         $this->IcRepository = new IcRepository;
         $this->signMe = new SignMe;
     }
@@ -79,17 +78,17 @@ class FileService
 
             $signatureCheckResult = $this->signMe->signatureCheck($file->md5_hash, $this->base64Encode($file->path));
 
-            if (! isset($signatureCheckResult['count']) || $signatureCheckResult['count'] < 1) {
+            if (!isset($signatureCheckResult['count']) || $signatureCheckResult['count'] < 1) {
                 continue;
             }
 
-            if (! isset($signatureCheckResult['pdf'])) {
+            if (!isset($signatureCheckResult['pdf'])) {
                 continue;
             }
 
             $file->update(['is_signed' => true]);
 
-            if (is_null($file->id_1c) || ! isset($signatureCheckResult['pdf'])) {
+            if ($file->id_1c === null) {
                 continue;
             }
 
@@ -115,6 +114,7 @@ class FileService
     public function loadFileFrom1C(FromIcRequest $request, string $inn): GetDataFrom1CResource
     {
         Gate::authorize('loadFileFrom1C', File::class);
+
         $user = User::where('cinn', $inn)->first();
         $fileFromIc = $this->IcRepository->IcFile($request->file, $request->type, $request->id_1c);
         $user->files()->attach($fileFromIc);
@@ -124,7 +124,6 @@ class FileService
 
     public function loadFilesForUser(CreateUserFileRequest $request)
     {
-        //        dd($request);
         $user = $request->user();
         $files = $this->loadFiles($request->documents);
         $this->userAttachFiles($files, $user);
@@ -134,14 +133,13 @@ class FileService
 
     public function updateFilesForUser(UpdateUserFileRequest $request)
     {
-        //        dd($request);
         $user = $request->user();
-        $types = [];
+
         foreach ($request->documents as $item) {
             $ids[] = $item['file_id'];
         }
         $files = $user->files()->whereIn('files.id', $ids)->get();
-        //        dd($files);
+
         $uploadFiles = $this->updateFiles($request->documents, $files);
         $this->userAttachFiles($uploadFiles, $user);
 

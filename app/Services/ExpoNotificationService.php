@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\User;
 use App\Enums\NotificationType;
+use App\Models\User;
+use Illuminate\Notifications\Notification;
 use NotificationChannels\Expo\ExpoChannel;
 use NotificationChannels\Expo\ExpoMessage;
-use Illuminate\Notifications\Notification;
 
 class ExpoNotificationService
 {
@@ -25,12 +25,13 @@ class ExpoNotificationService
 
     private function createNotification(NotificationType $type, array $data): Notification
     {
-        return new class($type, $data) extends Notification
-        {
+        return new class($type, $data) extends Notification {
             public function __construct(
                 private readonly NotificationType $type,
-                private readonly array $data
-            ) {}
+                private readonly array            $data
+            )
+            {
+            }
 
             public function via($notifiable): array
             {
@@ -50,14 +51,14 @@ class ExpoNotificationService
                 if ($this->type === NotificationType::ORDER) {
                     $action = $this->data['action'] ?? null;
 
-                    return match($action) {
+                    return match ($action) {
                         'created' => 'Агро-Логистика / Новая заявка',
                         'updated' => 'Агро-Логистика / Изменения в Заявке',
                         default => 'Агро-Логистика',
                     };
                 }
 
-                return match($this->type) {
+                return match ($this->type) {
                     NotificationType::REGULAR => 'Агро-Логистика',
                     default => 'Агро-Логистика',
                 };
@@ -98,12 +99,13 @@ class ExpoNotificationService
 
     public function broadcastCustomMessage(string $title, string $message): void
     {
-        $customNotification = new class($title, $message) extends Notification
-        {
+        $customNotification = new class($title, $message) extends Notification {
             public function __construct(
                 private readonly string $title,
                 private readonly string $message
-            ) {}
+            )
+            {
+            }
 
             public function via($notifiable): array
             {
