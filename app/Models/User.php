@@ -73,6 +73,7 @@ class User extends Authenticatable implements FilamentUser, HasLocalePreference,
         'company_activate',
         'gender',
         'cregion',
+        'app_version',
     ];
 
     /**

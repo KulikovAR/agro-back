@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationContactController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\V1\Auth\AuthTokenController;
+use App\Http\Controllers\V1\AppVersionController;
 use App\Http\Controllers\V1\BankAccountController;
 use App\Http\Controllers\V1\CounteragentController;
 use App\Http\Controllers\V1\FileController;
@@ -52,6 +53,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/managers', [ManagerContoller::class, 'list'])->name('managers.list');
     Route::get('/user', [AuthTokenController::class, 'getUser'])->name('user.get');
     Route::delete('/logout', [AuthTokenController::class, 'destroy'])->name('logout.stateless');
+
+    // App Version
+    Route::prefix('app-version')->group(function () {
+        Route::get('/latest', [AppVersionController::class, 'getLatestVersion'])->name('app-version.latest');
+        Route::post('/save', [AppVersionController::class, 'saveVersion'])->name('app-version.save');
+    });
 
     // UserProfile
     Route::prefix('userprofile')->group(function () {
