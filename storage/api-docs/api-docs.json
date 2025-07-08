@@ -159,6 +159,24 @@
                 ],
                 "summary": "Logout",
                 "operationId": "logout",
+                "requestBody": {
+                    "description": "Logout data",
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "device_token": {
+                                        "description": "Device token to remove",
+                                        "type": "string",
+                                        "example": "device_token_example"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -219,6 +237,11 @@
                                     "code": {
                                         "description": "Verification code",
                                         "type": "string"
+                                    },
+                                    "device_token": {
+                                        "description": "Device token for push notifications",
+                                        "type": "string",
+                                        "example": "device_token_example"
                                     }
                                 },
                                 "type": "object"
@@ -1993,25 +2016,9 @@
                                                         "type": "string",
                                                         "example": "http://localhost/storage/files/4R0V5abSTtHNxfJudzlAWuB8NdIWvnmOMafrJip4.jpg"
                                                     },
-                                                    "size": {
-                                                        "type": "integer",
-                                                        "example": "12213"
-                                                    },
                                                     "original_name": {
                                                         "type": "string",
                                                         "example": "file.jpeg"
-                                                    },
-                                                    "optimize_path": {
-                                                        "type": "string",
-                                                        "example": "http://localhost/storage/optimized/6661647d4479e.jpg"
-                                                    },
-                                                    "is_signed": {
-                                                        "type": "boolean",
-                                                        "example": "false"
-                                                    },
-                                                    "signer_id": {
-                                                        "type": "string",
-                                                        "example": "9bdf01f2-f0a7-428f-acc6-5a94a34gq88fbc"
                                                     },
                                                     "mime_type": {
                                                         "type": "string",
@@ -2141,25 +2148,9 @@
                                                         "type": "string",
                                                         "example": "http://localhost/storage/files/4R0V5abSTtHNxfJudzlAWuB8NdIWvnmOMafrJip4.jpg"
                                                     },
-                                                    "size": {
-                                                        "type": "integer",
-                                                        "example": "12213"
-                                                    },
                                                     "original_name": {
                                                         "type": "string",
                                                         "example": "file.jpeg"
-                                                    },
-                                                    "optimize_path": {
-                                                        "type": "string",
-                                                        "example": "http://localhost/storage/optimized/6661647d4479e.jpg"
-                                                    },
-                                                    "is_signed": {
-                                                        "type": "boolean",
-                                                        "example": "false"
-                                                    },
-                                                    "signer_id": {
-                                                        "type": "string",
-                                                        "example": "9bdf01f2-f0a7-428f-acc6-5a94a34gq88fbc"
                                                     },
                                                     "mime_type": {
                                                         "type": "string",

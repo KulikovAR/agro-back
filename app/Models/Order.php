@@ -133,4 +133,14 @@ class Order extends Model
             // и так далее
         ];
     }
+
+    public function setHeightLimitAttribute($value)
+    {
+        $this->attributes['height_limit'] = ($value === '' || $value === null) ? null : str_replace(',', '.', $value);
+    }
+
+    public function setScaleLengthAttribute($value)
+    {
+        $this->attributes['scale_length'] = ($value === '' || $value === null) ? null : str_replace(',', '.', $value);
+    }
 }

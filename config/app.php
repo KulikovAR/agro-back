@@ -46,6 +46,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Latest App Version
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the latest version of the mobile application
+    | that should be used by clients.
+    |
+    */
+
+    'latest_version' => env('APP_LATEST_VERSION', '1.0.0'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application URL
     |--------------------------------------------------------------------------
     |
@@ -186,6 +198,8 @@ return [
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
+        App\Providers\ServicesProvider::class,
+        NotificationChannels\Expo\ExpoServiceProvider::class,
     ])->toArray(),
 
     /*

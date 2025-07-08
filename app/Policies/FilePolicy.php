@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Enums\RoleEnum;
 use App\Models\File;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -19,7 +20,7 @@ class FilePolicy
 
     public function loadFileFrom1C(User $user): Response
     {
-        if (! $user->hasRole(RoleEnum::IC->value)) {
+        if (!$user->hasRole(RoleEnum::IC->value)) {
             return Response::denyAsNotFound();
         }
 

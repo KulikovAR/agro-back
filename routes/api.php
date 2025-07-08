@@ -2,29 +2,25 @@
 
 use App\Http\Controllers\AssetsController;
 use App\Http\Controllers\Auth\AuthProviderController;
-use App\Http\Controllers\Auth\AuthTokenController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationContactController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\V1\Auth\AuthTokenController;
+use App\Http\Controllers\V1\AppVersionController;
 use App\Http\Controllers\V1\BankAccountController;
 use App\Http\Controllers\V1\CounteragentController;
 use App\Http\Controllers\V1\FileController;
 use App\Http\Controllers\V1\ManagerContoller;
 use App\Http\Controllers\V1\OfferController;
 use App\Http\Controllers\V1\OrderController;
-use App\Http\Controllers\V1\ProductParserController;
 use App\Http\Controllers\V1\SignMeController;
+use App\Http\Controllers\V1\TgBotController;
 use App\Http\Controllers\V1\TransportBrandController;
 use App\Http\Controllers\V1\TransportController;
 use App\Http\Controllers\V1\TransportTypeController;
 use App\Http\Controllers\V1\UserProfileController;
 use App\Http\Controllers\V1\WhatsAppController;
-use App\Models\Role;
-use App\Models\User;
-use App\Notifications\AdminNotification;
-use App\Notifications\PasswordResetNotification;
-use Database\Seeders\UserSeeder;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,53 +34,51 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// WhatsApp
 Route::post('whatsapp/webhook', [WhatsAppController::class, 'webhook']);
+Route::post('/bot/send-message', [TgBotController::class, 'sendMessage']);
 
-//Route::prefix('products-parser')->group(function () {
-//    Route::get('/get-filters', [ProductParserController::class, 'getProductFilter'])->name('product-parser.get-filter');
-//    Route::get('/', [ProductParserController::class, 'index'])->name('product-parser.index');
-//});
+// TG
+Route::post('/bot-update', [TgBotController::class, 'update']);
 
+// Guest
 Route::middleware(['guest'])->group(function () {
-    Route::post('/registration/phone', [RegistrationController::class, 'registration'])->name('registration');
-    Route::post('/registration/verification', [RegistrationController::class, 'verification'])->name(
-        'register.verification'
-    );
-    Route::put('/code/update/{user}', [RegistrationController::class, 'codeUpdate'])->name('code.update');
     Route::post('/login', [AuthTokenController::class, 'store'])->name('login.stateless');
     Route::post('/login/verification', [AuthTokenController::class, 'verification'])->name('login.verification');
-    Route::delete('/logout', [AuthTokenController::class, 'destroy'])->name('logout');
-    Route::get('/user', [AuthTokenController::class, 'getUser'])->name('get_user');
-
-    // Route::post('/password/send', [PasswordController::class, 'sendPasswordLink'])->middleware(['throttle:6,1'])->name('password.send');
-    // Route::post('/password/reset', [PasswordController::class, 'store'])->name('password.reset');
 });
-
-Route::post('/bot/send-message', [\App\Http\Controllers\V1\TgBotController::class, 'sendMessage']);
-
-Route::get('/managers', [ManagerContoller::class, 'list'])->name('managers.list');
 
 
 Route::middleware('auth:sanctum')->group(function () {
+    // User
+    Route::get('/managers', [ManagerContoller::class, 'list'])->name('managers.list');
+    Route::get('/user', [AuthTokenController::class, 'getUser'])->name('user.get');
+    Route::delete('/logout', [AuthTokenController::class, 'destroy'])->name('logout.stateless');
 
-    //
+    // App Version
+    Route::prefix('app-version')->group(function () {
+        Route::get('/latest', [AppVersionController::class, 'getLatestVersion'])->name('app-version.latest');
+        Route::post('/save', [AppVersionController::class, 'saveVersion'])->name('app-version.save');
+    });
 
+    // UserProfile
     Route::prefix('userprofile')->group(function () {
         Route::get('/', [UserProfileController::class, 'getUserProfileByToken'])->name(
             'userprofile.getUserProfileByToken'
         );
-        Route::post('avatar/create', [UserProfileController::class, 'loadAvatar'])->name('userprofile.avatar.create');
-        Route::post('avatar/update/', [UserProfileController::class, 'updateAvatar'])->name(
-            'userprofile.avatar.update'
-        );
-        Route::put('/delete', [UserProfileController::class, 'delete'])->name('userprofile.delete');
+
+        Route::get('tax-systems', [UserProfileController::class, 'getTaxSystems'])->name('userprofile_tax-systems');
+
         Route::put('/update', [UserProfileController::class, 'update'])->name('userprofile.update');
-        //        Route::put('password/update', [UserProfileController::class, 'updatePassword'])->name(
-        //            'userprofile.password.update'
-        //        );
+        Route::put('/delete', [UserProfileController::class, 'delete'])->name('userprofile.delete');
+
+        Route::post('avatar/create', [UserProfileController::class, 'loadAvatar'])->name('userprofile.avatar.create');
+        Route::post('avatar/update/', [UserProfileController::class, 'updateAvatar'])->name('userprofile.avatar.update');
     });
 
+    // SignMe
     Route::post('/sign-me', [SignMeController::class, 'signature'])->name('sign.me.signature');
+
+    // Counteragents
     Route::prefix('counteragents')->group(function () {
         Route::get('/', [CounteragentController::class, 'index'])->name('counteragents.get');
         Route::get('/{user}', [CounteragentController::class, 'index'])->name('counteragents.index');
@@ -92,6 +86,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/{user}', [CounteragentController::class, 'update'])->name('counteragent.update');
     });
 
+
+    // BankAccounts
     Route::prefix('bank-accounts')->group(function () {
         Route::get('/', [BankAccountController::class, 'index'])->name(
             'bank_accounts.index.logistician'
@@ -103,6 +99,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/{bankAccount}', [BankAccountController::class, 'update'])->name('bank_accounts.update');
         Route::delete('/{bankAccount}', [BankAccountController::class, 'delete'])->name('bank_accounts.delete');
     });
+
+    // Files
     Route::prefix('files')->group(function () {
         Route::get('/', [FileController::class, 'index'])->name('files.index');
         Route::get('/on-signing', [FileController::class, 'getDocumentsForSigning'])->name('files.signing');
@@ -117,6 +115,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/from-1c/{inn}', [FileController::class, 'loadFileFrom1C'])->name('files.from-1c');
     });
 
+    // Transport
     Route::prefix('transport')->group(function () {
         Route::get('/', [TransportController::class, 'index'])->name('transport.index');
         Route::get('/{id}', [TransportController::class, 'show'])->name('transport.show');
@@ -127,8 +126,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/manual/types', [TransportTypeController::class, 'index'])->name('transport.types');
     });
 
-
-
+    // Orders
     Route::prefix('orders')->group(function () {
         Route::get('/export/local', [OrderController::class, 'exportLocal'])->name('order.export-local');
         Route::get('/export/public', [OrderController::class, 'exportPublic'])->name('order.export-public');
@@ -149,19 +147,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('options')->group(function () {
         Route::get('/', [OrderController::class, 'getOptions'])->name('order.get_options');
     });
-    Route::get('userprofile/tax-systems', [UserProfileController::class, 'getTaxSystems'])->name('userprofile_tax-systems');
-
-    Route::post('/verification/email', [VerificationContactController::class, 'sendEmailVerification'])->name(
-        'verification.email.send'
-    );
-
-    Route::prefix('notification')->group(function () {
-        Route::get('/', [NotificationController::class, 'index'])->name('notification.index');
-        Route::post('/{id}', [NotificationController::class, 'edit'])->name('notification.edit');
-    });
-
-    Route::patch('/password', [PasswordController::class, 'update'])->name('password.update');
-    Route::delete('/logout', [AuthTokenController::class, 'destroy'])->name('logout.stateless');
 
     Route::middleware('verified')->group(function () {
         Route::get('/user_profile', [UserProfileController::class, 'index'])->name('user_profile.index');
@@ -172,30 +157,4 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
-Route::get('/auth/{provider}/redirect', [AuthProviderController::class, 'redirectToProvider'])->middleware(
-    'throttle:10,1'
-)->name('provider.redirect');
-Route::get('/auth/{provider}/callback', [AuthProviderController::class, 'loginOrRegister'])->name('provider.callback');
-
-Route::get('/verification/{id}/{hash}', [VerificationContactController::class, 'verifyEmail'])->middleware(
-    ['signed', 'throttle:6,1']
-)->name('verification.email.url');
-
 Route::get('/assets/{locale?}', [AssetsController::class, 'show'])->name('assets.index');
-
-Route::get('/mail', function () {
-    $admin = User::role(Role::ROLE_ADMIN)->get()->first();
-    $admin->notify(new AdminNotification('$message'));
-
-    $notification = new PasswordResetNotification('Order');
-
-    $user = User::where('email', UserSeeder::USER_EMAIL)->first(); // Model with Notifiable trait
-
-    $message = $notification->toMail($user);
-
-    $markdown = new \Illuminate\Mail\Markdown(view(), config('mail.markdown'));
-
-    return $markdown->render('vendor.notifications.email', $message->toArray());
-});
-
-Route::post('/bot-update', [\App\Http\Controllers\V1\TgBotController::class, 'update']);

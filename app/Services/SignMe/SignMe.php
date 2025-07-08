@@ -10,21 +10,21 @@ class SignMe
 
     private ?string $token;
 
-    public function __construct(
-    ) {
+    public function __construct()
+    {
         $this->signMeClient = new SignMeClient();
-        $this->token        = config('app.sign_me_token');
+        $this->token = config('app.sign_me_token');
     }
 
     public function prechek(string $inn): ?bool
     {
         $query = [
-            'inn'     => $inn,
+            'inn' => $inn,
             'api_key' => $this->token,
         ];
 
         $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url') . SignMeApiEnum::PRECHEK->value, $query);
-        // dd(json_decode($result->body()));
+
         if ($result->body() == '{}') {
             return null;
         }
@@ -36,12 +36,12 @@ class SignMe
     {
         if ($llc) {
             $query = [
-                'cinn'    => $inn,
+                'cinn' => $inn,
                 'api_key' => $this->token,
             ];
         } else {
             $query = [
-                'inn'     => $inn,
+                'inn' => $inn,
                 'api_key' => $this->token,
             ];
         }
@@ -57,8 +57,8 @@ class SignMe
 
     public function prechekActivation(string $ogrn): ?bool
     {
-        $query  = [
-            'cogrn'   => $ogrn,
+        $query = [
+            'cogrn' => $ogrn,
             'api_key' => $this->token,
         ];
         $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url') . SignMeApiEnum::PRECHEK->value, $query);
@@ -73,7 +73,7 @@ class SignMe
     public function register(array $data): array|string
     {
         $query = $data + ['api_key' => $this->token];
-        // dd($query);
+
         $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url') . SignMeApiEnum::REGISTER->value, $query);
 
         if ($result->json() == null) {
@@ -86,9 +86,9 @@ class SignMe
     public function signature(array $data): string
     {
         $query = $data + ['api_key' => $this->token];
-        // dd($query);
+
         $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url') . SignMeApiEnum::SIGNATURE->value, $query);
-        // dd(json_encode($result->body()));
+
         if (strpos('error', $result->body())) {
             return 'error';
         }
@@ -98,9 +98,9 @@ class SignMe
 
     public function signatureCheck(string $md5, string $file, int $isPdf = 1): array
     {
-        $query  = ['md5' => $md5, 'pdf' => $isPdf, 'filet' => $file] + ['api_key' => $this->token];
+        $query = ['md5' => $md5, 'pdf' => $isPdf, 'filet' => $file] + ['api_key' => $this->token];
         $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url') . SignMeApiEnum::SIGNATURE_CHECK->value, $query);
-        $data   = json_decode($result->body(), true);
+        $data = json_decode($result->body(), true);
 
         return $data ?? [];
     }

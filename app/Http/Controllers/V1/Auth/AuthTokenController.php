@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\V1\Auth;
 
 use App\Enums\StatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\LogoutRequest;
 use App\Http\Requests\Auth\RegistrationSmsCodeRequest;
 use App\Http\Resources\User\UserResource;
 use App\Http\Responses\ApiJsonResponse;
@@ -16,7 +17,8 @@ class AuthTokenController extends Controller
 {
     public function __construct(
         private AuthService $auth_service,
-    ) {
+    )
+    {
         $this->auth_service = new AuthService;
     }
 
@@ -24,10 +26,7 @@ class AuthTokenController extends Controller
 
     public function store(LoginRequest $request): ApiJsonResponse
     {
-
-        $user = $this->auth_service->login($request);
-
-        return $user;
+        return $this->auth_service->login($request);
     }
 
     public function verification(RegistrationSmsCodeRequest $request): ApiJsonResponse
@@ -52,15 +51,16 @@ class AuthTokenController extends Controller
             StatusEnum::OK,
             __('login.verify_phone'),
             data: [
-                'user' => new UserResource($this->auth_service->getUser($request)),
+                'user' => new UserResource($request->user()),
             ]
         );
     }
 
-    public function destroy(Request $request): ApiJsonResponse
+    public function destroy(LogoutRequest $request): ApiJsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
+        $this->auth_service->destroy($request->user(), $request->device_token);
 
         return new ApiJsonResponse;
     }
 }
+

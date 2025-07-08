@@ -21,7 +21,8 @@ class TgBotController extends Controller
 
     public function sendMessage()
     {
-        $update = Telegram::commandsHandler(true);
+        Telegram::commandsHandler(true);
+
         $updateHook = Telegram::getWebhookUpdates();
 
         $reply_markup = Keyboard::make()
@@ -50,7 +51,7 @@ class TgBotController extends Controller
 
                     return 1;
                 }
-                if (! TgUser::where('phone_number', $phone_number)->exists()) {
+                if (!TgUser::where('phone_number', $phone_number)->exists()) {
                     TgUser::create(
                         [
                             'phone_number' => $phone_number,

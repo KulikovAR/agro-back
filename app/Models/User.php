@@ -73,6 +73,7 @@ class User extends Authenticatable implements FilamentUser, HasLocalePreference,
         'company_activate',
         'gender',
         'cregion',
+        'app_version',
     ];
 
     /**
@@ -299,5 +300,21 @@ class User extends Authenticatable implements FilamentUser, HasLocalePreference,
             ];
 
         return $data;
+    }
+
+    public function deviceTokens(): HasMany
+    {
+        return $this->hasMany(DeviceToken::class, 'user_id', 'id');
+    }
+
+    /**
+     * Route notifications for the Expo channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string|array
+     */
+    public function routeNotificationForExpo($notification)
+    {
+        return $this->deviceTokens->pluck('token')->toArray();
     }
 }

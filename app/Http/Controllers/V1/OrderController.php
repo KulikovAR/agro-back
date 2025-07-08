@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\V1;
 
+use App\Enums\NotificationType;
 use App\Enums\StatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\OrderCitiesRequest;
@@ -10,14 +11,17 @@ use App\Http\Requests\Order\OrderFilterRequest;
 use App\Http\Requests\Order\OrderUpdateRequest;
 use App\Http\Responses\ApiJsonResponse;
 use App\Models\Order;
+use App\Services\ExpoNotificationService;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     public function __construct(
-        private OrderService $service
-    ) {
+        private OrderService            $service,
+        private ExpoNotificationService $pushService
+    )
+    {
         $this->service = new OrderService;
     }
 
@@ -63,25 +67,25 @@ class OrderController extends Controller
 
     public function create(OrderCreateRequest $request): ApiJsonResponse
     {
+        $order = $this->service->create($request);
+
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
             'Заявка создана',
-            data: [
-                $this->service->create($request),
-            ]
+            data: [$order]
         );
     }
 
     public function update(OrderUpdateRequest $request, Order $order): ApiJsonResponse
     {
+        $updatedOrder = $this->service->update($request, $order);
+
         return new ApiJsonResponse(
             200,
             StatusEnum::OK,
             'Заявка обновлена',
-            data: [
-                $this->service->update($request, $order),
-            ]
+            data: [$updatedOrder]
         );
     }
 

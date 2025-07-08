@@ -17,7 +17,7 @@ class TransportService
 
     public function create(CreateTransportRequest $request): Transport
     {
-        $transport = Transport::create([
+        return Transport::create([
             'driver_id' => $request->driver_id,
             'type' => $request->type,
             'number' => $request->number,
@@ -28,15 +28,11 @@ class TransportService
             'capacity' => $request->capacity,
             'volume_cm' => $request->volume_cm,
         ]);
-
-        return $transport;
     }
 
     public function show(UuidRequest $request): Transport
     {
-        $transport = Transport::findOrFail($request->id);
-
-        return $transport;
+        return Transport::findOrFail($request->id);
     }
 
     public function update(UpdateTransportRequest $request, Transport $transport): Transport
