@@ -310,7 +310,7 @@ class Dadata
         $query = [
             'query' => $query[0] ?? null
         ];
-        
+
         $response = $this->dadata->client->post(DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::SUGGEST->value, $query);
 
         if ($response->successful()) {
@@ -335,6 +335,7 @@ class Dadata
                 "kladr_id" => $data["kladr_id"] ?? null,
                 "city_kladr_id" => $data["city_kladr_id"] ?? null,
                 "region_kladr_id" => $data["region_kladr_id"] ?? null,
+                'region_type_full' => $data['region_type_full'] ?? null,
             ];
 
         }
