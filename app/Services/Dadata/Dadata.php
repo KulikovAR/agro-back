@@ -6,7 +6,6 @@ use App\Enums\DadataBaseUrlEnum;
 use App\Enums\DadataUrlEnum;
 use App\Http\Requests\Dadata\DadataRequest;
 use App\Http\Requests\Dadata\DadataSuggestRequest;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class Dadata
@@ -308,12 +307,13 @@ class Dadata
      */
     public function getAddressArray(array $query)
     {
-        $response = $this->dadata->client->post(DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::SUGGEST->value, $query);
+        $response = $this->dadata->client->post(DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::SUGGEST->value, $query[0] ?? null);
 
         if ($response->successful()) {
-            $data = json_decode($response, true);
+            $data = $response->json();
+
             $data = $data['data']['suggestions'][0]['data'];
-            Log::info($data);
+
             return [
                 'source' => $data['result'] ?? null,
                 "country" => $data["country"] ?? null,
