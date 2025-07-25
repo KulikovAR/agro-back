@@ -307,7 +307,11 @@ class Dadata
      */
     public function getAddressArray(array $query)
     {
-        $response = $this->dadata->client->post(DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::SUGGEST->value, $query[0] ?? null);
+        $query = [
+            's' => $query[0] ?? null
+        ];
+
+        $response = $this->dadata->client->post(DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::SUGGEST->value, $query);
 
         if ($response->successful()) {
             $data = $response->json();
