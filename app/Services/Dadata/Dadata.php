@@ -316,7 +316,7 @@ class Dadata
         if ($response->successful()) {
             $data = $response->json();
 
-            $data = $data['data']['suggestions'][0]['data'];
+            $data = $data['suggestions'][0]['data'];
 
             return [
                 'source' => $data['result'] ?? null,
