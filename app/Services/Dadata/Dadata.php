@@ -23,8 +23,8 @@ class Dadata
     /**
      * Отправляет запрос на получение полного адреса.
      *
-     * @param  string  $query  - запрос
-     * @param  int  $count  - количество результатов (по умолчанию 1)
+     * @param string $query - запрос
+     * @param int $count - количество результатов (по умолчанию 1)
      * @return array|null - массив с полной информацией об адресе
      */
     public function sendFullAddress($query, $count = 1)
@@ -34,7 +34,7 @@ class Dadata
             'count' => $count,
         ];
         $response = $this->dadata->client->post(
-            DadataUrlEnum::API_URL->value.DadataBaseUrlEnum::SUGGEST->value,
+            DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::SUGGEST->value,
             $params
         );
 
@@ -68,9 +68,9 @@ class Dadata
     /**
      * Отправляет запрос на получение адреса по координатам.
      *
-     * @param  float  $lat  - широта
-     * @param  float  $lon  - долгота
-     * @param  int  $radius  - радиус поиска (по умолчанию 50)
+     * @param float $lat - широта
+     * @param float $lon - долгота
+     * @param int $radius - радиус поиска (по умолчанию 50)
      * @return array|null - адрес, соответствующий координатам
      */
     public function sendCoords($lat, $lon, $radius = 50)
@@ -82,7 +82,7 @@ class Dadata
         ];
 
         $response = $this->dadata->client->post(
-            DadataUrlEnum::API_URL->value.DadataBaseUrlEnum::GEOLOCATE->value,
+            DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::GEOLOCATE->value,
             $params
         );
         if ($response->successful()) {
@@ -96,7 +96,7 @@ class Dadata
     /**
      * Получение информации по ИНН.
      *
-     * @param  string  $inn  - ИНН
+     * @param string $inn - ИНН
      * @return array|null - информация, соответствующая ИНН
      */
     public function getInfoByInn($inn): ?array
@@ -106,7 +106,7 @@ class Dadata
         ];
 
         $response = $this->dadata->client->post(
-            DadataUrlEnum::API_URL->value.DadataBaseUrlEnum::FIND_BY_INN->value,
+            DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::FIND_BY_INN->value,
             $params
         );
         if ($response->successful()) {
@@ -121,7 +121,7 @@ class Dadata
     /**
      * Отправляет кастомный запрос.
      *
-     * @param  DadataRequest  $request  - объект запроса
+     * @param DadataRequest $request - объект запроса
      * @return object - результат запроса в виде объекта
      */
     public function sendRequest(DadataRequest $request)
@@ -136,7 +136,7 @@ class Dadata
     /**
      * Отправляет запрос на поиск организации.
      *
-     * @param  string  $query  - запрос
+     * @param string $query - запрос
      * @return array - массив с организациями, соответствующими запросу
      */
     public function sendCompany(string $query): array
@@ -147,7 +147,7 @@ class Dadata
             'status' => ['ACTIVE'],
         ];
         $response = $this->dadata->client->post(
-            DadataUrlEnum::API_URL->value.DadataBaseUrlEnum::CLIENT->value,
+            DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::CLIENT->value,
             $params
         );
 
@@ -166,13 +166,13 @@ class Dadata
             'status' => ['ACTIVE'],
         ];
         $response = $this->dadata->client->post(
-            DadataUrlEnum::API_URL->value.DadataBaseUrlEnum::CLIENT->value,
+            DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::CLIENT->value,
             $params
         );
 
         if ($response->successful()) {
             $data = json_decode($response->body(), true)['suggestions'];
-            if (! $is_search_in_data) {
+            if (!$is_search_in_data) {
                 foreach ($data as $item) {
                     $arr[] = $item[$param];
                 }
@@ -191,12 +191,12 @@ class Dadata
     /**
      * Отправляет запрос с подсказками.
      *
-     * @param  DadataSuggestRequest  $request  - объект запроса с подсказками
+     * @param DadataSuggestRequest $request - объект запроса с подсказками
      * @return array - массив с предложениями/подсказками
      */
     public function sendSuggest(DadataSuggestRequest $request)
     {
-        $response = $this->dadata->client->post(DadataUrlEnum::API_URL_SUGGEST->value.$request->url, $request->body);
+        $response = $this->dadata->client->post(DadataUrlEnum::API_URL_SUGGEST->value . $request->url, $request->body);
 
         if ($response->successful()) {
             return json_decode($response->body(), true)['suggestions'];
@@ -207,11 +207,11 @@ class Dadata
     /**
      * Получает информацию о транспортном средстве.
      *
-     * @param  array  $brand  - массив с информацией о марке транспортного средства
+     * @param array $brand - массив с информацией о марке транспортного средства
      */
     public function getVehicle(array $brand)
     {
-        $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value.'vehicle', $brand);
+        $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value . 'vehicle', $brand);
         if ($response->successful()) {
             return json_decode($response->body(), true);
         }
@@ -221,7 +221,7 @@ class Dadata
     /**
      * Отправляет запрос на очистку и стандартизацию телефонного номера с использованием Dadata API.
      *
-     * @param  array  $phone  Массив, содержащий телефонный номер для обработки.
+     * @param array $phone Массив, содержащий телефонный номер для обработки.
      * @return array Результат запроса в виде массива, если запрос успешен.
      *
      * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
@@ -229,7 +229,7 @@ class Dadata
      */
     public function sendPhone(array $phone)
     {
-        $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value.'phone', $phone);
+        $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value . 'phone', $phone);
         if ($response->successful()) {
             return json_decode($response->body(), true);
         }
@@ -240,7 +240,7 @@ class Dadata
     /**
      * Отправляет запрос на очистку и валидацию телефонного номера с использованием Dadata API.
      *
-     * @param  array  $phone  Массив, содержащий телефонный номер для обработки.
+     * @param array $phone Массив, содержащий телефонный номер для обработки.
      *                        Пример: ['phone' => '+7 (123) 456-7890']
      * @return array Результат запроса в виде ассоциативного массива.
      *               Пример успешного результата: ['result' => 'cleaned_phone_number']
@@ -249,7 +249,7 @@ class Dadata
      */
     public function sendPassport(array $passport)
     {
-        $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value.'passport', $passport);
+        $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value . 'passport', $passport);
         if ($response->successful()) {
             return json_decode($response->body(), true);
         }
@@ -260,7 +260,7 @@ class Dadata
     /**
      * Отправляет запрос на очистку и валидацию адреса с использованием Dadata API.
      *
-     * @param  array  $query  Массив, содержащий информацию об адресе для обработки.
+     * @param array $query Массив, содержащий информацию об адресе для обработки.
      *                        Пример: ['address' => 'г. Москва, ул. Примерная, д. 123']
      * @return array Результат запроса в виде ассоциативного массива с координатами.
      *               Пример успешного результата: ['lat' => 55.123456, 'lon' => 37.654321]
@@ -269,7 +269,7 @@ class Dadata
      */
     public function sendAddress(array $query): array
     {
-        $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value.'address', $query);
+        $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value . 'address', $query);
         if ($response->successful()) {
             return [
                 'lat' => $this->decodeBodyItem($response, 'geo_lat'),
@@ -283,7 +283,7 @@ class Dadata
      * Отправляет запрос на очистку и валидацию адреса с использованием Dadata API
      * и возвращает ассоциативный массив с различными элементами адреса.
      *
-     * @param  array  $query  Массив, содержащий информацию об адресе для обработки.
+     * @param array $query Массив, содержащий информацию об адресе для обработки.
      *                        Пример: ['address' => 'г. Москва, ул. Примерная, д. 123']
      * @return array Ассоциативный массив с элементами адреса.
      *               Пример успешного результата:
@@ -307,24 +307,29 @@ class Dadata
      */
     public function getAddressArray(array $query)
     {
-        $response = $this->clean_auth->client->post(DadataUrlEnum::API_CLEANER_URL->value.'address', $query);
+        $response = $this->dadata->client->post(DadataUrlEnum::API_URL->value . DadataBaseUrlEnum::SUGGEST->value, $query);
 
         if ($response->successful()) {
+            $data = json_decode($response, true);
+            $data = $data['data']['suggestions'][0]['data'];
+
             return [
-                'country' => $this->decodeBodyItem($response, 'country'),
-                'region' => $this->decodeBodyItem($response, 'region'),
-                'city' => $this->decodeBodyItem($response, 'city'),
-                'street' => $this->decodeBodyItem($response, 'street'),
-                'street_with_type' => $this->decodeBodyItem($response, 'street_with_type'),
-                'house' => $this->decodeBodyItem($response, 'house'),
-                'room' => $this->decodeBodyItem($response, 'flat'),
-                'postal_code' => $this->decodeBodyItem($response, 'postal_code'),
-                'region_code' => $this->decodeBodyItem($response, 'tax_office_legal'),
-                'region_with_type' => $this->decodeBodyItem($response, 'region_with_type'),
-                'federal_district' => $this->decodeBodyItem($response, 'federal_district'),
-                'kladr_id' => $this->decodeBodyItem($response, 'kladr_id'),
-                'city_kladr_id' => $this->decodeBodyItem($response, 'city_kladr_id'),
-                'region_type_full' => $this->decodeBodyItem($response, 'region_type_full'),
+                'source' => $data['result'] ?? null,
+                "country" => $data["country"] ?? null,
+                "region" => $data["region"] ?? null,
+                "city" => $data["city"] ?? null,
+                "street" => $data["street"],
+                "street_with_type" => $data["street_with_type"] ?? null,
+                "house" => $data["house"] ?? null,
+                "room" => $data["flat"] ?? null,
+                "postal_code" => $data["postal_code"] ?? null,
+                "region_code" => substr($data["tax_office_legal"] ?? null, 0, 2),
+                "region_with_type" => $data["region_with_type"] ?? null,
+                "federal_district" => $data["federal_district"] ?? null,
+                "flat" => $data["flat"] ?? null,
+                "kladr_id" => $data["kladr_id"] ?? null,
+                "city_kladr_id" => $data["city_kladr_id"] ?? null,
+                "region_kladr_id" => $data["region_kladr_id"] ?? null,
             ];
 
         }
