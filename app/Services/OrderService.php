@@ -22,11 +22,14 @@ use App\Models\Order;
 use App\Models\UnloadMethod;
 use App\Services\Dadata\Dadata;
 use App\Services\WhatsApp\WhatsAppService;
+use App\Traits\SendsOrderNotifications;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class OrderService
 {
+    use SendsOrderNotifications;
+
     private Dadata $dadata;
 
     protected $exportService;
@@ -113,6 +116,9 @@ class OrderService
             }
         }
 
+        // Отправляем push-уведомление о создании заявки
+        $this->sendOrderNotification($order, 'created');
+
         return new OrderCreateResource($order);
     }
 
@@ -127,6 +133,9 @@ class OrderService
                 $order->unloadMethods()->sync($unload_method);
             }
         }
+
+        // Отправляем push-уведомление об обновлении заявки
+        $this->sendOrderNotification($order, 'updated');
 
         return new OrderResource($order);
     }
