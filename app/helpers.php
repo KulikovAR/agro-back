@@ -7,10 +7,11 @@ if (! function_exists('getOrderNotificationData')) {
     {
         return [
             'order_id' => $order->id,
-            'load_place' => $order->load_place,
+            'load_place' => $order->load_place_name,
             'unload_place' => $order->unload_place_name,
-            'date' => $order->updated_at->format('d.m.Y'),
+            'date' => $order->updated_at?->format('d.m.Y') ?? now()->format('d.m.Y'),
             'crop' => $order->crop,
+            'volume' => $order->volume,
             'distance' => $order->distance,
             'tariff' => $order->tariff,
         ];

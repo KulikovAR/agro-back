@@ -76,13 +76,13 @@ class ExpoNotificationService
             private function buildOrderNotificationMessage(): string
             {
                 return sprintf(
-                    '%s -> %s / %s / %s / %d км / %d р/тн',
-                    $this->data['load_place'] ?? null,
-                    $this->data['unload_place'] ?? null,
-                    $this->data['date'] ?? null,
-                    $this->data['crop'] ?? null,
-                    $this->data['distance'] ?? null,
-                    $this->data['tariff'] ?? null
+                    "%s -> %s /\n%s тн / %s / %d км / %d р/тн",
+                    $this->data['load_place'] ?? '',
+                    $this->data['unload_place'] ?? '',
+                    $this->data['volume'] ?? '',
+                    $this->data['crop'] ?? '',
+                    $this->data['distance'] ?? 0,
+                    $this->data['tariff'] ?? 0
                 );
             }
         };
