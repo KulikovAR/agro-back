@@ -57,6 +57,9 @@ class WhatsAppService
 
         $user = User::where('phone_number', '+' . $phoneNumber)->first();
 
+
+        return;
+        
         if (is_null($user) || !$user->hasRole(RoleEnum::LOGISTICIAN->value)) {
             $this->localClient->sendMessage('Вы не зарегистрированы в AgroLogistic или не являетесь логистом AgroLogistic', $phoneNumber);
 
