@@ -6,11 +6,14 @@ use App\Enums\ModerationStatusEnum;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
+use App\Models\UserLoginHistory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Validation\Rule;
 
 class UserResource extends Resource
@@ -69,6 +72,7 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('roles.name')
                     ->label('Роли'),
                 Tables\Columns\TextColumn::make('email')
+                    ->searchable()
                     ->label('Электронная почта'),
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->label('Время подтверждения почты')
@@ -98,10 +102,31 @@ class UserResource extends Resource
                     ->getStateUsing(function ($record) {
                         return ModerationStatusEnum::getModerationStatus($record->moderation_status);
                     }),
+                Tables\Columns\TextColumn::make('last_login_at')
+                    ->label('Дата последней авторизации')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('inn')
+                    ->label('ИНН')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('short_name')
+                    ->label('Название организации')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true)
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
-                // ...
+                Tables\Filters\SelectFilter::make('Роли')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable(),
+                SelectFilter::make('moderation_status')
+                    ->label('Статус модерации')
+                    ->options(ModerationStatusEnum::getDescriptions())
+                    ->multiple()
+                    ->searchable(),
             ])
             ->actions([
                 // You may add these actions to your table if you're using a simple
@@ -126,6 +151,9 @@ class UserResource extends Resource
     {
         return [
             RelationManagers\RolesRelationManager::class,
+            RelationManagers\ContractRelationManager::class,
+            RelationManagers\ApplicationRelationManager::class,
+            RelationManagers\ActRelationManager::class
         ];
     }
 

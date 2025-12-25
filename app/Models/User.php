@@ -74,6 +74,7 @@ class User extends Authenticatable implements FilamentUser, HasLocalePreference,
         'gender',
         'cregion',
         'app_version',
+        'last_login_at'
     ];
 
     /**
@@ -317,4 +318,11 @@ class User extends Authenticatable implements FilamentUser, HasLocalePreference,
     {
         return $this->deviceTokens->pluck('token')->toArray();
     }
+
+    public function loginHistory()
+    {
+        return $this->hasMany(UserLoginHistory::class);
+    }
+
+
 }

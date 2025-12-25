@@ -5,10 +5,12 @@ namespace App\Services;
 use App\Enums\OrganizationTypeEnum;
 use App\Http\Requests\SignMe\SignMeRequest;
 use App\Models\File;
+use App\Models\User;
 use App\Repositories\IcRepository;
 use App\Repositories\ToIcRepositoryInterface;
 use App\Services\SignMe\SignMe;
 use App\Traits\FileTrait;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class SignMeService
@@ -28,18 +30,31 @@ class SignMeService
     public function signature(SignMeRequest $request): string
     {
         $user = $request->user();
+
+        if(is_null($user) && Auth::check()) {
+            $user = Auth::user();
+        }
+
         $data = $user->dataForSignMe($user);
+
+
         $file = File::where('path', $request->path)->first();
         $filet = $this->base64Encode($request->path);
         $fileContents = Storage::disk('public')->get($request->path);
         $fileExtension = $this->getExtension($request->path);
 
+        $precheckRegister = false;
+
         if ($user->type === OrganizationTypeEnum::IP->value) {
-            $signatureQueryData = ['filet' => $filet, 'fname' => $file->type . '.' . $fileExtension, 'md5' => md5($fileContents), 'company_inn' => $user->inn, 'user_ph' => $user->phone_number];
-            $precheckRegister = $this->signMe->prechekRegister($data['inn']);
+            if($data['inn']) {
+                $signatureQueryData = ['filet' => $filet, 'fname' => $file->type . '.' . $fileExtension, 'md5' => md5($fileContents), 'company_inn' => $user->inn, 'user_ph' => $user->phone_number];
+                $precheckRegister = $this->signMe->prechekRegister($data['inn']);
+            }
         } else {
-            $signatureQueryData = ['filet' => $filet, 'fname' => $file->type . '.' . $fileExtension, 'md5' => md5($fileContents), 'company_inn' => $user->cinn, 'user_ph' => $user->phone_number];
-            $precheckRegister = $this->signMe->prechekRegister($data['cinn'], true);
+            if($data['cinn']) {
+                $signatureQueryData = ['filet' => $filet, 'fname' => $file->type . '.' . $fileExtension, 'md5' => md5($fileContents), 'company_inn' => $user->cinn, 'user_ph' => $user->phone_number];
+                $precheckRegister = $this->signMe->prechekRegister($data['cinn'], true);
+            }
         }
 
         if (!$precheckRegister) {

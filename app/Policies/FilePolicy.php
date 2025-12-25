@@ -15,7 +15,7 @@ class FilePolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     public function loadFileFrom1C(User $user): Response
@@ -40,7 +40,7 @@ class FilePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -48,7 +48,7 @@ class FilePolicy
      */
     public function update(User $user, File $file): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -56,7 +56,7 @@ class FilePolicy
      */
     public function delete(User $user, File $file): bool
     {
-        //
+        return true;
     }
 
     /**

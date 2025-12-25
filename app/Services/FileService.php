@@ -50,19 +50,26 @@ class FileService
         return new FileResource($this->loadFile($request->file, $request->type));
     }
 
-    public function getDocumentsForSigning(Request $request): FileCollection
+    public function getDocumentsForSigning(Request $request, ?Collection $files = null): FileCollection
     {
-        $user = $request->user();
 
-        $files = $user->files()->where(function ($query) {
-            $query->where('type', FileTypeEnum::REQUEST->value)
-                ->orWhere('type', FileTypeEnum::CONTRACT->value)
-                ->orWhere('type', FileTypeEnum::ACT->value);
-        })->get();
 
-        if (is_null($files)) {
-            return new FileCollection([]);
+        if(is_null($files)) {
+            $user = $request->user();
+
+            $files = $user->files()->where(function ($query) {
+                $query->where('type', FileTypeEnum::REQUEST->value)
+                    ->orWhere('type', FileTypeEnum::CONTRACT->value)
+                    ->orWhere('type', FileTypeEnum::ACT->value);
+            })->where(function($signedQuery){
+                return $signedQuery->where('is_signed', false)->orWhere('is_dual_signed', false);
+            })->get();
+
+            if (is_null($files)) {
+                return new FileCollection([]);
+            }
         }
+
 
         $this->checkSignature($files);
 
@@ -72,7 +79,7 @@ class FileService
     private function checkSignature(Collection $files)
     {
         foreach ($files as $file) {
-            if ($file->is_signed) {
+            if ($file->is_signed && $file->is_dual_signed) {
                 continue;
             }
 
@@ -86,7 +93,21 @@ class FileService
                 continue;
             }
 
-            $file->update(['is_signed' => true]);
+            $updatedData = [];
+
+            if($signatureCheckResult['pdf']) {
+                $path = $this->saveFromBase64($signatureCheckResult['pdf']);
+                if($path) {
+                    $updatedData['pdf_file'] = $path;
+                }
+            }
+            $updatedData['is_signed'] = true;
+
+            if($signatureCheckResult['count'] == 2) {
+                $updatedData['is_dual_signed'] = true;
+            }
+
+            $file->update($updatedData);
 
             if ($file->id_1c === null) {
                 continue;

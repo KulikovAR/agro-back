@@ -63,6 +63,16 @@ trait FileTrait
         return $base64File;
     }
 
+    public function saveFromBase64(string $base64String) {
+
+        $base64String = preg_replace('#^data:application/pdf;base64,#i', '', $base64String);
+        $pdfData = base64_decode($base64String);
+
+        $tempFileName = 'files/' . uniqid() . '.pdf';
+        Storage::disk('public')->put($tempFileName, $pdfData);
+        return $tempFileName;
+    }
+
     public function getExtension(string $path): string
     {
         Storage::disk('public')->get($path);

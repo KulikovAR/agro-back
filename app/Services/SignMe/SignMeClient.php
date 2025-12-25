@@ -14,6 +14,7 @@ class SignMeClient
             [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
+                'X-Error-Json' => true
             ]
         );
     }

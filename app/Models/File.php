@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class File extends Model
 {
-    use FileTrait,Filterable,HasFactory,HasUuids;
+    use FileTrait,Filterable,HasFactory,HasUuids, SoftDeletes;
 
     protected $fillable = [
         'path',
@@ -22,6 +23,8 @@ class File extends Model
         'type',
         'md5_hash',
         'name',
+        'is_dual_signed',
+        'pdf_file'
     ];
 
     const SORT = [

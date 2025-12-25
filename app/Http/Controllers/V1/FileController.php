@@ -13,6 +13,7 @@ use App\Http\Responses\ApiJsonResponse;
 use App\Models\File;
 use App\Services\FileService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FileController extends Controller
 {
