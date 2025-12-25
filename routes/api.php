@@ -48,7 +48,7 @@ Route::middleware(['guest'])->group(function () {
 });
 
 
-Route::middleware([])->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     // User
     Route::get('/managers', [ManagerContoller::class, 'list'])->name('managers.list');
     Route::get('/user', [AuthTokenController::class, 'getUser'])->name('user.get');
