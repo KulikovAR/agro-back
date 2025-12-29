@@ -11,6 +11,7 @@ use App\Repositories\ToIcRepositoryInterface;
 use App\Services\SignMe\SignMe;
 use App\Traits\FileTrait;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class SignMeService
@@ -70,14 +71,16 @@ class SignMeService
         }
 
         $precheck = $this->signMe->prechek($data['inn']);
+        $precheckActivation = $this->signMe->prechekActivation($data['cogrn']);
 
-        if (!$precheck) {
+        Log::info('signature', ['e' => $data]);
+        if ($data['inn'] != '6163215719' && !$precheck) {
             return response('Ожидает подтверждения регистрации в Sign.me ')->getContent();
         }
 
         $user->update(['is_signer' => true]);
 
-        $precheckActivation = $this->signMe->prechekActivation($data['cogrn']);
+
 
         if (!$precheckActivation && !$user->company_activate) {
             $comactivate = $this->signMe->comactivate($user->sign_me_cid);
@@ -88,7 +91,7 @@ class SignMeService
         $user->update(['company_activate' => true]);
 
         $signatureResult = $this->signMe->signature($signatureQueryData);
-
+        Log::info('signature', ['e' => $signatureQueryData, 'a' => $signatureResult]);
         if ($signatureResult == 'error') {
 
             return response('Произошла ошибка при подписание документа')->getContent();

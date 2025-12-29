@@ -3,6 +3,7 @@
 namespace App\Services\SignMe;
 
 use App\Enums\SignMeApiEnum;
+use Illuminate\Support\Facades\Log;
 
 class SignMe
 {
@@ -24,12 +25,20 @@ class SignMe
         ];
 
         $result = $this->signMeClient->client->post(config('app.sign_me_base_dev_url') . SignMeApiEnum::PRECHEK->value, $query);
-
+        Log::info('precheck', ['e' => $result ]);
         if ($result->body() == '{}') {
             return null;
         }
 
-        return $result['inn']['approved'] && isset($result['inn']['apprtype']) && $result['inn']['apprtype'] == 1;
+        if(isset($result['inn'])) {
+            return $result['inn']['approved'] && isset($result['inn']['apprtype']) && $result['inn']['apprtype'] == 1;
+        }
+
+
+        if(isset($result['cinn'])) {
+            return $result['cinn']['approved'] && isset($result['cinn']['apprtype']) && $result['cinn']['apprtype'] == 1;
+        }
+        return false;
     }
 
     public function prechekRegister(string $inn, $llc = false): ?bool
@@ -52,7 +61,7 @@ class SignMe
             return null;
         }
 
-        return isset($result['inn']);
+        return isset($result['inn']) || isset($result['cinn']);
     }
 
     public function prechekActivation(string $ogrn): ?bool
